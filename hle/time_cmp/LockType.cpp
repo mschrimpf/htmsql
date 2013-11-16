@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <mutex> // has to be included before def.h
 #include "LockType.h"
-#include "def.h"
 
 //#include <immintrin.h> // RTM: _x
 //#include "pthread_lock.h"
@@ -13,6 +11,7 @@
 #include "atomic_tas_hle_lock.h"
 #include "hle_tas_lock.h"
 #include "hle_exch_lock.h"
+#include "hle_asm_exch_lock.h"
 
 LockType::LockType() {
 	this->lock = this->unlock = NULL;
@@ -53,6 +52,10 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_lock_function = hle_exch_lock;
 		this->type_unlock_function = hle_exch_unlock;
 		break;
+	case HLE_ASM_EXCH:
+		this->type_lock_function = hle_asm_exch_lock;
+		this->type_unlock_function = hle_asm_exch_unlock;
+		break;
 	}
 
 	// assign (un)lock
@@ -62,8 +65,8 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->unlock = &LockType::pthread_unlock;
 		break;
 	case CPP11MUTEX:
-//		this->lock = &LockType::cpp11_lock;
-//		this->unlock = &LockType::cpp11_unlock;
+		this->lock = &LockType::cpp11_lock;
+		this->unlock = &LockType::cpp11_unlock;
 		break;
 	case RTM:
 		this->lock = this->unlock = NULL;
@@ -76,6 +79,7 @@ void LockType::init(LockType::EnumType enum_type) {
 	case ATOMIC_TAS_HLE:
 	case HLE_TAS:
 	case HLE_EXCH:
+	case HLE_ASM_EXCH:
 		this->lock = &LockType::type_lock;
 		this->unlock = &LockType::type_unlock;
 		break;
@@ -91,12 +95,12 @@ void LockType::pthread_unlock() {
 	pthread_mutex_unlock(&this->p_mutex);
 }
 // cpp11
-//void LockType::cpp11_lock() {
-//	thread_lock(&this->cpp11mutex);
-//}
-//void LockType::cpp11_unlock() {
-//	thread_unlock(&this->cpp11mutex);
-//}
+void LockType::cpp11_lock() {
+	thread_lock(&this->cpp11_mutex);
+}
+void LockType::cpp11_unlock() {
+	thread_unlock(&this->cpp11_mutex);
+}
 // type
 void LockType::type_lock() {
 //	printf("Attempting to lock %p (%d)\n", &this->type_mutex, this->type_mutex);
@@ -140,20 +144,22 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 	case CPP11MUTEX:
 		return "CPP11 Mutex";
 	case ATOMIC_EXCH:
-		return "atomic_exch";
+		return "atomic_EXCH";
 	case ATOMIC_EXCH_HLE:
-		return "atomic_exch_hle";
+		return "atomic_EXCH_HLE";
 	case ATOMIC_EXCH_HLE2:
-		return "atomic_exch_hle2";
+		return "atomic_EXCH_HLE2";
 	case ATOMIC_TAS:
-		return "atomic_tas";
+		return "atomic_TAS";
 	case ATOMIC_TAS_HLE:
-		return "atomic_tas_hle";
+		return "atomic_TAS_HLE";
 	case RTM:
 		return "RTM";
 	case HLE_TAS:
-		return "hle_tas";
+		return "HLE_TAS";
 	case HLE_EXCH:
-		return "hle_exch";
+		return "HLE_EXCH";
+	case HLE_ASM_EXCH:
+		return "HLE_ASM_EXCH";
 	}
 }

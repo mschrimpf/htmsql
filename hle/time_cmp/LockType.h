@@ -1,7 +1,6 @@
 #ifndef LOCKTYPE_H_
 #define LOCKTYPE_H_
 
-#include <mutex>
 #include "def.h"
 
 class LockType {
@@ -16,7 +15,8 @@ public:
 		ATOMIC_TAS_HLE,
 		RTM,
 		HLE_TAS,
-		HLE_EXCH
+		HLE_EXCH,
+		HLE_ASM_EXCH
 	};
 	EnumType enum_type;
 //	static const LockType PTHREAD;
@@ -40,9 +40,11 @@ public:
 	 * <code>
 	 * 		// Given LockType *locker
 	 * 		(locker->*(locker->lock))();
+	 * 		(locker->*(locker->unlock))();
 	 *
 	 * 		// Given LockType locker
-	 * 		(locker.*(locker->lock))();
+	 * 		(locker.*(locker.lock))();
+	 * 		(locker.*(locker.unlock))();
 	 * </code>
 	 * The methodology of this is as follows: Get the function-pointer that the object holds.
 	 * Then call the function of the object that the pointer is pointing to.
@@ -59,13 +61,13 @@ private:
 	void (*type_unlock_function)(type *lock);
 	// mutexes
 	pthread_mutex_t p_mutex = PTHREAD_MUTEX_INITIALIZER;
-//	std::mutex cpp11_mutex;
+	std::mutex cpp11_mutex;
 	type type_mutex = 0;
 	// different lock functions for different mutexes
 	void pthread_lock();
 	void pthread_unlock();
-//	void cpp11_lock();
-//	void cpp11_unlock();
+	void cpp11_lock();
+	void cpp11_unlock();
 	void type_lock();
 	void type_unlock();
 };

@@ -23,16 +23,16 @@
 #define RTM_MAX_RETRIES 1000000
 
 int i;
-void run(int tid, int repeats, void (*lock)(), void (*unlock)()) {
+void run(int tid, int repeats, LockType *locker) {
 	for (int r = 0; r < repeats; r++) {
 //		printf(">> Thread %d\n", tid);
 
-		(*lock)();
+		(locker->*(locker->lock))();
 		//	printf("Locked\n");
 
 		i++;
 
-		(*unlock)();
+		(locker->*(locker->unlock))();
 		//	printf("Unlocked\n");
 	}
 }
@@ -79,20 +79,34 @@ int main(int argc, char *argv[]) {
 	}
 
 	// all
-//	const LockType *lockTypes[] = { &LockType::PTHREAD, &LockType::THREAD,
-//			&LockType::ATOMIC_EXCH, &LockType::ATOMIC_EXCH_HLE,
-//			&LockType::ATOMIC_EXCH_HLE2, &LockType::ATOMIC_TAS,
-//			&LockType::ATOMIC_TAS_HLE, &LockType::RTM, &LockType::HLE_TAS,
-//			&LockType::HLE_EXCH };
+	LockType::EnumType lockTypesEnum[] = {
+			LockType::PTHREAD, LockType::CPP11MUTEX,
+			LockType::ATOMIC_EXCH, LockType::ATOMIC_EXCH_HLE,
+			LockType::ATOMIC_EXCH_HLE2, LockType::ATOMIC_TAS,
+			LockType::ATOMIC_TAS_HLE, LockType::RTM, LockType::HLE_TAS,
+			LockType::HLE_EXCH, LockType::HLE_ASM_EXCH
+	};
 	// selected
-//	const LockType *lockTypes[] = { &LockType::PTHREAD, &LockType::ATOMIC_EXCH,
-//			&LockType::ATOMIC_EXCH_HLE, &LockType::RTM, &LockType::HLE_EXCH };
+//	LockType::EnumType lockTypesEnum[] = {
+//			LockType::PTHREAD,
+//			LockType::RTM,
+//			LockType::ATOMIC_EXCH,
+//			LockType::ATOMIC_EXCH_HLE,
+//			LockType::HLE_EXCH,
+//			LockType::HLE_ASM_EXCH
+//			};
 	// ! selected
-	const LockType *lockTypes[] = { &LockType::CPP11MUTEX,
-			&LockType::ATOMIC_EXCH_HLE2, &LockType::ATOMIC_TAS,
-			&LockType::ATOMIC_TAS_HLE, &LockType::HLE_TAS };
+//	LockType::EnumType lockTypesEnum[] = { LockType::CPP11MUTEX,
+//			LockType::ATOMIC_EXCH_HLE2, LockType::ATOMIC_TAS,
+//			LockType::ATOMIC_TAS_HLE, LockType::HLE_TAS };
+	int lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
+	LockType lockTypes[lockTypesCount];
+	for (int t = 0; t < lockTypesCount; t++) {
+		lockTypes[t].init(lockTypesEnum[t]);
+	}
+
 	printf("Repeats;");
-	printHeader(lockTypes, sizeof(lockTypes) / sizeof(lockTypes[0]));
+	LockType::printHeader(lockTypes, sizeof(lockTypes) / sizeof(lockTypes[0]));
 	for (int r = 0; r < sizeof(repeats) / sizeof(repeats[0]); r++) {
 		printf("%d", repeats[r]);
 
@@ -106,12 +120,14 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&start, NULL);
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					if (lockTypes[t] != &LockType::RTM) {
-						threads[i] = std::thread(run, i, repeats[r],
-								lockTypes[t]->lock_function,
-								lockTypes[t]->unlock_function);
-					} else {
+					switch (lockTypes[t].enum_type) {
+					case LockType::EnumType::RTM:
 						threads[i] = std::thread(xrun, i, repeats[r]);
+						break;
+					default:
+						threads[i] = std::thread(run, i, repeats[r],
+								&lockTypes[t]);
+						break;
 					}
 				}
 				// wait for threads

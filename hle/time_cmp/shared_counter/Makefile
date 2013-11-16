@@ -7,6 +7,7 @@ SOURCES=time_cmp.cpp \
 ../pthread_lock.cpp ../thread_lock.cpp \
 ../atomic_exch_lock.cpp ../atomic_exch_hle_lock.cpp ../atomic_tas_lock.cpp ../atomic_tas_hle_lock.cpp ../atomic_exch_hle_lock2.cpp \
 ../hle_tas_lock.cpp ../hle_exch_lock.cpp \
+../hle_asm_exch_lock.cpp \
 ../LockType.cpp ../../../util.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=time_cmp

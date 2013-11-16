@@ -20,7 +20,7 @@
 #define CORES 4
 #define RTM_MAX_RETRIES 1000000
 
-#define ACCOUNT_COUNT 10
+#define ACCOUNT_COUNT 1000
 #define ACCOUNT_INITIAL 1000.0
 #define MAXIMUM_MONEY 1000
 
@@ -111,11 +111,11 @@ int main(int argc, char *argv[]) {
 		repeats[i] = repeats_min + i * repeats_step;
 	}
 
-	// TODO seed with srand(time(NULL))
+	srand(time(NULL));
 	// define locktypes
 	LockType::EnumType lockTypesEnum[] =
 			{ LockType::PTHREAD, LockType::RTM, LockType::ATOMIC_EXCH,
-					LockType::ATOMIC_EXCH_HLE, LockType::HLE_EXCH };
+					LockType::ATOMIC_EXCH_HLE, LockType::HLE_EXCH, LockType::HLE_ASM_EXCH };
 	int lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	LockType lockTypes[lockTypesCount];
 	for (int t = 0; t < lockTypesCount; t++) {

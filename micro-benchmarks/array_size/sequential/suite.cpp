@@ -18,7 +18,7 @@ volatile type* init_clear(int size) {
 	return a;
 }
 
-int run_write(volatile type **array, int size) {
+int run_seq_write(volatile type **array, int size) {
 	volatile type *a = *array;
 	if (_xbegin() == _XBEGIN_STARTED) {
 		for (int i = 0; i < size; i++) {
@@ -31,7 +31,35 @@ int run_write(volatile type **array, int size) {
 		return 0;
 	}
 }
-int run_read(volatile type **array, int size) {
+int run_seq_read(volatile type **array, int size) {
+	volatile type *a = *array;
+	type dummy;
+	if (_xbegin() == _XBEGIN_STARTED) {
+		for (int i = 0; i < size; i++) {
+//			dummy = array[i]; // read - GCC option O0 needed!
+			dummy = a[i];
+		}
+		_xend();
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+int run_rnd_write(volatile type **array, int size) {
+	volatile type *a = *array;
+	if (_xbegin() == _XBEGIN_STARTED) {
+		for (int i = 0; i < size; i++) {
+//			array[i]++; // write
+			a[i]++;
+		}
+		_xend();
+		return 1;
+	} else {
+		return 0;
+	}
+}
+int run_rnd_read(volatile type **array, int size) {
 	volatile type *a = *array;
 	type dummy;
 	if (_xbegin() == _XBEGIN_STARTED) {
@@ -48,10 +76,10 @@ int run_read(volatile type **array, int size) {
 
 class MeasureType {
 public:
-	static const MeasureType NOINIT_WRITE;
-	static const MeasureType INIT_WRITE;
-	static const MeasureType NOINIT_READ;
-	static const MeasureType INIT_READ;
+	static const MeasureType NOINIT_SEQWRITE;
+	static const MeasureType INIT_SEQWRITE;
+	static const MeasureType NOINIT_SEQREAD;
+	static const MeasureType INIT_SEQREAD;
 
 	volatile type* (*init)(int size);
 	/** return: true for success, false otherwise */
@@ -63,21 +91,21 @@ private:
 		this->run = run;
 	}
 };
-const MeasureType MeasureType::NOINIT_WRITE = MeasureType(malloc_init,
-		run_write);
-const MeasureType MeasureType::INIT_WRITE = MeasureType(init_clear, run_write);
-const MeasureType MeasureType::NOINIT_READ = MeasureType(malloc_init, run_read);
-const MeasureType MeasureType::INIT_READ = MeasureType(init_clear, run_read);
+const MeasureType MeasureType::NOINIT_SEQWRITE = MeasureType(malloc_init,
+		run_seq_write);
+const MeasureType MeasureType::INIT_SEQWRITE = MeasureType(init_clear, run_seq_write);
+const MeasureType MeasureType::NOINIT_SEQREAD = MeasureType(malloc_init, run_seq_read);
+const MeasureType MeasureType::INIT_SEQREAD = MeasureType(init_clear, run_seq_read);
 void printHeader(const MeasureType *types[], int size, FILE *out = stdout) {
 	for (int t = 0; t < size; t++) {
-		if (types[t] == &MeasureType::NOINIT_WRITE)
-			fprintf(out, "NOINIT_WRITE");
-		else if (types[t] == &MeasureType::INIT_WRITE)
-			fprintf(out, "INIT_WRITE");
-		else if (types[t] == &MeasureType::NOINIT_READ)
-			fprintf(out, "NOINIT_READ");
-		else if (types[t] == &MeasureType::INIT_READ)
-			fprintf(out, "INIT_READ");
+		if (types[t] == &MeasureType::NOINIT_SEQWRITE)
+			fprintf(out, "NOINIT_SEQWRITE");
+		else if (types[t] == &MeasureType::INIT_SEQWRITE)
+			fprintf(out, "INIT_SEQWRITE");
+		else if (types[t] == &MeasureType::NOINIT_SEQREAD)
+			fprintf(out, "INIT_SEQWRITE");
+		else if (types[t] == &MeasureType::INIT_SEQREAD)
+			fprintf(out, "INIT_SEQREAD");
 		fprintf(out, "%s", t < size - 1 ? ";" : "\n");
 	}
 }

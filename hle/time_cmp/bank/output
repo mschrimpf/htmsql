@@ -1,0 +1,93 @@
+g++ -std=c++0x -O2  -o time_cmp time_cmp.cpp ../pthread_lock.cpp ../thread_lock.cpp ../boost_mutex_lock.cpp ../atomic_exch_lock.cpp ../atomic_exch_hle_lock.cpp ../atomic_tas_lock.cpp ../atomic_tas_hle_lock.cpp ../atomic_exch_hle_lock2.cpp ../hle_tas_lock.cpp ../hle_exch_lock.cpp ../hle_asm_exch_lock.cpp ../banking_account/Account.cpp ../banking_account/ThreadsafeAccount.cpp ../LockType.cpp ../../../util.cpp -fgnu-tm -mrtm -lpthread -Wl,--no-as-needed 
+time_cmp.cpp: In function ‘int main(int, char**)’:
+time_cmp.cpp:140:59: error: use of deleted function ‘LockType::LockType(const LockType&)’
+      ts_account_pool[a].init(lockTypes[t], ACCOUNT_INITIAL);
+                                                           ^
+In file included from ../banking_account/ThreadsafeAccount.h:12:0,
+                 from time_cmp.cpp:17:
+../banking_account/../LockType.h:6:7: note: ‘LockType::LockType(const LockType&)’ is implicitly deleted because the default definition would be ill-formed:
+ class LockType {
+       ^
+In file included from /usr/include/boost/thread/mutex.hpp:16:0,
+                 from /usr/include/boost/thread/pthread/thread_data.hpp:12,
+                 from /usr/include/boost/thread/thread.hpp:17,
+                 from /usr/include/boost/thread.hpp:13,
+                 from ../banking_account/../def.h:5,
+                 from ../banking_account/../LockType.h:4,
+                 from ../banking_account/ThreadsafeAccount.h:12,
+                 from time_cmp.cpp:17:
+/usr/include/boost/thread/pthread/mutex.hpp:33:9: error: ‘boost::mutex::mutex(const boost::mutex&)’ is private
+         mutex(mutex const&);
+         ^
+In file included from ../banking_account/ThreadsafeAccount.h:12:0,
+                 from time_cmp.cpp:17:
+../banking_account/../LockType.h:6:7: error: within this context
+ class LockType {
+       ^
+In file included from time_cmp.cpp:17:0:
+../banking_account/ThreadsafeAccount.h:19:7: error:   initializing argument 1 of ‘void ThreadsafeAccount::init(LockType, double)’
+  void init(LockType locker, double balance = 0);
+       ^
+../banking_account/ThreadsafeAccount.cpp: In constructor ‘ThreadsafeAccount::ThreadsafeAccount(LockType, double)’:
+../banking_account/ThreadsafeAccount.cpp:13:28: error: use of deleted function ‘LockType::LockType(const LockType&)’
+  this->init(locker, balance);
+                            ^
+In file included from ../banking_account/ThreadsafeAccount.h:12:0,
+                 from ../banking_account/ThreadsafeAccount.cpp:8:
+../banking_account/../LockType.h:6:7: note: ‘LockType::LockType(const LockType&)’ is implicitly deleted because the default definition would be ill-formed:
+ class LockType {
+       ^
+In file included from /usr/include/boost/thread/mutex.hpp:16:0,
+                 from /usr/include/boost/thread/pthread/thread_data.hpp:12,
+                 from /usr/include/boost/thread/thread.hpp:17,
+                 from /usr/include/boost/thread.hpp:13,
+                 from ../banking_account/../def.h:5,
+                 from ../banking_account/../LockType.h:4,
+                 from ../banking_account/ThreadsafeAccount.h:12,
+                 from ../banking_account/ThreadsafeAccount.cpp:8:
+/usr/include/boost/thread/pthread/mutex.hpp:33:9: error: ‘boost::mutex::mutex(const boost::mutex&)’ is private
+         mutex(mutex const&);
+         ^
+In file included from ../banking_account/ThreadsafeAccount.h:12:0,
+                 from ../banking_account/ThreadsafeAccount.cpp:8:
+../banking_account/../LockType.h:6:7: error: within this context
+ class LockType {
+       ^
+In file included from ../banking_account/ThreadsafeAccount.cpp:8:0:
+../banking_account/ThreadsafeAccount.h:19:7: error:   initializing argument 1 of ‘void ThreadsafeAccount::init(LockType, double)’
+  void init(LockType locker, double balance = 0);
+       ^
+../banking_account/ThreadsafeAccount.cpp: In member function ‘void ThreadsafeAccount::init(LockType, double)’:
+../banking_account/ThreadsafeAccount.cpp:19:15: error: use of deleted function ‘LockType& LockType::operator=(const LockType&)’
+  this->locker = locker;
+               ^
+In file included from ../banking_account/ThreadsafeAccount.h:12:0,
+                 from ../banking_account/ThreadsafeAccount.cpp:8:
+../banking_account/../LockType.h:6:7: note: ‘LockType& LockType::operator=(const LockType&)’ is implicitly deleted because the default definition would be ill-formed:
+ class LockType {
+       ^
+In file included from /usr/include/boost/thread/mutex.hpp:16:0,
+                 from /usr/include/boost/thread/pthread/thread_data.hpp:12,
+                 from /usr/include/boost/thread/thread.hpp:17,
+                 from /usr/include/boost/thread.hpp:13,
+                 from ../banking_account/../def.h:5,
+                 from ../banking_account/../LockType.h:4,
+                 from ../banking_account/ThreadsafeAccount.h:12,
+                 from ../banking_account/ThreadsafeAccount.cpp:8:
+/usr/include/boost/thread/pthread/mutex.hpp:34:16: error: ‘boost::mutex& boost::mutex::operator=(const boost::mutex&)’ is private
+         mutex& operator=(mutex const&);
+                ^
+In file included from ../banking_account/ThreadsafeAccount.h:12:0,
+                 from ../banking_account/ThreadsafeAccount.cpp:8:
+../banking_account/../LockType.h:6:7: error: within this context
+ class LockType {
+       ^
+../LockType.cpp: In member function ‘void LockType::boost_mutex_lock()’:
+../LockType.cpp:110:32: error: cannot convert ‘boost::mutex*’ to ‘std::mutex*’ for argument ‘1’ to ‘void thread_lock(std::mutex*)’
+  thread_lock(&this->boost_mutex);
+                                ^
+../LockType.cpp: In member function ‘void LockType::boost_mutex_unlock()’:
+../LockType.cpp:113:34: error: cannot convert ‘boost::mutex*’ to ‘std::mutex*’ for argument ‘1’ to ‘void thread_unlock(std::mutex*)’
+  thread_unlock(&this->boost_mutex);
+                                  ^
+make: *** [time_cmp] Error 1

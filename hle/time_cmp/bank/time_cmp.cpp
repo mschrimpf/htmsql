@@ -6,6 +6,7 @@
 #include <sys/time.h>
 #include <vector>
 
+#include <mutex>
 //#include "../pthread_lock.h"
 //#include "../atomic_exch_lock.h"
 //#include "../atomic_exch_hle_lock.h"
@@ -14,7 +15,7 @@
 
 #include "../banking_account/Account.h"
 #include "../banking_account/ThreadsafeAccount.h"
-#include "../LockType.h"
+#include "../../lock_functions/LockType.h"
 #include "../../../util.h"
 
 #define CORES 4
@@ -25,9 +26,9 @@
 #define MAXIMUM_MONEY 1000
 
 ///
-/// run functions
+/// Object-related locks run functions
 ///
-void run(int tid, int repeats, ThreadsafeAccount account_pool[],
+void run_object_normal(int tid, int repeats, ThreadsafeAccount account_pool[],
 		int account_pool_size) {
 	for (int r = 0; r < repeats; r++) {
 		// select two random accounts
@@ -35,17 +36,74 @@ void run(int tid, int repeats, ThreadsafeAccount account_pool[],
 		int a2 = rand() % account_pool_size;
 		// payout money from a1 and deposit it into a2
 		int money = rand() % MAXIMUM_MONEY;
+
 		account_pool[a1].payout(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
+	}
+}
+///
+/// Global lock run functions
+///
+void run_global_partitioned(int tid, int repeats, Account account_pool[],
+		int account_pool_size, LockType *locker) {
+	// partition the array and build an assumed best-case for HLE: no conflicts at all
+	int partition_size = ACCOUNT_COUNT / CORES;
+	int partition_left = tid * partition_size;
+	for (int r = 0; r < repeats; r++) {
+		int a1 = partition_left + (r % partition_size);
+		int a2 = partition_left + ((r + 1) % partition_size);
+		// payout money from a1 and deposit it into a2
+		int money = MAXIMUM_MONEY;
+
+		(locker->*(locker->lock))();
+//		(locker.*(locker.lock))();
+		account_pool[a1].payout(money); // remove from a1
+		account_pool[a2].deposit(money); // store in a2
+//		(locker.*(locker.unlock))();
+		(locker->*(locker->unlock))();
+	}
+}
+void run_global_customrand(int tid, int repeats, Account account_pool[],
+		int account_pool_size, LockType *locker) {
+	for (int r = 0; r < repeats; r++) {
+		// select two random accounts
+		int a1 = rand2(account_pool_size);
+		int a2 = rand2(account_pool_size);
+		int money = rand2(MAXIMUM_MONEY);
+
+		(locker->*(locker->lock))();
+		account_pool[a1].payout(money); // remove from a1
+		account_pool[a2].deposit(money); // store in a2
+		(locker->*(locker->unlock))();
+	}
+}
+
+int *rands = NULL;
+int rands_size = 0;
+int rands_counter = 0;
+void run_global_savedrand(int tid, int repeats, ThreadsafeAccount account_pool[],
+		int account_pool_size, LockType *locker) {
+	for (int r = 0; r < repeats; r++) {
+		int a1 = rands[rands_counter = (rands_counter + 1) % rands_size];
+		int a2 = rands[rands_counter = (rands_counter + 1) % rands_size];
+		int money = MAXIMUM_MONEY;
+
+		(locker->*(locker->lock))();
+		account_pool[a1].payout(money); // remove from a1
+		account_pool[a2].deposit(money); // store in a2
+		(locker->*(locker->unlock))();
 	}
 }
 
 void xrun(int tid, int repeats, Account account_pool[], int account_pool_size) {
 	for (int r = 0; r < repeats; r++) {
-		// select two random accounts
-		int a1 = rand() % account_pool_size;
-		int a2 = rand() % account_pool_size;
-		int money = rand() % MAXIMUM_MONEY;
+//		int a1 = rand() % account_pool_size;
+//		int a2 = rand() % account_pool_size;
+//		int money = rand() % MAXIMUM_MONEY;
+		int a1 = rand2(account_pool_size);
+		int a2 = rand2(account_pool_size);
+		int money = rand2(MAXIMUM_MONEY);
+
 		int failures = 0;
 		retry:
 		// payout money from a1 and deposit it into a2
@@ -99,10 +157,12 @@ int main(int argc, char *argv[]) {
 	handle_args(argc, argv, 5, values, identifier);
 	const int account_pool_size = ACCOUNT_COUNT;
 
-	printf("Running %d loops in %d threads\n", loops, num_threads);
+	printf("Threads:      %d\n", num_threads);
+	printf("Loops:        %d\n", loops);
 	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
 			repeats_step);
 	printf("%d accounts\n", account_pool_size);
+	printf("run function: %s\n", "custom_rand");
 	printf("\n");
 	int repeats_count = (repeats_max - repeats_min + repeats_step)
 			/ repeats_step;
@@ -111,11 +171,19 @@ int main(int argc, char *argv[]) {
 		repeats[i] = repeats_min + i * repeats_step;
 	}
 
-	srand(time(NULL));
+	// randomness setup
+	srand(time(0));
+	rands_size = ACCOUNT_COUNT * num_threads;
+	rands = (int*) malloc(rands_size * sizeof(int));
+	for (int i = 0; i < rands_size; i++) {
+		rands[i] = rand() % account_pool_size;
+	}
+
 	// define locktypes
 	LockType::EnumType lockTypesEnum[] =
 			{ LockType::PTHREAD, LockType::RTM, LockType::ATOMIC_EXCH,
-					LockType::ATOMIC_EXCH_HLE, LockType::HLE_EXCH, LockType::HLE_ASM_EXCH };
+					LockType::ATOMIC_EXCH_HLE, LockType::HLE_EXCH,
+					LockType::HLE_ASM_EXCH, LockType::HLE_ASM_EXCH2 };
 	int lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	LockType lockTypes[lockTypesCount];
 	for (int t = 0; t < lockTypesCount; t++) {
@@ -138,6 +206,12 @@ int main(int argc, char *argv[]) {
 				for (int a = 0; a < account_pool_size; a++) {
 					ts_account_pool[a].init(lockTypes[t], ACCOUNT_INITIAL);
 				}
+//				ThreadsafeAccount *ts_account_pool =
+//						(ThreadsafeAccount *) malloc(
+//								account_pool_size * sizeof(ThreadsafeAccount));
+				for (int a = 0; a < account_pool_size; a++) {
+					ts_account_pool[a].init(lockTypes[t], ACCOUNT_INITIAL);
+				}
 
 				Account account_pool[account_pool_size];
 				for (int a = 0; a < account_pool_size; a++) {
@@ -155,8 +229,9 @@ int main(int argc, char *argv[]) {
 								account_pool, account_pool_size);
 						break;
 					default:
-						threads[i] = std::thread(run, i, repeats[r],
-								ts_account_pool, account_pool_size);
+						threads[i] = std::thread(run_customrand, i, repeats[r],
+								account_pool, account_pool_size,
+								&lockTypes[t]);
 						break;
 					}
 				}
@@ -181,6 +256,7 @@ int main(int argc, char *argv[]) {
 					break;
 				}
 
+//				free((void *) ts_account_pool);
 			} // end of loops loop
 
 			printf(";%.0f", average(times));
@@ -188,5 +264,8 @@ int main(int argc, char *argv[]) {
 		} // end of locktype-loop
 		printf("\n");
 	} // end of repeats loop
+
+	if (rands != NULL)
+		free(rands);
 }
 

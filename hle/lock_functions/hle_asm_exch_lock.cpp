@@ -1,4 +1,4 @@
-#include "hle_exch_lock.h"
+#include "hle_asm_exch_lock.h"
 #include <xmmintrin.h> // _mm_pause
 #include "../lib/hle-emulation.h"
 //#define __HLE_ACQUIRE ".byte 0xf2 ; "

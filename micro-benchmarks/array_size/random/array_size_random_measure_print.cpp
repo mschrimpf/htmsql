@@ -8,12 +8,13 @@
 #include "util.h"
 
 int main(int argc, char *argv[]) {
-	int size = 100000, loops = 10000;
-	int* values[] = { &size, &loops };
-	const char* identifier[] = { "-s", "-l" };
+	int size = 10000, loops = 10000, init = 1;
+	int* values[] = { &size, &loops , &init};
+	const char* identifier[] = { "-s", "-l" , "-i"};
 	handle_args(argc, argv, 2, values, identifier);
 	printf("Array size:       %d\n", size);
 	printf("Loops:            %d\n", loops);
+	printf("Init:             %s\n", init ? "yes" : "no");
 
 	// file handle
 	const char* file_header = "Retries;Accesses;"
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]) {
 
 	// define measured values
 	int retries[] = { 0, 1, 2, 3 };
-	int accesses[] = { 1, 10, 100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
+	int accesses[] = { 1, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
 
 	srand (time(NULL)); // pseudo-randomness for current time
 	int rnd = rand();
@@ -43,6 +44,10 @@ int main(int argc, char *argv[]) {
 			for (int l = 0; l < loops; l++) {
 				volatile int* array = (volatile int *) malloc(
 						size * sizeof(int));
+				if(init) {
+					for(int i=0; i<size; i++)
+						array[i] = 0;
+				}
 
 				/* BEGIN: core code */
 				int retrynum = 0;

@@ -9,7 +9,7 @@
 #define THREADSAFEACCOUNT_H_
 
 //#include "Account.h"
-#include "../LockType.h"
+#include "../../lock_functions/LockType.h"
 
 class ThreadsafeAccount {
 public:

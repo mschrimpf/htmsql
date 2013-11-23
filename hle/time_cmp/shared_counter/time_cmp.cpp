@@ -5,16 +5,7 @@
 #include <sys/time.h>
 #include <vector>
 
-#include "../pthread_lock.h"
-#include "../thread_lock.h"
-#include "../atomic_exch_lock.h"
-#include "../atomic_exch_hle_lock.h"
-#include "../atomic_exch_hle_lock2.h"
-#include "../atomic_tas_lock.h"
-#include "../atomic_tas_hle_lock.h"
 #include <immintrin.h> // RTM: _x
-#include "../hle_tas_lock.h"
-#include "../hle_exch_lock.h"
 
 #include "../LockType.h"
 #include "../../../util.h"
@@ -80,7 +71,7 @@ int main(int argc, char *argv[]) {
 
 	// all
 	LockType::EnumType lockTypesEnum[] = {
-			LockType::PTHREAD, LockType::CPP11MUTEX,
+			LockType::PTHREAD, //LockType::CPP11MUTEX,
 			LockType::ATOMIC_EXCH, LockType::ATOMIC_EXCH_HLE,
 			LockType::ATOMIC_EXCH_HLE2, LockType::ATOMIC_TAS,
 			LockType::ATOMIC_TAS_HLE, LockType::RTM, LockType::HLE_TAS,

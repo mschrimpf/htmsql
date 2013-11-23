@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
 	FILE * out = stdout; //fopen("clear_write_read.csv", "w");
 
-	// pre
+	// pre - not doing this will lead to higher failure rates
 	int _size = 2000;
 	volatile type* _array = (volatile type *) malloc(_size * sizeof(type));
 //	if (_xbegin() == _XBEGIN_STARTED) {

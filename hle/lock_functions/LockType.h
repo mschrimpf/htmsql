@@ -2,12 +2,14 @@
 #define LOCKTYPE_H_
 
 #include "def.h"
+//#include <boost/thread.hpp>
 
 class LockType {
 public:
 	enum EnumType {
 		PTHREAD,
 		CPP11MUTEX,
+		BOOST_MUTEX,
 		ATOMIC_EXCH,
 		ATOMIC_EXCH_HLE,
 		ATOMIC_EXCH_HLE2,
@@ -16,7 +18,8 @@ public:
 		RTM,
 		HLE_TAS,
 		HLE_EXCH,
-		HLE_ASM_EXCH
+		HLE_ASM_EXCH,
+		HLE_ASM_EXCH2
 	};
 	EnumType enum_type;
 //	static const LockType PTHREAD;
@@ -61,13 +64,16 @@ private:
 	void (*type_unlock_function)(type *lock);
 	// mutexes
 	pthread_mutex_t p_mutex = PTHREAD_MUTEX_INITIALIZER;
-	std::mutex cpp11_mutex;
+//	std::mutex cpp11_mutex;
+//	boost::mutex boost_mutex;
 	type type_mutex = 0;
 	// different lock functions for different mutexes
 	void pthread_lock();
 	void pthread_unlock();
 	void cpp11_lock();
 	void cpp11_unlock();
+	void boost_mutex_lock();
+	void boost_mutex_unlock();
 	void type_lock();
 	void type_unlock();
 };

@@ -4,12 +4,13 @@ CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -lpthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES=time_cmp.cpp \
-../pthread_lock.cpp ../thread_lock.cpp \
-../atomic_exch_lock.cpp ../atomic_exch_hle_lock.cpp ../atomic_tas_lock.cpp ../atomic_tas_hle_lock.cpp ../atomic_exch_hle_lock2.cpp \
-../hle_tas_lock.cpp ../hle_exch_lock.cpp \
-../hle_asm_exch_lock.cpp \
+../../lock_functions/pthread_lock.cpp ../../lock_functions/thread_lock.cpp \
+../../lock_functions/atomic_exch_lock.cpp ../../lock_functions/atomic_exch_hle_lock.cpp ../../lock_functions/atomic_tas_lock.cpp ../../lock_functions/atomic_tas_hle_lock.cpp ../../lock_functions/atomic_exch_hle_lock2.cpp \
+../../lock_functions/hle_tas_lock.cpp ../../lock_functions/hle_exch_lock.cpp \
+../../lock_functions/hle_asm_exch_lock.cpp ../../lock_functions/hle_asm_exch_lock2.cpp \
 ../banking_account/Account.cpp ../banking_account/ThreadsafeAccount.cpp \
-../LockType.cpp ../../../util.cpp
+../../lock_functions/LockType.cpp ../../../util.cpp
+# ../boost_mutex_lock.cpp # Problems with includes
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=time_cmp
 

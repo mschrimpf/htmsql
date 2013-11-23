@@ -8,10 +8,11 @@
 #include "util.h"
 
 int main(int argc, char *argv[]) {
-	int size = 100000, loops = 1000, accesses = 1000, retries = 0, modulo = -1;
-	int *values[] = { &size, &loops, &accesses, &retries, &modulo };
-	const char* identifier[] = { "-s", "-l", "-a", "-r", "-m" };
-	handle_args(argc, argv, 5, values, identifier);
+	int size = 100000, loops = 1000, accesses = 1000, retries = 0, modulo = -1,
+			init = 1;
+	int *values[] = { &size, &loops, &accesses, &retries, &modulo, &init };
+	const char* identifier[] = { "-s", "-l", "-a", "-r", "-m", "-i" };
+	handle_args(argc, argv, 6, values, identifier);
 	if (modulo < 0) { //not set
 		modulo = size;
 	}
@@ -19,8 +20,13 @@ int main(int argc, char *argv[]) {
 	printf("Array size:       %d\t\tModulo:  rand() %% %d\n", size, modulo);
 	printf("Accesses:         %d\t\tRetries:          %d\n", accesses, retries);
 	printf("Loops:            %d\n", loops);
+	printf("Init:             %s\n", init ? "y" : "n");
 
 	volatile int* a = (volatile int *) malloc(size * sizeof(int));
+	if (init) {
+		for (int i = 0; i < size; i++)
+			a[i] = 0;
+	}
 
 	int attempts = 0, partial_attempts = 0, partial_failures = 0, failures = 0;
 	srand (time(NULL)); // pseudo-randomness for current time

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "LockType.h"
 
-//#include <immintrin.h> // RTM: _x
 //#include "pthread_lock.h"
 #include "thread_lock.h"
+//#include "boost_mutex_lock.h"
 #include "atomic_exch_lock.h"
 #include "atomic_exch_hle_lock.h"
 #include "atomic_exch_hle_lock2.h"
@@ -12,6 +12,7 @@
 #include "hle_tas_lock.h"
 #include "hle_exch_lock.h"
 #include "hle_asm_exch_lock.h"
+#include "hle_asm_exch_lock2.h"
 
 LockType::LockType() {
 	this->lock = this->unlock = NULL;
@@ -56,6 +57,10 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_lock_function = hle_asm_exch_lock;
 		this->type_unlock_function = hle_asm_exch_unlock;
 		break;
+	case HLE_ASM_EXCH2:
+		this->type_lock_function = hle_asm_exch_lock2;
+		this->type_unlock_function = hle_asm_exch_unlock2;
+		break;
 	}
 
 	// assign (un)lock
@@ -67,6 +72,10 @@ void LockType::init(LockType::EnumType enum_type) {
 	case CPP11MUTEX:
 		this->lock = &LockType::cpp11_lock;
 		this->unlock = &LockType::cpp11_unlock;
+		break;
+	case BOOST_MUTEX:
+		this->lock = &LockType::boost_mutex_lock;
+		this->unlock = &LockType::boost_mutex_unlock;
 		break;
 	case RTM:
 		this->lock = this->unlock = NULL;
@@ -80,6 +89,7 @@ void LockType::init(LockType::EnumType enum_type) {
 	case HLE_TAS:
 	case HLE_EXCH:
 	case HLE_ASM_EXCH:
+	case HLE_ASM_EXCH2:
 		this->lock = &LockType::type_lock;
 		this->unlock = &LockType::type_unlock;
 		break;
@@ -88,7 +98,7 @@ void LockType::init(LockType::EnumType enum_type) {
 
 // pthread
 void LockType::pthread_lock() {
-//	pthread_lock(&this->p_mutex);
+//	pthread_lock(&this->p_mutex); // perform immediate call
 	pthread_mutex_lock(&this->p_mutex);
 }
 void LockType::pthread_unlock() {
@@ -96,10 +106,16 @@ void LockType::pthread_unlock() {
 }
 // cpp11
 void LockType::cpp11_lock() {
-	thread_lock(&this->cpp11_mutex);
+//	thread_lock(&this->cpp11_mutex);
 }
 void LockType::cpp11_unlock() {
-	thread_unlock(&this->cpp11_mutex);
+//	thread_unlock(&this->cpp11_mutex);
+}
+void LockType::boost_mutex_lock() {
+//	boost_mutex_lock(&this->boost_mutex);
+}
+void LockType::boost_mutex_unlock() {
+//	boost_mutex_unlock(&this->boost_mutex);
 }
 // type
 void LockType::type_lock() {
@@ -143,6 +159,8 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "POSIX Thread";
 	case CPP11MUTEX:
 		return "CPP11 Mutex";
+	case BOOST_MUTEX:
+		return "BOOST_MUTEX";
 	case ATOMIC_EXCH:
 		return "atomic_EXCH";
 	case ATOMIC_EXCH_HLE:
@@ -161,5 +179,7 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "HLE_EXCH";
 	case HLE_ASM_EXCH:
 		return "HLE_ASM_EXCH";
+	case HLE_ASM_EXCH2:
+		return "HLE_ASM_EXCH2";
 	}
 }

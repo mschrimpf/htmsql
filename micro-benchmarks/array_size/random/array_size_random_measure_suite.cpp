@@ -9,17 +9,24 @@
 
 #include "util.h"
 
-#define FILE_VALUE_SEPARATOR " "
+#define FILE_VALUE_SEPARATOR ";"
 
 int main(int argc, char *argv[]) {
-	int size = 100000, loops = 10000;
-	int* values[] = { &size, &loops };
-	const char* identifier[] = { "-s", "-l" };
-	handle_args(argc, argv, 2, values, identifier);
+	int size = 10000, loops = 10000, init = 1;
+	int* values[] = { &size, &loops, &init };
+	const char* identifier[] = { "-s", "-l", "-i" };
+	handle_args(argc, argv, 3, values, identifier);
 
+	// init
 	volatile int* array = (volatile int *) malloc(size * sizeof(int));
+	if (init) {
+		for (int i = 0; i < size; i++)
+			array[i] = 0;
+	}
+
 	printf("Array size:       %d\n", size);
 	printf("Loops:            %d\n", loops);
+	printf("Init:             %s\n", init ? "yes" : "no");
 
 	// file handle
 	std::stringstream fstm;
@@ -36,8 +43,12 @@ int main(int argc, char *argv[]) {
 	gettimeofday(&start, NULL);
 
 	// define measured values
-	int retries[] = { 0 }; //, 1, 2, 3 };
-	int accesses[] = { 1 }; //, 10, 100, 1000, 2000, 3000 }; //, 4000, 5000, 6000, 7000, 8000,9000, 10000 };
+	int retries[] = { 0, 1, 2, 3 };
+	int accesses[] = { 1, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000,
+			10000 };
+
+	srand (time(NULL)); // pseudo-randomness for current time
+int 	rnd = rand();
 
 	// execute suite: check the failure rate for all accesses in all retries
 	int repeats = sizeof(retries) / sizeof(retries[0]);
@@ -45,7 +56,7 @@ int main(int argc, char *argv[]) {
 		std::stringstream sstm;
 		sstm.str(std::string());
 		sstm.clear();
-		sstm << "array_size_random-" << r << ".txt";
+		sstm << "array_size_random-" << r << ".csv";
 		const char *filename = sstm.str().c_str();
 		printf("Retry %d\n", r);
 
@@ -63,7 +74,9 @@ int main(int argc, char *argv[]) {
 				/* BEGIN: core code */
 				int retrynum = 0;
 				attempts++;
-				retry: partial_attempts++;
+				retry: srand(rnd); // generate new randomness
+				rnd = rand();
+				partial_attempts++;
 				if (_xbegin() == _XBEGIN_STARTED) {
 					for (int i = 0; i < size; i++) {
 						array[rand() % size]++;
@@ -85,7 +98,7 @@ int main(int argc, char *argv[]) {
 			stats_file << partial_failures << FILE_VALUE_SEPARATOR;
 			stats_file
 					<< (float) partial_failures * 100
-							/ partial_attempts << FILE_VALUE_SEPARATOR;
+							/ partial_attempts<< FILE_VALUE_SEPARATOR;
 			stats_file << attempts << FILE_VALUE_SEPARATOR;
 			stats_file << failures << FILE_VALUE_SEPARATOR;
 			stats_file << (float) failures * 100 / attempts << "\n";

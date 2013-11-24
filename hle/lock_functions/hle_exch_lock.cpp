@@ -2,8 +2,9 @@
 #include <xmmintrin.h> // _mm_pause
 #include "../lib/hle-emulation.h"
 
+
 void hle_exch_lock(type *lock) {
-	while (__hle_acquire_exchange_n4(lock, 1)) {
+	while (__hle_acquire_exchange_n##type_size(lock, 1)) {
 //		int val;
 //		/* Wait for lock to become free again before retrying. */
 //		do {
@@ -14,5 +15,5 @@ void hle_exch_lock(type *lock) {
 	}
 }
 void hle_exch_unlock(type *lock) {
-	__hle_release_clear4(lock);
+	__hle_release_clear##type_size(lock);
 }

@@ -25,25 +25,25 @@ ThreadsafeAccount::~ThreadsafeAccount() {
 
 void ThreadsafeAccount::deposit(double money) {
 //	(*lock)();
-//	(locker.*(locker.lock))();
+	(locker.*(locker.lock))();
 	this->balance += money;
-//	(locker.*(locker.unlock))();
+	(locker.*(locker.unlock))();
 //	(*unlock)();
 }
 
 void ThreadsafeAccount::payout(double money) {
 //	(*lock)();
-//	(locker.*(locker.lock))();
+	(locker.*(locker.lock))();
 	this->balance -= money;
-//	(locker.*(locker.unlock))();
+	(locker.*(locker.unlock))();
 //	(*unlock)();
 }
 
 double ThreadsafeAccount::getBalance() {
 //	(*lock)();
-//	(locker.*(locker.lock))();
+	(locker.*(locker.lock))();
 	double b = this->balance;
-//	(locker.*(locker.unlock))();
+	(locker.*(locker.unlock))();
 //	(*unlock)();
 	return b;
 }

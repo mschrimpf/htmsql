@@ -27,15 +27,3 @@ void hle_asm_exch_unlock2(type *lock) {
 			: "r"(lock)
 			: "cc", "memory");
 }
-
-//	while (__hle_acquire_exchange_n4(lock, 1)) {
-//		int val;
-//		/* Wait for lock to become free again before retrying. */
-//		do {
-//		_mm_pause();
-//			/* Abort speculation */
-//			__hle_acquire_store_n(lock, &val);
-//		} while (val == 1);
-//	}
-//
-//	__hle_release_clear4(lock);

@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# This file is released under the terms of the Artistic License.
+# Please see the file LICENSE, included in this package, for details.
+#
+# Copyright (C) 2002-2006 Mark Wong & Open Source Development Labs, Inc.
+#
+
+INITDB=@INITDB@; export INITDB
+CREATEDB=@CREATEDB@; export CREATEDB
+DROPDB=@DROPDB@; export DROPDB
+CREATELANG=@CREATELANG@; export CREATELANG
+PGRESTORE=@PGRESTORE@; export PGRESTORE
+PG_CTL=@PG_CTL@; export PG_CTL
+PSQL=@PSQL@; export PSQL
+VACUUMDB=@VACUUMDB@; export VACUUMDB
+LIBDIR=@LIBDIR@; export LIBDIR
+
+# Our database will be named dbt2
+DBNAME=dbt2; export DBNAME
+
+# Data instance path.  Storage location for this instance of the database
+# should be within the working directory.  If you're going to mount a device,
+# do it at /mnt/postgresql.
+PGDATA=/home/markwkm/local/dbt2/pgdata; export PGDATA
+
+# Directory with tablespace mount points, if using tablespaces.
+TSDIR=/home/markwkm/local/dbt2
+
+# Flag to use PGPOOL.
+USE_PGPOOL=0

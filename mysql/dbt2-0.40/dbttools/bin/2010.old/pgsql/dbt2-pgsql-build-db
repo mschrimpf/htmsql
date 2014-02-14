@@ -1,0 +1,103 @@
+#!/bin/sh
+
+#
+# This file is released under the terms of the Artistic License.
+# Please see the file LICENSE, included in this package, for details.
+#
+# Copyright (C) 2005-2006 Open Source Development Labs, Inc.
+# Copyright (C) 2005-2010 Mark Wong
+#
+
+usage()
+{
+	echo "Usage:"
+	echo "    dbt2-pgsql-build-db [options]"
+	echo "    dbt2-pgsql-build-db -h"
+	echo "Options:"
+	echo "    -b"
+	echo "        Load tables and create indexes in parallel."
+	echo "    -l <port>"
+	echo "        PostgreSQL port"
+	echo "    -p <database_parameters>"
+	echo "        PostgreSQL database parameters."
+	echo "    -r"
+	echo "        Drop existing database before building a new database"
+	echo "    -t"
+	echo "        Use tablespaces."
+	echo "    -w <scale factor>"
+	echo "        Number of warehouses to build. Default 1."
+}
+
+WAREHOUSES=1
+GENERATE_DATAFILE=0
+REBUILD_DB=0
+while getopts "bhl:p:rtw:" OPT; do
+	case ${OPT} in
+	b)
+		BACKGROUND_FLAG="-b"
+		;;
+	h)
+		usage
+		exit 0
+		;;
+	l)
+		PORT=${OPTARG}
+		;;
+	p)
+		PARAMETERS=$OPTARG
+		;;
+	r)
+		REBUILD_DB=1
+		;;
+	t)
+		TABLESPACES_FLAG="-t"
+		;;
+	w)
+		WAREHOUSES=${OPTARG}
+		;;
+	esac
+done
+
+if [ ! "x${PORT}" = "x" ]; then
+	PORTARG="-l ${PORT}"
+fi
+
+if [ ${REBUILD_DB} -eq 1 ]; then
+	echo "Restarting the database to reset database parameters..."
+	dbt2-pgsql-stop-db
+	dbt2-pgsql-start-db -p "${PARAMETERS}" || exit 1
+	dbt2-pgsql-drop-db ${PORTARG}
+fi
+
+dbt2-pgsql-create-db ${PORTARG} || exit 1
+dbt2-pgsql-create-tables ${PORTARG} ${TABLESPACES_FLAG} || exit 1
+
+# FIXME: Make datagen take argument instead of setting environment variables
+# for psql.
+export PGPORT="${PORT}"
+export PGDATABASE="${DBT2DBNAME}"
+dbt2-datagen --direct -w ${WAREHOUSES} --pgsql || exit 1
+
+dbt2-pgsql-create-indexes ${PORTARG} ${TABLESPACES_FLAG} || exit 1
+
+# load C or pl/pgsql implementation of the stored procedures
+if true; then
+	dbt2-pgsql-load-stored-procs ${PORTARG} -t c || exit 1
+else
+	dbt2-pgsql-load-stored-procs ${PORTARG} -t plpgsql || exit 1
+fi
+
+if [ ! "x${PORT}" = "x" ]; then
+	PORTARG="-p ${PORT}"
+fi
+
+psql ${PORTARG} -e -d ${DBT2DBNAME} -c "SELECT setseed(0);" || exit 1
+
+# VACUUM FULL ANALYZE: Build optimizer statistics for newly-created
+# tables. The VACUUM FULL is probably unnecessary; we want to scan the
+# heap and update the commit-hint bits on each new tuple, but a regular
+# VACUUM ought to suffice for that.
+
+vacuumdb ${PORTARG} -z -f -d ${DBT2DBNAME} || exit 1
+
+exit 0

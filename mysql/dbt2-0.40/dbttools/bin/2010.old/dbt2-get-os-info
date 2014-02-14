@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#
+# This file is released under the terms of the Artistic License.
+# Please see the file LICENSE, included in this package, for details.
+#
+# Copyright (C) 2002-2008 Mark Wong & Open Source Development Lab, Inc.
+#
+
+while getopts "o:" opt; do
+	case ${opt} in
+	o)
+		OUTPUT_DIR=${OPTARG}
+		;;
+	esac
+done
+
+OS=`uname -s`
+
+SYSCTL="/sbin/sysctl"
+if [ ! -f "${SYSCTL}" ]; then
+	SYSCTL=true
+fi
+
+# I don't think capturing error messages is important here.
+if [ -f ${SYSCTL} ]; then
+	if [ "x${OS}" = "xLinux" ]; then
+		${SYSCTL} -a 2> /dev/null | sort > ${OUTPUT_DIR}/proc.out
+	elif [ "x${OS}" = "xSunOS" ]; then
+		${SYSCTL} -a 2> /dev/null | sort > ${OUTPUT_DIR}/proc.out
+	else
+		echo "Unknown OS: ${OS}"
+	fi
+fi

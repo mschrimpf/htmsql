@@ -1,0 +1,13 @@
+Installing dbttools:
+
+    make install DESTDIR=/usr/local
+
+This will put all binaries in '/usr/local/bin'.
+
+-----
+
+Uninstalling dbttools:
+
+    xargs rm < install_manifest.txt
+
+The file 'install_manifest.txt' will be created after running 'make install'.

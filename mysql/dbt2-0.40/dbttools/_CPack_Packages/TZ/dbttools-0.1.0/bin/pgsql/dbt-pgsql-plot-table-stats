@@ -1,0 +1,173 @@
+#!/usr/bin/env python
+
+#
+# This file is released under the terms of the Artistic License.
+# Please see the file LICENSE, included in this package, for details.
+#
+# Copyright (C) 2010 Mark Wong
+#
+
+"""
+This script assumes the output is in this format:
+
+SELECT EXTRACT(EPOCH FROM TRANSACTION_TIMESTAMP()), a.schemaname, a.relname,
+       seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd,
+       n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, heap_blks_read,
+       heap_blks_hit, idx_blks_read, idx_blks_hit, toast_blks_read,
+       toast_blks_hit, tidx_blks_read, tidx_blks_hit
+FROM pg_statio_all_tables a, pg_stat_all_tables b
+WHERE a.relid = b.relid;
+"""
+
+import sys
+from os import makedirs, system
+from os.path import exists, realpath
+
+import rpy2.robjects as robjects
+from rpy2.robjects.vectors import DataFrame
+
+r = robjects.r
+
+def make_chart(tag, x, y, xmax, ymax_list, num_colors, title, ylabel, legend):
+    r.bitmap('%s/table-stat-%s-%s.png' % (outputdir, tablename, tag),
+             type='png16m', units='px', width=1280, height=800, res=150,
+             taa=4, gaa=4)
+
+    color = r.rainbow(num_colors)
+    ymax = r.max(*ymax_list)[0]
+
+    # Plot the first set of data.
+    r.plot(x, y[0], xlim=r.c(0, xmax), ylim=r.c(0, ymax), type='b',
+           main=title, xlab='Elapsed Time (minutes)', ylab=ylabel, pch=1,
+           col=color[0])
+
+    # Plot the rest of the data.
+    y.pop(0)
+    index = 1
+    for i in y:
+        r.points(x, y=i, type='b', pch=index + 1, col=color[index])
+
+        index += 1
+
+    # Create a legend if there are any labels.
+    int_list = list()
+    index = 1
+    for i in legend:
+        int_list.append(index)
+        index += 1
+    if len(legend) > 0:
+        r.legend('topright', r.c(*legend), pch=r.c(*int_list), col=color)
+
+    r.grid(col='gray')
+    r('dev.off()')
+
+
+if len(sys.argv) != 4:
+    print 'usage: %s <filename> <tablename> <outputdirectory>' % sys.argv[0]
+    print
+    print '    <filename> - full path to the datafile file'
+    print '    <tablename> - name of the table to plot stats for'
+    print '    <output directory> - location to write output files'
+    print
+    print 'Will attempt to create <output directory> if it does not exist.'
+    sys.exit(1)
+
+infilename = sys.argv[1]
+tablename = sys.argv[2]
+outputdir = sys.argv[3]
+
+# Make sure the file exists.
+if not exists(infilename):
+    print 'cannot open file: %s' % infilename
+    sys.exit(1)
+
+# Make sure we can open the files to write to.
+
+if not exists(outputdir):
+    try:
+        makedirs(outputdir)
+    except:
+        print 'cannot create directory "%s"' % outputdir
+        sys.exit(2)
+
+outputdir = realpath(outputdir)
+
+df = DataFrame.from_csvfile(infilename, header=False, sep='|')
+df = r.subset(df, df.rx('V3').ro == tablename)
+start_ctime = df[0][0]
+elapsed_time = (df.rx(1).ro - start_ctime).ro / r['as.numeric'](60)
+
+# There must be a more R-tistic way to do derive the data than iteratively.
+row = df.nrow - 1
+col = df.ncol - 1
+while row > 0:
+    while col > 2:
+        df[col][row] -= df[col][row - 1]
+        col -= 1
+    row -= 1
+    col = df.ncol - 1
+col = df.ncol - 1
+while col > 2:
+    try:
+        df[col][0] = 0
+    except:
+        df[col][0] = 0.0
+    col -= 1
+
+xmax = r.max(elapsed_time.rx(1))[0]
+
+make_chart('seq_scan', elapsed_time.rx2(1), [df.rx2('V4')], xmax,
+           df.rx('V4'), 1, 'Sequential Scans (%s)' % tablename,
+           'Sequential Scans', [])
+
+make_chart('seq_tup_read', elapsed_time.rx2(1), [df.rx2('V5')], xmax,
+           df.rx('V5'), 1, 'Tuples Read by Sequential Scan (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('idx_scan', elapsed_time.rx2(1), [df.rx2('V6')], xmax,
+           df.rx('V6'), 1, 'Index Scans (%s)' % tablename,
+           'Index Scans', [])
+
+make_chart('idx_tup_fetch', elapsed_time.rx2(1), [df.rx2('V7')], xmax,
+           df.rx('V7'), 1, 'Tuples Read by Index Scans(%s)' % tablename,
+           'Tuples', [])
+
+make_chart('n_tup_ins', elapsed_time.rx2(1), [df.rx2('V8')], xmax,
+           df.rx('V8'), 1, 'Inserts (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('n_tup_upd', elapsed_time.rx2(1), [df.rx2('V9')], xmax,
+           df.rx('V9'), 1, 'Updates (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('n_tup_del', elapsed_time.rx2(1), [df.rx2('V10')], xmax,
+           df.rx('V10'), 1, 'Deletes (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('n_tup_hot_upd', elapsed_time.rx2(1), [df.rx2('V11')], xmax,
+           df.rx('V11'), 1, 'HOT Updates (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('n_live_tup', elapsed_time.rx2(1), [df.rx2('V12')], xmax,
+           df.rx('V12'), 1, 'Live Tuples (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('n_dead_tup', elapsed_time.rx2(1), [df.rx2('V13')], xmax,
+           df.rx('V13'), 1, 'Dead Tuples (%s)' % tablename,
+           'Tuples', [])
+
+make_chart('heap_blks_read', elapsed_time.rx2(1), [df.rx2('V14')], xmax,
+           df.rx('V14'), 1, 'Heap Blocks Read (%s)' % tablename,
+           'Blocks', [])
+
+make_chart('heap_blks_hit', elapsed_time.rx2(1), [df.rx2('V15')], xmax,
+           df.rx('V15'), 1, 'Heap Blocks Hit (%s)' % tablename,
+           'Blocks', [])
+
+make_chart('idx_blks_read', elapsed_time.rx2(1), [df.rx2('V16')], xmax,
+           df.rx('V16'), 1, 'Index Blocks Read (%s)' % tablename,
+           'Blocks', [])
+
+make_chart('idx_blks_hit', elapsed_time.rx2(1), [df.rx2('V17')], xmax,
+           df.rx('V17'), 1, 'Index Blocks Hit (%s)' % tablename,
+           'Blocks', [])

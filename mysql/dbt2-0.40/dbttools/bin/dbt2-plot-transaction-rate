@@ -1,0 +1,115 @@
+#!/usr/bin/env python
+
+#
+# This file is released under the terms of the Artistic License.
+# Please see the file LICENSE, included in this package, for details.
+#
+# Copyright (C) 2010 Mark Wong
+#
+
+import sys
+from os import makedirs, system
+from os.path import exists, realpath
+
+import rpy2.robjects as robjects
+from rpy2.robjects.vectors import DataFrame
+
+if len(sys.argv) != 3:
+    print 'Create a plot the rate of transactions.'
+    print 'usage: %s <mix.log> <output directory>' % sys.argv[0]
+    print
+    print '    <mix.log> - full path to the mix.log file'
+    print '    <output directory> - location to write output files'
+    print
+    print 'Will attempt to create <output directory> if it does not exist.'
+    sys.exit(1)
+
+infilename = sys.argv[1]
+outputdir = sys.argv[2]
+
+sample_length = 60
+
+de = 'd'
+no = 'n'
+os = 'o'
+pa = 'p'
+sl = 's'
+
+transaction_name = dict()
+transaction_name[de] = 'Delivery'
+transaction_name[no] = 'New Order'
+transaction_name[os] = 'Order Status'
+transaction_name[pa] = 'Payment'
+transaction_name[sl] = 'Stock Level'
+
+# Make sure we can open the files to write to.
+if not exists(outputdir):
+    try:
+        # FIXME: Don't know why makedirs sometimes fails.
+        #makedirs(outputdir)
+        system('mkdir -p %s' % outputdir)
+    except:
+        print 'cannot create directory "%s"' % outputdir
+        sys.exit(2)
+
+outputdir = realpath(outputdir)
+
+# Make sure the file exists.
+if not exists(infilename):
+    print 'cannot open file: %s' % infilename
+    sys.exit(1)
+
+r = robjects.r
+
+df = DataFrame.from_csvfile(infilename, header=False)
+
+starttime = df[0][0]
+endtime = df[0][df.nrow - 1]
+iterations = r.ceiling((endtime - starttime) / sample_length)[0]
+
+j = 0
+for key in [de, no, os, pa, sl]:
+    i = 0
+
+    # Create a list of data then pass it to R.
+    # TODO: Figure out how to append data to an R data frame instead of making
+    # Python lists and then generating the R data frame.  Then determine which
+    # way is better.
+    x = [0]
+    y = [0]
+
+    subset = r.subset(df, df.rx('V2').ro == key)
+    while i < iterations:
+        # Calculate 1 minute intervals starting from the first transaction
+        # response time.
+        istart = starttime + i * sample_length
+        iend = istart + sample_length
+
+        isubset = r.subset(subset, subset.rx('V1').ro >= istart)
+        isubset = r.subset(isubset, isubset.rx('V1').ro < iend)
+
+        x.append(i + 1)
+        # Aggregate count of transaction.
+        y.append(isubset.nrow)
+        i += 1
+
+    # Set the data frame column names to default V1 and V2 values R would use
+    # for lack of better names.
+    data = {'V1': robjects.IntVector(x), 'V2': robjects.IntVector(y)}
+    tmp_df = r['data.frame'](**data)
+
+    # Create the plots!
+    r.bitmap('%s/t%s-transaction-rate.png' % (outputdir, key),
+             type='png16m', units='px', width=1280, height=800, res=150, taa=4,
+             gaa=4)
+    xmax = r.max(tmp_df.rx(1))[0]
+    ymax = r.max(tmp_df.rx(2))[0]
+    color = r.rainbow(len(transaction_name))
+    r.plot(tmp_df[0], tmp_df[1], xlim=r.c(0, xmax), ylim=r.c(0, ymax),
+           type='b', col=color[j],
+           main='%s Transaction Rate' % transaction_name[key],
+           xlab='Elapsed Time (minutes)', ylab='Transactions per Minute')
+    r.grid(col='gray')
+    r('dev.off()')
+
+    j += 1

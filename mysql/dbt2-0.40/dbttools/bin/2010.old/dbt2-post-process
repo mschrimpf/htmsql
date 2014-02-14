@@ -1,0 +1,111 @@
+#!/usr/bin/env python
+
+#
+# This file is released under the terms of the Artistic License.
+# Please see the file LICENSE, included in this package, for details.
+#
+# Copyright (C) 2006      Open Source Development Labs, Inc.
+#               2006-2010 Mark Wong
+#
+
+import sys
+import os
+
+import rpy2.robjects as robjects
+from rpy2.robjects.vectors import DataFrame
+
+if len(sys.argv) != 2:
+    print 'usage: %s <mix.log>' % sys.argv[0]
+    sys.exit(1)
+
+filename = sys.argv[1]
+
+if not os.path.exists(filename):
+    print 'cannot open file: %s' % filename
+    sys.exit(1)
+
+d = 'd'
+n = 'n'
+o = 'o'
+p = 'p'
+s = 's'
+
+dataframe = dict()
+transaction_count = dict()
+rollback_count = dict()
+per90 = dict()
+average_rt = dict()
+
+r = robjects.r
+df = DataFrame.from_csvfile(filename, header=False)
+rampup_start = df[0][0]
+
+start_subset = r.subset(df, df.rx('V2').ro == "START")
+if start_subset.nrow == 0:
+    print 'START market not found in: %s' % filename
+    sys.exit(1)
+steadystate_start = r.subset(df, df.rx('V2').ro == "START")[0][0]
+steadystate_end = df[0][df.nrow - 1]
+steadystate = r.subset(df, df.rx('V1').ro > steadystate_start)
+if steadystate.nrow == 0:
+    print 'No data was collected during the steady state portion of the test.'
+    sys.exit(1)
+error_count = r.subset(steadystate, steadystate.rx('V3').ro == "E").nrow
+total_transaction_count = steadystate.nrow
+
+for key in [d, n, o, p, s]:
+    dataframe[key] = r.subset(steadystate, steadystate.rx('V2').ro == key)
+    transaction_count[key] = dataframe[key].nrow
+    if transaction_count[key] == 0:
+        rollback_count[key] = 0
+        per90[key] = 0.0
+        average_rt[key] = 0.0
+    else:
+        rollback_count[key] = r.subset(dataframe[key],
+                                   dataframe[key].rx('V3').ro == "R").nrow
+        per90[key] = r.quantile(dataframe[key].rx('V4')[0], .9)[0]
+        average_rt[key] = r.mean(dataframe[key].rx('V4')[0])[0]
+
+transaction_name = dict()
+transaction_name[d] = 'Delivery'
+transaction_name[n] = 'New Order'
+transaction_name[o] = 'Order Status'
+transaction_name[p] = 'Payment'
+transaction_name[s] = 'Stock Level'
+
+print '                         Response Time (s)'
+print ' Transaction      %    Average :    90th %        Total        Rollbacks      %'
+print '------------  -----  ---------------------  -----------  ---------------  -----'
+
+for key in [d, n, o, p, s]:
+    try:
+        mix_percentage = float(transaction_count[key]) / \
+                float(total_transaction_count) * 100.0
+    except:
+        mix_percentage = 0
+
+    try:
+        rollback_percentage = float(rollback_count[key]) / \
+                float(transaction_count[key]) * 100.0
+    except:
+        rollback_percentage = 0
+
+    print '%12s  %5.2f  %9.3f : %9.3f  %11d  %15d  %5.2f' % (
+            transaction_name[key],
+            mix_percentage,
+            average_rt[key],
+            per90[key],
+            transaction_count[key],
+            rollback_count[key],
+            rollback_percentage)
+
+print '------------  -----  ---------------------  -----------  ---------------  -----'
+
+duration = float(steadystate_end - steadystate_start)
+print
+print '%0.2f new-order transactions per minute (NOTPM)' % \
+        (float(transaction_count[n]) * 60.0 / duration)
+print '%0.1f minute duration' % (duration / 60.0)
+print '%d total unknown errors' % error_count
+print '%0.1f seconds(s) ramping up' % \
+      (float(steadystate_start - rampup_start) / 60.0)

@@ -1,0 +1,19 @@
+The purpose of this package is to provide tools that are shared between
+all kits in the database test projects.
+
+These scripts currently depend on R and Python.
+
+R
+_
+
+These were developed using R v2.9.2.  Older versions of R, such as
+v2.6.2 do not support some of the taa and gaa parameters.  Although I
+did not check when they were introduced.
+
+Python
+______
+
+Some of the scripts make use of math.fsum, which seems like the right
+thing to do because it's supposed to handle floating points more
+accurate.  Did not verify at what version that was introduced, but it is
+in 2.6.4.

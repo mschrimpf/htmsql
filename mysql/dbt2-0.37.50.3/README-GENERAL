@@ -1,0 +1,22 @@
+dbt2-0.37 has been extended quite a bit with a set of scripts that
+make it possible to automate benchmark runs for Sysbench and DBT2.
+All these scripts operate on top of a slightly changed DBT2 code
+and the sysbench-0.4.12.5 version also made available as part of
+this package.
+
+See README-AUTOMATED for a description of the fully automated
+benchmark run framework.
+
+The new scripts are GPL licensed and thus there is also a
+LICENSE.GPLv2 file in this distribution. The original code
+and the extensions made in this distribution is covered by
+the artistic license as described in the LICENSE file.
+
+README-ICLAUSTRON contains a description of the lower level scripts
+used to automate the benchmark runs. This description is useful for
+anyone wanting to understanding the operation of the scripts a bit
+more. The description is however a bit outdated.
+
+README-MYSQL contains the lowest level of scripts in the DBT2 test
+framework. This is also a bit outdated but can be useful to get a
+better understanding of the operation of the benchmark runs.

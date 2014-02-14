@@ -1,0 +1,4 @@
+When using gcc on Solaris it might be necessary to set
+LD_LIBRARY_PATH to find the library libgcc_s.so.1 which
+is found in /usr/local/gcc4/lib if gcc is installed in
+/usr/local/gcc4.

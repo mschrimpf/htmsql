@@ -1,0 +1,200 @@
+This README file provides some explanation on lower level scripts
+used by the automation layer. It is no longer required to understand
+this layer unless you want to further develop the scripts and the
+automation layer.
+
+COMMENTS
+--------
+
+There are two versions of DBT2(TPC-C) test:
+
+   - pure C based version of the test(nonSP) 
+   - server side SP based version of the test(default)
+
+It is possible to run C based(nonSP) test with any version of MySQL 
+server.
+
+To run SP based test you have to build test with includes and libraries 
+from MySQL 5.0 or higher.
+
+PREPARATION FOR TEST
+--------------------
+
+0. Build test binaries
+
+aclocal
+autoheader
+autoconf
+automake
+
+Unless changes are done to any makefiles or automake scripts these need
+not be performed since the distribution is already prepared by having
+this executed on beforehand. The resulting configure script has also been
+patched since there was an error if one uses source code distributions of
+MySQL.
+
+
+./configure --help 
+
+...
+  --enable-nonsp          Force to build nonSP version of dbt2 test 
+                          (default is no)
+  --enable-debug-query    Dump all queries to client log file
+...
+
+  --with-mysql[=DIR]      Build C based version of dbt2 test. Set to the path
+                          of the MySQL's installation, or leave unset if the
+                          path is already in the search path
+  --with-mysql-includes   path to MySQL header files
+  --with-mysql-libs       path to MySQL libraries
+
+
+./configure --with-mysql [--enable-nonsp] [--with-mysql-libs=<path>] \
+            [--with-mysql-includes=<path>] 
+
+make
+
+1. How to generate data files for test?
+
+   One has to specify:
+
+     -w - number of warehouses (example: -w 3)
+     -d - output path for data files (example: -d /tmp/dbt2-w3)
+     - mode (example: --mysql)
+
+   datagen -w 3 -d /tmp/dbt2-w3 --mysql
+
+   Please note that output directory for data file should exist.
+
+   If it is desirable to execute the loading of the test database
+   from many machines in parallel one can use the option -m to set
+   the first warehouse to create.
+
+   datagen -w 3 -d /tmp/dbt2-w3_2 -m 4 --mysql
+
+   This will create warehouses, number 4,5 and 6. Thus the two examples
+   can load warehouse data in parallel as described below.
+
+2. How to load test database?
+
+   You should run shell script which will create database scheme
+   and will load all data files. 
+
+   cd scripts/mysql
+   ./mysql_load_db.sh --help
+   (Run this to check for all possible parameters)
+
+   Example: sh mysql_load_db.sh --path /tmp/dbt2-w3
+
+   If parallel load is wanted this can be achieved in the following manner.
+   First run the above script from one computer, do not use the flag -a in
+   this case. This run will create the tables and load the warehouses
+   in the datafile (a good idea to only store 1 warehouse in this data file).
+   When this script has completed one can start in parallel on many machines
+   scripts using disjunct warehouses (created by using -m flag on datagen above)
+   AND using the flag -a. This ensures that these scripts will not drop any
+   database and will not create any tables. They will also not load the item
+   table that is only loaded once.
+
+   Example: sh mysql_load_db.sh --path /tmp/dbt2-first --host mysql_host
+   Then in parallel:
+            sh mysql_load_db.sh --path /tmp/dbt2-w2_99 --parallel-load \
+                                --host mysql_host
+            sh mysql_load_db.sh --path /tmp/dbt2-w100_199 --parallel-load \
+                                --host mysql_host
+            ....
+            sh mysql_load_db.sh --path /tmp/dbt2-w900_999 -parallel-load \
+                                --host mysql_host
+
+  If one is using MySQL Cluster then the parallel loads can even be performed
+  on different MySQL Servers.
+
+  In addition a parameter to define using partitioning is possible. This will
+  decrease the search particularly for MySQL Cluster where index scans need
+  to proceed on all nodes and using partitioning over warehouse we can limit
+  the index scan to only one node. It also makes better use of communication
+  channels by avoiding spreading the data over many nodes and thus using the
+  same link for most communications in a transaction.
+
+  Some primary keys can be implemented by using a hash index rather than an
+  ordered index (or even both as in the case of MySQL Cluster). This can be
+  more efficient and also save some memory space.
+
+  MySQL Cluster in version introduced the possibility to save some data on
+  disk. There is a parameter to use this feature on select tables.
+
+3. How to load SP procedures? (optional, only if you ran configure with 
+   --enable-mysql-sp)
+
+   cd scripts/mysql
+   ./mysql_load_sp.sh
+
+   usage: mysql_load_sp.sh [options]
+   options:
+       -d <database name>
+       -c <path to mysql client binary. (default: /usr/bin/mysql)>
+       -f <path to SPs>
+       -h <database host (default: localhost)>
+       -s <database socket>
+       -u <database user>
+       -p <database password>
+       -t <database port>
+
+   Example: sh mysql_load_sp.sh -d dbt2 -f ../../storedproc/mysql/
+
+   Note: If the test is run in parallel, then this needs to be executed once
+         per MySQL Server used in the test since stored procedures are not
+         yet shared in the cluster.
+
+RUN TEST
+--------
+
+   cd scripts
+   sh ./run_mysql.sh --help
+   (Run this to check for all possible parameters)
+
+   Example: sh run_mysql.sh --connections 20 --time 300 --warehouses 3
+
+   Test will be run for 300 seconds with 20 database connections and 
+   scale factor(num of warehouses) 3
+
+   There are 3 mandatory parameters as shown in the example above.
+   There are a number of configuration options that can be used to point
+   to the proper MySQL Server for this instance of the DBT2 test and
+   also which user and password to use against this MySQL Server.
+
+   There is a set of options that controls the running of the benchmark
+   such as how fast to start the benchmark (normally just use the default).
+   There is parameters to specify only a range of warehouses to enable
+   parallel execution of the test, so one instance could be using warehouses
+   1 through 6 and a second instance warehouses 7 through 12 (first_warehouse
+   and last_warehouse options). Also to control the number of threads one
+   can set the number of terminals per warehouse (there is one thread per
+   terminal per warehouse). Finally to be able to execute at a heavy load
+   also with a limited amount of warehouses one can set zero-delay to avoid
+   a long wait in each thread before sending the next transaction. It is also
+   possible to get some extra output by using verbose output.
+
+WARNING: If you break test (by Control-C for instance) or some kind of error
+happened during running of test and you want to start test again please be sure 
+that 'client' and 'driver' programms are not running anymore otherwise test 
+will fail.
+
+WARNING: Please ensure that number of warehouses (option -w) is less of equal
+(not greater) to the real number of warehouses that exist in your test
+database.
+
+POSTRUNNING ANALYSES
+--------------------
+
+Results can be found in scripts/output/<number>
+
+some of the usefull log files:
+
+  scripts/output/<number>/client/error.log - errors from backend C|SP based
+  scripts/output/<number>/driver/error.log - errors from terminals(driver)
+  scripts/output/<number>/driver/mix.log - info about performed transactions
+  scripts/output/<number>/driver/results.out - results of the test
+
+The Perl part requires a package Statistics::Descriptive
+

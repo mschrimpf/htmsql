@@ -1,0 +1,368 @@
+# Mandatory parameters
+# This configuration was used to run the benchmark which gave
+# the result 17.6M reads per second or 1.05BN reads per minute.
+#
+# IMPORTANT: No empty lines are allowed in this file,
+# only comment lines and variable assignments.
+# Also no spaces are allowed in values, use ; for spaces,
+# they will be automatically replaced by spaces
+# Currently not supported with values containing ;
+# Only THREAD_COUNTS_TO_RUN and CMAKE_GENERATOR has
+# this capability currently, so no spaces in file
+# names and directories are currently allowed
+# If MySQL is used it's required to set MYSQL_VERSION.
+# For Drizzle it's required to set DRIZZLE_VERSION and
+# LIBDRIZZLE_VERSION
+# For MySQL a standard sysbench can be used, for Drizzle
+# the SYSBENCH_VERSION must be a drizzle-sysbench tarball
+# HOST and PORT is the port used for mysqld/drizzled
+BENCHMARK_TO_RUN="flexAsynch"
+TARBALL_DIR="/panfs/home/Xmronst/bench/tarballs"
+#These scripts can be used with a MySQL source tarball or a
+#MySQL binary tarball (only gzipped tarballs). The sysbench
+#and DBT2 tarballs are always source tarball and thus always
+#needs compilation. Default is to use MySQL binary tarballs.
+USE_BINARY_MYSQL_TARBALL="no"
+MYSQL_VERSION="mysql-5.5.19-ndb-7.2.5"
+#MySQL version to use for benchmark programs, defaults to MYSQL_VERSION
+#Can be set to different if other than gcc compiler is used and creates
+#a problem with compiler flags, this removes the need to get the benchmark
+#compiled with same version as the MySQL Server. A binary installation
+#should in this case be placed with the name CLIENT_MYSQL_VERSION in the
+#REMOTE_BIN_INSTALL_DIR (= DEFAULT_DIR/basedir if not defined) directory.
+#CLIENT_MYSQL_VERSION=""
+DRIZZLE_VERSION="drizzle-2009.11.1208"
+LIBDRIZZLE_VERSION="libdrizzle-0.5"
+SYSBENCH_VERSION="sysbench-0.4.12.5"
+DBT2_VERSION="dbt2-0.37.50"
+SERVER_HOST="127.0.0.1"
+SERVER_PORT="3306"
+DATA_DIR_BASE="/panfs/home/Xmronst/bench/ndb"
+WINDOWS_REMOTE="no"
+BUILD_REMOTE="no"
+REMOTE_BIN_INSTALL_DIR="/panfs/home/Xmronst/bench/mysql"
+REMOTE_SRC_INSTALL_DIR="/panfs/home/Xmronst/bench/src_build"
+ENGINE="ndb"
+MYSQL_BASE="5.5"
+TEST_DESCRIPTION="mysql-5.5.19-ndb-7.2.5"
+#Compiler parameters
+#Use high optimisation level and optimize for CPU used
+#USE_FAST_MYSQL="yes"
+#Package is set to pro if NDB isn't the storage engine
+#PACKAGE=""
+#Set WITH_DEBUG to --with-debug if debug build is desired
+#WITH_DEBUG=""
+#Default compiler is gcc, other allowed values are open64, icc, forte
+#COMPILER=""
+STATIC_LINKING_FLAG="no"
+#Set LINK_TIME_OPTIMIZER to "yes" if interprocedural optimisations are desired
+#LINK_TIME_OPTIMIZER=""
+#For Open64 compiler one can set --mso to get multi-core scalability
+#optimisations. Set to "yes" to get this.
+#MSO_FLAG=""
+#Set COMPILE_SIZE_FLAG to 32 or 64 to specify whether to build a 32-bit
+#binary or 64-bit binary explicitly
+#COMPILE_SIZE_FLAG=""
+#This option is used by normal MySQL builds but not by the build script, enable
+#it by setting this to "yes"
+#WITH_FAST_MUTEXES_FLAG="yes"
+#To disable building with performance schema support set this to "no"
+#WITH_PERFSCHEMA_FLAG="yes"
+#To enable running with performance schema support set this to "yes"
+#PERFSCHEMA_FLAG="no"
+#
+#It is possible to run with feedback compilation but currently with fairly
+#limited abilities. First the test run has to be done on localhost, it won't
+#work on remote host, second to avoid messing up compilation of the benchmark
+#it is required to set the CLIENT_MYSQL_VERSION such that the benchmark
+#program use a normally compiled version of MySQL. Set
+#FEEDBACK_COMPILATION="yes" to enable feedback compilation.
+#FEEDBACK_COMPILATION=""
+#
+#Mandatory parameters if NDB used
+ENGINE="ndb"
+USE_NDBMTD="yes"
+#On some systems it's hard to use pid files on the file system (e.g. NFS)
+NDB_MGMD_NODES="en314ib0"
+NDBD_NODES="en340ib0;en341ib0;en342ib0;en343ib0;en344ib0;en345ib0;en346ib0;en347ib0"
+#SERVER_HOST="host1;host2"
+#SERVER_PORT="port1;port2"
+#NDB_EXECUTE_CPU="0-7;8-15"
+NDB_MAINT_CPU="11"
+#Optional parameters for NDB config
+#CLUSTER_HOME can be used to move log files and pid files to a different
+#location
+#CLUSTER_HOME=""
+#NDB_DISKLESS is set to yes if Diskless operation is requested.
+NDB_DISKLESS="yes"
+#Set USE_NDB_O_DIRECT to yes if O_DIRECT is requested on NDB files
+#USE_NDB_O_DIRECT=""
+#Set NDB_DISK_IO_THREADPOOL to increase number of threads writing
+#disk data files
+#NDB_DISK_IO_THREADPOOL=""
+#Set NDB_MULTI_CONNECTION to use multiple connects to data nodes from MySQL Server
+#or APIs, set to number of connects per MySQL Server/API.
+#NDB_MULTI_CONNECTION=""
+NDB_REPLICAS="2"
+NDB_DATA_MEMORY="8G"
+NDB_INDEX_MEMORY="1500M"
+DISK_CHECKPOINT_SPEED="10M"
+NDB_NO_OF_FRAGMENT_LOG_PARTS="8"
+NDB_NO_OF_FRAGMENT_LOG_FILES="100"
+NDB_SEND_BUFFER="8M"
+NDB_TCP_SEND_BUFFER_MEMORY="1M"
+NDB_TCP_RECEIVE_BUFFER_MEMORY="1M"
+#USE_NDB_O_DIRECT=""
+#NDB_DISK_IO_THREADPOOL=""
+#Set NDB_MAX_NO_OF_EXECUTION_THREADS to maximum number of
+#execution threads to configure NDB data nodes with.
+#NDB_MAX_NO_OF_EXECUTION_THREADS="8"
+#NDB_THREAD_CONFIG can be used to provide a more thorough description of how
+#configure the execution threads in the NDB data nodes.
+#Example:
+#NDB_THREAD_CONFIG="ldm={count=8},tc={count=6},send={count=3},recv={count=4},main={count=1},rep={count=1}"
+NDB_THREAD_CONFIG="ldm={count=8,cpubind=7-10,19-22},tc={count=6,cpubind=4-6,16-18},send={count=4,cpubind=0-1,12-13},recv={count=4,cpubind=2-3,14-15},main={count=1,cpubind=11},rep={count=1,cpubind=11}"
+#It is also possible to lock specific threads to specific CPUs using this
+#config variable saying e.g. ldm={count=4, cpubind=1-4}. Otherwise one
+#uses the settings from NDB_EXECUTE_CPU for binding to CPUs.
+#NDB_THREAD_CONFIG=""
+#NDB_THREAD_CONFIG, NDB_MAX_NO_OF_EXECUTION_THREADS, NDB_EXECUTE_CPU
+#and NDB_MAINT_CPU can be provided either as a single value used on
+#all data nodes, or an array separated by ; with one entry per data node.
+#The following parameters are set to non-default values but aren't changeable
+#in this framework.
+#[TCP Default]
+#SendBufferMemory: 4M
+#[MYSQLD DEFAULT]
+#BatchSize: 128
+#[NDBD DEFAULT]
+#BatchSizePerLocalScan: 128
+#MaxNoOfConcurrentOperations: 50000
+#MaxNoOfConcurrentScans: 500
+#MaxNoOfLocalScans: 2048
+#NoOfFragmentLogFiles: 50
+#FragmentLogFileSize: 64M
+#DiskSyncSize: 4M
+#DataDir: DATA_DIR_BASE/ndb
+#MaxNoOfExecutionThreads: 8, this is set if USE_NDBMTD is set to yes
+#[NDB_MGMD]
+#PortNumber: 1186
+#NodeId in increasing order
+#
+#Optional server parameters
+#TMP_BASE="/tmp"
+#Possible values are READ-UNCOMMITTED, READ-COMMITTED, REPEATABLE-READ
+#and SERIALIZABLE. REPEATABLE-READ is default in MySQL Server.
+#TRANSACTION_ISOLATION=""
+#
+#Optional parameters for build script
+#To use Drizzle, set USE_DRIZZLE="yes"
+#USE_DRIZZLE="no"
+#REMOTE_SRC_INSTALL_DIR is mandatory for remote Windows hosts
+#REMOTE_SRC_INSTALL_DIR="C:/cygwin/home/mikael/src"
+#CMAKE_GENERATOR="Visual;Studio;9;2008;Win64"
+#SSH_PORT="22"
+#SSH_USER=""
+#
+#Default compiler is gcc, other options are open64, icc and forte
+#COMPILER=""
+#
+#Optional iClaustron parameters
+USE_MALLOC_LIB="no"
+#MALLOC_LIB="/usr/lib64/libtcmalloc_minimal.so.0"
+#
+#Set USE_SUPERSOCKET="yes" to use Supersocket, set SUPERSOCKET_LIB
+#if LD_LIBRARY_PATH needs to be changed to find library, similarly
+#for Infiniband.
+#USE_SUPERSOCKET="no"
+#USE_INFINIBAND="no"
+#SUPERSOCKET_LIB=""
+#INFINIBAND_LIB=""
+#
+#InnoDB parameters
+#INNODB_BUFFER_POOL_INSTANCES="12"
+#INNODB_READ_IO_THREADS="8"
+#INNODB_WRITE_IO_THREADS="8"
+#INNODB_THREAD_CONCURRENCY="0"
+#INNODB_LOG_FILE_SIZE="2000M"
+#INNODB_LOG_BUFFER_SIZE="64M"
+#INNODB_BUFFER_POOL_SIZE="8192M"
+#INNODB_FLUSH_LOG_AT_TRX_COMMIT="2"
+#INNODB_ADAPTIVE_HASH_INDEX="0"
+#INNODB_READ_AHEAD_THRESHOLD="63"
+#INNODB_IO_CAPACITY="200"
+#INNODB_LOG_DIR=""
+#INNODB_MAX_PURGE_LAG=""
+# InnoDB support XA is disabled by default
+#INNODB_SUPPORT_XA=""
+#Allowed flush methods are O_DSYNC, O_DIRECT, default uses fsync()
+#INNODB_FLUSH_METHOD=""
+#INNODB_USE_PURGE_THREAD="yes"
+#INNODB_FILE_PER_TABLE=""
+#Change buffering can have values inserts, deletes, purges, changes, all, none
+#INNODB_CHANGE_BUFFERING="all"
+#INNODB_DOUBLEWRITE="yes"
+#INNODB_FILE_FORMAT="barracuda"
+#INNODB_DIRTY_PAGES_PCT=""
+#INNODB_OLD_BLOCKS_PCT=""
+#INNODB_SPIN_WAIT_DELAY=""
+#INNODB_SYNC_SPIN_LOOPS=""
+#INNODB_STATS_ON_METADATA="off"
+#
+#USE_LARGE_PAGES=""
+#LOCK_ALL=""
+#KEY_BUFFER_SIZE="50M"
+#MAX_HEAP_TABLE_SIZE="1000M"
+#TMP_TABLE_SIZE="100M"
+#MAX_TMP_TABLES="100"
+#SORT_BUFFER_SIZE="32768"
+#If desirable to run benchmarks with more than 1000 connections this
+#parameter MAX_CONNECTIONS need to be increased.
+#MAX_CONNECTIONS="1000"
+#TABLE_CACHE_SIZE="400"
+#
+#Server parameters for thread pool, setting any activates the thread
+#pool plugin, requires binary MySQL Enterprise tarball.
+#THREADPOOL_SIZE=""
+#THREADPOOL_ALGORITHM=""
+#THREADPOOL_STALL_LIMIT=""
+#THREADPOOL_PRIO_KICKUP_TIMER=""
+#
+#Mandatory DBT2 parameters, only needed when running DBT2
+DBT2_DATA_DIR="/panfs/home/Xmronst/bench/dbt2_data"
+#
+#Optional DBT2 parameters (only used when running DBT2)
+#DBT2_DATA_DIR is where files used to load data are put
+#They can be generated with create_dbt2_files.sh
+#See create_dbt2_file.sh --help for info on how
+#Number of warehouses loaded
+#DBT2_WAREHOUSES="10"
+#Number of terminals, which is threads per warehouse in test
+#Default normally is 10, but here we use 1 as default. Should
+#be between 1 and 10.
+#DBT2_TERMINALS="1"
+#What type of partitioning to use, set to empty if no partitioning
+#is desired, partitioning types are HASH and KEY.
+#DBT2_PARTITION_FLAG="HASH"
+#Set number of partitions if not default number is desired, default
+#is 1 for non-clustered engines and dependent on number of nodes
+#and threads per node in NDB.
+#DBT2_NUM_PARTITIONS=""
+#Should PK be defined as USING HASH or not.
+#Set to empty if ordered index is desired instead.
+#DBT2_PK_USING_HASH_FLAG="--using-hash"
+#Intermediate result reporting to be able to understand not only
+#mean throughput in a long period, but also short term ups and
+#downs. Setting it to "0" means no intermediate reporting is done.
+#DBT2_INTERMEDIATE_TIMER_RESOLUTION="3"
+#The real number of threads for a DBT2 test run is number of
+#DBT2_RUN_WAREHOUSES times the number of DBT2_TERMINALS since each
+#terminal will use one terminal, so e.g. 1;2;4 means 10, 20 and 40
+#threads in the test.
+#Number of threads in DBT2_RUN_WAREHOUSES below can never be more
+#than the number of warehouses.
+#DBT2_RUN_WAREHOUSES="1;2;4"
+#It is also possible to run more complex DBT2 runs which is useful
+#in particular for NDB test cases where one might want to vary
+#all the parameters, number of MySQL Servers, number of warehouses
+#and number of terminals. In this case it is necessary to add one
+#more config file next to the autobench.conf which is named
+#dbt2_run_1.conf. An example of what this file should contain is:
+##NUM_MYSQL_SERVERS NUM_WAREHOUSES NUM_TERMINALS
+# 1                 1              1
+# 2                 2              2
+# 4                 4              1
+# This means 3 runs with various settings of servers, warehouses
+# and terminals.
+#
+#Time for each DBT2 test run
+#DBT2_TIME="90"
+#Use SCI in DBT2 test
+#DBT2_SCI=""
+#Use perfect spread in MySQL Cluster tests
+#DBT2_SPREAD=""
+#Use this number of parallel loaders when inserting DBT2 records
+#DBT2_LOADERS="8"
+#To use MyISAM for Item table is useful for NDB scalability tests,
+#set to yes if desired.
+#USE_MYISAM_FOR_ITEM=""
+#
+#Optional Sysbench parameters (only used when running sysbench)
+#RUN_RW="yes"
+#RUN_RW_WRITE_INT="no"
+#RUN_RO="no"
+#RUN_RW_LESS_READ="no"
+#RUN_WRITE="no"
+#SB_USE_SECONDARY_INDEX="no"
+#SB_USE_MYSQL_HANDLER="no"
+#SB_NUM_PARTITIONS="0"
+#SB_NUM_TABLES="1"
+#SB_TX_RATE=""
+#SB_TX_JITTER=""
+#SB_USE_AUTO_INC="no"
+#Default for USE_TRX is to base it on storage engine, otherwise yes/no
+#SB_USE_TRX=""
+#Distribution type of data (uniform, gaussian, special)
+#SB_DIST_TYPE="uniform"
+#SYSBENCH_ROWS="1000000"
+#THREAD_COUNTS_TO_RUN="16;32;64;128;256"
+#MAX_TIME="260"
+#NUM_TEST_RUNS="1"
+#
+#flexAsynch mandatory parameter
+FLEX_ASYNCH_API_NODES="en318ib0;en319ib0;en320ib0;en321ib0;en322ib0;en323ib0;en314ib0;en325ib0;en327ib0;en349ib0"
+#
+#flexAsynch optional parameters
+FLEX_ASYNCH_NUM_THREADS="9"
+FLEX_ASYNCH_NUM_PARALLELISM="700"
+FLEX_ASYNCH_NUM_OPS_PER_TRANS="1"
+FLEX_ASYNCH_EXECUTION_ROUNDS="800"
+FLEX_ASYNCH_NUM_ATTRIBUTES="25"
+FLEX_ASYNCH_ATTRIBUTE_SIZE="1"
+FLEX_ASYNCH_NO_LOGGING="no"
+FLEX_ASYNCH_NO_HINT="no"
+FLEX_ASYNCH_FORCE_FLAG="force"
+#FLEX_ASYNCH_USE_WRITE="no"
+FLEX_ASYNCH_NUM_MULTI_CONNECTIONS="3"
+FLEX_ASYNCH_WARMUP_TIMER="20"
+FLEX_ASYNCH_EXECUTION_TIMER="40"
+FLEX_ASYNCH_COOLDOWN_TIMER="20"
+FLEX_ASYNCH_USE_LOCAL="0"
+#
+#Generic benchmark parameters
+#If lock to CPU's are used one must set TASKSET="taskset" and
+#set both SERVER_CPUS and BENCHMARK_CPUS to proper values,
+#setting SERVER_CPUS="0xFC" means that CPU2-CPU7 is allowed to
+#be used by the Server process.
+#Default is to not use taskset and locking to CPUs
+#It is also possible to set multiple values in SERVER_CPUS, e.g.
+#SERVER_CPUS="0xF;=0x0F", the number of values must then be equal
+#to the number of SERVER_HOST values and there is a one to one
+#correspondence between the first SERVER_CPUS and the first
+#SERVER_HOST, thus the first mysql server host will be mapped to
+#CPU 0-3 in this case.
+#It is also possible to set TASKSET to numactl, in this case the
+#variable SERVER_BIND specifies the NUMA nodes to bind memory and
+#CPUs to, if need to bind to individual CPUs then use SERVER_CPUS
+#in addition to SERVER_BIND. SERVER_MEM_POLICY can be set to
+#local to avoid interleaved memory policy which is default.
+#The BENCHMARK_* parameters has the same meaning as the SERVER_*
+#parameters except they operate on the benchmark programs instead
+#of operate on the MySQL Server program.
+#With numactl nodes and cpus are given by the syntax 0-2,5-7 where
+#there can be multiple ranges of cpus and nodes.
+TASKSET="taskset"
+SERVER_CPUS=""
+SERVER_BIND="2-7"
+SERVER_MEM_POLICY="interleaved"
+#BENCHMARK_CPUS="0xF0000000F;0xf0000000f0;0xf0000000f00"
+#BENCHMARK_CPUS="0x03F0000003F;0xfC000000fC0"
+BENCHMARK_CPUS="0x000FFF;0xfff;0xfff;0xfff;0xfff;0xfff;0xfff;0xfff;0xfff;0xfff"
+BENCHMARK_BIND="0-1"
+BENCHMARK_MEM_POLICY="local"
+#BETWEEN_RUNS="25"
+#AFTER_INITIAL_RUN="30"
+AFTER_SERVER_START="30"
+#BETWEEN_CREATE_DB_TEST="15"
+#NUM_CREATE_DB_ATTEMPTS="12"
+AFTER_SERVER_STOP="10"

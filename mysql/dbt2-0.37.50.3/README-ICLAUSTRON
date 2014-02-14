@@ -1,0 +1,105 @@
+This README file provides explanations of the second layer of scripts
+in the benchmark scripts. It's not necessary to have an understanding
+of those scripts to run the automation layer. Only necessary to
+acquire sufficient understanding to extend the benchmark automation
+scripts.
+
+This README file explains how to use the new scripts to simplify running
+DBT2. The running is configuration file driven to a great extent. So there
+is some work to set-up the configuration files and then after that it is
+very simple to make the actual runs of DBT2.
+
+The example files for all the configuration files are placed in
+the directory
+scripts/example_conf
+
+1. Explanation of scripts used to run DBT2
+------------------------------------------
+scripts/create_dbt2_files.sh:
+This script is used to create all the files needed to load the warehouses
+into the database in the load phase of a DBT2 run. This is something one
+needs to do once before running the benchmark. Normally it is only
+necessary to specify number of warehouses to create files for (there will
+be one file per warehouse to enable parallel loading). It is however also
+possible to start at a number different from 1 if files are spread on many
+machines. It is also possible to specify where the DBT2 installation is
+placed and where the data files is to be placed. Normally these should be
+set in the configuration files.
+
+scripts/run_dbt2_test.sh
+This script is used to perform a run of DBT2. It will:
+1) Start the cluster with an initial start of NDB nodes and MySQL Servers
+2) Create tables
+3) Create stored procedures
+4) Load data into tables (possibly in parallel)
+5) Run a set of DBT2 tests (one test per line described in run config file)
+6) Stop cluster
+
+When it says cluster here it can actually be a cluster containing only one
+MySQL Server and nothing more, this would be the case if any other storage
+engine than NDB is tested.
+
+This script has an extensive help output and using this is important to ensure
+the correct parameters are set, there are many parameters to set.
+
+The above script uses a couple of helper scripts which can also be used 
+stand-alone.
+
+scripts/dbt2.sh
+This script is used to create tables, create stored procedures, load data
+into tables and finally run a set of DBT2 test runs.
+This script can also invoke itself in some cases to perform a set of those
+activities. What it can do and what can be specified on command line is
+extensively explained in the --help output.
+
+scripts/mgm_cluster.sh
+This is the start-up and stop script to start and stop cluster nodes.
+It uses the script start_ndb.sh to perform the actual start and stop,
+this script is used to start a set of nodes. Again the script is extensively
+documented in the --help output.
+
+scripts/start_ndb.sh
+This script is the script that starts the actual nodes. An important principle
+here is that no MySQL configuration file is ever used. The script will set
+all needed configuration parameters. This is the case since I never could
+remember the order of the configuration files and I very often stumbled into
+problems in my benchmarking when a configuration file was left in some
+obscure place with some obscure setting I didn't expect. This means that any
+configuration settings should be set in the configuration file iclaustron.conf
+
+Again this script has a very extensive explanation of parameters in the
+--help output.
+
+Configuration files
+-------------------
+The configuration files will always be looked for in the directory
+$HOME/.build and for a root user in /root/.build.
+
+The following configuration files need to be created.
+$HOME/.build/config_c1.ini
+Configuration file of the MySQL Cluster
+
+$HOME/.build/dis_config_c1.ini
+Configuration file driving start and stop of cluster nodes and MySQL
+Servers. It is possible to pass parameters to nodes here which
+will be interpreted by the start_ndb.sh script.
+
+Both the above configuration files have the ending c1.ini, this
+is the case for a cluster with id 1, one can create these two files
+for many different clusters to enable easy test runs of different
+cluster configurations.
+
+$HOME/.build/dbt2_run_1.conf
+This is the file that specifies which tests to perform in the test run.
+There can be many such files, this is using run_number 1, there can
+be any number of such configuration files to enable easy set-up of
+many different test runs.
+
+$HOME/.build/dbt2.conf
+This makes it possible to set any variable in the dbt2.sh script from
+the configuration file instead of using passed parameters.
+
+$HOME/.build/iclaustron.conf
+This makes it possible to also set any variable in the scripts used to
+start and stop cluster nodes and MySQL Servers.
+

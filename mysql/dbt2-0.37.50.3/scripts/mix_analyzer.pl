@@ -374,9 +374,11 @@ foreach my $idx ('d', 'n', 'o', 'p', 's') {
 # Calculated the number of transactions per second.
 #
 if ( $current_time == $start_time ) {
-  $tps = 0; }
-else {
-  $tps = $transaction_count{'n'} / ($current_time - $start_time); }
+  printf("current_time == start_time --> NOTPM=0");
+  $tps = 0;
+} else {
+  $tps = ($transaction_count{'n'} * 1.0) / ($current_time - $start_time);
+}
 $total_rollback_count = $rollback_count{'d'} + $rollback_count{'n'} + $rollback_count{'o'} + $rollback_count{'p'} + $rollback_count{'s'} ;
 printf("\n");
 printf("%0.2f new-order transactions per minute (NOTPM)\n", $tps * 60);

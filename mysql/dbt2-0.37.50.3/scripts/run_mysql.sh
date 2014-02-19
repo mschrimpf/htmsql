@@ -612,11 +612,9 @@ if [ "x$REAL_RUN" = "xyes" ] ; then
 # Client doesn't go away by itself like the driver does and I nohup it.
   check_client
   if [ "x$CLIENT_PID" != "x" ]; then 
-    echo "Waiting for client (pid $CLIENT_PID)"
-    wait $CLIENT_PID
-    #echo "Shutdown clients. Send TERM signal to $CLIENT_PID."
-    #KILL_CLIENT_CMD="$KILL_CMD $CLIENT_PID"
-    #$KILL_CLIENT_CMD
+    echo "Shutdown clients. Send TERM signal to $CLIENT_PID."
+    KILL_CLIENT_CMD="$KILL_CMD $CLIENT_PID"
+    $KILL_CLIENT_CMD
   fi
 
   check_driver

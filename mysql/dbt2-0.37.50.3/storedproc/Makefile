@@ -94,7 +94,7 @@ AUTOMAKE = ${SHELL} /home/htmsql/develop/mysql/dbt2-0.37.50.3/missing --run auto
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=none
-CFLAGS = -Wall -g -O2 -I/home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/include  -g -fabi-version=2 -fno-omit-frame-pointer -fno-strict-aliasing
+CFLAGS = -Wall -g -O2 -I/home/htmsql/develop/mysql/mysql-5.6.10-unmodified/install/include  -g -fabi-version=2 -fno-omit-frame-pointer -fno-strict-aliasing
 CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
@@ -120,11 +120,11 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 IOSTAT = 
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lm -lpthread  -L/home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/lib -lmysqlclient_r -lpthread -lm -ldl
+LIBS = -lm -lpthread  -L/home/htmsql/develop/mysql/mysql-5.6.10-unmodified/install/lib -lmysqlclient_r -lpthread -lm -ldl
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/htmsql/develop/mysql/dbt2-0.37.50.3/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
-MYSQL_DIR = /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install
+MYSQL_DIR = /home/htmsql/develop/mysql/mysql-5.6.10-unmodified/install
 OBJEXT = o
 PACKAGE = dbt2
 PACKAGE_BUGREPORT = osdldbt-general@lists.sourceforge.net
@@ -177,7 +177,7 @@ localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
-mysqlconfig = /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysql_config
+mysqlconfig = /home/htmsql/develop/mysql/mysql-5.6.10-unmodified/install/bin/mysql_config
 oldincludedir = /usr/include
 pdfdir = ${docdir}
 prefix = /usr/local

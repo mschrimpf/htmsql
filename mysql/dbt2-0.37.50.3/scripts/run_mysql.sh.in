@@ -461,7 +461,7 @@ THREADS=$(( $WAREHOUSES*$TPW ))
 # Determine the output directory for storing data.
 get_run_number
 #OUTPUT_DIR=$OUTPUT_BASE/output/$RUN_NUMBER
-OUTPUT_DIR=$OUTPUT_BASE/$RUN_NUMBER
+OUTPUT_DIR="${OUTPUT_BASE}/${RUN_NUMBER}_${DATE}-c_${DBCON}-w_${WAREHOUSES}"
 CLIENT_OUTPUT_DIR=$OUTPUT_DIR/client
 DRIVER_OUTPUT_DIR=$OUTPUT_DIR/driver
 DB_OUTPUT_DIR=$OUTPUT_DIR/db
@@ -618,9 +618,11 @@ if [ "x$REAL_RUN" = "xyes" ] ; then
 
   check_driver
   if [ "x$DRIVER_PID" != "x" ]; then 
-    echo "Shutdown driver. Send TERM signal to $DRIVER_PID."
-    KILL_DRIVER_CMD="$KILL_CMD $DRIVER_PID"
-    $KILL_DRIVER_CMD
+    echo "Waiting for driver (pid $DRIVER_PID)"
+    wait $DRIVER_PID
+    #echo "Shutdown driver. Send TERM signal to $DRIVER_PID."
+    #KILL_DRIVER_CMD="$KILL_CMD $DRIVER_PID"
+    #$KILL_DRIVER_CMD
   fi
 
 # Run some post processing analysese.

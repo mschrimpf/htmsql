@@ -98,6 +98,9 @@ pthread_mutex_t mutex_terminal_state[3][TRANSACTION_MAX] = { {
 		PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER,
 		PTHREAD_MUTEX_INITIALIZER } };
 
+char debug_buffer[1024]; // XXX added
+int debug_len; // XXX added
+
 void delete_pid_file() {
 	char pid_filename[1024];
 	sprintf(pid_filename, "%s/%s", output_path, DRIVER_PID_FILENAME);
@@ -314,12 +317,18 @@ int final_write_log_mix() {
 }
 
 int write_log_mix(char *buf, int len) {
+	debug_len = sprintf(debug_buffer, "Writing to log_mix: %s\n", buf); // XXX added
+	debug_log(debug_buffer, debug_len);
+
 	int new_tot_len;
 	pthread_mutex_lock(&mutex_mix_log);
 	new_tot_len = mix_log_buffer_len + len;
 	if (new_tot_len > MIX_LOG_BUFFER_SIZE) {
 		/* Write buffer */
-		write(log_mix, mix_log_buffer_start_ptr, mix_log_buffer_len);
+		int write_ret = write(log_mix, mix_log_buffer_start_ptr, mix_log_buffer_len); // XXX ret added
+		if(write_ret <= 0) {
+			sprintf(stderr, "Write error: %d\n", write_ret); // XXX added
+		}
 		mix_log_buffer_ptr = mix_log_buffer_start_ptr;
 		mix_log_buffer_len = 0;
 		new_tot_len = len;
@@ -397,6 +406,11 @@ int start_driver() {
 				return ERROR;
 			}
 
+//			debug_len = sprintf(debug_buffer,
+//					"Thread started %d/%d (w %d/%d)\n", j + 1,
+//					terminals_per_warehouse, i + 1, w_id_max + 1); // XXX added
+//			debug_log(debug_buffer, debug_len);
+
 			/* Sleep for between starting terminals. */
 			while (nanosleep(&ts, &rem) == -1) {
 				if (errno == EINTR) {
@@ -411,6 +425,9 @@ int start_driver() {
 		}
 
 		if (mode_altered == 1) {
+//			debug_len = sprintf(debug_buffer, "Altered mode detected\n"); // XXX added
+//			debug_log(debug_buffer, debug_len);
+
 			/*
 			 * This effectively allows one client to touch
 			 * the entire warehouse range.  The setting of
@@ -420,12 +437,18 @@ int start_driver() {
 			break;
 		}
 	}
+//	debug_len = sprintf(debug_buffer, "Terminals started\n"); // XXX added
+//	debug_log(debug_buffer, debug_len);
+
 	printf("terminals started...\n");
 
 	/* Note that the driver has started up all threads in the log. */
 	len = sprintf(local_buffer, "%d,START\n", (int) time(NULL));
-	printf("Should have written something inside mix-file (%s)\n", log_mix);
 	write_log_mix(local_buffer, len);
+
+//	debug_len = sprintf(debug_buffer,
+//			"Should have written something inside mix-file (%s)\n", log_mix); // XXX added
+//	debug_log(debug_buffer, debug_len);
 
 	/* wait until all threads quit */
 	for (i = w_id_min; i < w_id_max + 1; i += spread) {
@@ -446,10 +469,19 @@ int start_driver() {
 			break;
 		}
 	}
+
+	debug_len = sprintf(debug_buffer, "final_write_log_mix\n"); // XXX added
+	debug_log(debug_buffer, debug_len);
+
 	final_write_log_mix();
 	final_write_intermediate_result();
 	printf("driver is exiting normally\n");
 	return OK;
+}
+
+void debug_log(char *buffer, int len) {
+//	printf(buffer);
+//	write_log_mix(buffer, len);
 }
 
 void *terminal_worker(void *data) {
@@ -668,6 +700,14 @@ void *terminal_worker(void *data) {
 				pthread_mutex_unlock(&intermediate_mutex);
 			}
 		}
+
+		debug_len =
+				sprintf(debug_buffer,
+						"Time_now: %d, time(NULL): %d, start_log_time: %d, end_log_time: %d, stop_time: %d\n",
+						time_now, time(NULL), start_log_time, end_log_time,
+						stop_time); // XXX added
+		debug_log(debug_buffer, debug_len);
+
 		if (time_now >= start_log_time && time_now < end_log_time) {
 			len = 0;
 			if (rc == OK) {

@@ -1,0 +1,16 @@
+global lwlock
+
+probe process("/home/pgssi/install/pgsql-debug/bin/postgres").mark("lwlock__wait__start")
+{
+  lwlock[$arg1, $arg2, tid()] = gettimeofday_us()
+}
+
+probe process("/home/pgssi/install/pgsql-debug/bin/postgres").mark("lwlock__wait__done")
+{
+   p = tid(); t = gettimeofday_us()
+   if ( [$arg1, $arg2, p] in lwlock) {
+     
+     printf("%5d; %#8x; %#8x; %10d\n", p, $arg1, $arg2, t - lwlock[$arg1,$arg2,p])
+     delete lwlock[$arg1,$arg2,p]
+   }
+}

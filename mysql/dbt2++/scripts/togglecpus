@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ "$1" == "" ]; then
+   cpus="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31";
+else
+   cpus=$1;
+fi
+
+for i in $cpus;
+do
+  v=`cat /sys/devices/system/cpu/cpu$i/online`
+  echo "CPU$i: $v"
+  if [ "$v" -eq "0" ]; then
+     sudo ./switchcpuon $i
+#echo 1 >/sys/devices/system/cpu/cpu$i/online;
+  else
+     sudo ./switchcpuoff $i
+#echo 0 >/sys/devices/system/cpu/cpu$i/online;
+  fi
+done

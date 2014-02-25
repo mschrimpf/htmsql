@@ -1,0 +1,190 @@
+
+database table cardinalities:
+warehouses = 1
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.45
+payment mix 0.43
+order-status mix 0.04
+delivery mix 0.04
+stock-level mix 0.04
+
+transaction thresholds:
+new-order threshold 0.45
+payment threshold 0.88
+order-status threshold 0.92
+delivery threshold 0.96
+stock-level threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+
+w_id range 1 to 1
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1392785021
+driver will ramp up in  0 seconds
+will stop test at time 1392785101
+seed: 4016609996
+seed: 4016119107
+seed: 4016214554
+seed: 4016887495
+seed: 4015336336
+seed: 4015705623
+seed: 4015481559
+seed: 4015097837
+seed: 4015078082
+seed: 4015504949
+terminals started...
+Writing to log_mix: 1392785024,START
+
+Time_now: 1392785024, time(NULL): 1392785024, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785024,p,0.003942,-1134057728
+
+Time_now: 1392785025, time(NULL): 1392785025, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785025,p,0.002252,-1134463232
+
+Time_now: 1392785026, time(NULL): 1392785026, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785026,p,0.003777,-1134733568
+
+Time_now: 1392785026, time(NULL): 1392785026, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785026,p,0.003766,-1135003904
+
+Time_now: 1392785027, time(NULL): 1392785027, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785027,p,0.002459,-1135139072
+
+Time_now: 1392785027, time(NULL): 1392785027, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785027,p,0.003931,-1135274240
+
+Time_now: 1392785030, time(NULL): 1392785030, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785030,p,0.003587,-1134057728
+
+Time_now: 1392785033, time(NULL): 1392785033, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785033,p,0.004048,-1135274240
+
+Time_now: 1392785036, time(NULL): 1392785036, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785036,p,0.003907,-1135139072
+
+Time_now: 1392785039, time(NULL): 1392785039, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785039,p,0.003939,-1134733568
+
+Time_now: 1392785040, time(NULL): 1392785040, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785040,n,0.015408,-1134192896
+
+Time_now: 1392785040, time(NULL): 1392785040, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785040,p,0.013067,-1135003904
+
+Time_now: 1392785040, time(NULL): 1392785040, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785040,n,0.011147,-1134328064
+
+Time_now: 1392785040, time(NULL): 1392785040, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785040,n,0.011035,-1134598400
+
+Time_now: 1392785041, time(NULL): 1392785041, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785041,p,0.003820,-1135139072
+
+Time_now: 1392785041, time(NULL): 1392785041, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785041,n,0.010007,-1134868736
+
+Time_now: 1392785043, time(NULL): 1392785043, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785043,p,0.003948,-1134192896
+
+Time_now: 1392785046, time(NULL): 1392785046, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785046,n,0.015640,-1134463232
+
+Time_now: 1392785046, time(NULL): 1392785046, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785046,p,0.002651,-1134868736
+
+Time_now: 1392785049, time(NULL): 1392785049, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785049,p,0.003761,-1134328064
+
+Time_now: 1392785051, time(NULL): 1392785051, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785051,p,0.003727,-1134192896
+
+Time_now: 1392785051, time(NULL): 1392785051, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785051,p,0.004086,-1134868736
+
+Time_now: 1392785051, time(NULL): 1392785051, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785051,n,0.009328,-1135274240
+
+Time_now: 1392785064, time(NULL): 1392785064, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785064,p,0.003597,-1135274240
+
+Time_now: 1392785065, time(NULL): 1392785065, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785065,p,0.003606,-1135003904
+
+Time_now: 1392785067, time(NULL): 1392785067, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785067,n,0.007484,-1134463232
+
+Time_now: 1392785069, time(NULL): 1392785069, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785069,n,0.012863,-1134057728
+
+Time_now: 1392785071, time(NULL): 1392785071, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785071,n,0.004623,-1135139072
+
+Time_now: 1392785072, time(NULL): 1392785072, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785072,n,0.010075,-1134868736
+
+Time_now: 1392785077, time(NULL): 1392785077, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785077,d,0.011482,-1134057728
+
+Time_now: 1392785078, time(NULL): 1392785078, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785078,p,0.002718,-1135139072
+
+Time_now: 1392785080, time(NULL): 1392785080, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785080,p,0.001625,-1134598400
+
+Time_now: 1392785086, time(NULL): 1392785086, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785086, time(NULL): 1392785086, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785087, time(NULL): 1392785087, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785090, time(NULL): 1392785090, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785091, time(NULL): 1392785091, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785093, time(NULL): 1392785093, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785094, time(NULL): 1392785094, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785094, time(NULL): 1392785094, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785095, time(NULL): 1392785095, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785095, time(NULL): 1392785095, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785099, time(NULL): 1392785099, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Time_now: 1392785100, time(NULL): 1392785100, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785101,TERMINATED,-1134463232
+
+Writing to log_mix: 1392785103,TERMINATED,-1134868736
+
+Writing to log_mix: 1392785103,TERMINATED,-1135003904
+
+Writing to log_mix: 1392785104,TERMINATED,-1135139072
+
+Writing to log_mix: 1392785108,TERMINATED,-1134192896
+
+Time_now: 1392785113, time(NULL): 1392785113, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785113,TERMINATED,-1134328064
+
+Time_now: 1392785116, time(NULL): 1392785116, start_log_time: 1392785021, end_log_time: 1392785081, stop_time: 1392785101
+Writing to log_mix: 1392785116,TERMINATED,-1134733568
+
+Writing to log_mix: 1392785124,TERMINATED,-1134598400
+
+Writing to log_mix: 1392785128,TERMINATED,-1134057728
+
+Writing to log_mix: 1392785146,TERMINATED,-1135274240
+
+final_write_log_mix
+driver is exiting normally

@@ -1,0 +1,14 @@
+sleep: Interrupt
+
+ Performance counter stats for process id '28172':
+
+         21,401501 task-clock                #    0,001 CPUs utilized          
+        13.480.212 instructions              #    0,69  insns per cycle        
+        19.573.486 cycles                    #    0,915 GHz                    
+                 0 cpu/cycles-t/             #    0,00% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+                 0 cpu/el-start/             #    0,000 K/sec                  
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+      27,954970128 seconds time elapsed
+

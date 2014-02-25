@@ -1,0 +1,2058 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 50
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 50
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1392954424
+driver will ramp up in  490 seconds
+will stop test at time 1392954974
+seed for 30648:c0a12700 : 2477444036
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c09f1700 : 2476012745
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c09d0700 : 2476139940
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c09af700 : 2475759236
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c098e700 : 2475886190
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c096d700 : 2476554056
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c094c700 : 2476679220
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c092b700 : 2476298517
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c090a700 : 2476425861
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c08e9700 : 2474996645
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c08c8700 : 2475121851
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c08a7700 : 2474749403
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c0886700 : 2474884846
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:c0865700 : 2475527698
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfb05700 : 3971714856
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfae4700 : 3970275403
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfac3700 : 3970427239
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfaa2700 : 3970038408
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfa81700 : 3970157477
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfa60700 : 3970815172
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfa3f700 : 3970442708
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bfa1e700 : 3970577674
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf9fd700 : 3969123871
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf9dc700 : 3969259325
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf9bb700 : 3968884818
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf99a700 : 3969020274
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf979700 : 3969663592
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf958700 : 3969799054
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf937700 : 3969432743
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf916700 : 3969560002
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf8f5700 : 3968114398
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf8d4700 : 3968241656
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf8b3700 : 3967875310
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf892700 : 3968002064
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf871700 : 3968653626
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf850700 : 3968780890
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf82f700 : 3968416578
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf80e700 : 3968541805
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf7ed700 : 3967096195
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf7cc700 : 3967223468
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf7ab700 : 3966859243
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf78a700 : 3966984399
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf769700 : 3967635930
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf748700 : 3967762766
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf727700 : 3967398464
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf706700 : 3967525794
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf6e5700 : 3966069946
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf6c4700 : 3966205336
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf6a3700 : 3965783785
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf682700 : 3965919183
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf661700 : 3966576857
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf640700 : 3966711841
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf61f700 : 3966421329
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf5fe700 : 3964983979
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf5dd700 : 3965119369
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf5bc700 : 3964728468
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf59b700 : 3964831231
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf57a700 : 3965490897
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf559700 : 3965626318
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf538700 : 3965237025
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf517700 : 3965337622
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf4f6700 : 3963900274
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf4d5700 : 3964035690
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf4b4700 : 3963646794
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf493700 : 3963755694
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf472700 : 3964407209
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf451700 : 3964550449
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf430700 : 3964153376
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf40f700 : 3964395285
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf3ee700 : 3962947706
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf3cd700 : 3963091310
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf3ac700 : 3962694210
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf38b700 : 3962805112
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf36a700 : 3963454495
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf349700 : 3963598123
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf328700 : 3963200962
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf307700 : 3963311837
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf2e6700 : 3961866059
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf2c5700 : 3962007628
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf2a4700 : 3961610598
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf283700 : 3961721440
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf262700 : 3962372877
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf241700 : 3962506241
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf220700 : 3962117404
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf1ff700 : 3960794664
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf1de700 : 3960930103
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf1bd700 : 3960524753
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf19c700 : 3960658144
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf17b700 : 3961301483
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf15a700 : 3961436754
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf139700 : 3961031513
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf118700 : 3961164914
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf0f7700 : 3959711081
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf0d6700 : 3959846428
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf0b5700 : 3959441210
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf094700 : 3959574572
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf073700 : 3960217804
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf052700 : 3960353268
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bf031700 : 3959948001
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+100 / 500 threads started...
+seed for 30648:bf010700 : 3960083332
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:befef700 : 3992321229
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:befce700 : 3992448396
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:befad700 : 3992051383
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bef8c700 : 3992178512
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bef6b700 : 3992828025
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bef4a700 : 3992955119
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bef29700 : 3992558048
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bef08700 : 3992685204
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beee7700 : 3991239565
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beec6700 : 3991364712
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beea5700 : 3990967675
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bee84700 : 3991094756
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bee63700 : 3991746326
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bee42700 : 3991873533
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bee21700 : 3991474321
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bee00700 : 3991601518
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beddf700 : 3990286968
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bedbe700 : 3989889859
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bed9d700 : 3990006900
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bed7c700 : 3990666589
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bed5b700 : 3990801975
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bed3a700 : 3990413102
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bed19700 : 3990546458
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:becf8700 : 3989108978
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:becd7700 : 3989178852
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:becb6700 : 3988789977
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bec95700 : 3988925365
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bec74700 : 3989583020
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bec53700 : 3989718413
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bec32700 : 3989329523
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bec11700 : 3989464930
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bebf0700 : 3988025428
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bebcf700 : 3988226373
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bebae700 : 3987837490
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beb8d700 : 3987972900
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beb6c700 : 3988630567
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beb4b700 : 3988774254
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beb2a700 : 3988377211
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beb09700 : 3988520584
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beae8700 : 3987074982
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beac7700 : 3987151029
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:beaa6700 : 3986753989
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bea85700 : 3986897622
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bea64700 : 3987549170
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bea43700 : 3987690511
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bea22700 : 3987293465
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bea01700 : 3987437093
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be9e0700 : 3985991475
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be9bf700 : 3985674306
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be99e700 : 3985801592
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be97d700 : 3986469495
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be95c700 : 3986596509
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be93b700 : 3986215869
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be91a700 : 3986357463
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be8f9700 : 3984903617
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be8d8700 : 3985038889
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be8b7700 : 3984600873
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be896700 : 3984734274
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be875700 : 3985377655
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be854700 : 3985513059
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be833700 : 3985140373
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be812700 : 3985275834
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be7f1700 : 3983819944
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be7d0700 : 3983955409
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be7af700 : 3983648509
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be78e700 : 3983783911
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be76d700 : 3984424964
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be74c700 : 3984560426
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be72b700 : 3984187928
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be70a700 : 3984323355
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be6e9700 : 3982869422
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be6c8700 : 3983002806
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be6a7700 : 3982572936
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be686700 : 3982700085
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be665700 : 3983351596
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be644700 : 3983476736
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be623700 : 3983112448
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be602700 : 3983239782
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be5e1700 : 3981794170
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be5c0700 : 3981919297
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be59f700 : 3981620565
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be57e700 : 3982271933
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be55d700 : 3982399107
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be53c700 : 3982002069
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be51b700 : 3982160113
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be4fa700 : 3980714475
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be4d9700 : 3980841496
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be4b8700 : 3980444532
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be497700 : 3980512355
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be476700 : 3981434197
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be455700 : 3981307464
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be434700 : 3981180607
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be413700 : 3981021097
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be3f2700 : 3979843732
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be3d1700 : 3979717117
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be3b0700 : 3979590383
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be38f700 : 3979365338
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be36e700 : 3980285129
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be34d700 : 3980158402
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+200 / 500 threads started...
+seed for 30648:be32c700 : 3980031529
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be30b700 : 3979871941
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be2ea700 : 3978695130
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be2c9700 : 3978567913
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be2a8700 : 3978441604
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be287700 : 3978347164
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be266700 : 3979267497
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be245700 : 3979148476
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be224700 : 3979013203
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be203700 : 3978862440
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be1e2700 : 3977678451
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be1c1700 : 3977558283
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be1a0700 : 3977422864
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be17f700 : 3978255145
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be15e700 : 3978119730
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be13d700 : 3977999843
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be11c700 : 3977864436
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be0fb700 : 3976664961
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be0da700 : 3976529596
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be0b9700 : 3976409516
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be098700 : 3976274269
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be077700 : 3977236558
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be056700 : 3977102148
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be035700 : 3976983153
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:be014700 : 3976846694
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdff3700 : 4009208856
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdfd2700 : 4009082687
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdfb1700 : 4008939050
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdf90700 : 4008810963
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdf6f700 : 4009650370
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdf4e700 : 4009523288
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdf2d700 : 4009380699
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdf0c700 : 4009253440
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdeeb700 : 4008060388
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdeca700 : 4007933154
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdea9700 : 4007790589
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bde88700 : 4007663306
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bde67700 : 4008632783
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bde46700 : 4008505495
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bde25700 : 4008362103
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bde04700 : 4008235842
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdde3700 : 4007043653
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bddc2700 : 4006915411
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdda1700 : 4006779937
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdd80700 : 4006645558
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdd5f700 : 4007493120
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdd3e700 : 4007356907
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdd1d700 : 4007221501
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdcfc700 : 4006038479
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdcdb700 : 4005903054
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdcba700 : 4005766586
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdc99700 : 4005631143
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdc78700 : 4006545296
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdc57700 : 4006475634
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdc36700 : 4006340202
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdc15700 : 4006203743
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdbf4700 : 4005019721
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdbd3700 : 4004885472
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdbb2700 : 4004750030
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdb91700 : 4004638138
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdb70700 : 4005559460
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdb4f700 : 4005302170
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdb2e700 : 4005174935
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdb0d700 : 4005046662
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdaec700 : 4003871085
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdacb700 : 4003743791
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bdaaa700 : 4003617593
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bda89700 : 4003490376
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bda68700 : 4004410718
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bda47700 : 4004283492
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bda26700 : 4004157305
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bda05700 : 4004030094
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd9e4700 : 4002853283
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd9c3700 : 4002726049
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd9a2700 : 4002599887
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd981700 : 4002472640
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd960700 : 4003393006
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd93f700 : 4003142908
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd91e700 : 4003007494
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd8fd700 : 4001840912
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd8dc700 : 4001705528
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd8bb700 : 4001585450
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd89a700 : 4001450050
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd879700 : 4002380660
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd858700 : 4002245218
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd837700 : 4002125210
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd816700 : 4001989810
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd7f5700 : 4000823221
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd7d4700 : 4000687777
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd7b3700 : 4000567730
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd792700 : 4000432324
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd771700 : 4001362939
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd750700 : 4001227603
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd72f700 : 4000977503
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd70e700 : 4000857421
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd6ed700 : 3999665281
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd6cc700 : 3999539129
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd6ab700 : 3999428242
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd68a700 : 3999300079
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd669700 : 4000205035
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+300 / 500 threads started...
+seed for 30648:bd648700 : 4000078790
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd627700 : 3999967969
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd606700 : 3999839732
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd5e5700 : 3998647491
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd5c4700 : 3998521305
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd5a3700 : 3998410541
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd582700 : 3998283318
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd561700 : 3999187207
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd540700 : 3999059987
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd51f700 : 3998819174
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd4fe700 : 3997643338
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd4dd700 : 3997506894
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd4bc700 : 3997371484
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd49b700 : 3997269836
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd47a700 : 3998183098
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd459700 : 3998046612
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd438700 : 3997911171
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd417700 : 3997809656
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd3f6700 : 3996625644
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd3d5700 : 3996489155
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd3b4700 : 3996353740
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd393700 : 3996251187
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd372700 : 3997165349
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd351700 : 3997029939
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd330700 : 3996893518
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd30f700 : 3996659791
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd2ee700 : 3995476927
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd2cd700 : 3995341473
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd2ac700 : 3995270550
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd28b700 : 3995110523
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd26a700 : 3996032228
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd249700 : 3995906011
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd228700 : 3995778629
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd207700 : 3995617726
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd1e6700 : 3994441805
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd1c5700 : 3994315616
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd1a4700 : 3994188742
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd183700 : 3994027313
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd162700 : 3994949084
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd141700 : 3994821864
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd120700 : 3994695670
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd0ff700 : 3993486978
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd0de700 : 3993358741
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd0bd700 : 3993231525
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd09c700 : 3993105329
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd07b700 : 3993993759
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd05a700 : 3993865499
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd039700 : 3993746442
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bd018700 : 3993611421
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcff7700 : 4025966483
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcfd6700 : 4025831044
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcfb5700 : 4025711008
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcf94700 : 4025575598
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcf73700 : 4026473300
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcf52700 : 4026337795
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcf31700 : 4026217774
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcf10700 : 4026082772
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bceef700 : 4024882368
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcece700 : 4024748017
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcead700 : 4024628962
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bce8c700 : 4024492435
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bce6b700 : 4025389232
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bce4a700 : 4025254751
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bce29700 : 4025135696
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bce08700 : 4024999213
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcde7700 : 4023807029
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcdc6700 : 4023680791
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcda5700 : 4023537181
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcd84700 : 4023410411
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcd63700 : 4024314360
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcd42700 : 4024187079
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcd21700 : 4024044460
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcd00700 : 4023917240
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bccdf700 : 4022723978
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bccbe700 : 4022596762
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcc9d700 : 4022454126
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcc7c700 : 4023375475
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcc5b700 : 4023230801
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcc3a700 : 4023103564
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcc19700 : 4022960935
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcbf8700 : 4021785598
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcbd7700 : 4021641953
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcbb6700 : 4021513685
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcb95700 : 4021378244
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcb74700 : 4022292406
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcb53700 : 4022156977
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcb32700 : 4022020508
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcb11700 : 4021885068
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcaf0700 : 4020702086
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcacf700 : 4020566644
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bcaae700 : 4020430170
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bca8d700 : 4020294740
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bca6c700 : 4021208299
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bca4b700 : 4021073805
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bca2a700 : 4020938475
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bca09700 : 4020802027
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc9e8700 : 4019618041
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc9c7700 : 4019483406
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc9a6700 : 4019348003
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc985700 : 4019203377
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+400 / 500 threads started...
+seed for 30648:bc964700 : 4020124739
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc943700 : 4019998576
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc922700 : 4019871347
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc901700 : 4019744399
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc8e0700 : 4018567658
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc8bf700 : 4018374890
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc89e700 : 4018248692
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc87d700 : 4019169899
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc85c700 : 4019041641
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc83b700 : 4018914404
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc81a700 : 4018788196
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc7f9700 : 4017612394
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc7d8700 : 4017485444
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc7b7700 : 4017291696
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc796700 : 4017164458
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc775700 : 4018086869
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc754700 : 4017959425
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc733700 : 4017839369
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc712700 : 4017703998
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc6f1700 : 4016537395
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc6d0700 : 4016402014
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc6af700 : 4016216401
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc68e700 : 4016080964
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc66d700 : 4017011575
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc64c700 : 4016876440
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc62b700 : 4016757410
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc60a700 : 4016621007
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc5e9700 : 4015453412
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc5c8700 : 4015319021
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc5a7700 : 4015134453
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc586700 : 4014997960
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc565700 : 4015927513
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc544700 : 4015792943
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc523700 : 4015673914
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc502700 : 4015553796
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc4e1700 : 4014361602
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc4c0700 : 4014235501
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc49f700 : 4014059130
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc47e700 : 4014979403
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc45d700 : 4014835804
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc43c700 : 4014708898
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc41b700 : 4014599100
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc3fa700 : 4013423254
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc3d9700 : 4013278594
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc3b8700 : 4013151486
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc397700 : 4012976110
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc376700 : 4013897437
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc355700 : 4013752776
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc334700 : 4013625401
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc313700 : 4013515564
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc2f2700 : 4012339733
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc2d1700 : 4012203275
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc2b0700 : 4012067963
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc28f700 : 4011900778
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc26e700 : 4012813915
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc24d700 : 4012677463
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc22c700 : 4012542441
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc20b700 : 4012440330
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc1ea700 : 4011255832
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc1c9700 : 4011120936
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc1a8700 : 4010985023
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc187700 : 4010817487
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc166700 : 4011730099
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc145700 : 4011595183
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc124700 : 4011459944
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc103700 : 4011356768
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc0e2700 : 4010173196
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc0c1700 : 4010037248
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc0a0700 : 4009902355
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc07f700 : 4010692237
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc05e700 : 4010565621
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:bc03d700 : 4010437763
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7fff700 : 3841346987
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7fde700 : 3841219245
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7fbd700 : 3841092165
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7f9c700 : 3840965476
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7f7b700 : 3841853466
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7f5a700 : 3841726721
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7f39700 : 3841599204
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7f18700 : 3841472483
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7ef7700 : 3840328854
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7ed6700 : 3840202175
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7eb5700 : 3840074407
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7e94700 : 3839947346
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7e73700 : 3840836475
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7e52700 : 3840708704
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7e31700 : 3840581897
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7e10700 : 3840454206
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7def700 : 3839319843
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7dce700 : 3839184104
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7dad700 : 3839065548
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7d8c700 : 3838929628
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7d6b700 : 3839826868
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7d4a700 : 3839690937
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7d29700 : 3839572371
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7d08700 : 3839436421
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7ce7700 : 3838302103
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7cc6700 : 3838166890
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7ca5700 : 3838047238
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 30648:b7c84700 : 3837912330
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+500 / 500 threads started...
+seed for 30648:b7c63700 : 3838808815
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+terminals started...
+driver is exiting normally

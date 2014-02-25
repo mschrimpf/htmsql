@@ -1,0 +1,10 @@
+output: ../../../report-unmodified//120-20140224_0445-c_20-w_30
+Started on:   Mo 24. Feb 04:45:42 CET 2014
+Expected end: Mo 24. Feb 04:50:42 CET 2014
+RUNNING TEST: ./dbt2-run-workload 		-a mysql 		-c 20 		-d 300 		-w 30 		-o ../../../report-unmodified/
+Waiting for 7 sec before profiling
+directory '../../../report-unmodified/' exists, stopping to prevent possible
+clobbering of data, please specify another -o location
+Error executing script
+Killing PERF
+./run_and_analyze.sh: line 1: 29881 Terminated              profile

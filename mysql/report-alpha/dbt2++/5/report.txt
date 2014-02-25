@@ -1,0 +1,17 @@
+                         Response Time (s)
+ Transaction      %    Average :    90th %        Total        Rollbacks      %     Ser. Retries      %
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----
+    Delivery   3.81        nan :     0.006           51               51  100.00                0   0.00
+   New Order  11.51        nan :     0.001          154              154  100.00                0   0.00
+Order Status  35.58        nan :     0.001          476              476  100.00                0   0.00
+     Payment   7.70        nan :     0.001          103              103  100.00                0   0.00
+ Stock Level  37.07        nan :     0.001          496              496  100.00                0   0.00
+Credit Check   4.33        nan :     0.001           58               58  100.00                0   0.00
+------------  -----  ---------------------  -----------  ---------------  -----
+
+133.91 new-order transactions per minute (NOTPM)
+1163.48 total transactions per minute (TTPM)
+1.1 minute duration
+0 total unknown errors
+5.0 seconds(s) ramping up
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----

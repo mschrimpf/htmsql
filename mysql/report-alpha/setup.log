@@ -1,0 +1,205 @@
+Setup started on: Mo 24. Feb 05:03:34 CET 2014
+Setup type:       a
+MySQL-Folder:     /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin
+LOADING TABLES: ./dbt2-mysql-build-db 		-d dbt2 		-g 		-s /tmp/mysql.sock 		-f /tmp/dbt2_data
+warehouses = 1
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new_orders = 900
+
+Output directory of data files: /tmp/dbt2_data
+
+Generating data files for 1 warehouse(s)...
+Generating item table data...
+Finished item table data...
+Generating warehouse table data...
+Finished warehouse table data...
+Generating stock table data...
+Finished stock table data...
+Generating district table data...
+Finished district table data...
+Generating customer table data...
+Finished customer table data...
+Generating history table data...
+Finished history table data...
+Generating order and order-line table data...
+Finished order and order-line table data...
+Generating new-order table data...
+Finished new-order table data...
+
+Loading of DBT2 dataset located in /tmp/dbt2_data to database dbt2.
+
+DB_ENGINE:      INNODB
+DB_SCHEME:      OPTIMIZED
+DB_HOST:        localhost
+DB_USER:        root
+DB_SOCKET:      /tmp/mysql.sock
+DEFAULTS_FILE:  
+
+Creating table STOCK
+Creating table ITEM
+Creating table ORDER_LINE
+Creating table ORDERS
+Creating table NEW_ORDER
+Creating table HISTORY
+Creating table CUSTOMER
+Creating table DISTRICT
+Creating table WAREHOUSE
+
+Loading table customer
+Loading table district
+Loading table history
+Loading table item
+Loading table new_order
+Loading table order_line
+Loading table orders
+Loading table stock
+Loading table warehouse
+LOADING STORED PROCEDURES: ./dbt2-mysql-load-stored-procs 		-d dbt2 		-s /tmp/mysql.sock 		-f ../storedproc/mysql
+
+Loading of DBT2 SPs located in ../storedproc/mysql to database dbt2.
+
+Load SP: delivery
+Load SP: new_order
+Load SP: new_order_2
+Load SP: order_status
+Load SP: payment
+Load SP: stock_level
+Setup started on: Mo 24. Feb 05:07:17 CET 2014
+Setup type:       a
+MySQL-Folder:     /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin
+LOADING TABLES: ./dbt2-mysql-build-db 		-d dbt2 		-w 75 		-g 		-s /tmp/mysql.sock 		-f /tmp/dbt2_data
+warehouses = 75
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new_orders = 900
+
+Output directory of data files: /tmp/dbt2_data
+
+Generating data files for 75 warehouse(s)...
+Generating item table data...
+Finished item table data...
+Generating warehouse table data...
+Finished warehouse table data...
+Generating stock table data...
+Finished stock table data...
+Generating district table data...
+Finished district table data...
+Generating customer table data...
+Finished customer table data...
+Generating history table data...
+Finished history table data...
+Generating order and order-line table data...
+Finished order and order-line table data...
+Generating new-order table data...
+Finished new-order table data...
+
+Loading of DBT2 dataset located in /tmp/dbt2_data to database dbt2.
+
+DB_ENGINE:      INNODB
+DB_SCHEME:      OPTIMIZED
+DB_HOST:        localhost
+DB_USER:        root
+DB_SOCKET:      /tmp/mysql.sock
+DEFAULTS_FILE:  
+
+Creating table STOCK
+Creating table ITEM
+Creating table ORDER_LINE
+Creating table ORDERS
+Creating table NEW_ORDER
+Creating table HISTORY
+Creating table CUSTOMER
+Creating table DISTRICT
+Creating table WAREHOUSE
+
+Loading table customer
+Loading table district
+Loading table history
+Loading table item
+Loading table new_order
+Loading table order_line
+Loading table orders
+Loading table stock
+ERROR 1317 (70100) at line 1: Query execution was interrupted
+Ctrl-C -- sending "KILL QUERY 48" to server ...
+Ctrl-C -- query aborted.
+ERROR: rc=1
+SCRIPT INTERRUPTED
+Error status -> exit
+Setup started on: Mo 24. Feb 05:14:34 CET 2014
+Setup type:       a
+MySQL-Folder:     /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin
+LOADING TABLES: ./dbt2-mysql-build-db 		-d dbt2 		-w 75 		-g 		-s /tmp/mysql.sock 		-f /tmp/dbt2_data
+warehouses = 75
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new_orders = 900
+
+Output directory of data files: /tmp/dbt2_data
+
+Generating data files for 75 warehouse(s)...
+Generating item table data...
+Finished item table data...
+Generating warehouse table data...
+Finished warehouse table data...
+Generating stock table data...
+Finished stock table data...
+Generating district table data...
+Finished district table data...
+Generating customer table data...
+Finished customer table data...
+Generating history table data...
+Finished history table data...
+Generating order and order-line table data...
+Finished order and order-line table data...
+Generating new-order table data...
+Finished new-order table data...
+
+Loading of DBT2 dataset located in /tmp/dbt2_data to database dbt2.
+
+DB_ENGINE:      INNODB
+DB_SCHEME:      OPTIMIZED
+DB_HOST:        localhost
+DB_USER:        root
+DB_SOCKET:      /tmp/mysql.sock
+DEFAULTS_FILE:  
+
+Creating table STOCK
+Creating table ITEM
+Creating table ORDER_LINE
+Creating table ORDERS
+Creating table NEW_ORDER
+Creating table HISTORY
+Creating table CUSTOMER
+Creating table DISTRICT
+Creating table WAREHOUSE
+
+Loading table customer
+Loading table district
+Loading table history
+Loading table item
+Loading table new_order
+Loading table order_line
+Loading table orders
+Loading table stock
+Loading table warehouse
+LOADING STORED PROCEDURES: ./dbt2-mysql-load-stored-procs 		-d dbt2 		-s /tmp/mysql.sock 		-f ../storedproc/mysql
+
+Loading of DBT2 SPs located in ../storedproc/mysql to database dbt2.
+
+Load SP: delivery
+Load SP: new_order
+Load SP: new_order_2
+Load SP: order_status
+Load SP: payment
+Load SP: stock_level

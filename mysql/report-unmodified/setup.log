@@ -1,0 +1,156 @@
+Setup started on: Do 20. Feb 02:02:08 CET 2014
+Setup type:       u
+MySQL-Folder:     ../mysql-5.6.10-unmodified/install/bin
+LOADING TABLES: ./scripts/mysql/mysql_load_db.sh 		--socket /tmp/mysql.sock 		--path /tmp/dbt2_data 		--mysql-path ../mysql-5.6.10-unmodified/install/bin/mysql
+
+Loading of DBT2 dataset located in /tmp/dbt2_data to database dbt2.
+
+DB_ENGINE:      INNODB
+DB_HOST:        localhost
+DB_PORT:        3306
+DB_USER:        root
+DB_SOCKET:      /tmp/mysql.sock
+PARTITION:      
+PARTITION_NO:   
+NDB_DISK_DATA:  
+USING_HASH:     
+LOGFILE_GROUP:  lg1
+TABLESPACE:     ts1
+TABLESPACE SIZE: 12G
+LOGFILE SIZE:   256M
+DROP/CREATE Database
+
+Creating table STOCK in INNODB
+Creating table ITEM in INNODB
+Creating table ORDER_LINE in INNODB
+Creating table ORDERS in INNODB
+Creating table NEW_ORDER in INNODB
+Creating table HISTORY in INNODB
+Creating table CUSTOMER in INNODB
+Creating table DISTRICT in INNODB
+Creating table WAREHOUSE in INNODB
+
+Loading table customer
+Loading table district
+Loading table history
+Loading table item
+Loading table new_order
+Loading table order_line
+Loading table orders
+Loading table stock
+Loading table warehouse
+LOADING STORED PROCEDURES: ./scripts/mysql/mysql_load_sp.sh 		--database dbt2 		--socket /tmp/mysql.sock 		--sp-path storedproc/mysql 		--client-path ../mysql-5.6.10-unmodified/install/bin
+
+Loading of DBT2 SPs located in storedproc/mysql to database dbt2.
+
+Start by creating database if it not already exists
+Load SP: delivery
+Load SP: new_order
+Load SP: new_order_2
+Load SP: order_status
+Load SP: payment
+Load SP: stock_level
+Setup started on: Do 20. Feb 03:59:06 CET 2014
+Setup type:       u
+MySQL-Folder:     ../mysql-5.6.10-unmodified/install/bin
+LOADING TABLES: ./scripts/mysql/mysql_load_db.sh 		--socket /tmp/mysql.sock 		--path /tmp/dbt2_data 		--mysql-path ../mysql-5.6.10-unmodified/install/bin/mysql
+
+Loading of DBT2 dataset located in /tmp/dbt2_data to database dbt2.
+
+DB_ENGINE:      INNODB
+DB_HOST:        localhost
+DB_PORT:        3306
+DB_USER:        root
+DB_SOCKET:      /tmp/mysql.sock
+PARTITION:      
+PARTITION_NO:   
+NDB_DISK_DATA:  
+USING_HASH:     
+LOGFILE_GROUP:  lg1
+TABLESPACE:     ts1
+TABLESPACE SIZE: 12G
+LOGFILE SIZE:   256M
+DROP/CREATE Database
+
+Creating table STOCK in INNODB
+Creating table ITEM in INNODB
+Creating table ORDER_LINE in INNODB
+Creating table ORDERS in INNODB
+Creating table NEW_ORDER in INNODB
+Creating table HISTORY in INNODB
+Creating table CUSTOMER in INNODB
+Creating table DISTRICT in INNODB
+Creating table WAREHOUSE in INNODB
+
+Loading table customer
+Loading table district
+Loading table history
+Loading table item
+Loading table new_order
+Loading table order_line
+Loading table orders
+Loading table stock
+Loading table warehouse
+LOADING STORED PROCEDURES: ./scripts/mysql/mysql_load_sp.sh 		--database dbt2 		--socket /tmp/mysql.sock 		--sp-path storedproc/mysql 		--client-path ../mysql-5.6.10-unmodified/install/bin
+
+Loading of DBT2 SPs located in storedproc/mysql to database dbt2.
+
+Start by creating database if it not already exists
+Load SP: delivery
+Load SP: new_order
+Load SP: new_order_2
+Load SP: order_status
+Load SP: payment
+Load SP: stock_level
+Setup started on: Do 20. Feb 04:06:07 CET 2014
+Setup type:       u
+MySQL-Folder:     ../mysql-5.6.10-unmodified/install/bin
+LOADING TABLES: ./scripts/mysql/mysql_load_db.sh 		--socket /tmp/mysql.sock 		--path /tmp/dbt2_data 		--mysql-path ../mysql-5.6.10-unmodified/install/bin/mysql
+
+Loading of DBT2 dataset located in /tmp/dbt2_data to database dbt2.
+
+DB_ENGINE:      INNODB
+DB_HOST:        localhost
+DB_PORT:        3306
+DB_USER:        root
+DB_SOCKET:      /tmp/mysql.sock
+PARTITION:      
+PARTITION_NO:   
+NDB_DISK_DATA:  
+USING_HASH:     
+LOGFILE_GROUP:  lg1
+TABLESPACE:     ts1
+TABLESPACE SIZE: 12G
+LOGFILE SIZE:   256M
+DROP/CREATE Database
+
+Creating table STOCK in INNODB
+Creating table ITEM in INNODB
+Creating table ORDER_LINE in INNODB
+Creating table ORDERS in INNODB
+Creating table NEW_ORDER in INNODB
+Creating table HISTORY in INNODB
+Creating table CUSTOMER in INNODB
+Creating table DISTRICT in INNODB
+Creating table WAREHOUSE in INNODB
+
+Loading table customer
+Loading table district
+Loading table history
+Loading table item
+Loading table new_order
+Loading table order_line
+Loading table orders
+Loading table stock
+Loading table warehouse
+LOADING STORED PROCEDURES: ./scripts/mysql/mysql_load_sp.sh 		--database dbt2 		--socket /tmp/mysql.sock 		--sp-path storedproc/mysql 		--client-path ../mysql-5.6.10-unmodified/install/bin
+
+Loading of DBT2 SPs located in storedproc/mysql to database dbt2.
+
+Start by creating database if it not already exists
+Load SP: delivery
+Load SP: new_order
+Load SP: new_order_2
+Load SP: order_status
+Load SP: payment
+Load SP: stock_level

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '4734':
+
+       4959,131800 task-clock                #    0,028 CPUs utilized          
+     6.485.307.865 instructions              #    1,24  insns per cycle        
+     5.225.380.591 cycles                    #    1,054 GHz                    
+       164.438.182 cpu/cycles-t/             #    3,15% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+           790.781 cpu/el-start/             #      208 cycles / elision       
+        89.172.691 cpu/cycles-ct/            #    1,44% aborted cycles         
+
+     175,001042224 seconds time elapsed
+

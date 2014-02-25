@@ -1,0 +1,2 @@
+run;totaltrans;totalrollback;totalserretries;totalavgrestime;ttpm;errors;duration
+./report.txt;7614;7614;0;0;1478.45;0;5.0

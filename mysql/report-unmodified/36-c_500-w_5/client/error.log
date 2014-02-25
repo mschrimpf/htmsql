@@ -1,0 +1,34 @@
+Fri Feb 14 08:07:07 2014
+Microseconds : 75643
+tid:826230592 client.c:127
+500 DB worker threads have started
+Fri Feb 14 08:10:50 2014
+Microseconds : 16422
+tid:793478912 mysql/dbc_new_order.c:108
+NEW_ORDER ROLLBACK RC 1
+
+Fri Feb 14 08:10:50 2014
+Microseconds : 16448
+tid:793478912 mysql/dbc_common.c:97
+ROLLBACK INITIATED
+
+Fri Feb 14 08:15:50 2014
+Microseconds : 219809
+tid:-1344043264 mysql/dbc_new_order.c:108
+NEW_ORDER ROLLBACK RC 1
+
+Fri Feb 14 08:15:50 2014
+Microseconds : 219852
+tid:-1344043264 mysql/dbc_common.c:97
+ROLLBACK INITIATED
+
+Fri Feb 14 08:16:38 2014
+Microseconds : 499339
+tid:-1379186944 mysql/dbc_new_order.c:108
+NEW_ORDER ROLLBACK RC 1
+
+Fri Feb 14 08:16:38 2014
+Microseconds : 499382
+tid:-1379186944 mysql/dbc_common.c:97
+ROLLBACK INITIATED
+

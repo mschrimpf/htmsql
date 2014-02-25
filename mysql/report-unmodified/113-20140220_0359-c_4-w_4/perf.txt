@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '3070':
+
+       4341,981031 task-clock                #    0,025 CPUs utilized          
+     4.455.291.530 instructions              #    1,16  insns per cycle        
+     3.852.152.698 cycles                    #    0,887 GHz                    
+                 0 cpu/cycles-t/             #    0,00% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+                 0 cpu/el-start/             #    0,000 K/sec                  
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+     175,001244166 seconds time elapsed
+

@@ -1,0 +1,152 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 10
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 10
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1393210865
+driver will ramp up in  90 seconds
+will stop test at time 1393211015
+seed for 27922:4e260700 : 489193682
+seed for 27922:4e23f700 : 489508808
+seed for 27922:4e21e700 : 489643758
+seed for 27922:4e1fd700 : 487681658
+seed for 27922:4e1dc700 : 487816556
+seed for 27922:4e1bb700 : 487918777
+seed for 27922:4e19a700 : 488053679
+seed for 27922:4e179700 : 488188665
+seed for 27922:4e158700 : 488323574
+seed for 27922:4e137700 : 488491280
+seed for 27922:4e116700 : 488626289
+seed for 27922:4e0f5700 : 486664062
+seed for 27922:4e0d4700 : 486799060
+seed for 27922:4e0b3700 : 486901245
+seed for 27922:4d569700 : 509093172
+seed for 27922:4d548700 : 509228977
+seed for 27922:4d527700 : 509394992
+seed for 27922:4d506700 : 509530298
+seed for 27922:4d4e5700 : 507568557
+seed for 27922:4d4c4700 : 507703963
+seed for 27922:4d4a3700 : 507806556
+seed for 27922:4d482700 : 507939879
+seed for 27922:4d461700 : 508083409
+seed for 27922:4d440700 : 508210433
+seed for 27922:4d41f700 : 508517893
+seed for 27922:4d3fe700 : 506547962
+seed for 27922:4d3dd700 : 506691431
+seed for 27922:4d3bc700 : 506816601
+seed for 27922:4d39b700 : 506927394
+seed for 27922:4d37a700 : 507054593
+seed for 27922:4d359700 : 507198235
+seed for 27922:4d338700 : 507325425
+seed for 27922:4d317700 : 507499577
+seed for 27922:4d2f6700 : 505529683
+seed for 27922:4d2d5700 : 505673239
+seed for 27922:4d2b4700 : 505800406
+seed for 27922:4d293700 : 505911185
+seed for 27922:4d272700 : 506036356
+seed for 27922:4d251700 : 506179882
+seed for 27922:4d230700 : 506307029
+seed for 27922:4d20f700 : 506352249
+seed for 27922:4d1ee700 : 504382305
+seed for 27922:4d1cd700 : 504525804
+seed for 27922:4d1ac700 : 504667302
+seed for 27922:4d18b700 : 504819073
+seed for 27922:4d16a700 : 504954488
+seed for 27922:4d149700 : 505073512
+seed for 27922:4d128700 : 505208807
+seed for 27922:4d107700 : 505293052
+seed for 27922:4d0e6700 : 503331231
+seed for 27922:4d0c5700 : 503450259
+seed for 27922:4d0a4700 : 503585655
+seed for 27922:4d083700 : 503735346
+seed for 27922:4d062700 : 503870598
+seed for 27922:4d041700 : 503989573
+seed for 27922:4d020700 : 504124930
+seed for 27922:4cfff700 : 535930671
+seed for 27922:4cfde700 : 536066006
+seed for 27922:4cfbd700 : 536182863
+seed for 27922:4cf9c700 : 536318290
+seed for 27922:4cf7b700 : 536469989
+seed for 27922:4cf5a700 : 536605411
+seed for 27922:4cf39700 : 536724385
+seed for 27922:4cf18700 : 536857777
+seed for 27922:4cef7700 : 534855026
+seed for 27922:4ced6700 : 534982071
+seed for 27922:4ceb5700 : 535109295
+seed for 27922:4ce94700 : 535236460
+seed for 27922:4ce73700 : 535394341
+seed for 27922:4ce52700 : 535521374
+seed for 27922:4ce31700 : 535648583
+seed for 27922:4ce10700 : 535775916
+seed for 27922:4cdef700 : 533773086
+seed for 27922:4cdce700 : 533900224
+seed for 27922:4cdad700 : 534025511
+seed for 27922:4cd8c700 : 534152676
+seed for 27922:4cd6b700 : 534312614
+seed for 27922:4cd4a700 : 534439693
+seed for 27922:4cd29700 : 534564898
+seed for 27922:4cd08700 : 534692035
+seed for 27922:4cce7700 : 532689369
+seed for 27922:4ccc6700 : 532816399
+seed for 27922:4cca5700 : 532943718
+seed for 27922:4cc84700 : 533085260
+seed for 27922:4cc63700 : 533220584
+seed for 27922:4cc42700 : 533355843
+seed for 27922:4cc21700 : 533491269
+seed for 27922:4cc00700 : 533626499
+seed for 27922:4cbdf700 : 531861298
+seed for 27922:4cbbe700 : 531994632
+seed for 27922:4cb9d700 : 532129966
+seed for 27922:4cb7c700 : 532265400
+seed for 27922:4cb5b700 : 532400822
+seed for 27922:4cb3a700 : 532536300
+seed for 27922:4cb19700 : 532669482
+seed for 27922:4caf8700 : 530707730
+seed for 27922:4cad7700 : 530777689
+seed for 27922:4cab6700 : 530913121
+seed for 27922:4ca95700 : 531046464
+100 / 100 threads started...
+seed for 27922:4ca74700 : 531181726

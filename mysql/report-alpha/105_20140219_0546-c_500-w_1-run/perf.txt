@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '25595':
+
+       1081,698730 task-clock                #    0,006 CPUs utilized          
+     1.011.468.993 instructions              #    0,97  insns per cycle         [71,94%]
+     1.038.898.980 cycles                    #    0,960 GHz                     [71,94%]
+        41.572.297 cpu/cycles-t/             #    4,00% transactional cycles    [71,94%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [71,94%]
+           182.116 cpu/el-start/             #      228 cycles / elision        [71,94%]
+        26.499.084 cpu/cycles-ct/            #    1,45% aborted cycles          [71,94%]
+
+     175,001295250 seconds time elapsed
+

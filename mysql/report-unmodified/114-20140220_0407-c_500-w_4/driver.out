@@ -1,0 +1,87 @@
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.45
+payment mix 0.43
+order-status mix 0.04
+delivery mix 0.04
+stock-level mix 0.04
+
+transaction thresholds:
+new-order threshold 0.45
+payment threshold 0.88
+order-status threshold 0.92
+delivery threshold 0.96
+stock-level threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+180 second steady state duration
+
+driver is starting to ramp up at time 1392865789
+driver will ramp up in  9 seconds
+will stop test at time 1392865998
+seed: 3624174220
+seed: 3624775427
+seed: 3624356419
+seed: 3624457863
+seed: 3624554968
+seed: 3624312415
+seed: 3657177794
+seed: 3656746263
+seed: 3657310615
+seed: 3657125203
+seed: 3657034242
+seed: 3656479801
+seed: 3656643053
+seed: 3657186985
+seed: 3644013163
+seed: 3644827076
+seed: 3644129658
+seed: 3644616220
+seed: 3644311959
+seed: 3643954437
+seed: 3642806960
+seed: 3643284497
+seed: 3643447406
+seed: 3643082012
+seed: 3643564697
+seed: 3642936335
+seed: 3642780048
+seed: 3643356482
+seed: 3642392028
+seed: 3642735740
+seed: 3642017183
+seed: 3642598552
+seed: 3642163269
+seed: 3642256651
+seed: 3642296834
+seed: 3642119209
+seed: 3641495834
+seed: 3641040590
+seed: 3641617508
+seed: 3641378200
+terminals started...
+driver is exiting normally

@@ -1,0 +1,2058 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 50
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 50
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1392953297
+driver will ramp up in  490 seconds
+will stop test at time 1392953847
+seed for 28876:ec20700 : 1573871401
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ebff700 : 1571991548
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ebde700 : 1571856592
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ebbd700 : 1572245932
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eb9c700 : 1572110990
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eb7b700 : 1572533094
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eb5a700 : 1572398150
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eb39700 : 1572787498
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eb18700 : 1572652598
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eaf7700 : 1570912030
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ead6700 : 1570777085
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:eab5700 : 1571166415
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ea94700 : 1571031512
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ea73700 : 1571453517
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dd13700 : 1591507834
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dcf2700 : 1589800058
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dcd1700 : 1589665045
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dcb0700 : 1590054410
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dc8f700 : 1590017854
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dc6e700 : 1590407053
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dc4d700 : 1590583431
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dc2c700 : 1590194610
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dc0b700 : 1590297180
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dbea700 : 1588859714
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dbc9700 : 1588995098
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dba8700 : 1588606219
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:db87700 : 1588774463
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:db66700 : 1589434076
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:db45700 : 1589569475
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:db24700 : 1589180655
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:db03700 : 1589283231
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dae2700 : 1587845760
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:dac1700 : 1587981215
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:daa0700 : 1587592368
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:da7f700 : 1588415705
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:da5e700 : 1588551119
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:da3d700 : 1588162267
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:da1c700 : 1588297713
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d9fb700 : 1586827394
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d9da700 : 1586954652
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d9b9700 : 1586574010
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d998700 : 1586701130
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d977700 : 1587401812
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d956700 : 1587528974
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d935700 : 1587148318
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d914700 : 1587275556
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d8f3700 : 1585813453
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d8d2700 : 1585940261
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d8b1700 : 1585559061
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d890700 : 1585685772
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d86f700 : 1586254950
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d84e700 : 1586381663
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d82d700 : 1586000449
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d80c700 : 1586127291
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d7eb700 : 1584664732
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d7ca700 : 1584807899
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d7a9700 : 1584402149
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d788700 : 1584537037
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d767700 : 1585245494
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d746700 : 1585380376
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d725700 : 1584974718
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d704700 : 1585109599
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d6e3700 : 1583655237
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d6c2700 : 1583790333
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d6a1700 : 1583384574
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d680700 : 1583519440
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d65f700 : 1584358869
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d63e700 : 1583969499
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d61d700 : 1584088114
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d5fc700 : 1582650205
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d5db700 : 1582768725
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d5ba700 : 1582379575
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d599700 : 1582498096
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d578700 : 1583157253
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d557700 : 1583349611
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d536700 : 1582952069
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d515700 : 1583078835
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d4f4700 : 1581632665
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d4d3700 : 1581759543
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d4b2700 : 1581361925
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d491700 : 1581488698
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d470700 : 1582139690
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d44f700 : 1582200915
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d42e700 : 1581803336
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d40d700 : 1581930059
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d3ec700 : 1580483961
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d3cb700 : 1580610709
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d3aa700 : 1580213123
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d389700 : 1580339882
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d368700 : 1580990937
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d347700 : 1581183210
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d326700 : 1580785694
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d305700 : 1580904213
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d2e4700 : 1579466347
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d2c3700 : 1579601255
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d2a2700 : 1579211914
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d281700 : 1579346846
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d260700 : 1580006062
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d23f700 : 1579747778
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+100 / 500 threads started...
+seed for 28876:d21e700 : 1579882710
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d1fd700 : 1578444810
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d1dc700 : 1578579703
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d1bb700 : 1578190361
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d19a700 : 1578325300
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d179700 : 1578984516
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d158700 : 1579119469
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d137700 : 1578730099
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d116700 : 1578865029
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d0f5700 : 1577427092
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d0d4700 : 1577562022
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d0b3700 : 1577180850
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d092700 : 1577307576
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d071700 : 1577974959
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d050700 : 1578101633
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d02f700 : 1577589617
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:d00e700 : 1577716344
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cfed700 : 1609841004
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cfcc700 : 1609967687
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cfab700 : 1609586484
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cf8a700 : 1609713217
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cf69700 : 1610380594
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cf48700 : 1610507311
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cf27700 : 1610126111
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cf06700 : 1610252803
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cee5700 : 1608823285
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cec4700 : 1608949986
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cea3700 : 1608576974
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ce82700 : 1608711856
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ce61700 : 1609354625
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ce40700 : 1609489563
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ce1f700 : 1609247745
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cdfe700 : 1607809992
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cddd700 : 1607928520
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cdbc700 : 1607539160
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cd9b700 : 1607690422
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cd7a700 : 1608349576
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cd59700 : 1608468349
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cd38700 : 1608078858
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cd17700 : 1608230199
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ccf6700 : 1606792219
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ccd5700 : 1606910944
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ccb4700 : 1606521546
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cc93700 : 1606672858
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cc72700 : 1607332173
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cc51700 : 1607450705
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cc30700 : 1607061321
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cc0f700 : 1607089711
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cbee700 : 1605643567
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cbcd700 : 1605770460
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cbac700 : 1605372915
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cb8b700 : 1605532504
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cb6a700 : 1606183512
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cb49700 : 1606310212
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cb28700 : 1605912651
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cb07700 : 1606072093
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cae6700 : 1604626064
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:cac5700 : 1604752867
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:caa4700 : 1604355215
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ca83700 : 1604514748
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ca62700 : 1605165741
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ca41700 : 1605292473
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:ca20700 : 1604895048
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c9ff700 : 1603612760
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c9de700 : 1603788659
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c9bd700 : 1603399169
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c99c700 : 1603534105
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c97b700 : 1604160728
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c95a700 : 1604295649
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c939700 : 1603906284
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c918700 : 1604041200
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c8f7700 : 1602570371
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c8d6700 : 1602705299
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c8b5700 : 1602315947
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c894700 : 1602450872
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c873700 : 1603077444
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c852700 : 1603212456
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c831700 : 1602823042
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c810700 : 1602958071
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c7ef700 : 1601487332
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c7ce700 : 1601622249
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c7ad700 : 1601241064
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c78c700 : 1601367751
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c76b700 : 1602002227
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c74a700 : 1602128927
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c729700 : 1601747722
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c708700 : 1601874558
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c6e7700 : 1600412006
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c6c6700 : 1600539133
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c6a5700 : 1600157853
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c684700 : 1600284556
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c663700 : 1600919083
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c642700 : 1601045808
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c621700 : 1600664583
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c600700 : 1600791319
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c5df700 : 1599591015
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c5be700 : 1599193468
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c59d700 : 1599336520
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c57c700 : 1599987546
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c55b700 : 1600106412
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+200 / 500 threads started...
+seed for 28876:c53a700 : 1599717047
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c519700 : 1599835552
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c4f8700 : 1598397582
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c4d7700 : 1598516118
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c4b6700 : 1598126819
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c495700 : 1598245362
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c474700 : 1598904429
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c453700 : 1599022869
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c432700 : 1598633558
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c411700 : 1598752114
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c3f0700 : 1597314165
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c3cf700 : 1597432672
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c3ae700 : 1597043612
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c38d700 : 1597162165
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c36c700 : 1597821350
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c34b700 : 1597939724
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c32a700 : 1597550352
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c309700 : 1597677163
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c2e8700 : 1596231322
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c2c7700 : 1596358088
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c2a6700 : 1595960527
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c285700 : 1596087292
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c264700 : 1596738285
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c243700 : 1596864995
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c222700 : 1596467427
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c201700 : 1596594170
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c1e0700 : 1595147784
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c1bf700 : 1595012370
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c19e700 : 1595139111
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c17d700 : 1595790200
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c15c700 : 1595916919
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c13b700 : 1595519351
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c11a700 : 1595646346
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c0f9700 : 1594200193
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c0d8700 : 1594359699
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c0b7700 : 1593904881
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c096700 : 1594039777
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c075700 : 1594698980
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c054700 : 1594833731
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:c033700 : 1594444685
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7fff700 : 1425378018
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7fde700 : 1425512912
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7fbd700 : 1425123550
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7f9c700 : 1425258436
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7f7b700 : 1425917626
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7f5a700 : 1426052523
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7f39700 : 1425663109
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7f18700 : 1425797923
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7ef7700 : 1424294453
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7ed6700 : 1424429345
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7eb5700 : 1424039944
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7e94700 : 1424175344
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7e73700 : 1424842722
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7e52700 : 1424969421
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7e31700 : 1424588218
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7e10700 : 1424714915
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7def700 : 1423219549
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7dce700 : 1423346270
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7dad700 : 1422965033
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7d8c700 : 1423091774
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7d6b700 : 1423759123
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7d4a700 : 1423886307
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7d29700 : 1423505111
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7d08700 : 1423631827
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7ce7700 : 1422136487
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7cc6700 : 1422263135
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7ca5700 : 1421881948
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7c84700 : 1422008663
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7c63700 : 1422676426
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7c42700 : 1422803151
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7c21700 : 1422413673
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7c00700 : 1422548581
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7bdf700 : 1421323588
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7bbe700 : 1420934266
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7b9d700 : 1421052689
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7b7c700 : 1421711872
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7b5b700 : 1421863220
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7b3a700 : 1421474137
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7b19700 : 1421592665
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7af8700 : 1420154746
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7ad7700 : 1420240493
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7ab6700 : 1419851027
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7a95700 : 1419969548
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7a74700 : 1420628789
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7a53700 : 1420780066
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7a32700 : 1420391123
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7a11700 : 1420509693
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:79f0700 : 1419071732
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:79cf700 : 1419165681
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:79ae700 : 1418768011
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:798d700 : 1418894741
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:796c700 : 1419545713
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:794b700 : 1419705193
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:792a700 : 1419307616
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7909700 : 1419434352
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:78e8700 : 1417988097
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:78c7700 : 1418082074
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:78a6700 : 1417684496
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7885700 : 1417811236
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7864700 : 1418462261
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+300 / 500 threads started...
+seed for 28876:7843700 : 1418622110
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7822700 : 1418224631
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7801700 : 1418351233
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:77e0700 : 1416905114
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:77bf700 : 1416737110
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:779e700 : 1416781386
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:777d700 : 1417441210
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:775c700 : 1417575599
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:773b700 : 1417153946
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:771a700 : 1417288329
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:76f9700 : 1415851006
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:76d8700 : 1415985377
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:76b7700 : 1415629279
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7696700 : 1415763657
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7675700 : 1416422961
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7654700 : 1416558370
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7633700 : 1416135707
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7612700 : 1416271113
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:75f1700 : 1414832805
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:75d0700 : 1414968236
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:75af700 : 1414611128
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:758e700 : 1414746508
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:756d700 : 1415413406
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:754c700 : 1415540722
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:752b700 : 1415126228
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:750a700 : 1415253467
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:74e9700 : 1413823788
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:74c8700 : 1413950011
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:74a7700 : 1413602052
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7486700 : 1413728360
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7465700 : 1414396284
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7444700 : 1414522446
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7423700 : 1414109103
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7402700 : 1414235320
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:73e1700 : 1412806024
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:73c0700 : 1412932251
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:739f700 : 1412584409
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:737e700 : 1413235518
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:735d700 : 1413378092
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:733c700 : 1412981172
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:731b700 : 1413099251
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:72fa700 : 1411661805
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:72d9700 : 1411780368
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:72b8700 : 1411390467
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7297700 : 1411575071
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7276700 : 1412233811
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7255700 : 1412352834
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7234700 : 1411963014
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7213700 : 1412082085
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:71f2700 : 1410643668
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:71d1700 : 1410762748
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:71b0700 : 1410372837
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:718f700 : 1410556937
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:716e700 : 1411216671
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:714d700 : 1411334706
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:712c700 : 1410945860
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:710b700 : 1411063903
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:70ea700 : 1409626465
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:70c9700 : 1409752701
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:70a8700 : 1409355660
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7087700 : 1409547409
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7066700 : 1410198914
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7045700 : 1410325183
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7024700 : 1409928130
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:7003700 : 1410054358
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6fe2700 : 1442163173
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6fc1700 : 1442289393
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6fa0700 : 1441891871
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6f7f700 : 1442609001
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6f5e700 : 1442735170
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6f3d700 : 1442338102
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6f1c700 : 1442464298
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6efb700 : 1441018631
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6eda700 : 1441145077
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6eb9700 : 1440748030
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6e98700 : 1440906986
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6e77700 : 1441566677
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6e56700 : 1441701061
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6e35700 : 1441312215
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6e14700 : 1441446590
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6df3700 : 1440008813
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6dd2700 : 1440144220
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6db1700 : 1439754313
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6d90700 : 1439889716
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6d6f700 : 1440548404
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6d4e700 : 1440683787
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6d2d700 : 1440293915
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6d0c700 : 1440429549
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6ceb700 : 1438991096
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6cca700 : 1439126487
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6ca9700 : 1438736601
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6c88700 : 1438871940
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6c67700 : 1439531374
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6c46700 : 1439665788
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6c25700 : 1439285069
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6c04700 : 1439411318
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6be3700 : 1437982020
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6bc2700 : 1438108243
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6ba1700 : 1437727503
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6b80700 : 1437853699
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+400 / 500 threads started...
+seed for 28876:6b5f700 : 1438521641
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6b3e700 : 1438123691
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6b1d700 : 1438267326
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6afc700 : 1436820650
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6adb700 : 1436963929
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6aba700 : 1436566861
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6a99700 : 1436709497
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6a78700 : 1437361003
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6a57700 : 1437503502
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6a36700 : 1437106482
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6a15700 : 1437240879
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:69f4700 : 1435803614
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:69d3700 : 1435954212
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:69b2700 : 1435565523
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6991700 : 1435683580
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6970700 : 1436343278
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:694f700 : 1436494070
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:692e700 : 1436105089
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:690d700 : 1436223124
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:68ec700 : 1434785705
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:68cb700 : 1434936490
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:68aa700 : 1434547269
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6889700 : 1434666313
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6868700 : 1435325019
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6847700 : 1435476837
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6826700 : 1435086859
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6805700 : 1435205912
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:67e4700 : 1433767679
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:67c3700 : 1433927679
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:67a2700 : 1433529558
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6781700 : 1433656804
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6760700 : 1434307319
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:673f700 : 1433942906
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:671e700 : 1434069103
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:66fd700 : 1432623454
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:66dc700 : 1432750514
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:66bb700 : 1432385188
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:669a700 : 1432512406
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6679700 : 1433162907
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6658700 : 1433290122
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6637700 : 1432924906
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6616700 : 1433052123
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:65f5700 : 1431605449
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:65d4700 : 1431732518
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:65b3700 : 1431309843
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6592700 : 1431445182
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6571700 : 1432104025
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6550700 : 1432239434
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:652f700 : 1431948715
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:650e700 : 1432083131
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:64ed700 : 1430645641
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:64cc700 : 1430780056
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:64ab700 : 1430358509
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:648a700 : 1430492916
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6469700 : 1431152415
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6448700 : 1431286802
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6427700 : 1430865257
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6406700 : 1431000484
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:63e5700 : 1429562038
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:63c4700 : 1429697414
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:63a3700 : 1429274771
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6382700 : 1429410092
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6361700 : 1430076966
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6340700 : 1430204370
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:631f700 : 1429920796
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:62fe700 : 1428475144
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:62dd700 : 1428617781
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:62bc700 : 1428220706
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:629b700 : 1428330583
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:627a700 : 1428982105
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6259700 : 1429124683
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6238700 : 1428727673
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6217700 : 1428837478
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:61f6700 : 1427391844
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:61d5700 : 1427535277
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:61b4700 : 1427137244
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6193700 : 1427248072
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6172700 : 1427898612
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6151700 : 1428042218
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6130700 : 1427643931
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:610f700 : 1427894024
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:60ee700 : 1426455625
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:60cd700 : 1426574686
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:60ac700 : 1426184817
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:608b700 : 1426303622
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:606a700 : 1426963351
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6049700 : 1427081362
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6028700 : 1426692515
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:6007700 : 1426810544
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5fe6700 : 1458927403
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5fc5700 : 1459045395
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5fa4700 : 1458656549
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5f83700 : 1458774581
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5f62700 : 1459434310
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5f41700 : 1459552347
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5f20700 : 1459163313
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5eff700 : 1457840587
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5ede700 : 1457974978
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5ebd700 : 1457577906
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+seed for 28876:5e9c700 : 1457704098
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+500 / 500 threads started...
+seed for 28876:5e7b700 : 1458355603
+connect: Connection refused
+Can't connect to client socket
+connect_to_client() failed, thread exiting...
+terminals started...
+driver is exiting normally

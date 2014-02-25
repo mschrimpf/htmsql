@@ -1,0 +1,48 @@
+Thu Feb 20 04:22:40 2014
+Microseconds : 188037
+tid:799401728 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:40 2014
+Microseconds : 771076
+tid:799807232 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:41 2014
+Microseconds : 489352
+tid:814749440 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:42 2014
+Microseconds : 268777
+tid:800212736 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:43 2014
+Microseconds : 118577
+tid:801429248 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:44 2014
+Microseconds : 65784
+tid:800753408 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:45 2014
+Microseconds : 305212
+tid:800347904 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:46 2014
+Microseconds : 208513
+tid:801699584 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:46 2014
+Microseconds : 684685
+tid:799536896 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:47 2014
+Microseconds : 156856
+tid:799266560 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:47 2014
+Microseconds : 641634
+tid:800888576 client_interface.c:33
+socket closed on _receive
+Thu Feb 20 04:22:47 2014
+Microseconds : 989547
+tid:798996224 client_interface.c:33
+socket closed on _receive

@@ -1,0 +1,12 @@
+140224 06:10:47 mysqld_safe Starting mysqld daemon with databases from /var/lib/mysql
+2014-02-24 06:10:48 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2014-02-24 06:10:48 0 [Warning] Changed limits: max_open_files: 4096  max_connections: 151  table_cache: 1967
+2014-02-24 06:10:48 3489 [ERROR] Can't read from messagefile '/usr/share/mysql/english/errmsg.sys'
+2014-02-24 06:10:48 3489 [Warning] Can't create test file /var/lib/mysql/deskkemper05.lower-test
+2014-02-24 06:10:48 3489 [Warning] Can't create test file /var/lib/mysql/deskkemper05.lower-test
+/home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: Can't change dir to '/var/lib/mysql/' (Errcode: 2 - No such file or directory)
+2014-02-24 06:10:48 3489 [ERROR] Aborting
+
+2014-02-24 06:10:48 3489 [Note] Binlog end
+2014-02-24 06:10:48 3489 [Note] 
+140224 06:10:48 mysqld_safe mysqld from pid file /var/run/mysqld/mysqld.pid ended

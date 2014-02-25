@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '27380':
+
+       2497,491471 task-clock                #    0,045 CPUs utilized          
+     2.912.543.854 instructions              #    1,21  insns per cycle        
+     2.398.966.390 cycles                    #    0,961 GHz                    
+        87.867.592 cpu/cycles-t/             #    3,66% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+           448.024 cpu/el-start/             #      196 cycles / elision       
+        47.557.855 cpu/cycles-ct/            #    1,68% aborted cycles         
+
+      55,001199517 seconds time elapsed
+

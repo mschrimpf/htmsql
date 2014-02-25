@@ -1,0 +1,91 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1393299181
+driver will ramp up in  30 seconds
+will stop test at time 1393299271
+seed for 17469:e5310700 : 3057237033
+seed for 17469:e52ef700 : 3055963962
+seed for 17469:e52ce700 : 3055836689
+seed for 17469:e52ad700 : 3055708521
+seed for 17469:e528c700 : 3055581272
+seed for 17469:e526b700 : 3056470863
+seed for 17469:e524a700 : 3056343870
+seed for 17469:e5229700 : 3056216614
+seed for 17469:e5208700 : 3056088328
+seed for 17469:e51e7700 : 3054945384
+seed for 17469:e51c6700 : 3054819162
+seed for 17469:e51a5700 : 3054692007
+seed for 17469:e5184700 : 3054563732
+seed for 17469:e5163700 : 3055452433
+seed for 17469:e4619700 : 3077120111
+seed for 17469:e45f8700 : 3075945296
+seed for 17469:e45d7700 : 3075850930
+seed for 17469:e45b6700 : 3075723790
+seed for 17469:e4595700 : 3075480836
+seed for 17469:e4574700 : 3076394337
+seed for 17469:e4553700 : 3076292154
+seed for 17469:e4532700 : 3076157124
+seed for 17469:e4511700 : 3076022150
+seed for 17469:e44f0700 : 3074836529
+seed for 17469:e44cf700 : 3074799912
+seed for 17469:e44ae700 : 3074664899
+seed for 17469:e448d700 : 3074529901
+seed for 17469:e446c700 : 3075443459
+seed for 17469:e444b700 : 3075339294
+seed for 17469:e442a700 : 3075204289
+seed for 17469:e4409700 : 3075069382
+seed for 17469:e43e8700 : 3073885933
+seed for 17469:e43c7700 : 3073718159
+seed for 17469:e43a6700 : 3073581184
+seed for 17469:e4385700 : 3073446306
+seed for 17469:e4364700 : 3074359883
+seed for 17469:e4343700 : 3074257784
+seed for 17469:e4322700 : 3074128933
+seed for 17469:e4301700 : 3073985674
+seed for 17469:e42e0700 : 3072810316

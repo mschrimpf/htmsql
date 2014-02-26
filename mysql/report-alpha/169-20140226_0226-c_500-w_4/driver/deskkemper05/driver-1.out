@@ -1,0 +1,91 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1393378076
+driver will ramp up in  30 seconds
+will stop test at time 1393378166
+seed for 9989:2573d700 : 1987157666
+seed for 9989:2571c700 : 1987284338
+seed for 9989:256fb700 : 1986919489
+seed for 9989:256da700 : 1987048221
+seed for 9989:256b9700 : 1986642468
+seed for 9989:25698700 : 1986777804
+seed for 9989:25677700 : 1986339306
+seed for 9989:25656700 : 1986474170
+seed for 9989:25635700 : 1986070406
+seed for 9989:25614700 : 1986205345
+seed for 9989:255f3700 : 1985832217
+seed for 9989:255d2700 : 1985967129
+seed for 9989:255b1700 : 1985561788
+seed for 9989:25590700 : 1985698708
+seed for 9989:24a46700 : 2007382642
+seed for 9989:24a25700 : 2006976878
+seed for 9989:24a04700 : 2007111707
+seed for 9989:249e3700 : 2006739091
+seed for 9989:249c2700 : 2006876087
+seed for 9989:249a1700 : 2006470226
+seed for 9989:24980700 : 2006605236
+seed for 9989:2495f700 : 2006428780
+seed for 9989:2493e700 : 2006041359
+seed for 9989:2491d700 : 2006184955
+seed for 9989:248fc700 : 2005787381
+seed for 9989:248db700 : 2004931329
+seed for 9989:248ba700 : 2005320253
+seed for 9989:24899700 : 2005201212
+seed for 9989:24878700 : 2005590507
+seed for 9989:24857700 : 2005405936
+seed for 9989:24836700 : 2005796745
+seed for 9989:24815700 : 2005677754
+seed for 9989:247f4700 : 2003969744
+seed for 9989:247d3700 : 2003850751
+seed for 9989:247b2700 : 2004239529
+seed for 9989:24791700 : 2004122415
+seed for 9989:24770700 : 2004511344
+seed for 9989:2474f700 : 2004457798
+seed for 9989:2472e700 : 2004847038
+seed for 9989:2470d700 : 2004728005

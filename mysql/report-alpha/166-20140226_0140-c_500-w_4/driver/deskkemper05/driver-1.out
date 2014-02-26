@@ -1,0 +1,91 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+500 second steady state duration
+
+driver is starting to ramp up at time 1393375272
+driver will ramp up in  30 seconds
+will stop test at time 1393375802
+seed for 6207:34dd9700 : 1742039900
+seed for 6207:34db8700 : 1741912984
+seed for 6207:34d97700 : 1741785725
+seed for 6207:34d76700 : 1742707024
+seed for 6207:34d55700 : 1742579763
+seed for 6207:34d34700 : 1742440215
+seed for 6207:34d13700 : 1742338015
+seed for 6207:34cf2700 : 1741153980
+seed for 6207:34cd1700 : 1741018553
+seed for 6207:34cb0700 : 1740883050
+seed for 6207:34c8f700 : 1740649276
+seed for 6207:34c6e700 : 1741562397
+seed for 6207:34c4d700 : 1741427449
+seed for 6207:34c2c700 : 1741291999
+seed for 6207:340e2700 : 1728503997
+seed for 6207:340c1700 : 1728372635
+seed for 6207:340a0700 : 1728237171
+seed for 6207:3407f700 : 1729051999
+seed for 6207:3405e700 : 1728916546
+seed for 6207:3403d700 : 1728781086
+seed for 6207:e7fff700 : 3036101138
+seed for 6207:e7fde700 : 3035966121
+seed for 6207:e7fbd700 : 3035830670
+seed for 6207:e7f9c700 : 3035695220
+seed for 6207:e7f7b700 : 3036636958
+seed for 6207:e7f5a700 : 3036509758
+seed for 6207:e7f39700 : 3036366477
+seed for 6207:e7f18700 : 3036239246
+seed for 6207:e7ef7700 : 3035079840
+seed for 6207:e7ed6700 : 3034952653
+seed for 6207:e7eb5700 : 3034809033
+seed for 6207:e7e94700 : 3034681836
+seed for 6207:e7e73700 : 3035619762
+seed for 6207:e7e52700 : 3035492556
+seed for 6207:e7e31700 : 3035352841
+seed for 6207:e7e10700 : 3035225623
+seed for 6207:e7def700 : 3033935202
+seed for 6207:e7dce700 : 3033807985
+seed for 6207:e7dad700 : 3033664668
+seed for 6207:e7d8c700 : 3033537333

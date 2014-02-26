@@ -1,0 +1,293 @@
+Started on:   Mi 26. Feb 01:18:38 CET 2014
+Expected end: Mi 26. Feb 01:26:58 CET 2014
+Restoring backed up mysql data
+STOPPING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqladmin --no-defaults -u root shutdown
+Data restored
+STARTING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld --no-defaults 		--max_connections=1000 		--performance_schema=OFF 		--table_open_cache_instances=32 		--query_cache_type=0 		--query_cache_size=0 		--innodb_buffer_pool_size=21474836480 		--innodb_log_file_size=268435456 		--innodb_log_buffer_size=16777216 		--innodb_flush_method=fsync 		--innodb_flush_log_at_trx_commit=2
+2014-02-26 01:19:21 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2014-02-26 01:19:21 0 [Warning] Changed limits: max_open_files: 4096  max_connections: 1000  table_cache: 1543
+2014-02-26 01:19:21 5561 [Note] Plugin 'FEDERATED' is disabled.
+2014-02-26 01:19:21 5561 [Note] InnoDB: The InnoDB memory heap is disabled
+2014-02-26 01:19:21 5561 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2014-02-26 01:19:21 5561 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2014-02-26 01:19:21 5561 [Note] InnoDB: CPU does not support crc32 instructions
+2014-02-26 01:19:21 5561 [Note] InnoDB: Initializing buffer pool, size = 20.0G
+2014-02-26 01:19:22 5561 [Note] InnoDB: Completed initialization of buffer pool
+2014-02-26 01:19:22 5561 [Note] InnoDB: Highest supported file format is Barracuda.
+2014-02-26 01:19:23 5561 [Note] InnoDB: 128 rollback segment(s) are active.
+2014-02-26 01:19:23 5561 [Note] InnoDB: Waiting for purge to start
+2014-02-26 01:19:23 5561 [Note] InnoDB: 1.2.10 started; log sequence number 17719764156
+2014-02-26 01:19:23 5561 [Note] Server hostname (bind-address): '*'; port: 3306
+2014-02-26 01:19:23 5561 [Note] IPv6 is available.
+2014-02-26 01:19:23 5561 [Note]   - '::' resolves to '::';
+2014-02-26 01:19:23 5561 [Note] Server socket created on IP: '::'.
+2014-02-26 01:19:23 5561 [Note] Event Scheduler: Loaded 0 events
+2014-02-26 01:19:23 5561 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: ready for connections.
+Version: '5.6.10'  socket: '/tmp/mysql.sock'  port: 3306  Source distribution
+output: /home/htmsql/develop/mysql/report-alpha/165-20140226_0118-c_4-w_4
+RUNNING TEST: ./dbt2-run-workload 		-a mysql 		-c 4 		-d 500 		-w 4 		-o /home/htmsql/develop/mysql/report-alpha/165-20140226_0118-c_4-w_4
+Sleeping for 30 sec before profiling
+MySQL pid file '/home/htmsql/develop/mysql/mysql-5.6.10-alpha/deskkemper05.pid' does not exist.
+MySQL was not stopped, if it was running.
+DBT-2 test for mysql started...
+
+DATABASE SYSTEM: localhost
+DATABASE NAME: dbt2
+DATABASE SOCKET: /tmp/mysql.sock
+DATABASE PORT: 3306
+DATABASE CONNECTIONS: 4
+TERMINAL THREADS: 40
+TERMINALS PER WAREHOUSE: 10
+WAREHOUSES PER THREAD/CLIENT PAIR: 4
+SCALE FACTOR (WAREHOUSES): 4
+DURATION OF TEST (in sec): 500
+1 client stared every 1000 millisecond(s)
+
+waiting for server
+Stage 1. Starting up client...
+./dbt2-client -t /tmp/mysql.sock -l 3306 -d dbt2 -u root -h localhost -f -c 4 -s 1000 -p 30000 -o /home/htmsql/develop/mysql/report-alpha/165-20140226_0118-c_4-w_4/client/deskkemper05.1
+Sleeping 5 seconds
+collecting database statistics...
+./dbt2-run-workload: line 650: ./vacuumdb: No such file or directory
+
+Stage 2. Starting up driver...
+1000 threads started per millisecond
+estimated rampup time: Sleeping 50 seconds
+PROFILING PERF: perf stat 		-T -p 5561 		sleep 9999 		&>/home/htmsql/develop/mysql/report-alpha/165-20140226_0118-c_4-w_4/perf.txt
+estimated rampup time has elapsed
+estimated steady state time: Sleeping 500 seconds
+
+Stage 3. Processing of results...
+Killing client...
+./dbt2-run-workload: line 680:  5673 Terminated              ./dbt2-driver ${DRIVER_COMMAND_ARGS} > ${DRIVER_OUTPUT_DIR}/`hostname`/driver-${SEG}.out 2>&1
+./dbt2-run-workload: line 605:  5631 Terminated              ./dbt2-client ${CLIENT_COMMAND_ARGS} -p ${PORT} -o ${CDIR} > ${CLIENT_OUTPUT_DIR}/`hostname`/client-${SEG}.out 2>&1
+MySQL pid file '/home/htmsql/develop/mysql/mysql-5.6.10-alpha/deskkemper05.pid' does not exist.
+MySQL was not stopped, if it was running.
+Test completed.
+Results are in: /home/htmsql/develop/mysql/report-alpha/165-20140226_0118-c_4-w_4
+
+                         Response Time (s)
+ Transaction      %    Average :    90th %        Total        Rollbacks      %     Ser. Retries      %
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----
+    Delivery   3.41      0.054 :     0.073           57                0   0.00                0   0.00
+   New Order   9.50      0.009 :     0.018          159                1   0.63                0   0.00
+Order Status  39.01      0.003 :     0.004          653                0   0.00                0   0.00
+     Payment   7.71      0.003 :     0.004          129                0   0.00                0   0.00
+ Stock Level  36.50      0.003 :     0.003          611                0   0.00                0   0.00
+Credit Check   3.88      0.000 :     0.001           65                0   0.00                0   0.00
+------------  -----  ---------------------  -----------  ---------------  -----
+
+18.71 new-order transactions per minute (NOTPM)
+196.94 total transactions per minute (TTPM)
+8.5 minute duration
+0 total unknown errors
+0.6 second(s) ramping up
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----
+./run_dbt2_suite.sh: line 207: syntax error near unexpected token `('
+./run_dbt2_suite.sh: line 207: `me from run_mysql.sh.in ("sleep for .. to start .. database connections")'
+Started on:   Mi 26. Feb 01:40:07 CET 2014
+Expected end: Mi 26. Feb 01:48:27 CET 2014
+Restoring backed up mysql data
+STOPPING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqladmin --no-defaults -u root shutdown
+2014-02-26 01:40:07 5561 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: Normal shutdown
+
+2014-02-26 01:40:07 5561 [Note] Giving 0 client threads a chance to die gracefully
+2014-02-26 01:40:07 5561 [Note] Event Scheduler: Purging the queue. 0 events
+2014-02-26 01:40:07 5561 [Note] Shutting down slave threads
+2014-02-26 01:40:07 5561 [Note] Forcefully disconnecting 0 remaining clients
+2014-02-26 01:40:07 5561 [Note] Binlog end
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'partition'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'ARCHIVE'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'BLACKHOLE'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_INSERTED'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_METRICS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_CMP'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_LOCKS'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'INNODB_TRX'
+2014-02-26 01:40:07 5561 [Note] Shutting down plugin 'InnoDB'
+2014-02-26 01:40:07 5561 [Note] InnoDB: FTS optimize thread exiting.
+2014-02-26 01:40:07 5561 [Note] InnoDB: Starting shutdown...
+2014-02-26 01:40:09 5561 [Note] InnoDB: Shutdown completed; log sequence number 17730208324
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'MRG_MYISAM'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'CSV'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'MyISAM'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'MEMORY'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'sha256_password'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'mysql_old_password'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'mysql_native_password'
+2014-02-26 01:40:09 5561 [Note] Shutting down plugin 'binlog'
+2014-02-26 01:40:09 5561 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: Shutdown complete
+
+Data restored
+STARTING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld --no-defaults 		--max_connections=1000 		--performance_schema=OFF 		--table_open_cache_instances=32 		--query_cache_type=0 		--query_cache_size=0 		--innodb_buffer_pool_size=21474836480 		--innodb_log_file_size=268435456 		--innodb_log_buffer_size=16777216 		--innodb_flush_method=fsync 		--innodb_flush_log_at_trx_commit=2
+2014-02-26 01:40:42 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2014-02-26 01:40:42 0 [Warning] Changed limits: max_open_files: 4096  max_connections: 1000  table_cache: 1543
+2014-02-26 01:40:42 6090 [Note] Plugin 'FEDERATED' is disabled.
+2014-02-26 01:40:42 6090 [Note] InnoDB: The InnoDB memory heap is disabled
+2014-02-26 01:40:42 6090 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2014-02-26 01:40:42 6090 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2014-02-26 01:40:42 6090 [Note] InnoDB: CPU does not support crc32 instructions
+2014-02-26 01:40:42 6090 [Note] InnoDB: Initializing buffer pool, size = 20.0G
+2014-02-26 01:40:43 6090 [Note] InnoDB: Completed initialization of buffer pool
+2014-02-26 01:40:43 6090 [Note] InnoDB: Highest supported file format is Barracuda.
+2014-02-26 01:40:44 6090 [Note] InnoDB: 128 rollback segment(s) are active.
+2014-02-26 01:40:44 6090 [Note] InnoDB: Waiting for purge to start
+2014-02-26 01:40:44 6090 [Note] InnoDB: 1.2.10 started; log sequence number 17719764156
+2014-02-26 01:40:44 6090 [Note] Server hostname (bind-address): '*'; port: 3306
+2014-02-26 01:40:44 6090 [Note] IPv6 is available.
+2014-02-26 01:40:44 6090 [Note]   - '::' resolves to '::';
+2014-02-26 01:40:44 6090 [Note] Server socket created on IP: '::'.
+2014-02-26 01:40:44 6090 [Note] Event Scheduler: Loaded 0 events
+2014-02-26 01:40:44 6090 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: ready for connections.
+Version: '5.6.10'  socket: '/tmp/mysql.sock'  port: 3306  Source distribution
+output: /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4
+RUNNING TEST: ./dbt2-run-workload 		-a mysql 		-c 500 		-d 500 		-w 4 		-o /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4
+Sleeping for 30 sec before profiling
+MySQL pid file '/home/htmsql/develop/mysql/mysql-5.6.10-alpha/deskkemper05.pid' does not exist.
+MySQL was not stopped, if it was running.
+DBT-2 test for mysql started...
+
+DATABASE SYSTEM: localhost
+DATABASE NAME: dbt2
+DATABASE SOCKET: /tmp/mysql.sock
+DATABASE PORT: 3306
+DATABASE CONNECTIONS: 500
+TERMINAL THREADS: 40
+TERMINALS PER WAREHOUSE: 10
+WAREHOUSES PER THREAD/CLIENT PAIR: 4
+SCALE FACTOR (WAREHOUSES): 4
+DURATION OF TEST (in sec): 500
+1 client stared every 1000 millisecond(s)
+
+waiting for server
+Stage 1. Starting up client...
+./dbt2-client -t /tmp/mysql.sock -l 3306 -d dbt2 -u root -h localhost -f -c 500 -s 1000 -p 30000 -o /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4/client/deskkemper05.1
+Sleeping 5 seconds
+collecting database statistics...
+./dbt2-run-workload: line 650: ./vacuumdb: No such file or directory
+
+Stage 2. Starting up driver...
+1000 threads started per millisecond
+estimated rampup time: Sleeping 50 seconds
+PROFILING PERF STAT: perf stat 		-T -p 6090 		sleep 9999 		&>/home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4/perf.stat
+PROFILING PERF RECORD: perf record -p 6090 -o /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4/perf.data
+estimated rampup time has elapsed
+estimated steady state time: Sleeping 500 seconds
+
+Stage 3. Processing of results...
+Killing client...
+./dbt2-run-workload: line 680:  6207 Terminated              ./dbt2-driver ${DRIVER_COMMAND_ARGS} > ${DRIVER_OUTPUT_DIR}/`hostname`/driver-${SEG}.out 2>&1
+MySQL pid file '/home/htmsql/develop/mysql/mysql-5.6.10-alpha/deskkemper05.pid' does not exist.
+MySQL was not stopped, if it was running.
+./dbt2-run-workload: line 605:  6160 Terminated              ./dbt2-client ${CLIENT_COMMAND_ARGS} -p ${PORT} -o ${CDIR} > ${CLIENT_OUTPUT_DIR}/`hostname`/client-${SEG}.out 2>&1
+Test completed.
+Results are in: /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4
+
+                         Response Time (s)
+ Transaction      %    Average :    90th %        Total        Rollbacks      %     Ser. Retries      %
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----
+    Delivery   4.08      0.059 :     0.079           74                0   0.00                0   0.00
+   New Order   7.78      0.012 :     0.017          141                1   0.71                0   0.00
+Order Status  37.62      0.004 :     0.006          682                0   0.00                0   0.00
+     Payment   8.16      0.004 :     0.005          148                0   0.00                0   0.00
+ Stock Level  38.50      0.003 :     0.003          698                0   0.00                0   0.00
+Credit Check   3.86      0.000 :     0.001           70               18  25.71                0   0.00
+------------  -----  ---------------------  -----------  ---------------  -----
+
+16.59 new-order transactions per minute (NOTPM)
+213.29 total transactions per minute (TTPM)
+8.5 minute duration
+0 total unknown errors
+0.6 second(s) ramping up
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----
+ANALYZING RESULTS: python ../../dbttools/bin/dbt2-generate-report 	--dbms mysql 	--i /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4
+Output flag not set - setting output=input
+Generating mpstat, iostat, and vmstat charts for driver systems...
+Moving on to database system stats...
+Generating transaction distribution charts...
+Generating mpstat charts...
+Generating iostat charts...
+Generating vmstat charts...
+Generating transaction rate charts...
+Generating database statistics charts...
+[ perf record: Woken up 2 times to write data ]
+[ perf record: Captured and wrote 1.006 MB /home/htmsql/develop/mysql/report-alpha/166-20140226_0140-c_500-w_4/perf.data (~43959 samples) ]
+2014-02-26 02:06:54 6090 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: Normal shutdown
+
+2014-02-26 02:06:54 6090 [Note] Giving 0 client threads a chance to die gracefully
+2014-02-26 02:06:54 6090 [Note] Event Scheduler: Purging the queue. 0 events
+2014-02-26 02:06:54 6090 [Note] Shutting down slave threads
+2014-02-26 02:06:54 6090 [Note] Forcefully disconnecting 0 remaining clients
+2014-02-26 02:06:54 6090 [Note] Binlog end
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'partition'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'ARCHIVE'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'BLACKHOLE'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_INSERTED'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_METRICS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_CMP'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_LOCKS'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'INNODB_TRX'
+2014-02-26 02:06:54 6090 [Note] Shutting down plugin 'InnoDB'
+2014-02-26 02:06:54 6090 [Note] InnoDB: FTS optimize thread exiting.
+2014-02-26 02:06:54 6090 [Note] InnoDB: Starting shutdown...
+2014-02-26 02:06:56 6090 [Note] InnoDB: Shutdown completed; log sequence number 17732868130
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'MRG_MYISAM'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'CSV'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'MyISAM'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'MEMORY'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'sha256_password'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'mysql_old_password'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'mysql_native_password'
+2014-02-26 02:06:56 6090 [Note] Shutting down plugin 'binlog'
+2014-02-26 02:06:56 6090 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-alpha/install/bin/mysqld: Shutdown complete
+

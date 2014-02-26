@@ -1,0 +1,91 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+500 second steady state duration
+
+driver is starting to ramp up at time 1393373991
+driver will ramp up in  30 seconds
+will stop test at time 1393374521
+seed for 5673:fbf1e700 : 2834421980
+seed for 5673:fbefd700 : 2834295235
+seed for 5673:fbedc700 : 2834169504
+seed for 5673:fbebb700 : 2834009984
+seed for 5673:fbe9a700 : 2833882217
+seed for 5673:fbe79700 : 2833755408
+seed for 5673:fbe58700 : 2833613334
+seed for 5673:fbe37700 : 2833478345
+seed for 5673:fbe16700 : 2833343402
+seed for 5673:fbdf5700 : 2833207455
+seed for 5673:fbdd4700 : 2833072456
+seed for 5673:fbdb3700 : 2832938551
+seed for 5673:fbd92700 : 2832803532
+seed for 5673:fbd71700 : 2832668625
+seed for 5673:fb227700 : 2820830304
+seed for 5673:fb206700 : 2820695387
+seed for 5673:fb1e5700 : 2820560360
+seed for 5673:fb1c4700 : 2820426437
+seed for 5673:fb1a3700 : 2820291493
+seed for 5673:fb182700 : 2820155447
+seed for 5673:fb161700 : 2820020535
+seed for 5673:fb140700 : 2819885545
+seed for 5673:fb11f700 : 2819751671
+seed for 5673:fb0fe700 : 2819616720
+seed for 5673:fb0dd700 : 2819480651
+seed for 5673:fb0bc700 : 2819345751
+seed for 5673:fb09b700 : 2819203706
+seed for 5673:fb07a700 : 2819076979
+seed for 5673:fb059700 : 2818933660
+seed for 5673:fb038700 : 2818806007
+seed for 5673:fb017700 : 2818662860
+seed for 5673:faff6700 : 2852091505
+seed for 5673:fafd5700 : 2851948273
+seed for 5673:fafb4700 : 2851821323
+seed for 5673:faf93700 : 2851677252
+seed for 5673:faf72700 : 2851550561
+seed for 5673:faf51700 : 2851407315
+seed for 5673:faf30700 : 2851281642
+seed for 5673:faf0f700 : 2851138326
+seed for 5673:faeee700 : 2851010645

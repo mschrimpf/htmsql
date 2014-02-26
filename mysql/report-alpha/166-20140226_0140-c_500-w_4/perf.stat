@@ -1,0 +1,14 @@
+sleep: Terminated
+
+ Performance counter stats for process id '6090':
+
+      16084,882778 task-clock                #    0,011 CPUs utilized          
+    19.578.802.668 instructions              #    1,00  insns per cycle         [99,44%]
+    19.660.676.547 cycles                    #    1,222 GHz                     [99,44%]
+       655.918.266 cpu/cycles-t/             #    3,34% transactional cycles    [99,44%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [99,44%]
+         4.757.997 cpu/el-start/             #      138 cycles / elision        [99,44%]
+       464.548.681 cpu/cycles-ct/            #    0,97% aborted cycles          [99,44%]
+
+    1438,931818608 seconds time elapsed
+

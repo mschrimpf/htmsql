@@ -1,0 +1,4 @@
+./time_cmp -l 50 -pc 750 -pi 125 -pr 125
+./time_cmp -l 50 -pc 90 -pi 5 -pr 5
+./time_cmp -l 50
+./time_cmp -l 50 -bi 0

@@ -5,14 +5,17 @@
 #include "thread_lock.h"
 //#include "boost_mutex_lock.h"
 #include "atomic_exch_lock.h"
-#include "atomic_exch_hle_lock.h"
-#include "atomic_exch_hle_lock2.h"
+#include "atomic_exch_hle_lock-busy.h"
+#include "atomic_exch_hle_lock-spin.h"
 #include "atomic_tas_lock.h"
-#include "atomic_tas_hle_lock.h"
-#include "hle_tas_lock.h"
-#include "hle_exch_lock.h"
-#include "hle_asm_exch_lock.h"
-#include "hle_asm_exch_lock2.h"
+#include "atomic_tas_hle_lock-busy.h"
+#include "hle_tas_lock-busy.h"
+#include "hle_tas_lock-spin.h"
+#include "hle_exch_lock-busy.h"
+#include "hle_exch_lock-spin.h"
+#include "hle_asm_exch_lock-busy.h"
+#include "hle_asm_exch_lock-spin.h"
+#include "hle_asm_exch_lock-asm_spin.h"
 
 LockType::LockType() {
 	this->lock = this->unlock = NULL;
@@ -29,37 +32,49 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_lock_function = atomic_exch_lock;
 		this->type_unlock_function = atomic_exch_unlock;
 		break;
-	case ATOMIC_EXCH_HLE:
-		this->type_lock_function = atomic_exch_hle_lock;
-		this->type_unlock_function = atomic_exch_hle_unlock;
+	case ATOMIC_EXCH_HLE_BUSY:
+		this->type_lock_function = atomic_exch_hle_lock_busy;
+		this->type_unlock_function = atomic_exch_hle_unlock_busy;
 		break;
-	case ATOMIC_EXCH_HLE2:
-		this->type_lock_function = atomic_exch_hle_lock2;
-		this->type_unlock_function = atomic_exch_hle_unlock2;
+	case ATOMIC_EXCH_HLE_SPIN:
+		this->type_lock_function = atomic_exch_hle_lock_spin;
+		this->type_unlock_function = atomic_exch_hle_unlock_spin;
 		break;
 	case ATOMIC_TAS:
 		this->type_lock_function = atomic_tas_lock;
 		this->type_unlock_function = atomic_tas_unlock;
 		break;
-	case ATOMIC_TAS_HLE:
-		this->type_lock_function = atomic_tas_hle_lock;
-		this->type_unlock_function = atomic_tas_hle_unlock;
+	case ATOMIC_TAS_HLE_BUSY:
+		this->type_lock_function = atomic_tas_hle_lock_busy;
+		this->type_unlock_function = atomic_tas_hle_unlock_busy;
 		break;
-	case HLE_TAS:
-		this->type_lock_function = hle_tas_lock;
-		this->type_unlock_function = hle_tas_unlock;
+	case HLE_TAS_BUSY:
+		this->type_lock_function = hle_tas_lock_busy;
+		this->type_unlock_function = hle_tas_unlock_busy;
 		break;
-	case HLE_EXCH:
-		this->type_lock_function = hle_exch_lock;
-		this->type_unlock_function = hle_exch_unlock;
+	case HLE_TAS_SPIN:
+		this->type_lock_function = hle_tas_lock_spin;
+		this->type_unlock_function = hle_tas_unlock_spin;
 		break;
-	case HLE_ASM_EXCH:
-		this->type_lock_function = hle_asm_exch_lock;
-		this->type_unlock_function = hle_asm_exch_unlock;
+	case HLE_EXCH_BUSY:
+		this->type_lock_function = hle_exch_lock_busy;
+		this->type_unlock_function = hle_exch_unlock_busy;
 		break;
-	case HLE_ASM_EXCH2:
-		this->type_lock_function = hle_asm_exch_lock2;
-		this->type_unlock_function = hle_asm_exch_unlock2;
+	case HLE_EXCH_SPIN:
+		this->type_lock_function = hle_exch_lock_spin;
+		this->type_unlock_function = hle_exch_unlock_spin;
+		break;
+	case HLE_ASM_EXCH_BUSY:
+		this->type_lock_function = hle_asm_exch_lock_busy;
+		this->type_unlock_function = hle_asm_exch_unlock_busy;
+		break;
+	case HLE_ASM_EXCH_SPIN:
+		this->type_lock_function = hle_asm_exch_lock_spin;
+		this->type_unlock_function = hle_asm_exch_unlock_spin;
+		break;
+	case HLE_ASM_EXCH_ASM_SPIN:
+		this->type_lock_function = hle_asm_exch_lock_asm_spin;
+		this->type_unlock_function = hle_asm_exch_unlock_asm_spin;
 		break;
 	}
 
@@ -82,14 +97,17 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_lock_function = this->type_unlock_function = NULL;
 		break;
 	case ATOMIC_EXCH:
-	case ATOMIC_EXCH_HLE:
-	case ATOMIC_EXCH_HLE2:
+	case ATOMIC_EXCH_HLE_BUSY:
+	case ATOMIC_EXCH_HLE_SPIN:
 	case ATOMIC_TAS:
-	case ATOMIC_TAS_HLE:
-	case HLE_TAS:
-	case HLE_EXCH:
-	case HLE_ASM_EXCH:
-	case HLE_ASM_EXCH2:
+	case ATOMIC_TAS_HLE_BUSY:
+	case HLE_TAS_BUSY:
+	case HLE_TAS_SPIN:
+	case HLE_EXCH_BUSY:
+	case HLE_EXCH_SPIN:
+	case HLE_ASM_EXCH_BUSY:
+	case HLE_ASM_EXCH_SPIN:
+	case HLE_ASM_EXCH_ASM_SPIN:
 		this->lock = &LockType::type_lock;
 		this->unlock = &LockType::type_unlock;
 		break;
@@ -126,30 +144,17 @@ void LockType::type_unlock() {
 	(*this->type_unlock_function)(&this->type_mutex);
 }
 
-//const LockType LockType::PTHREAD = LockType(pthread_lock, pthread_unlock);
-//const LockType LockType::CPP11MUTEX = LockType(thread_lock, thread_unlock);
-//const LockType LockType::ATOMIC_EXCH = LockType(atomic_exch_lock,
-//		atomic_exch_unlock);
-//const LockType LockType::ATOMIC_EXCH_HLE = LockType(atomic_exch_hle_lock,
-//		atomic_exch_hle_unlock);
-//const LockType LockType::ATOMIC_EXCH_HLE2 = LockType(atomic_exch_hle_lock2,
-//		atomic_exch_hle_unlock2);
-//const LockType LockType::ATOMIC_TAS = LockType(atomic_tas_lock,
-//		atomic_tas_unlock);
-//const LockType LockType::ATOMIC_TAS_HLE = LockType(atomic_tas_hle_lock,
-//		atomic_tas_hle_unlock);
-//const LockType LockType::RTM = LockType(NULL, NULL);
-//const LockType LockType::HLE_TAS = LockType(hle_tas_lock, hle_tas_unlock);
-//const LockType LockType::HLE_EXCH = LockType(hle_exch_lock, hle_exch_unlock);
-
 void LockType::printHeader(LockType *lockTypes[], int size, FILE *out) {
 	printHeader(*lockTypes, size, out);
 }
-
 void LockType::printHeader(LockType lockTypes[], int size, FILE *out) {
-	for (int t = 0; t < size; t++) {
+	printHeaderRange(lockTypes, 0, size, out);
+}
+void LockType::printHeaderRange(LockType lockTypes[], int from, int to,
+		FILE *out) {
+	for (int t = from; t < to; t++) {
 		fprintf(out, "%s", LockType::getEnumText(lockTypes[t].enum_type));
-		fprintf(out, "%s", t < size - 1 ? ";" : "\n");
+		fprintf(out, "%s", t < to - 1 ? ";" : "\n");
 	}
 }
 
@@ -163,23 +168,29 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "BOOST_MUTEX";
 	case ATOMIC_EXCH:
 		return "atomic_EXCH";
-	case ATOMIC_EXCH_HLE:
-		return "atomic_EXCH_HLE";
-	case ATOMIC_EXCH_HLE2:
-		return "atomic_EXCH_HLE2";
+	case ATOMIC_EXCH_HLE_BUSY:
+		return "atomic_EXCH_HLE-busy";
+	case ATOMIC_EXCH_HLE_SPIN:
+		return "atomic_EXCH_HLE-spin";
 	case ATOMIC_TAS:
 		return "atomic_TAS";
-	case ATOMIC_TAS_HLE:
-		return "atomic_TAS_HLE";
+	case ATOMIC_TAS_HLE_BUSY:
+		return "atomic_TAS_HLE_BUSY";
 	case RTM:
 		return "RTM";
-	case HLE_TAS:
-		return "HLE_TAS";
-	case HLE_EXCH:
-		return "HLE_EXCH";
-	case HLE_ASM_EXCH:
-		return "HLE_ASM_EXCH";
-	case HLE_ASM_EXCH2:
-		return "HLE_ASM_EXCH2";
+	case HLE_TAS_BUSY:
+		return "HLE_TAS_BUSY";
+	case HLE_TAS_SPIN:
+		return "HLE_TAS_SPIN";
+	case HLE_EXCH_BUSY:
+		return "HLE_EXCH_BUSY";
+	case HLE_EXCH_SPIN:
+		return "HLE_EXCH_SPIN";
+	case HLE_ASM_EXCH_BUSY:
+		return "HLE_ASM_EXCH-busy";
+	case HLE_ASM_EXCH_SPIN:
+		return "HLE_ASM_EXCH-spin";
+	case HLE_ASM_EXCH_ASM_SPIN:
+		return "HLE_ASM_EXCH-asm_spin";
 	}
 }

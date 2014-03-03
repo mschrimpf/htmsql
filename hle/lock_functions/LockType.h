@@ -11,15 +11,18 @@ public:
 		CPP11MUTEX,
 		BOOST_MUTEX,
 		ATOMIC_EXCH,
-		ATOMIC_EXCH_HLE,
-		ATOMIC_EXCH_HLE2,
+		ATOMIC_EXCH_HLE_BUSY,
+		ATOMIC_EXCH_HLE_SPIN,
 		ATOMIC_TAS,
-		ATOMIC_TAS_HLE,
+		ATOMIC_TAS_HLE_BUSY,
 		RTM,
-		HLE_TAS,
-		HLE_EXCH,
-		HLE_ASM_EXCH,
-		HLE_ASM_EXCH2
+		HLE_TAS_BUSY,
+		HLE_TAS_SPIN,
+		HLE_EXCH_BUSY,
+		HLE_EXCH_SPIN,
+		HLE_ASM_EXCH_BUSY,
+		HLE_ASM_EXCH_SPIN,
+		HLE_ASM_EXCH_ASM_SPIN
 	};
 	EnumType enum_type;
 //	static const LockType PTHREAD;
@@ -57,8 +60,11 @@ public:
 
 	// printing
 	static const char* getEnumText(LockType::EnumType e);
-	static void printHeader(LockType *lockTypes[], int size, FILE *out = stdout);
+	static void printHeader(LockType *lockTypes[], int size,
+			FILE *out = stdout);
 	static void printHeader(LockType lockTypes[], int size, FILE *out = stdout);
+	static void printHeaderRange(LockType lockTypes[], int from, int to,
+			FILE *out = stdout);
 private:
 	void (*type_lock_function)(type *lock);
 	void (*type_unlock_function)(type *lock);

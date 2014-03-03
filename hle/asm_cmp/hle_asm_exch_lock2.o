@@ -1,0 +1,45 @@
+	.file	"hle_asm_exch_lock2.cpp"
+	.intel_syntax noprefix
+	.text
+	.p2align 4,,15
+	.globl	_Z18hle_asm_exch_lock2Pj
+	.type	_Z18hle_asm_exch_lock2Pj, @function
+_Z18hle_asm_exch_lock2Pj:
+.LFB636:
+	.cfi_startproc
+#APP
+# 22 "../lock_functions/hle_asm_exch_lock2.cpp" 1
+	1:  movl $1, %eax          
+	    xacquire lock xchgl %eax, (rdi) 
+	    cmpl $0, %eax         
+	    jz 3f                 
+	2:  pause                 
+	    cmpl $1, (rdi)         
+	    jz 2b                 
+	    jmp 1b                
+	3:                        
+	
+# 0 "" 2
+#NO_APP
+	ret
+	.cfi_endproc
+.LFE636:
+	.size	_Z18hle_asm_exch_lock2Pj, .-_Z18hle_asm_exch_lock2Pj
+	.p2align 4,,15
+	.globl	_Z20hle_asm_exch_unlock2Pj
+	.type	_Z20hle_asm_exch_unlock2Pj, @function
+_Z20hle_asm_exch_unlock2Pj:
+.LFB637:
+	.cfi_startproc
+#APP
+# 30 "../lock_functions/hle_asm_exch_lock2.cpp" 1
+	xrelease movl $0,(rdi) 
+	
+# 0 "" 2
+#NO_APP
+	ret
+	.cfi_endproc
+.LFE637:
+	.size	_Z20hle_asm_exch_unlock2Pj, .-_Z20hle_asm_exch_unlock2Pj
+	.ident	"GCC: (Ubuntu/Linaro 4.8.1-10ubuntu8) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

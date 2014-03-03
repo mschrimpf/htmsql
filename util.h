@@ -15,4 +15,8 @@ void handle_args(int argc, char *argv[], int value_len, int **values,
 /** Calculates the average value of the values in the given vector */
 double average(std::vector<double> values);
 
+//int rand_tausworth(int limit); // segmentation faults
+int rand_lcg(int limit);
+int rand_gerhard(int limit);
+
 #endif /* UTIL_H_ */

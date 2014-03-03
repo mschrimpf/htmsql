@@ -1,0 +1,52 @@
+	.file	"hle_asm_exch_lock-intel_store.cpp"
+	.intel_syntax noprefix
+	.text
+	.p2align 4,,15
+	.globl	_Z29hle_asm_exch_lock_intel_storePj
+	.type	_Z29hle_asm_exch_lock_intel_storePj, @function
+_Z29hle_asm_exch_lock_intel_storePj:
+.LFB2190:
+	.cfi_startproc
+	mov	edx, 1
+	.p2align 4,,10
+	.p2align 3
+.L5:
+	mov	eax, edx
+#APP
+# 13 "../lock_functions/hle_asm_exch_lock-intel_store.cpp" 1
+	.byte 0xf2 ;  ; lock ; xchg eax,DWORD PTR [rdi]
+# 0 "" 2
+#NO_APP
+	cmp	eax, 1
+	jne	.L1
+	.p2align 4,,10
+	.p2align 3
+.L4:
+	rep nop
+	cmp	DWORD PTR [rdi], 1
+	je	.L4
+	jmp	.L5
+.L1:
+	.p2align 4,,6
+	rep ret
+	.cfi_endproc
+.LFE2190:
+	.size	_Z29hle_asm_exch_lock_intel_storePj, .-_Z29hle_asm_exch_lock_intel_storePj
+	.p2align 4,,15
+	.globl	_Z31hle_asm_exch_unlock_intel_storePj
+	.type	_Z31hle_asm_exch_unlock_intel_storePj, @function
+_Z31hle_asm_exch_unlock_intel_storePj:
+.LFB2191:
+	.cfi_startproc
+	xor	eax, eax
+#APP
+# 32 "../lock_functions/hle_asm_exch_lock-intel_store.cpp" 1
+	.byte 0xf3 ; mov eax,DWORD PTR [rdi]
+# 0 "" 2
+#NO_APP
+	ret
+	.cfi_endproc
+.LFE2191:
+	.size	_Z31hle_asm_exch_unlock_intel_storePj, .-_Z31hle_asm_exch_unlock_intel_storePj
+	.ident	"GCC: (Ubuntu/Linaro 4.8.1-10ubuntu8) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

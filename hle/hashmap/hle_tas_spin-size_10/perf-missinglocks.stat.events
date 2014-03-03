@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '11295':
+
+           504.516 r21D0                                                        [66,12%]
+        13.482.454 r01C8                                                        [66,12%]
+   681.978.709.024 cycles                    #    0,000 GHz                     [66,12%]
+
+      59,575084869 seconds time elapsed
+

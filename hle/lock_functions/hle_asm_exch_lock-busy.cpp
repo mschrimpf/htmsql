@@ -1,10 +1,10 @@
-#include "hle_asm_exch_lock.h"
+#include "hle_asm_exch_lock-busy.h"
 #include <xmmintrin.h> // _mm_pause
 #include "../lib/hle-emulation.h"
 //#define __HLE_ACQUIRE ".byte 0xf2 ; "
 //#define __HLE_RELEASE ".byte 0xf3 ; "
 
-void hle_asm_exch_lock(type *lock) {
+void hle_asm_exch_lock_busy(type *lock) {
 	type val = 1;
 //	printf("val %d | lock %d\n", val, *lock);
 	asm volatile(__HLE_ACQUIRE " ; lock ; xchg %0,%1" : "+q" (val), "+m" (*lock) :: "memory");
@@ -14,7 +14,7 @@ void hle_asm_exch_lock(type *lock) {
 		asm volatile(__HLE_ACQUIRE " ; lock ; xchg %0,%1" : "+q" (val), "+m" (*lock) :: "memory");
 	}
 }
-void hle_asm_exch_unlock(type *lock) {
+void hle_asm_exch_unlock_busy(type *lock) {
 	asm volatile(__HLE_RELEASE "mov %1,%0" : "=m" (*lock) : "q" (0) : "memory");
 }
 

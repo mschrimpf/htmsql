@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '5192':
+
+      10267,949056 task-clock                #    2,752 CPUs utilized          
+    10.418.678.197 instructions              #    0,35  insns per cycle         [32,67%]
+    29.913.189.027 cycles                    #    2,913 GHz                     [32,67%]
+     5.129.666.481 cpu/cycles-t/             #   17,15% transactional cycles    [32,67%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [32,67%]
+        51.233.971 cpu/el-start/             #      100 cycles / elision        [32,67%]
+     5.110.099.228 cpu/cycles-ct/            #    0,07% aborted cycles          [32,67%]
+
+       3,731312182 seconds time elapsed
+

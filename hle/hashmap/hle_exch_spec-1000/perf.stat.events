@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '3684':
+
+           153.406 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,27%]
+        96.809.588 r01C8 (HLE_RETIRED.START)                                                        [33,27%]
+        96.656.032 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,27%]
+             7.893 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,27%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,27%]
+           143.778 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,27%]
+             1.999 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,27%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,27%]
+
+       6,448028543 seconds time elapsed
+

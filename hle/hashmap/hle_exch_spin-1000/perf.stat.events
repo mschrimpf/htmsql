@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '3870':
+
+         2.498.378 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,46%]
+       100.330.634 r01C8 (HLE_RETIRED.START)                                                        [33,46%]
+        97.834.238 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,46%]
+             8.309 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,46%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,46%]
+           224.861 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,46%]
+         2.302.604 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,46%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,46%]
+
+       6,497669455 seconds time elapsed
+

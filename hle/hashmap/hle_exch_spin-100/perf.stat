@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '4147':
+
+      83340,188054 task-clock                #    3,938 CPUs utilized          
+    42.028.453.040 instructions              #    0,17  insns per cycle         [66,08%]
+   240.706.318.591 cycles                    #    2,888 GHz                     [66,08%]
+   223.699.872.184 cpu/cycles-t/             #   92,93% transactional cycles    [66,08%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [66,08%]
+        59.100.298 cpu/el-start/             #     3785 cycles / elision        [66,08%]
+   222.049.273.645 cpu/cycles-ct/            #    0,69% aborted cycles          [66,08%]
+
+      21,163816554 seconds time elapsed
+

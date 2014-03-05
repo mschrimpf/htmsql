@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '3870':
+
+         1.182.015 r21D0                                                        [66,41%]
+       100.377.222 r01C8                                                        [66,41%]
+    72.227.449.459 cycles                    #    0,000 GHz                     [66,41%]
+
+       6,504664855 seconds time elapsed
+

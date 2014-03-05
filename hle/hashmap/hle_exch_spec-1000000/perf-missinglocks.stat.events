@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '5192':
+
+        40.247.974 r21D0                                                        [65,04%]
+        51.802.124 r01C8                                                        [65,04%]
+    29.987.063.117 cycles                    #    0,000 GHz                     [65,04%]
+
+       3,727548125 seconds time elapsed
+

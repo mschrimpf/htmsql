@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '4253':
+
+           296.092 r21D0                                                        [65,96%]
+        53.827.050 r01C8                                                        [65,96%]
+   248.471.811.674 cycles                    #    0,000 GHz                     [65,96%]
+
+      21,769935795 seconds time elapsed
+

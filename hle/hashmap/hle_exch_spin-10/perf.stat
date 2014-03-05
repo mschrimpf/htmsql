@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '4057':
+
+     288389,452068 task-clock                #    3,951 CPUs utilized          
+   134.238.021.441 instructions              #    0,16  insns per cycle         [66,47%]
+   834.290.760.833 cycles                    #    2,893 GHz                     [66,47%]
+   335.475.043.835 cpu/cycles-t/             #   40,21% transactional cycles    [66,47%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [66,47%]
+       567.043.514 cpu/el-start/             #      592 cycles / elision        [66,47%]
+   132.412.790.149 cpu/cycles-ct/            #   24,34% aborted cycles          [66,47%]
+
+      72,990076301 seconds time elapsed
+

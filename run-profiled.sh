@@ -55,7 +55,8 @@ PROGRAM_ARR=($PROGRAM)
 PROGRAM_NAME=${PROGRAM_ARR[0]}
 PROGRAM_PID=$(pidof $PROGRAM_NAME)
 
-profile_all "$PROGRAM_PID" "$OUTPUT_FOLDER" &
+sleep 1
+profile_all "$PROGRAM_PID" "$OUTPUT_FOLDER" true
 
 wait "$PROGRAM_CALLER_PID"
 stop_profiling

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '4147':
+
+         6.378.442 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,20%]
+        59.717.170 r01C8 (HLE_RETIRED.START)                                                        [33,20%]
+        53.338.722 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,20%]
+            41.877 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,20%]
+                 3 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,20%]
+           479.024 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,20%]
+         5.943.418 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,20%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,20%]
+
+      21,163329966 seconds time elapsed
+

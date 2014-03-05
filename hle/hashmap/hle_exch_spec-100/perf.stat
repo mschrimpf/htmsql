@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '4253':
+
+      85990,157048 task-clock                #    3,947 CPUs utilized          
+    43.404.353.999 instructions              #    0,17  insns per cycle         [33,55%]
+   248.422.578.750 cycles                    #    2,889 GHz                     [33,55%]
+   231.315.297.284 cpu/cycles-t/             #   93,11% transactional cycles    [33,55%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,55%]
+        53.935.364 cpu/el-start/             #     4289 cycles / elision        [33,55%]
+   230.601.935.382 cpu/cycles-ct/            #    0,29% aborted cycles          [33,55%]
+
+      21,784177332 seconds time elapsed
+

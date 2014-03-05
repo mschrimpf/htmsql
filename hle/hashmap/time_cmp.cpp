@@ -14,7 +14,6 @@
 #define CORES 4
 
 #define VALUE_RANGE INT_MAX
-#define MAP_SIZE 1000
 std::vector<int> values;
 std::vector<int> operations;
 #define OPERATION_INSERT 1
@@ -107,16 +106,19 @@ void random_operations(int tid, HashMap *map, int repeats, int base_inserts,
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
-	int loops = 100, repeats_min = 100000, repeats_max = 1500000, repeats_step =
-			400000, probability_insert = 25, probability_remove = 25,
-			probability_contains = 50, base_inserts = 5000, lockType = -1;
-	int *arg_values[] = { &num_threads, &loops, &repeats_min, &repeats_max,
-			&repeats_step, &probability_insert, &probability_remove,
-			&probability_contains, &base_inserts, &lockType };
-	const char *identifier[] = { "-n", "-l", "-rmin", "-rmax", "-rstep", "-pi",
-			"-pr", "-pc", "-bi", "-t" };
-	handle_args(argc, argv, 10, arg_values, identifier);
+	int mapSize = 1000, loops = 100, repeats_min = 100000,
+			repeats_max = 1500000, repeats_step = 400000, probability_insert =
+					25, probability_remove = 25, probability_contains = 50,
+			base_inserts = 5000, lockType = -1;
+	int *arg_values[] =
+			{ &mapSize, &num_threads, &loops, &repeats_min, &repeats_max,
+					&repeats_step, &probability_insert, &probability_remove,
+					&probability_contains, &base_inserts, &lockType };
+	const char *identifier[] = { "-s", "-n", "-l", "-rmin", "-rmax", "-rstep",
+			"-pi", "-pr", "-pc", "-bi", "-t" };
+	handle_args(argc, argv, 11, arg_values, identifier);
 
+	printf("MapSize:      %d\n", mapSize);
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
 	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
@@ -169,7 +171,7 @@ int main(int argc, char *argv[]) {
 			std::vector<double> times;
 			for (int l = 0; l < loops; l++) {
 				// init
-				HashMap map(MAP_SIZE, lockTypes[t]);
+				HashMap map(mapSize, lockTypes[t]);
 //				values.clear();
 //				operations.clear();
 

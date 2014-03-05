@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '13310':
+
+        30.644.919 r21D0                                                        [34,07%]
+                 0 r01C8                                                        [34,07%]
+     9.390.103.102 cycles                    #    0,000 GHz                     [34,07%]
+
+       0,979982267 seconds time elapsed
+

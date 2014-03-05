@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '13814':
+
+      15977,961541 task-clock                #    3,856 CPUs utilized          
+    10.215.881.715 instructions              #    0,22  insns per cycle         [67,25%]
+    45.899.210.872 cycles                    #    2,873 GHz                     [67,25%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [67,25%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [67,25%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [67,25%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles          [67,25%]
+
+       4,143647535 seconds time elapsed
+

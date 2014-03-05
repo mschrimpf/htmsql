@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '13919':
+
+     7.830.698.250 r21D0                                                        [25,47%]
+                 0 r01C8                                                        [25,47%]
+   621.415.261.533 cycles                    #    0,000 GHz                     [25,47%]
+
+     184,951273308 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '13582':
+
+     191004,090536 task-clock                #    1,036 CPUs utilized          
+   980.690.214.655 instructions              #    1,59  insns per cycle         [25,44%]
+   618.687.440.398 cycles                    #    3,239 GHz                     [25,44%]
+     7.091.873.571 cpu/cycles-t/             #    1,15% transactional cycles    [25,44%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [25,44%]
+        74.208.786 cpu/el-start/             #       96 cycles / elision        [25,44%]
+     7.065.010.943 cpu/cycles-ct/            #    0,00% aborted cycles          [25,44%]
+
+     184,435862845 seconds time elapsed
+

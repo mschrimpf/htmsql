@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '13919':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [25,48%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [25,48%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [25,48%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [25,48%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [25,48%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [25,48%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [25,48%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [25,48%]
+
+     184,954628795 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '13310':
+
+       3392,357704 task-clock                #    3,463 CPUs utilized          
+     3.682.806.781 instructions              #    0,39  insns per cycle         [65,97%]
+     9.473.340.317 cycles                    #    2,793 GHz                     [65,97%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [65,97%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [66,01%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [66,01%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles          [66,00%]
+
+       0,979715647 seconds time elapsed
+

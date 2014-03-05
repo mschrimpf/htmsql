@@ -4,11 +4,14 @@
 //#include "pthread_lock.h"
 #include "thread_lock.h"
 //#include "boost_mutex_lock.h"
-#include "atomic_exch_lock.h"
+#include "atomic_exch_lock-busy.h"
+#include "atomic_exch_lock-spin.h"
+#include "atomic_tas_lock-busy.h"
+#include "atomic_tas_lock-spin.h"
 #include "atomic_exch_hle_lock-busy.h"
 #include "atomic_exch_hle_lock-spin.h"
-#include "atomic_tas_lock.h"
 #include "atomic_tas_hle_lock-busy.h"
+#include "atomic_tas_hle_lock-spin.h"
 #include "hle_tas_lock-busy.h"
 #include "hle_tas_lock-spin.h"
 #include "hle_exch_lock-busy.h"
@@ -28,9 +31,21 @@ void LockType::init(LockType::EnumType enum_type) {
 	this->enum_type = enum_type;
 	// assign type_(un)lock_function
 	switch (this->enum_type) {
-	case ATOMIC_EXCH:
-		this->type_lock_function = atomic_exch_lock;
-		this->type_unlock_function = atomic_exch_unlock;
+	case ATOMIC_EXCH_BUSY:
+		this->type_lock_function = atomic_exch_lock_busy;
+		this->type_unlock_function = atomic_exch_unlock_busy;
+		break;
+	case ATOMIC_EXCH_SPIN:
+		this->type_lock_function = atomic_exch_lock_spin;
+		this->type_unlock_function = atomic_exch_unlock_spin;
+		break;
+	case ATOMIC_TAS_BUSY:
+		this->type_lock_function = atomic_tas_lock_busy;
+		this->type_unlock_function = atomic_tas_unlock_busy;
+		break;
+	case ATOMIC_TAS_SPIN:
+		this->type_lock_function = atomic_tas_lock_spin;
+		this->type_unlock_function = atomic_tas_unlock_spin;
 		break;
 	case ATOMIC_EXCH_HLE_BUSY:
 		this->type_lock_function = atomic_exch_hle_lock_busy;
@@ -40,13 +55,13 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_lock_function = atomic_exch_hle_lock_spin;
 		this->type_unlock_function = atomic_exch_hle_unlock_spin;
 		break;
-	case ATOMIC_TAS:
-		this->type_lock_function = atomic_tas_lock;
-		this->type_unlock_function = atomic_tas_unlock;
-		break;
 	case ATOMIC_TAS_HLE_BUSY:
 		this->type_lock_function = atomic_tas_hle_lock_busy;
 		this->type_unlock_function = atomic_tas_hle_unlock_busy;
+		break;
+	case ATOMIC_TAS_HLE_SPIN:
+		this->type_lock_function = atomic_tas_hle_lock_spin;
+		this->type_unlock_function = atomic_tas_hle_unlock_spin;
 		break;
 	case HLE_TAS_BUSY:
 		this->type_lock_function = hle_tas_lock_busy;
@@ -96,11 +111,14 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->lock = this->unlock = NULL;
 		this->type_lock_function = this->type_unlock_function = NULL;
 		break;
-	case ATOMIC_EXCH:
+	case ATOMIC_EXCH_BUSY:
+	case ATOMIC_EXCH_SPIN:
 	case ATOMIC_EXCH_HLE_BUSY:
 	case ATOMIC_EXCH_HLE_SPIN:
-	case ATOMIC_TAS:
+	case ATOMIC_TAS_BUSY:
+	case ATOMIC_TAS_SPIN:
 	case ATOMIC_TAS_HLE_BUSY:
+	case ATOMIC_TAS_HLE_SPIN:
 	case HLE_TAS_BUSY:
 	case HLE_TAS_SPIN:
 	case HLE_EXCH_BUSY:
@@ -166,16 +184,22 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "CPP11 Mutex";
 	case BOOST_MUTEX:
 		return "BOOST_MUTEX";
-	case ATOMIC_EXCH:
-		return "atomic_EXCH";
+	case ATOMIC_EXCH_BUSY:
+		return "atomic_EXCH_BUSY";
+	case ATOMIC_EXCH_SPIN:
+		return "atomic_EXCH_SPIN";
 	case ATOMIC_EXCH_HLE_BUSY:
 		return "atomic_EXCH_HLE-busy";
 	case ATOMIC_EXCH_HLE_SPIN:
 		return "atomic_EXCH_HLE-spin";
-	case ATOMIC_TAS:
-		return "atomic_TAS";
+	case ATOMIC_TAS_BUSY:
+		return "atomic_TAS_BUSY";
+	case ATOMIC_TAS_SPIN:
+		return "atomic_TAS_SPIN";
 	case ATOMIC_TAS_HLE_BUSY:
 		return "atomic_TAS_HLE_BUSY";
+	case ATOMIC_TAS_HLE_SPIN:
+		return "atomic_TAS_HLE_SPIN";
 	case RTM:
 		return "RTM";
 	case HLE_TAS_BUSY:

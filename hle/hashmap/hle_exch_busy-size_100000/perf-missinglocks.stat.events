@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '13267':
+
+        12.722.129 r21D0                                                        [33,08%]
+        11.404.038 r01C8                                                        [33,08%]
+     6.407.547.409 cycles                    #    0,000 GHz                     [33,08%]
+
+       0,624563361 seconds time elapsed
+

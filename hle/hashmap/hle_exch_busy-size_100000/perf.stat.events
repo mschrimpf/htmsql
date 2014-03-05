@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '13267':
+
+           207.133 r04C8 (HLE_RETIRED.ABORTED)                                                        [34,07%]
+        11.333.208 r01C8 (HLE_RETIRED.START)                                                        [34,07%]
+        11.126.070 r02C8 (HLE_RETIRED.COMMIT)                                                        [34,07%]
+             5.204 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [34,07%]
+                26 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [34,07%]
+            33.444 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [34,07%]
+           169.960 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [34,07%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [34,07%]
+
+       0,625519189 seconds time elapsed
+

@@ -8,6 +8,7 @@ void atomic_exch_hle_lock_busy(type *lock) {
 }
 void atomic_exch_hle_unlock_busy(type *lock) {
 	/* Free lock with lock elision */
-	__atomic_store_n(lock, 0, __ATOMIC_RELEASE | __ATOMIC_HLE_RELEASE);
+	__atomic_clear(lock, __ATOMIC_RELEASE | __ATOMIC_HLE_RELEASE);
+//	__atomic_store_n(lock, 0, __ATOMIC_RELEASE | __ATOMIC_HLE_RELEASE);
 	// http://gcc.gnu.org/onlinedocs/gcc/x86-specific-memory-model-extensions-for-transactional-memory.html
 }

@@ -1,10 +1,10 @@
-#include "hle_asm_exch_lock-asm_spin.h"
+#include "hle_asm_exch_lock-asm_spec.h"
 #include <xmmintrin.h> // _mm_pause
 #include "../lib/hle-emulation.h"
 //#define __HLE_ACQUIRE ".byte 0xf2 ; "
 //#define __HLE_RELEASE ".byte 0xf3 ; "
 
-void hle_asm_exch_lock_asm_spin(type *lock) {
+void hle_asm_exch_lock_asm_spec(type *lock) {
 	asm volatile(
 			"1:  movl $1, %%eax          \n\t"
 			"    xacquire lock xchgl %%eax, (%0) \n\t"
@@ -20,7 +20,7 @@ void hle_asm_exch_lock_asm_spin(type *lock) {
 			: "cc", "%eax", "memory");
 }
 
-void hle_asm_exch_unlock_asm_spin(type *lock) {
+void hle_asm_exch_unlock_asm_spec(type *lock) {
 	asm volatile(
 			"xrelease movl $0,(%0) \n\t"
 			:

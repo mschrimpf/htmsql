@@ -46,7 +46,7 @@
   Also C11 has some operations that do not map directly to x86 
   atomic instructions. Since HLE requires that a single instruction,
   we omit those. That includes nand, xor, and, or.  While they could
-  be mapped to CMPXCHG this would require a spin loop, which is 
+  be mapped to CMPXCHG this would require a spec loop, which is 
   better not done implicitely. There is also no HLE load.
 
   x86 supports HLE prefixes for all atomic operations, but not all

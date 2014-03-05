@@ -1,7 +1,7 @@
-#include "atomic_tas_hle_lock-spin.h"
+#include "atomic_tas_hle_lock-spec.h"
 #include <xmmintrin.h> // _mm_pause
 
-void atomic_tas_hle_lock_spin(type *lock) {
+void atomic_tas_hle_lock_spec(type *lock) {
 	while (__atomic_test_and_set(lock, __ATOMIC_ACQUIRE | __ATOMIC_HLE_ACQUIRE)) { // wait until lock was not locked
 		type val;
 		/* Wait for lock to become free again before retrying. */
@@ -12,6 +12,6 @@ void atomic_tas_hle_lock_spin(type *lock) {
 		} while (val == 1);
 	}
 }
-void atomic_tas_hle_unlock_spin(type *lock) {
+void atomic_tas_hle_unlock_spec(type *lock) {
 	__atomic_clear(lock, __ATOMIC_RELEASE | __ATOMIC_HLE_RELEASE);
 }

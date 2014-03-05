@@ -1,9 +1,11 @@
-#include "hle_exch_lock-spin.h"
-#include <xmmintrin.h> // _mm_pause
+#include "hle_tas_lock-spec.h"
+#include <xmmintrin.h>
 #include "../lib/hle-emulation.h"
 
-void hle_exch_lock_spin(type *lock) {
-	while (__hle_acquire_exchange_n4(lock, 1)) {
+#define type unsigned
+
+void hle_tas_lock_spec(type *lock) {
+	while (__hle_acquire_test_and_set4(lock)) { // wait until lock was not locked
 		type val;
 		/* Wait for lock to become free again before retrying. */
 		do {
@@ -14,6 +16,6 @@ void hle_exch_lock_spin(type *lock) {
 		} while (val == 1);
 	}
 }
-void hle_exch_unlock_spin(type *lock) {
+void hle_tas_unlock_spec(type *lock) {
 	__hle_release_clear4(lock);
 }

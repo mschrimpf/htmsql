@@ -20,7 +20,7 @@ public:
 	/**
 	 * @return the new balance
 	 */
-	double payout(double);
+	double withdraw(double);
 	/**
 	 * @return the current balance
 	 */

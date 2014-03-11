@@ -24,9 +24,9 @@ double ThreadsafeAccount::deposit(double money) {
 	// unlock
 }
 
-double ThreadsafeAccount::payout(double money) {
+double ThreadsafeAccount::withdraw(double money) {
 	// lock
-	return this->account->payout(money);
+	return this->account->withdraw(money);
 	// unlock
 }
 

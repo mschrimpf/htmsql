@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '17323':
+
+      28478,825205 task-clock                #    3,385 CPUs utilized          
+     9.213.243.692 instructions              #    0,13  insns per cycle         [64,66%]
+    72.073.427.598 cycles                    #    2,531 GHz                     [64,66%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [64,66%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [64,66%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [64,66%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles          [64,66%]
+
+       8,413334316 seconds time elapsed
+

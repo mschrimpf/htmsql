@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '17151':
+
+        28.308.344 r21D0                                                        [64,26%]
+        46.172.532 r01C8                                                        [64,26%]
+    23.542.148.436 cycles                    #    0,000 GHz                     [64,26%]
+
+       2,885680638 seconds time elapsed
+

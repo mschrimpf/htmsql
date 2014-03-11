@@ -31,7 +31,7 @@ void ThreadsafeAccount::deposit(double money) {
 //	(*unlock)();
 }
 
-void ThreadsafeAccount::payout(double money) {
+void ThreadsafeAccount::withdraw(double money) {
 //	(*lock)();
 	(locker.*(locker.lock))();
 	this->balance -= money;

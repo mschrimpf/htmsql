@@ -26,7 +26,7 @@ public:
 	/**
 	 * @return the new balance
 	 */
-	void payout(double);
+	void withdraw(double);
 	/**
 	 * @return the current balance
 	 */

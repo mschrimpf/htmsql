@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '17237':
+
+        69.148.388 r21D0                                                        [32,84%]
+        43.499.601 r01C8                                                        [32,84%]
+    23.839.203.748 cycles                    #    0,000 GHz                     [32,84%]
+
+       2,893374450 seconds time elapsed
+

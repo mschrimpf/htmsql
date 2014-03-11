@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '17151':
+
+         4.031.881 r04C8 (HLE_RETIRED.ABORTED)                                                        [32,53%]
+        46.252.951 r01C8 (HLE_RETIRED.START)                                                        [32,52%]
+        42.221.552 r02C8 (HLE_RETIRED.COMMIT)                                                        [32,52%]
+            19.613 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [32,52%]
+                 9 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [32,52%]
+           687.502 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [32,52%]
+         3.468.288 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [32,52%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [32,52%]
+
+       2,879353441 seconds time elapsed
+

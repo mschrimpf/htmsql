@@ -55,7 +55,7 @@ void checkResult(HashMap *map) {
 }
 
 /**
- * Use the values- and operations-vector partitioned.
+ * Use the values- and operations-vector partitioned for each thread.
  */
 void createValues(int threads_count, int repeats, int probability_insert,
 		int probability_remove, int probability_contains) {
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
 	int mapSize = 1000, loops = 100, repeats_min = 100000,
-			repeats_max = 1500000, repeats_step = 400000, probability_insert =
+			repeats_max = 1500000, repeats_step = 700000, probability_insert =
 					25, probability_remove = 25, probability_contains = 50,
 			base_inserts = 5000, lockType = -1;
 	int *arg_values[] =

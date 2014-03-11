@@ -9,7 +9,6 @@ void hle_exch_lock_spec(type *lock) {
 		do {
 			_mm_pause();
 			/* Abort speculation */
-//			val = *lock; // TODO what to use
 			__atomic_load(lock, &val, __ATOMIC_CONSUME);
 		} while (val == 1);
 	}

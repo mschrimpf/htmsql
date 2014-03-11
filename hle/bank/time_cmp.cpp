@@ -6,13 +6,7 @@
 #include <sys/time.h>
 #include <vector>
 
-#include <mutex>
-//#include "../pthread_lock.h"
-//#include "../atomic_exch_lock.h"
-//#include "../atomic_exch_hle_lock.h"
 #include <immintrin.h> // RTM: _x
-//#include "../hle_exch_lock.h"
-
 #include "entities/Account.h"
 #include "entities/ThreadsafeAccount.h"
 #include "../lock_functions/LockType.h"
@@ -21,7 +15,7 @@
 #define CORES 4
 #define RTM_MAX_RETRIES 1000000
 
-#define ACCOUNT_COUNT 1000
+#define ACCOUNT_COUNT 10000
 #define ACCOUNT_INITIAL 1000.0
 #define MAXIMUM_MONEY 1000
 
@@ -45,10 +39,10 @@ void run_object_rand(int tid, int repeats, ThreadsafeAccount account_pool[],
 		// select two random accounts
 		int a1 = rand() % account_pool_size;
 		int a2 = rand() % account_pool_size;
-		// payout money from a1 and deposit it into a2
+		// withdraw money from a1 and deposit it into a2
 		int money = rand() % MAXIMUM_MONEY;
 
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 	}
 }
@@ -62,7 +56,7 @@ void run_object_partitioned(int tid, int repeats,
 		int a2 = partition_left + ((r + 1) % partition_size);
 		int money = MAXIMUM_MONEY;
 
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 	}
 }
@@ -74,7 +68,7 @@ void run_object_customrand(int tid, int repeats,
 		int a2 = RAND(account_pool_size);
 		int money = RAND(MAXIMUM_MONEY);
 
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 	}
 }
@@ -85,7 +79,7 @@ void run_object_savedrand(int tid, int repeats,
 		int a2 = rands[rands_counter = (rands_counter + 1) % rands_size];
 		int money = MAXIMUM_MONEY;
 
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 	}
 }
@@ -98,11 +92,11 @@ void run_global_rand(int tid, int repeats, Account account_pool[],
 		// select two random accounts
 		int a1 = rand() % account_pool_size;
 		int a2 = rand() % account_pool_size;
-		// payout money from a1 and deposit it into a2
+		// withdraw money from a1 and deposit it into a2
 		int money = rand() % MAXIMUM_MONEY;
 
 		(locker->*(locker->lock))();
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 		(locker->*(locker->unlock))();
 	}
@@ -115,11 +109,11 @@ void run_global_partitioned(int tid, int repeats, Account account_pool[],
 	for (int r = 0; r < repeats; r++) {
 		int a1 = partition_left + (r % partition_size);
 		int a2 = partition_left + ((r + 1) % partition_size);
-		// payout money from a1 and deposit it into a2
+		// withdraw money from a1 and deposit it into a2
 		int money = MAXIMUM_MONEY;
 
 		(locker->*(locker->lock))();
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 		(locker->*(locker->unlock))();
 	}
@@ -133,7 +127,7 @@ void run_global_customrand(int tid, int repeats, Account account_pool[],
 		int money = RAND(MAXIMUM_MONEY);
 
 		(locker->*(locker->lock))();
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 		(locker->*(locker->unlock))();
 	}
@@ -147,7 +141,7 @@ void run_global_savedrand(int tid, int repeats,
 		int money = MAXIMUM_MONEY;
 
 		(locker->*(locker->lock))();
-		account_pool[a1].payout(money); // remove from a1
+		account_pool[a1].withdraw(money); // remove from a1
 		account_pool[a2].deposit(money); // store in a2
 		(locker->*(locker->unlock))();
 	}
@@ -165,9 +159,9 @@ void xrun_rand(int tid, int repeats, Account account_pool[],
 
 		int failures = 0;
 		retry:
-		// payout money from a1 and deposit it into a2
+		// withdraw money from a1 and deposit it into a2
 		if (_xbegin() == _XBEGIN_STARTED) {
-			account_pool[a1].payout(money); // remove from a1
+			account_pool[a1].withdraw(money); // remove from a1
 			account_pool[a2].deposit(money); // store in a2
 			_xend();
 		} else {
@@ -190,9 +184,9 @@ void xrun_partitioned(int tid, int repeats, Account account_pool[],
 
 		int failures = 0;
 		retry:
-		// payout money from a1 and deposit it into a2
+		// withdraw money from a1 and deposit it into a2
 		if (_xbegin() == _XBEGIN_STARTED) {
-			account_pool[a1].payout(money); // remove from a1
+			account_pool[a1].withdraw(money); // remove from a1
 			account_pool[a2].deposit(money); // store in a2
 			_xend();
 		} else {
@@ -213,9 +207,9 @@ void xrun_customrand(int tid, int repeats, Account account_pool[],
 
 		int failures = 0;
 		retry:
-		// payout money from a1 and deposit it into a2
+		// withdraw money from a1 and deposit it into a2
 		if (_xbegin() == _XBEGIN_STARTED) {
-			account_pool[a1].payout(money); // remove from a1
+			account_pool[a1].withdraw(money); // remove from a1
 			account_pool[a2].deposit(money); // store in a2
 			_xend();
 		} else {
@@ -235,7 +229,7 @@ void xrun_savedrand(int tid, int repeats, Account account_pool[],
 
 		int failures = 0;
 		retry: if (_xbegin() == _XBEGIN_STARTED) {
-			account_pool[a1].payout(money); // remove from a1
+			account_pool[a1].withdraw(money); // remove from a1
 			account_pool[a2].deposit(money); // store in a2
 			_xend();
 		} else {
@@ -278,7 +272,7 @@ int main(int argc, char *argv[]) {
 	// arguments
 	num_threads = CORES;
 	int loops = 100, repeats_min = 100000, repeats_max = 1500000, repeats_step =
-			100000;
+			700000;
 	int *values[] = { &num_threads, &loops, &repeats_min, &repeats_max,
 			&repeats_step };
 	const char *identifier[] = { "-n", "-l", "-rmin", "-rmax", "-rstep" };
@@ -290,7 +284,7 @@ int main(int argc, char *argv[]) {
 	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
 			repeats_step);
 	printf("%d accounts\n", account_pool_size);
-	printf("run function: %s\n", "run_object_rand");
+	printf("run function: %s\n", "run_object_partitioned");
 	printf("\n");
 	int repeats_count = (repeats_max - repeats_min + repeats_step)
 			/ repeats_step;
@@ -308,9 +302,17 @@ int main(int argc, char *argv[]) {
 	}
 
 	// define locktypes
-	LockType::EnumType lockTypesEnum[] = { LockType::PTHREAD, LockType::RTM,
-			LockType::ATOMIC_EXCH, LockType::ATOMIC_EXCH_HLE_BUSY,
-			LockType::HLE_EXCH_BUSY, LockType::HLE_ASM_EXCH_BUSY };
+	LockType::EnumType lockTypesEnum[] = { LockType::PTHREAD,
+	// atomic - tas
+			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
+			// atomic - exch
+			LockType::ATOMIC_EXCH_BUSY, LockType::ATOMIC_EXCH_SPEC,
+			// hle - tas
+			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
+			// hle - exch
+			LockType::HLE_EXCH_BUSY, LockType::HLE_EXCH_SPEC,
+			// rtm
+			LockType::RTM };
 	int lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	LockType lockTypes[lockTypesCount];
 	for (int t = 0; t < lockTypesCount; t++) {
@@ -352,12 +354,12 @@ int main(int argc, char *argv[]) {
 				for (int i = 0; i < num_threads; i++) {
 					switch (lockTypes[t].enum_type) {
 					case LockType::EnumType::RTM:
-						threads[i] = std::thread(xrun_rand, i, repeats[r],
+						threads[i] = std::thread(xrun_partitioned, i, repeats[r],
 								account_pool, account_pool_size);
 						break;
 					default:
-						threads[i] = std::thread(run_object_rand, i, repeats[r],
-								ts_account_pool, account_pool_size); //, &lockTypes[t]);
+						threads[i] = std::thread(run_object_partitioned, i,
+								repeats[r], ts_account_pool, account_pool_size); //, &lockTypes[t]);
 						break;
 					}
 				}

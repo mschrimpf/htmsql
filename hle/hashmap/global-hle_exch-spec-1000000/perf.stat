@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '17237':
+
+       8204,844914 task-clock                #    2,821 CPUs utilized          
+     7.854.731.896 instructions              #    0,33  insns per cycle         [64,17%]
+    24.016.159.037 cycles                    #    2,927 GHz                     [64,17%]
+     8.095.128.362 cpu/cycles-t/             #   33,71% transactional cycles    [64,17%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [64,17%]
+        43.549.121 cpu/el-start/             #      186 cycles / elision        [64,17%]
+     7.983.271.648 cpu/cycles-ct/            #    0,47% aborted cycles          [64,17%]
+
+       2,908509739 seconds time elapsed
+

@@ -19,7 +19,7 @@ double Account::deposit(double amount) {
 	return this->balance;
 }
 
-double Account::payout(double amount) {
+double Account::withdraw(double amount) {
 	this->balance -= amount;
 	return this->balance;
 }

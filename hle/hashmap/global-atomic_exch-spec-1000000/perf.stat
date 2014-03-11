@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '17409':
+
+      21196,123617 task-clock                #    3,087 CPUs utilized          
+     9.504.635.322 instructions              #    0,17  insns per cycle         [65,64%]
+    57.051.772.739 cycles                    #    2,692 GHz                     [65,64%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [65,64%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [65,64%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [65,64%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles          [65,64%]
+
+       6,865881897 seconds time elapsed
+

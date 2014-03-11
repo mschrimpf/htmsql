@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '17323':
+
+       258.611.513 r21D0                                                        [33,28%]
+                 0 r01C8                                                        [33,28%]
+    71.957.168.835 cycles                    #    0,000 GHz                     [33,28%]
+
+       8,417395508 seconds time elapsed
+

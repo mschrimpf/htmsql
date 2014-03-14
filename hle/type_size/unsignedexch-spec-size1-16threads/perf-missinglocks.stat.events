@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '29107':
+
+         1.096.126 r21D0                                                        [65,66%]
+            82.672 r01C8                                                        [65,66%]
+    39.531.388.808 cycles                    #    0,000 GHz                     [65,66%]
+
+       4,559735014 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '29107':
+
+      13821,610482 task-clock                #    3,039 CPUs utilized          
+    11.086.739.298 instructions              #    0,28  insns per cycle         [69,95%]
+    39.013.277.334 cycles                    #    2,823 GHz                     [69,95%]
+        10.396.402 cpu/cycles-t/             #    0,03% transactional cycles    [69,95%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [69,95%]
+            80.792 cpu/el-start/             #      129 cycles / elision        [69,95%]
+           323.167 cpu/cycles-ct/            #    0,03% aborted cycles          [69,95%]
+
+       4,547846492 seconds time elapsed
+

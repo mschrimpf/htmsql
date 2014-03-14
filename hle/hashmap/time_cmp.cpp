@@ -22,6 +22,7 @@ std::vector<int> operations;
 
 #define RAND(limit) rand_gerhard(limit)
 
+// NOTE: not used, approach does not work
 void checkResult(HashMap *map) {
 	return; // vector is not thread-safe
 	std::set<int> expectedValues;
@@ -123,8 +124,6 @@ int main(int argc, char *argv[]) {
 	printf("Loops:        %d\n", loops);
 	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
 			repeats_step);
-	if (lockType > -1)
-		printf("LockType:     %d\n", lockType);
 	printf(
 			"run function: %s\n\t(base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
 			"random_operations", base_inserts, probability_insert,
@@ -139,13 +138,13 @@ int main(int argc, char *argv[]) {
 
 	// define locktypes
 	LockType::EnumType lockTypesEnum[] = { LockType::PTHREAD,
-			// atomic - tas
+			// atomic - tas (1, 2)
 			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
-			// atomic - exch
+			// atomic - exch (3, 4)
 			LockType::ATOMIC_EXCH_BUSY, LockType::ATOMIC_EXCH_SPEC,
-			// hle - tas
+			// hle - tas (5, 6)
 			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
-			// hle - exch
+			// hle - exch (7, 8)
 			LockType::HLE_EXCH_BUSY, LockType::HLE_EXCH_SPEC };
 	int lockTypesCount, lockTypesMin, lockTypesMax;
 	lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);

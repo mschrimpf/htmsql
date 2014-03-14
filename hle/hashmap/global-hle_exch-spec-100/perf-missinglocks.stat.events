@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '1453':
+
+     1.034.501.167 r21D0                                                        [33,35%]
+       979.500.138 r01C8                                                        [33,35%]
+ 4.564.860.539.767 cycles                    #    0,000 GHz                     [33,35%]
+
+     400,958874429 seconds time elapsed
+

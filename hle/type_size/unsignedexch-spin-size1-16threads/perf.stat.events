@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '30127':
+
+     3.360.923.311 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+     3.360.922.514 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+     143,521331534 seconds time elapsed
+

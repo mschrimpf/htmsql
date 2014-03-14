@@ -99,40 +99,6 @@ LinkedListItem* HashMap::insert(int value) {
 
 	((map[h]->locker).*((map[h]->locker).unlock))();
 	return insert_item;
-
-//	if (!map[h]->item) { // item not set
-////		printf("New LinkedListItem (first_item)\n");
-//		LinkedListItem *item = new LinkedListItem(value);
-////		printf("New LinkedListItem (first_item) complete\n");
-//		map[h]->item = item;
-//		(locker.*(locker.unlock))();
-//		return item;
-//	} else {
-//		// search for first non-set item
-//		LinkedListItem* last_item = map[h]->item;
-//		if (last_item->data == value) { // item holding same data exists
-////			fprintf(/*stderr*/stdout, "Value %d already exists in hash_map\n",value);
-//			(locker.*(locker.unlock))();
-//			return last_item;
-//		}
-//		LinkedListItem* item_ptr = last_item->successor;
-//		while (item_ptr) {
-//			if (item_ptr->data == value) { // item holding same data exists
-////				fprintf(/*stderr*/stdout, "Value %d already exists in hash_map\n", value);
-//				(locker.*(locker.unlock))();
-//				return item_ptr;
-//			}
-//			last_item = item_ptr;
-//			item_ptr = (*last_item).successor;
-//		}
-//		// insert new item after last item
-////		printf("New LinkedListItem (insert_item)\n");
-//		LinkedListItem* insert_item = new LinkedListItem(value);
-////		printf("New LinkedListItem (insert_item) complete\n");
-//		last_item->successor = insert_item;
-//		(locker.*(locker.unlock))();
-//		return insert_item;
-//	}
 }
 /**
  * Removes the value from the map.
@@ -142,10 +108,6 @@ LinkedListItem* HashMap::insert(int value) {
  */
 int HashMap::remove(int value) {
 	int h = hash(value);
-//	std::thread::id thread_id = std::this_thread::get_id();
-//	std::cout << "[Thread " << thread_id << "] ";
-//	printf("Locking on locker %p | hash %d | value %d\n", &map[h]->locker, h,
-//			value);
 	LinkedListItem *prev_item = NULL;
 	((map[h]->locker).*((map[h]->locker).lock))();
 	LinkedListItem *item = map[h]->item;
@@ -155,45 +117,24 @@ int HashMap::remove(int value) {
 		item = item->successor;
 	}
 	if (item) { // value contained in map
-//	    std::cout << "[Thread " << thread_id << "] ";
-//		printf("Value %d found in map for item %p\n", value, item);
 		if (prev_item) { // prev_item exists -> map[h] is set
 			prev_item->successor = item->successor;
-//			printf("delete item %p (prev_item) - ",  item);
 		} else { // value we search for is at first list-position
 			LinkedListItem* successor = item->successor;
 			map[h]->item = successor;
-
-//			if (item->successor) {
-//				LinkedListItem* new_item = item->successor;
-//				printf("delete item %p (successor) - ", item);
-//			    std::cout << "thread " << thread_id << "\n";
-//				delete item;
-//				printf("delete item %p (successor) - ", item);
-//			    std::cout << "thread " << thread_id << " complete\n";
-//				map[h]->item = new_item;
-//			} else {
-//				printf("delete map[h]->item\n");
-//				delete map[h]->item;
-//				printf("delete map[h]->item complete\n");
-//				map[h]->item = NULL;
-//			}
 		}
-//	    std::cout << "[Thread " << thread_id << "] ";
-//		printf("Deleting item %p\n",  item);
-		delete item; // TODO leads to: double free or corruption (fasttop)
-//		std::cout << "[Thread " << thread_id << "] unlocking\n";
+		delete item;
 		((map[h]->locker).*((map[h]->locker).unlock))();
 		return 1;
 	} else { // value does not exist in map
-//		fprintf(/*stderr*/stdout, "Value %d not found in hash_map\n", value);
 		((map[h]->locker).*((map[h]->locker).unlock))();
 		return 0;
 	}
 }
 
 /**
- * Returns 1 if the value is contained, 0 otherwise
+ * Checks whether the given value is contained in this Hashmap.
+ * @return 1 if the value is contained, 0 otherwise
  */
 int HashMap::contains(int value) {
 	int h = this->hash(value);

@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '25595':
+
+     7.240.928.660 r21D0                                                        [66,63%]
+     3.629.303.457 r01C8                                                        [66,63%]
+ 1.615.888.190.010 cycles                    #    0,000 GHz                     [66,63%]
+
+     146,628756850 seconds time elapsed
+

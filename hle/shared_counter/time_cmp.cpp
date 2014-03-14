@@ -7,32 +7,25 @@
 
 #include <immintrin.h> // RTM: _x
 
-#include "../LockType.h"
-#include "../../../util.h"
+#include "ThreadsafeCounter.h"
+#include "../lock_functions/LockType.h"
+#include "../../util.h"
 
 #define CORES 4
 #define RTM_MAX_RETRIES 1000000
 
-int i;
-void run(int tid, int repeats, LockType *locker) {
+void run(int tid, int repeats, ThreadsafeCounter * counter) {
 	for (int r = 0; r < repeats; r++) {
-//		printf(">> Thread %d\n", tid);
-
-		(locker->*(locker->lock))();
-		//	printf("Locked\n");
-
-		i++;
-
-		(locker->*(locker->unlock))();
-		//	printf("Unlocked\n");
+		counter->increment();
 	}
 }
 
+int rtm_counter;
 void xrun(int tid, int repeats) {
 	for (int r = 0; r < repeats; r++) {
 		int failures = 0;
 		retry: if (_xbegin() == _XBEGIN_STARTED) {
-			i++;
+			rtm_counter++;
 			_xend();
 		} else {
 			if (failures++ < RTM_MAX_RETRIES)
@@ -52,7 +45,7 @@ void xrun(int tid, int repeats) {
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES, loops = 100, repeats_min = 100000, repeats_max =
-			1500000, repeats_step = 100000;
+			1500000, repeats_step = 700000;
 	int *values[] = { &num_threads, &loops, &repeats_min, &repeats_max,
 			&repeats_step };
 	const char *identifier[] = { "-n", "-l", "-rmin", "-rmax", "-rstep" };
@@ -70,26 +63,17 @@ int main(int argc, char *argv[]) {
 	}
 
 	// all
-	LockType::EnumType lockTypesEnum[] = {
-			LockType::PTHREAD, //LockType::CPP11MUTEX,
-			LockType::ATOMIC_EXCH, LockType::ATOMIC_EXCH_HLE,
-			LockType::ATOMIC_EXCH_HLE2, LockType::ATOMIC_TAS,
-			LockType::ATOMIC_TAS_HLE, LockType::RTM, LockType::HLE_TAS,
-			LockType::HLE_EXCH, LockType::HLE_ASM_EXCH
-	};
-	// selected
-//	LockType::EnumType lockTypesEnum[] = {
-//			LockType::PTHREAD,
-//			LockType::RTM,
-//			LockType::ATOMIC_EXCH,
-//			LockType::ATOMIC_EXCH_HLE,
-//			LockType::HLE_EXCH,
-//			LockType::HLE_ASM_EXCH
-//			};
-	// ! selected
-//	LockType::EnumType lockTypesEnum[] = { LockType::CPP11MUTEX,
-//			LockType::ATOMIC_EXCH_HLE2, LockType::ATOMIC_TAS,
-//			LockType::ATOMIC_TAS_HLE, LockType::HLE_TAS };
+	LockType::EnumType lockTypesEnum[] = { LockType::PTHREAD,
+			// atomic - tas (1, 2)
+			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
+			// atomic - exch (3, 4)
+			LockType::ATOMIC_EXCH_BUSY, LockType::ATOMIC_EXCH_SPEC,
+			// hle - tas (5, 6)
+			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
+			// hle - exch (7, 8)
+			LockType::HLE_EXCH_BUSY, LockType::HLE_EXCH_SPEC,
+			// rtm (9)
+			LockType::RTM };
 	int lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	LockType lockTypes[lockTypesCount];
 	for (int t = 0; t < lockTypesCount; t++) {
@@ -106,7 +90,10 @@ int main(int argc, char *argv[]) {
 			// use a loop to check the time more than once --> normalize
 			std::vector<double> times;
 			for (int l = 0; l < loops; l++) {
-				i = 0; // reset
+				// reset
+				ThreadsafeCounter counter(lockTypes[t]);
+				rtm_counter = 0;
+				// run
 				struct timeval start, end;
 				gettimeofday(&start, NULL);
 				std::thread threads[num_threads];
@@ -117,7 +104,7 @@ int main(int argc, char *argv[]) {
 						break;
 					default:
 						threads[i] = std::thread(run, i, repeats[r],
-								&lockTypes[t]);
+								&counter);
 						break;
 					}
 				}
@@ -127,9 +114,10 @@ int main(int argc, char *argv[]) {
 				}
 
 				int expected = num_threads * repeats[r];
-				if (expected != i)
-					printf("CHECK: i should be %d, is %d - %s\n", expected, i,
-							expected == i ? "OK" : "ERROR");
+				int actual = rtm_counter > 0 ? rtm_counter : counter.get();
+				if (expected != actual)
+					printf("CHECK: counter should be %d, is %d - %s\n", expected, actual,
+							expected == actual ? "OK" : "ERROR");
 
 				gettimeofday(&end, NULL);
 				double elapsed = ((end.tv_sec - start.tv_sec) * 1000)

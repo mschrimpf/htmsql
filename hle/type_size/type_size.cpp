@@ -9,7 +9,6 @@
 #include "lock_functions.cpp"
 
 #include <xmmintrin.h> // _mm_pause
-
 #include <sched.h> // thread affinity
 #define DEBUG 0
 
@@ -60,9 +59,9 @@ void *run(void * attr) {
 #endif
 		attrs.lock_function(&locks[access]);
 //		_mm_pause();
-		usleep(1); // does only make a difference for array_size=1
+//		usleep(1); // does only make a difference for array_size=1
 #if DEBUG == 1
-		printf("[T#%d] Unlocking %d (%p)\n", attrs.tid, access, &locks[access]);
+				printf("[T#%d] Unlocking %d (%p)\n", attrs.tid, access, &locks[access]);
 #endif
 		attrs.unlock_function(&locks[access]);
 	}
@@ -70,19 +69,31 @@ void *run(void * attr) {
 	free(attr);
 }
 
-void printHeader(FILE * out = stdout) {
-	fprintf(out, "Repeats;hle_exch-spin;hle_exch-spec\n");
+void printHeader(int functionType = -1, FILE * out = stdout) {
+	switch (functionType) {
+	case 0:
+		fprintf(out, "Repeats;hle_exch-spin\n");
+		break;
+	case 1:
+		fprintf(out, "Repeats;hle_exch-spec\n");
+		break;
+	default:
+		fprintf(out, "Repeats;hle_exch-spin;hle_exch-spec\n");
+		break;
+	}
 }
 
 int main(int argc, char *argv[]) {
 	int lock_array_size = 100;
-	int repeats[] = { 1000, 5500, 10000 }; // {10, 55, 100};
+	int repeats[] = { 1000, 5500, 10000 }; //{ 1000, 5500, 10000 }; // {10, 55, 100}; //
 	int num_threads = 4;
-	int loops = 10000;
+	int loops = 100;
+	int lockFunction = -1;
 	partitioned = 0;
-	int *values[] = { &num_threads, &loops, &partitioned, &lock_array_size }; // &repeats_min, &repeats_max, &repeats_step };
-	const char *identifier[] = { "-n", "-l", "-p", "-s" }; //, "-rmin", "-rmax", "-rstep" };
-	handle_args(argc, argv, 4, values, identifier);
+	int *values[] = { &num_threads, &loops, &partitioned, &lock_array_size,
+			&lockFunction }; // &repeats_min, &repeats_max, &repeats_step };
+	const char *identifier[] = { "-n", "-l", "-p", "-s", "-t" }; //, "-rmin", "-rmax", "-rstep" };
+	handle_args(argc, argv, 5, values, identifier);
 
 	printf("Lock array size: %d\n", lock_array_size);
 	printf("Threads:         %d\n", num_threads);
@@ -90,6 +101,14 @@ int main(int argc, char *argv[]) {
 	printf("Partitioned:     %d\n", partitioned);
 	printf("Type size:       %d\n", 4);
 
+	int lockFunctionsMin, lockFunctionsMax;
+	if (lockFunction > -1) {
+		lockFunctionsMin = lockFunction;
+		lockFunctionsMax = lockFunction + 1;
+	} else {
+		lockFunctionsMin = 0;
+		lockFunctionsMax = LOCK_FUNCTIONS_LENGTH;
+	}
 
 	// define lock_functions to test
 	__FUNCTION_DEFINITION(type, 4)
@@ -99,7 +118,7 @@ int main(int argc, char *argv[]) {
 
 	pthread_t threads[num_threads];
 
-	printHeader();
+	printHeader(lockFunction);
 	for (int r = 0; r < sizeof(repeats) / sizeof(repeats[0]); r++) {
 		printf("%d", repeats[r]);
 		std::cout.flush();
@@ -107,7 +126,7 @@ int main(int argc, char *argv[]) {
 		int lock_accesses_size = repeats[r];
 
 		// loop over functions, loops, threads
-		for (int f = 0; f < LOCK_FUNCTIONS_LENGTH; f++) {
+		for (int f = lockFunctionsMin; f < lockFunctionsMax; f++) {
 			std::vector<double> times;
 			for (int l = 0; l < loops; l++) {
 				// create random access values for each thread

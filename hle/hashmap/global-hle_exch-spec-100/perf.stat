@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1453':
+
+    1580301,242239 task-clock                #    3,941 CPUs utilized          
+   797.332.681.431 instructions              #    0,17  insns per cycle         [66,68%]
+ 4.567.619.180.139 cycles                    #    2,890 GHz                     [66,68%]
+ 4.258.131.911.767 cpu/cycles-t/             #   93,22% transactional cycles    [66,68%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [66,68%]
+       980.748.941 cpu/el-start/             #     4342 cycles / elision        [66,68%]
+ 4.206.560.806.589 cpu/cycles-ct/            #    1,13% aborted cycles          [66,68%]
+
+     400,979902407 seconds time elapsed
+

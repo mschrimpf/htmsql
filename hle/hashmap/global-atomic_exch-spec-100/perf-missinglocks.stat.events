@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '2694':
+
+                 0 r21D0                                                        [66,69%]
+                 0 r01C8                                                        [66,69%]
+18.307.457.990.829 cycles                    #    0,000 GHz                     [66,69%]
+
+    1672,160218410 seconds time elapsed
+

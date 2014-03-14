@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '22587':
+
+     1.008.703.948 r21D0                                                        [33,35%]
+       965.712.401 r01C8                                                        [33,35%]
+ 4.520.136.621.779 cycles                    #    0,000 GHz                     [33,35%]
+
+     396,657485321 seconds time elapsed
+

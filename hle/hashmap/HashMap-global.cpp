@@ -36,7 +36,7 @@ HLEBucket::HLEBucket(LockType locker) {
 }
 void HLEBucket::init(LinkedListItem *item, LockType locker) {
 	this->item = item;
-	this->locker = locker;
+//	this->locker = locker; // do not set
 }
 HLEBucket::~HLEBucket() {
 	LinkedListItem* item = this->item;

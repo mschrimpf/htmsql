@@ -1,9 +1,9 @@
 
- Performance counter stats for process id '4253':
+ Performance counter stats for process id '31316':
 
-           296.092 r21D0                                                        [65,96%]
-        53.827.050 r01C8                                                        [65,96%]
-   248.471.811.674 cycles                    #    0,000 GHz                     [65,96%]
+     1.012.717.671 r21D0                                                        [33,40%]
+       965.168.935 r01C8                                                        [33,40%]
+ 4.498.098.958.777 cycles                    #    0,000 GHz                     [33,40%]
 
-      21,769935795 seconds time elapsed
+     394,956479646 seconds time elapsed
 

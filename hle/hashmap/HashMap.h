@@ -23,7 +23,7 @@ private:
 class HLEBucket {
 public:
 	LinkedListItem *item;
-	LockType locker; // could make this a reference member: LockType &locker
+	LockType locker;
 	HLEBucket(LockType locker);
 	HLEBucket(LinkedListItem *item, LockType locker);
 	~HLEBucket();

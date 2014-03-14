@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '21362':
+
+     246669,109353 task-clock                #    3,868 CPUs utilized          
+   155.796.261.094 instructions              #    0,22  insns per cycle         [33,42%]
+   705.829.270.464 cycles                    #    2,861 GHz                     [33,42%]
+   418.132.804.766 cpu/cycles-t/             #   59,24% transactional cycles    [33,42%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,42%]
+       961.048.595 cpu/el-start/             #      435 cycles / elision        [33,42%]
+   417.526.899.915 cpu/cycles-ct/            #    0,09% aborted cycles          [33,42%]
+
+      63,765504721 seconds time elapsed
+

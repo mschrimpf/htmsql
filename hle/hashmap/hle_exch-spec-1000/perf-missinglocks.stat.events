@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '21362':
+
+        31.074.611 r21D0                                                        [66,87%]
+       964.120.862 r01C8                                                        [66,87%]
+   708.436.834.011 cycles                    #    0,000 GHz                     [66,87%]
+
+      63,778906630 seconds time elapsed
+

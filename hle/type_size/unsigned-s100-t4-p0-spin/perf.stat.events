@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '20112':
+
+             4.674 r04C8 (HLE_RETIRED.ABORTED)                                                       
+         6.579.312 r01C8 (HLE_RETIRED.START)                                                       
+         6.574.638 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+       0,376773895 seconds time elapsed
+

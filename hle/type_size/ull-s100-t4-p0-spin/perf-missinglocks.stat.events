@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '25101':
+
+        21.627.720 r21D0                                                        [73,38%]
+         5.480.682 r01C8                                                        [73,38%]
+     2.127.930.726 cycles                    #    0,000 GHz                     [73,38%]
+
+       0,612091042 seconds time elapsed
+

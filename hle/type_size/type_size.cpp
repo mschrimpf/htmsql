@@ -6,39 +6,29 @@
 #include <vector>
 #include <iostream> // cout
 #include "../../util.h"
-#include "lock_functions.cpp"
+#include "hle-lock_functions.cpp"
+#include "atomic-lock_functions.cpp"
 
 #include <xmmintrin.h> // _mm_pause
-#include <sched.h> // thread affinity
 #define DEBUG 0
 
 #define type_uchar unsigned char // 1
 #define type_ushort unsigned short // 2
 #define type_u unsigned // 4
 #define type_ull unsigned long long // 8
-#define type type_u
+#define type type_ull
 
-#define LOCK_FUNCTIONS_LENGTH 2
+#define LOCK_FUNCTIONS_LENGTH 1
 #define __FUNCTION_DEFINITION(type, size)\
 	void (*lock_functions[])(type *lock) = {hle_exch_lock_spin##size, hle_exch_lock_spec##size};\
+	/*hle_exch_lock_spec##size, hle_exch_lock_spec_noload##size};\
+	void (*lock_functions[])(type *lock) = {atomic_tas_lock_spec, atomic_exch_lock_spec, \
+			hle_tas_lock_spec##size, hle_exch_lock_spec##size};*/\
 	void (*unlock_function)(type *lock) = hle_unlock##size;
 
 type *locks = NULL;
 int **lock_accesses = NULL;
 int partitioned = 0;
-
-static int num_cores = sysconf(_SC_NPROCESSORS_ONLN);
-int stick_this_thread_to_core(int core_id) {
-	if (core_id < 0 || core_id >= num_cores)
-		return -1;
-
-	cpu_set_t cpuset;
-	CPU_ZERO(&cpuset);
-	CPU_SET(core_id, &cpuset);
-
-	pthread_t current_thread = pthread_self();
-	return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
-}
 
 struct thread_attr {
 	int tid;
@@ -61,7 +51,7 @@ void *run(void * attr) {
 //		_mm_pause();
 //		usleep(1); // does only make a difference for array_size=1
 #if DEBUG == 1
-				printf("[T#%d] Unlocking %d (%p)\n", attrs.tid, access, &locks[access]);
+		printf("[T#%d] Unlocking %d (%p)\n", attrs.tid, access, &locks[access]);
 #endif
 		attrs.unlock_function(&locks[access]);
 	}
@@ -76,6 +66,13 @@ void printHeader(int functionType = -1, FILE * out = stdout) {
 		break;
 	case 1:
 		fprintf(out, "Repeats;hle_exch-spec\n");
+		break;
+	case 2:
+		fprintf(out,
+				"Repeats;atomic_exch-spec;atomic_tas-spec;hle_exch-spec;hle_tas-spec\n");
+		break;
+	case 3:
+		fprintf(out, "Repeats;hle_exch-spec;hle_exch-spec-noload\n");
 		break;
 	default:
 		fprintf(out, "Repeats;hle_exch-spin;hle_exch-spec\n");
@@ -99,19 +96,24 @@ int main(int argc, char *argv[]) {
 	printf("Threads:         %d\n", num_threads);
 	printf("Loops:           %d\n", loops);
 	printf("Partitioned:     %d\n", partitioned);
-	printf("Type size:       %d\n", 4);
-
-	int lockFunctionsMin, lockFunctionsMax;
-	if (lockFunction > -1) {
-		lockFunctionsMin = lockFunction;
-		lockFunctionsMax = lockFunction + 1;
-	} else {
-		lockFunctionsMin = 0;
-		lockFunctionsMax = LOCK_FUNCTIONS_LENGTH;
-	}
+	printf("Type size:       %d\n", 8);
 
 	// define lock_functions to test
-	__FUNCTION_DEFINITION(type, 4)
+	__FUNCTION_DEFINITION(type, 8)
+
+	int lockFunctionsMin, lockFunctionsMax;
+	switch (lockFunction) {
+	case -1:
+	case 2:
+	case 3:
+		lockFunctionsMin = 0;
+		lockFunctionsMax = LOCK_FUNCTIONS_LENGTH;
+		break;
+	default:
+		lockFunctionsMin = lockFunction;
+		lockFunctionsMax = lockFunction + 1;
+		break;
+	}
 
 	// init
 	locks = (type *) calloc(lock_array_size, sizeof(type));

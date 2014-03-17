@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '25101':
+
+         5.599.568 r04C8 (HLE_RETIRED.ABORTED)                                                        [84,35%]
+         5.598.480 r01C8 (HLE_RETIRED.START)                                                        [84,35%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [84,35%]
+
+       0,615763697 seconds time elapsed
+

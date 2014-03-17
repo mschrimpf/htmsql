@@ -7,6 +7,7 @@
 class LockType {
 public:
 	enum EnumType {
+		NONE,
 		PTHREAD,
 		CPP11MUTEX,
 		BOOST_MUTEX,
@@ -77,6 +78,8 @@ private:
 //	boost::mutex boost_mutex;
 	type type_mutex = 0;
 	// different lock functions for different mutexes
+	void no_lock();
+	void no_unlock();
 	void pthread_lock();
 	void pthread_unlock();
 	void cpp11_lock();

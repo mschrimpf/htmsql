@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '23851':
+
+                 0 r21D0                                                        [100,00%]
+         6.631.509 r01C8                                                        [100,00%]
+     3.572.866.481 cycles                    #    0,000 GHz                    
+
+       0,814668819 seconds time elapsed
+

@@ -8,7 +8,9 @@ private:
 	int counter;
 	LockType locker;
 public:
+	ThreadsafeCounter();
 	ThreadsafeCounter(LockType locker);
+	void init(LockType locker);
 	void increment();
 	int get();
 };

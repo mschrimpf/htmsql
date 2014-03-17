@@ -29,6 +29,49 @@ LockType::LockType(LockType::EnumType enum_type) {
 }
 void LockType::init(LockType::EnumType enum_type) {
 	this->enum_type = enum_type;
+
+	// assign lock-functions
+	switch (this->enum_type) {
+	case NONE:
+		this->lock = &LockType::no_lock;
+		this->unlock = &LockType::no_unlock;
+		break;
+	case PTHREAD:
+		this->lock = &LockType::pthread_lock;
+		this->unlock = &LockType::pthread_unlock;
+		break;
+	case CPP11MUTEX:
+		this->lock = &LockType::cpp11_lock;
+		this->unlock = &LockType::cpp11_unlock;
+		break;
+	case BOOST_MUTEX:
+		this->lock = &LockType::boost_mutex_lock;
+		this->unlock = &LockType::boost_mutex_unlock;
+		break;
+	case RTM:
+		this->lock = this->unlock = NULL;
+		this->type_lock_function = this->type_unlock_function = NULL;
+		break;
+	case ATOMIC_EXCH_BUSY:
+	case ATOMIC_EXCH_SPEC:
+	case ATOMIC_EXCH_HLE_BUSY:
+	case ATOMIC_EXCH_HLE_SPEC:
+	case ATOMIC_TAS_BUSY:
+	case ATOMIC_TAS_SPEC:
+	case ATOMIC_TAS_HLE_BUSY:
+	case ATOMIC_TAS_HLE_SPEC:
+	case HLE_TAS_BUSY:
+	case HLE_TAS_SPEC:
+	case HLE_EXCH_BUSY:
+	case HLE_EXCH_SPEC:
+	case HLE_ASM_EXCH_BUSY:
+	case HLE_ASM_EXCH_SPEC:
+	case HLE_ASM_EXCH_ASM_SPEC:
+		this->lock = &LockType::type_lock;
+		this->unlock = &LockType::type_unlock;
+		break;
+	}
+
 	// assign type_(un)lock_function
 	switch (this->enum_type) {
 	case ATOMIC_EXCH_BUSY:
@@ -92,49 +135,15 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_unlock_function = hle_asm_exch_unlock_asm_spec;
 		break;
 	}
-
-	// assign (un)lock
-	switch (this->enum_type) {
-	case PTHREAD:
-		this->lock = &LockType::pthread_lock;
-		this->unlock = &LockType::pthread_unlock;
-		break;
-	case CPP11MUTEX:
-		this->lock = &LockType::cpp11_lock;
-		this->unlock = &LockType::cpp11_unlock;
-		break;
-	case BOOST_MUTEX:
-		this->lock = &LockType::boost_mutex_lock;
-		this->unlock = &LockType::boost_mutex_unlock;
-		break;
-	case RTM:
-		this->lock = this->unlock = NULL;
-		this->type_lock_function = this->type_unlock_function = NULL;
-		break;
-	case ATOMIC_EXCH_BUSY:
-	case ATOMIC_EXCH_SPEC:
-	case ATOMIC_EXCH_HLE_BUSY:
-	case ATOMIC_EXCH_HLE_SPEC:
-	case ATOMIC_TAS_BUSY:
-	case ATOMIC_TAS_SPEC:
-	case ATOMIC_TAS_HLE_BUSY:
-	case ATOMIC_TAS_HLE_SPEC:
-	case HLE_TAS_BUSY:
-	case HLE_TAS_SPEC:
-	case HLE_EXCH_BUSY:
-	case HLE_EXCH_SPEC:
-	case HLE_ASM_EXCH_BUSY:
-	case HLE_ASM_EXCH_SPEC:
-	case HLE_ASM_EXCH_ASM_SPEC:
-		this->lock = &LockType::type_lock;
-		this->unlock = &LockType::type_unlock;
-		break;
-	}
 }
 
+// unsynchronized
+void LockType::no_lock() {
+}
+void LockType::no_unlock() {
+}
 // pthread
 void LockType::pthread_lock() {
-//	pthread_lock(&this->p_mutex); // perform immediate call
 	pthread_mutex_lock(&this->p_mutex);
 }
 void LockType::pthread_unlock() {
@@ -178,6 +187,8 @@ void LockType::printHeaderRange(LockType lockTypes[], int from, int to,
 
 const char* LockType::getEnumText(LockType::EnumType e) {
 	switch (e) {
+	case NONE:
+		return "No synchronization";
 	case PTHREAD:
 		return "POSIX Thread";
 	case CPP11MUTEX:

@@ -1,19 +1,15 @@
 CC=g++
 SC=gcc
-CCFLAGS=-O2 # compiler flags
+CCFLAGS=-std=c++0x -O2
 LDLAGS=-fgnu-tm -mrtm -lpthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES=type_size.cpp \
+hle-lock_functions.cpp \
+atomic-lock_functions.cpp \
 ../../util.cpp
-SOURCES_HLE=$(SOURCES) \
-lock_functions.cpp
-SOURCES_ATOMIC=$(SOURCES) \
-lock_functions-atomic.cpp
 EXECUTABLE=type_size
 EXECUTABLE_ATOMIC=type_size-atomic
 
 # time_cmp
-$(EXECUTABLE): $(SOURCES_HLE)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_HLE) $(LDLAGS)
-$(EXECUTABLE_ATOMIC): $(SOURCES_ATOMIC)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_ATOMIC) $(LDLAGS)
+$(EXECUTABLE): $(SOURCES)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES) $(LDLAGS)

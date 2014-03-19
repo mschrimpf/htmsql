@@ -14,9 +14,6 @@
 
 double average(std::vector<int> v);
 
-/**
- * Benchmarks how big the HashMap can get before aborts occur.
- */
 int main(int argc, char *argv[]) {
 	// handle args
 	int size = 10, loops = 1000, variety = -1, print = 0;

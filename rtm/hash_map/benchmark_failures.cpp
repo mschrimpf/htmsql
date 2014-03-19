@@ -11,9 +11,6 @@
 #include "LockException.h"
 #include "util.h"
 
-/**
- * Benchmarks how many failures occur for a certain setting.
- */
 int main(int argc, char *argv[]) {
 	// handle args
 	int size = 10, inserts = 100, loops = 1000, variety = 0, print = 0;

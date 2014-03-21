@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '1232':
+
+            46.645 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+            46.644 r01C8 (HLE_RETIRED.START)                                                       
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+       9,818393409 seconds time elapsed
+

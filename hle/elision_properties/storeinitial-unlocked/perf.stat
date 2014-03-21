@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '2403':
+
+      10136,893613 task-clock                #    0,999 CPUs utilized          
+     3.255.161.253 instructions              #    0,10  insns per cycle         [100,00%]
+    33.267.646.429 cycles                    #    3,282 GHz                     [100,00%]
+    23.785.526.334 cpu/cycles-t/             #   71,50% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+       540.580.556 cpu/el-start/             #       44 cycles / elision        [100,00%]
+    23.785.424.232 cpu/cycles-ct/            #    0,00% aborted cycles          [100,00%]
+
+      10,148972390 seconds time elapsed
+

@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '16159':
+
+       213.156.113 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+       213.187.224 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+            31.545 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+      12,137165893 seconds time elapsed
+

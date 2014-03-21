@@ -137,15 +137,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	// define locktypes
-	LockType::EnumType lockTypesEnum[] = { LockType::PTHREAD,
-			// atomic - tas (1, 2)
-			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
+	LockType::EnumType lockTypesEnum[] = {
+			// pthread (0)
+			LockType::PTHREAD,
+//			// atomic - tas (1, 2)
+//			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
 			// atomic - exch (3, 4)
-			LockType::ATOMIC_EXCH_BUSY, LockType::ATOMIC_EXCH_SPEC,
-			// hle - tas (5, 6)
-			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
+//			LockType::ATOMIC_EXCH_BUSY,
+			LockType::ATOMIC_EXCH_SPEC,
+//			// hle - tas (5, 6)
+//			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
 			// hle - exch (7, 8)
-			LockType::HLE_EXCH_BUSY, LockType::HLE_EXCH_SPEC };
+//			LockType::HLE_EXCH_BUSY,
+			LockType::HLE_EXCH_SPEC,
+			LockType::NONE};
 	int lockTypesCount, lockTypesMin, lockTypesMax;
 	lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	if (lockType > -1) {

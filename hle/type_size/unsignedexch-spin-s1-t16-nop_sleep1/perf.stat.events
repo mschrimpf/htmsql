@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '490':
+
+       146.779.450 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+       149.372.374 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+         2.593.614 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+       8,123327523 seconds time elapsed
+

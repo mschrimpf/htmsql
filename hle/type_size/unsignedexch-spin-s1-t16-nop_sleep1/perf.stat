@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '490':
+
+      27417,854404 task-clock                #    3,374 CPUs utilized          
+    15.388.110.545 instructions              #    0,22  insns per cycle         [100,00%]
+    69.928.325.821 cycles                    #    2,550 GHz                     [100,00%]
+    19.610.525.687 cpu/cycles-t/             #   28,04% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+       149.459.663 cpu/el-start/             #      131 cycles / elision        [100,00%]
+     3.333.905.097 cpu/cycles-ct/            #   23,28% aborted cycles          [100,00%]
+
+       8,127107234 seconds time elapsed
+

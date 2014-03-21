@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '1670':
+
+             1.016 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+       140.283.568 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+       140.282.389 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+       2,635979627 seconds time elapsed
+

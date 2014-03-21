@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1640':
+
+       2746,571556 task-clock                #    0,998 CPUs utilized          
+       282.041.249 instructions              #    0,03  insns per cycle         [100,00%]
+     9.014.710.566 cycles                    #    3,282 GHz                     [100,00%]
+     2.040.940.712 cpu/cycles-t/             #   22,64% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+        46.461.082 cpu/el-start/             #       44 cycles / elision        [100,00%]
+     2.040.923.765 cpu/cycles-ct/            #    0,00% aborted cycles          [100,00%]
+
+       2,752316284 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1544':
+
+       1251,623156 task-clock                #    0,109 CPUs utilized          
+     2.200.283.736 instructions              #    1,16  insns per cycle         [100,00%]
+     1.896.283.682 cycles                    #    1,515 GHz                     [100,00%]
+         7.869.880 cpu/cycles-t/             #    0,42% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+           262.201 cpu/el-start/             #       30 cycles / elision        [100,00%]
+         1.048.805 cpu/cycles-ct/            #    0,36% aborted cycles          [100,00%]
+
+      11,479863449 seconds time elapsed
+

@@ -16,9 +16,9 @@
 #define type_ushort unsigned short // 2
 #define type_u unsigned // 4
 #define type_ull unsigned long long // 8
-#define type type_ull
+#define type type_u
 
-#define LOCK_FUNCTIONS_LENGTH 1
+#define LOCK_FUNCTIONS_LENGTH 2
 #define __FUNCTION_DEFINITION(type, size)\
 	void (*lock_functions[])(type *lock) = {hle_exch_lock_spin##size, hle_exch_lock_spec##size};\
 	/*hle_exch_lock_spec##size, hle_exch_lock_spec_noload##size};\
@@ -29,6 +29,8 @@
 type *locks = NULL;
 int **lock_accesses = NULL;
 int partitioned = 0;
+int pin = 1;
+int sleep_time = 0; // amount to sleep for in microseconds (or 750 nop loops)
 
 struct thread_attr {
 	int tid;
@@ -39,7 +41,7 @@ struct thread_attr {
 void *run(void * attr) {
 	struct thread_attr attrs = *((struct thread_attr*) attr);
 
-	if (stick_this_thread_to_core(attrs.tid % num_cores) != 0)
+	if (pin && stick_this_thread_to_core(attrs.tid % num_cores) != 0)
 		printf("Could not pin thread\n");
 
 	for (int r = 0; r < attrs.repeats; r++) {
@@ -49,6 +51,7 @@ void *run(void * attr) {
 #endif
 		attrs.lock_function(&locks[access]);
 //		_mm_pause();
+		nop_sleep(sleep_time);
 //		usleep(1); // does only make a difference for array_size=1
 #if DEBUG == 1
 		printf("[T#%d] Unlocking %d (%p)\n", attrs.tid, access, &locks[access]);
@@ -82,24 +85,26 @@ void printHeader(int functionType = -1, FILE * out = stdout) {
 
 int main(int argc, char *argv[]) {
 	int lock_array_size = 100;
-	int repeats[] = { 1000, 5500, 10000 }; //{ 1000, 5500, 10000 }; // {10, 55, 100}; //
 	int num_threads = 4;
 	int loops = 100;
 	int lockFunction = -1;
-	partitioned = 0;
+	int partitioned = 0;
 	int *values[] = { &num_threads, &loops, &partitioned, &lock_array_size,
-			&lockFunction }; // &repeats_min, &repeats_max, &repeats_step };
-	const char *identifier[] = { "-n", "-l", "-p", "-s", "-t" }; //, "-rmin", "-rmax", "-rstep" };
-	handle_args(argc, argv, 5, values, identifier);
+			&lockFunction, &sleep_time, &pin }; // &repeats_min, &repeats_max, &repeats_step };
+	const char *identifier[] = { "-n", "-l", "-partition", "-s", "-t", "-sleep", "-pin" };
+	handle_args(argc, argv, 7, values, identifier);
 
 	printf("Lock array size: %d\n", lock_array_size);
 	printf("Threads:         %d\n", num_threads);
 	printf("Loops:           %d\n", loops);
-	printf("Partitioned:     %d\n", partitioned);
-	printf("Type size:       %d\n", 8);
+	printf("Partitioned:     %s\n", partitioned ? "yes" : "no");
+	printf("Pinned:          %s\n", pin ? "yes" : "no");
+	printf("sleep:           %d\n", sleep_time);
+	printf("Type size:       %d\n", 4);
+	int repeats[] = { 1000, 5500, 10000 };//{ 1000, 5500, 10000 }; // {10, 55, 100}; //
 
 	// define lock_functions to test
-	__FUNCTION_DEFINITION(type, 8)
+	__FUNCTION_DEFINITION(type, 4)
 
 	int lockFunctionsMin, lockFunctionsMax;
 	switch (lockFunction) {
@@ -188,7 +193,7 @@ int main(int argc, char *argv[]) {
 				}
 //				free(lock_accesses);
 				delete[] lock_accesses;
-				// TODO fix the corruption error
+				// TODO corruption error (double free) for uchar size 1000 and ushort size 100
 			} // end loops loop
 			printf(";%.2f", average(times));
 			std::cout.flush();

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '2340':
+
+       1301,539713 task-clock                #    2,073 CPUs utilized          
+       696.252.531 instructions              #    0,30  insns per cycle        
+     2.350.684.100 cycles                    #    1,806 GHz                    
+       439.383.332 cpu/cycles-t/             #   18,69% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+         6.591.122 cpu/el-start/             #       67 cycles / elision       
+       436.540.583 cpu/cycles-ct/            #    0,12% aborted cycles         
+
+       0,627789957 seconds time elapsed
+

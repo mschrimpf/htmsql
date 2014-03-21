@@ -4,6 +4,8 @@ CCFLAGS=-std=c++0x -O2
 LDLAGS=-fgnu-tm -mrtm -lpthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 
+SOURCES_BUSYSLEEP=busy_sleep.cpp ../util.cpp
+
 # time_cmp
-busy_sleep: busy_sleep.cpp
-	$(CC) $(CCFLAGS) -o $@ busy_sleep.cpp $(LDLAGS)
+busy_sleep: $(SOURCES_BUSYSLEEP)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_BUSYSLEEP) $(LDLAGS)

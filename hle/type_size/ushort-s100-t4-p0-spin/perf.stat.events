@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '13692':
+
+         5.163.833 r04C8 (HLE_RETIRED.ABORTED) (HLE_RETIRED.ABORTED)                                                        [71,71%]
+         5.163.833 r01C8 (HLE_RETIRED.START) (HLE_RETIRED.START)                                                        [71,71%]
+                 0 r02C8 (HLE_RETIRED.COMMIT) (HLE_RETIRED.COMMIT)                                                        [71,71%]
+
+       0,682177672 seconds time elapsed
+

@@ -8,7 +8,6 @@ hle-lock_functions.cpp \
 atomic-lock_functions.cpp \
 ../../util.cpp
 EXECUTABLE=type_size
-EXECUTABLE_ATOMIC=type_size-atomic
 
 # time_cmp
 $(EXECUTABLE): $(SOURCES)

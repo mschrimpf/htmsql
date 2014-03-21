@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '17180':
+
+       153.164.126 r21D0                                                        [69,65%]
+        67.672.766 r01C8                                                        [69,65%]
+    34.250.522.548 cycles                    #    0,000 GHz                     [69,65%]
+
+       5,325969901 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '14970':
+
+       1707,818777 task-clock                #    2,414 CPUs utilized          
+       681.866.160 instructions              #    0,22  insns per cycle         [100,00%]
+     3.111.496.501 cycles                    #    1,822 GHz                     [100,00%]
+       998.415.080 cpu/cycles-t/             #   32,09% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+         6.643.726 cpu/el-start/             #      150 cycles / elision        [100,00%]
+       940.015.044 cpu/cycles-ct/            #    1,88% aborted cycles         
+
+       0,707506960 seconds time elapsed
+

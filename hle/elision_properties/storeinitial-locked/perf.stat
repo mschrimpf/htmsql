@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '2428':
+
+       2719,015527 task-clock                #    0,998 CPUs utilized          
+       881.165.424 instructions              #    0,10  insns per cycle         [100,00%]
+     8.932.161.927 cycles                    #    3,285 GHz                     [100,00%]
+     6.438.807.189 cpu/cycles-t/             #   72,09% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+       146.336.409 cpu/el-start/             #       44 cycles / elision        [100,00%]
+     6.438.764.807 cpu/cycles-ct/            #    0,00% aborted cycles          [100,00%]
+
+       2,725044467 seconds time elapsed
+

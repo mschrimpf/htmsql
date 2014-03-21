@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '14922':
+
+      20981,720346 task-clock                #    3,575 CPUs utilized          
+   210.863.648.926 instructions              #    3,59  insns per cycle         [100,00%]
+    58.783.858.232 cycles                    #    2,802 GHz                     [100,00%]
+    50.246.541.071 cpu/cycles-t/             #   85,48% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+            71.930 cpu/el-start/             #   698548 cycles / elision        [100,00%]
+    47.391.744.847 cpu/cycles-ct/            #    4,86% aborted cycles          [100,00%]
+
+       5,868295551 seconds time elapsed
+

@@ -2,22 +2,38 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <sys/time.h> // timeval
+#include "../util.h"
 //
 
-void busy_sleep() {
-	for (int i = 0; i < 255; i++)
-		for (int j = 0; j < 255; j++)
-			;
+int dummy = 0;
+void busy_sleep() { // X
+	int loops = 1000;
+	for (int i = 0; i < loops; i++)
+		for (int j = 0; j < loops; j++)
+			dummy++;
+}
+
+void sleep_nop(int microseconds) { // <--
+	for (int i = 0; i < microseconds * 750; ++i) {
+		asm volatile("nop");
+	}
 }
 
 int main(int argc, char *argv[]) {
+	int duration = 1;
+	int *values[] = { &duration };
+	const char *identifier[] = { "-d" };
+	handle_args(argc, argv, 1, values, identifier);
+
+	//
 	struct timeval start, end;
 	gettimeofday(&start, NULL);
 
-	busy_sleep();
+	sleep_nop(duration);
 
 	gettimeofday(&end, NULL);
-	double elapsed = ((end.tv_sec - start.tv_sec) * 1000)
-			+ (end.tv_usec / 1000 - start.tv_usec / 1000);
-	printf("%2.2d\n", elapsed);
+	long elapsed = (end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec
+			- start.tv_usec;
+	printf("%ld microseconds elapsed\n", elapsed);
+	printf("dummy: %d\n", dummy);
 }

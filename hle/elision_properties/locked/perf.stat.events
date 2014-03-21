@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '1640':
+
+        46.460.097 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+        46.460.043 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                       
+
+       2,752238807 seconds time elapsed
+

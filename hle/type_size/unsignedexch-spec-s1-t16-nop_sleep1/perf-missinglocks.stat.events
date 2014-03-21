@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '1064':
+
+        21.850.948 r21D0                                                        [71,19%]
+         2.559.452 r01C8                                                        [71,19%]
+    33.885.008.217 cycles                    #    0,000 GHz                     [71,19%]
+
+       5,127757349 seconds time elapsed
+

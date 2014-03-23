@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 	printf("Pinned:          %s\n", pin ? "yes" : "no");
 	printf("sleep:           %d\n", sleep_time);
 	printf("Type size:       %d\n", 4);
-	int repeats[] = { 1000, 5500, 10000 };//{ 1000, 5500, 10000 }; // {10, 55, 100}; //
+	int repeats[] = {10, 55, 100}; //{ 1000, 5500, 10000 }; // {10, 55, 100}; //
 
 	// define lock_functions to test
 	__FUNCTION_DEFINITION(type, 4)

@@ -20,3 +20,11 @@ EXECUTABLE_RETRIED=retried_elision
 $(EXECUTABLE_RETRIED): $(SOURCES_RETRIED)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_RETRIED) $(LDLAGS)
 	
+# abort
+SOURCES_ABORT=mutual_abort.cpp \
+../../util.cpp
+EXECUTABLE_ABORT=mutual_abort
+
+$(EXECUTABLE_ABORT): $(SOURCES_ABORT)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_ABORT) $(LDLAGS)
+	

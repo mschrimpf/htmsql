@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '19464':
+
+        41.716.572 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+        41.716.407 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [100,00%]
+
+       2,914986958 seconds time elapsed
+

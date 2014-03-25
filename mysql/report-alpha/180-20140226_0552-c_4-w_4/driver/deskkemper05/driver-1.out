@@ -1,0 +1,91 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1393390416
+driver will ramp up in  30 seconds
+will stop test at time 1393390506
+seed for 17432:7e2dc700 : 757812487
+seed for 17432:7e2bb700 : 757939530
+seed for 17432:7e29a700 : 758066577
+seed for 17432:7e279700 : 757145332
+seed for 17432:7e258700 : 757272366
+seed for 17432:7e237700 : 757432339
+seed for 17432:7e216700 : 757567747
+seed for 17432:7e1f5700 : 756654487
+seed for 17432:7e1d4700 : 756789910
+seed for 17432:7e1b3700 : 756925439
+seed for 17432:7e192700 : 757060656
+seed for 17432:7e171700 : 756147660
+seed for 17432:7e150700 : 756283000
+seed for 17432:7e12f700 : 756287333
+seed for 17432:7d5e5700 : 777562187
+seed for 17432:7d5c4700 : 777697461
+seed for 17432:7d5a3700 : 777832888
+seed for 17432:7d582700 : 777968347
+seed for 17432:7d561700 : 777055216
+seed for 17432:7d540700 : 777190429
+seed for 17432:7d51f700 : 777456976
+seed for 17432:7d4fe700 : 776543648
+seed for 17432:7d4dd700 : 776679107
+seed for 17432:7d4bc700 : 776814553
+seed for 17432:7d49b700 : 776949993
+seed for 17432:7d47a700 : 776028656
+seed for 17432:7d459700 : 776172055
+seed for 17432:7d438700 : 776299318
+seed for 17432:7d417700 : 776442756
+seed for 17432:7d3f6700 : 775521453
+seed for 17432:7d3d5700 : 775664916
+seed for 17432:7d3b4700 : 775792144
+seed for 17432:7d393700 : 775935637
+seed for 17432:7d372700 : 775014308
+seed for 17432:7d351700 : 775157994
+seed for 17432:7d330700 : 775285005
+seed for 17432:7d30f700 : 775297537
+seed for 17432:7d2ee700 : 774376277
+seed for 17432:7d2cd700 : 774519924
+seed for 17432:7d2ac700 : 774646967

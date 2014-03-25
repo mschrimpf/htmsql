@@ -12,24 +12,18 @@
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
 #define type int
-#define RAND_FUNCTION(lim) rand2(lim)
+#define RAND(lim) rand_gerhard(lim)
 
 void shuffle_array(int *array, int size) {
 	// from: http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
-	for(int i = size-1; i>0; i--) {
-		int j = rand() % i+1;
+	for (int i = size - 1; i > 0; i--) {
+		int j = rand() % i + 1;
 		// swap
 		int h = array[j];
 		array[j] = array[i];
 		array[i] = array[j];
 	}
 }
-
-
-
-
-
-
 
 volatile type* malloc_init(int size) {
 	return (volatile type *) malloc(size * sizeof(type));
@@ -74,10 +68,10 @@ int run_rnd_write(volatile type *array[], int size) {
 //	srand(rnd); // generate new randomness
 	// (otherwise, the old "random" values would occur again after a retry
 	// since the internal rand()-value would be aborted and therefore reset)
-	rnd = RAND_FUNCTION(size);
+	rnd = RAND(size);
 	if (_xbegin() == _XBEGIN_STARTED) {
 		for (int i = 0; i < size; i++) {
-			(*array)[RAND_FUNCTION(size)]++; // write
+			(*array)[RAND(size)]++; // write
 		}
 		_xend();
 		return 1;
@@ -92,10 +86,10 @@ int run_rnd_read(volatile type *array[], int size) {
 	int failures = 0;
 	retry:
 //	srand(rnd);
-	rnd = RAND_FUNCTION(size);
+	rnd = RAND(size);
 	if (_xbegin() == _XBEGIN_STARTED) {
 		for (int i = 0; i < size; i++) {
-			dummy = (*array)[RAND_FUNCTION(size)]; // read - GCC option O0 needed!
+			dummy = (*array)[RAND(size)]; // read - GCC option O0 needed!
 		}
 		_xend();
 		return 1;
@@ -168,41 +162,36 @@ void printHeader(const MeasureType *types[], int size, FILE *out = stdout) {
 int main(int argc, char *argv[]) {
 	// arguments
 	int loops = 1000, sizes_min = 0, sizes_max = 800000, sizes_step = 5000,
-			write = 0;
-	int *values[] = { &loops, &sizes_min, &sizes_max, &sizes_step, &write,
-			&max_retries };
-	const char *identifier[] = { "-l", "-smin", "-smax", "-sstep", "-w",
-			"-max_retries" };
-	handle_args(argc, argv, 6, values, identifier);
+			write = 1;
+	int *values[] = { &loops, &sizes_min, &sizes_min, &sizes_max, &sizes_max,
+			&sizes_step, &sizes_step, &write, &max_retries };
+	const char *identifier[] = { "-l", "-smin", "-rmin", "-smax", "-rmax",
+			"-sstep", "-rstep", "-w", "-max_retries" };
+	handle_args(argc, argv, 9, values, identifier);
 
 	printf("%d - %d runs with steps of %d\n", sizes_min, sizes_max, sizes_step);
 	printf("Maximum %d retries\n", max_retries);
 	printf("Looped %d times\n", loops);
 	printf("Printing to %s\n", write ? "files" : "stdout");
 	printf("\n");
-	int sizes_small_count = 10, small_step = 1000;
-	int sizes_count = sizes_small_count
-			+ (sizes_max - sizes_min + sizes_step) / sizes_step;
-	int sizes[sizes_count];
-	for (int i = 0; i < sizes_small_count; i++) { // make smaller steps in the beginning
-		sizes[i] = (i + 1) * small_step;
-	}
-	for (int i = sizes_small_count; i < sizes_count; i++) {
-		sizes[i] = max(sizes_min, sizes_small_count * small_step)
-				+ (i - sizes_small_count + 1) * sizes_step;
-	}
 
-	const MeasureType *measureTypes[] = { &MeasureType::NOINIT_SEQ_WRITE,
-			&MeasureType::INIT_SEQ_WRITE, &MeasureType::NOINIT_SEQ_READ,
-			&MeasureType::INIT_SEQ_READ, &MeasureType::NOINIT_RND_WRITE,
-			&MeasureType::INIT_RND_WRITE, &MeasureType::NOINIT_RND_READ,
-			&MeasureType::INIT_RND_READ };
+	const MeasureType *measureTypes[] = {
+	// write sequential
+//			&MeasureType::NOINIT_SEQ_WRITE, &MeasureType::INIT_SEQ_WRITE,
+			// read sequential
+			&MeasureType::NOINIT_SEQ_READ, &MeasureType::INIT_SEQ_READ,
+//			// write random
+//			&MeasureType::NOINIT_RND_WRITE, &MeasureType::INIT_RND_WRITE,
+//			// read random
+//			&MeasureType::NOINIT_RND_READ, &MeasureType::INIT_RND_READ
+			//
+			};
 
 	// open files
 	char retries_str[21]; // enough to hold all numbers up to 64-bits
 	sprintf(retries_str, "%d", max_retries);
-	std::string file_prefix = "array_suite-", failures_file_suffix =
-			"retry-rand2.csv", time_file_suffix = "retry-rand2-time.csv";
+	std::string file_prefix = "read-seq-", failures_file_suffix =
+			"retry-failures.csv", time_file_suffix = "retry-time.csv";
 	std::string failures_filename = file_prefix + retries_str
 			+ failures_file_suffix;
 	std::string time_filename = file_prefix + retries_str + time_file_suffix;
@@ -219,9 +208,9 @@ int main(int argc, char *argv[]) {
 			time_out);
 
 	// run suite
-	for (int s = 0; s < sizeof(sizes) / sizeof(sizes[0]); s++) {
-		fprintf(failures_out, "%d", sizes[s]);
-		fprintf(time_out, "%d", sizes[s]);
+	for (int s = sizes_min; s <= sizes_max; s += sizes_step) {
+		fprintf(failures_out, "%d", s);
+		fprintf(time_out, "%d", s);
 		for (int t = 0; t < sizeof(measureTypes) / sizeof(measureTypes[0]);
 				t++) {
 			int failures = 0;
@@ -229,13 +218,13 @@ int main(int argc, char *argv[]) {
 			std::vector<double> times;
 			for (int l = 0; l < loops; l++) {
 				// init
-				volatile type* array = measureTypes[t]->init(sizes[s]);
+				volatile type* array = measureTypes[t]->init(s);
 
 				// run
 				attempts++;
 				struct timeval start, end;
 				gettimeofday(&start, NULL);
-				int res = measureTypes[t]->run(&array, sizes[s]);
+				int res = measureTypes[t]->run(&array, s);
 				gettimeofday(&end, NULL);
 				double elapsed = ((end.tv_sec - start.tv_sec) * 1000)
 						+ (end.tv_usec / 1000 - start.tv_usec / 1000);

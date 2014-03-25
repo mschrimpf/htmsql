@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <thread>
+#include <xmmintrin.h> // mm_pause
+#include "../../util.h"
+
+#include "../lib/hle-emulation.h"
+
+#define LOCK_TECHNIQUE_SPIN 0
+#define LOCK_TECHNIQUE_SPEC 1
+#define LOCK_TECHNIQUE LOCK_TECHNIQUE_SPEC
+
+const int wait_timeout = 500000;
+
+volatile unsigned mutex = 0;
+// counter
+long long read_counter = 0;
+// flags
+volatile int notify = 0;
+volatile int run = 1;
+
+void abort_write(int tid) {
+	if (stick_this_thread_to_core(tid % num_cores) != 0)
+		printf("Could not pin thread\n");
+
+	// let tas thread start up
+	usleep(wait_timeout);
+	// abort
+	mutex = 1;
+	printf("Aborted\n");
+	// let the other thread read for some time
+	usleep(2 * wait_timeout);
+	// reset
+	mutex = 0;
+	printf("Resetted\n");
+}
+
+void wait_tas_read_tas_wait(int tid) {
+	if (stick_this_thread_to_core(tid % num_cores) != 0)
+		printf("Could not pin thread\n");
+
+	// wait for abort to be set
+//	usleep(wait_timeout);
+
+	// try to elide
+	while (__hle_acquire_exchange_n4((unsigned *) &mutex, 1)) {
+		printf("Inside tas loop\n");
+#if(LOCK_TECHNIQUE == LOCK_TECHNIQUE_SPEC)
+		unsigned val;
+		do {
+#endif
+			_mm_pause();
+#if(LOCK_TECHNIQUE == LOCK_TECHNIQUE_SPEC)
+			__atomic_load(&mutex, &val, __ATOMIC_CONSUME);
+			read_counter++;
+		} while (val == 1);
+
+		// notify
+		if (val == 0) {
+#endif
+			printf("Notifying\n");
+			notify = 1;
+#if(LOCK_TECHNIQUE == LOCK_TECHNIQUE_SPEC)
+		}
+#endif
+	}
+
+	// wait
+	while (run) {
+		asm volatile("nop");
+	}
+	// release
+	__hle_release_clear4((unsigned *) &mutex);
+}
+
+long long mutex_checks = 100000;
+long long mutex_sum = 0;
+
+void check_mutex(int tid) {
+	if (stick_this_thread_to_core(tid % num_cores) != 0)
+		printf("Could not pin thread\n");
+
+	// wait for notify
+	while (!notify) {
+		asm volatile("nop");
+	}
+
+	// read mutex
+	for (int i = 0; i < mutex_checks; i++) {
+		mutex_sum += mutex;
+	}
+
+	float mutex_rate = (float) mutex_sum / mutex_checks * 100;
+	printf("Mutex was set to one in %lld cases out of %lld (%.2f%%)\n",
+			mutex_sum, mutex_checks, mutex_rate);
+
+	run = 0;
+}
+
+int main(int argc, char *argv[]) {
+	// start
+	std::thread tas_thread = std::thread(wait_tas_read_tas_wait, 0);
+	std::thread check_thread = std::thread(check_mutex, 1);
+	std::thread abort_thread = std::thread(abort_write, 2);
+
+	// join
+	tas_thread.join();
+	check_thread.join();
+	abort_thread.join();
+
+	printf("Reads: %lld\n", read_counter);
+}

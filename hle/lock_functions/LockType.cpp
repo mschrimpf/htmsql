@@ -20,6 +20,7 @@
 #include "hle_asm_exch_lock-spec.h"
 #include "hle_asm_exch_lock-asm_spec.h"
 
+
 LockType::LockType() {
 	this->lock = this->unlock = NULL;
 	this->type_lock_function = this->type_unlock_function = NULL;
@@ -40,14 +41,10 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->lock = &LockType::pthread_lock;
 		this->unlock = &LockType::pthread_unlock;
 		break;
-	case CPP11MUTEX:
-		this->lock = &LockType::cpp11_lock;
-		this->unlock = &LockType::cpp11_unlock;
-		break;
-	case BOOST_MUTEX:
-		this->lock = &LockType::boost_mutex_lock;
-		this->unlock = &LockType::boost_mutex_unlock;
-		break;
+//	case PTHREAD_HLE:
+//		this->lock = &LockType::pthread_hle_lock;
+//		this->unlock = &LockType::pthread_hle_unlock;
+//		break;
 	case RTM:
 		this->lock = this->unlock = NULL;
 		this->type_lock_function = this->type_unlock_function = NULL;
@@ -149,19 +146,13 @@ void LockType::pthread_lock() {
 void LockType::pthread_unlock() {
 	pthread_mutex_unlock(&this->p_mutex);
 }
-// cpp11
-void LockType::cpp11_lock() {
-//	thread_lock(&this->cpp11_mutex);
-}
-void LockType::cpp11_unlock() {
-//	thread_unlock(&this->cpp11_mutex);
-}
-void LockType::boost_mutex_lock() {
-//	boost_mutex_lock(&this->boost_mutex);
-}
-void LockType::boost_mutex_unlock() {
-//	boost_mutex_unlock(&this->boost_mutex);
-}
+// pthread hle
+//void LockType::pthread_hle_lock() {
+//	pthread_mutex_lock(&this->p_mutex_hle);
+//}
+//void LockType::pthread_hle_unlock() {
+//	pthread_mutex_unlock(&this->p_mutex_hle);
+//}
 // type
 void LockType::type_lock() {
 //	printf("Attempting to lock %p (%d)\n", &this->type_mutex, this->type_mutex);
@@ -191,10 +182,8 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "No synchronization";
 	case PTHREAD:
 		return "POSIX Thread";
-	case CPP11MUTEX:
-		return "CPP11 Mutex";
-	case BOOST_MUTEX:
-		return "BOOST_MUTEX";
+//	case PTHREAD_HLE:
+//		return "POSIX Thread HLE";
 	case ATOMIC_EXCH_BUSY:
 		return "atomic_EXCH_BUSY";
 	case ATOMIC_EXCH_SPEC:

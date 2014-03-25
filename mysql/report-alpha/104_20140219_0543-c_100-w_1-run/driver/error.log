@@ -1,8 +1,0 @@
-Wed Feb 19 05:45:13 2014
-Microseconds : 4351
-tid:-1134328064 client_interface.c:33
-socket closed on _receive
-Wed Feb 19 05:45:16 2014
-Microseconds : 472940
-tid:-1134733568 client_interface.c:33
-socket closed on _receive

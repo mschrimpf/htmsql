@@ -1,4 +1,0 @@
--->interrupted.
-Fehler in (function (expr, envir = parent.frame(), enclos = if (is.list(envir) ||  : 
-  Interrupted
-Keyboard interrupt.

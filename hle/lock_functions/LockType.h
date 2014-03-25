@@ -9,8 +9,7 @@ public:
 	enum EnumType {
 		NONE,
 		PTHREAD,
-		CPP11MUTEX,
-		BOOST_MUTEX,
+//		PTHREAD_HLE,
 		ATOMIC_EXCH_BUSY,
 		ATOMIC_EXCH_SPEC,
 		ATOMIC_EXCH_HLE_BUSY,
@@ -74,14 +73,16 @@ private:
 	void (*type_unlock_function)(type *lock);
 	// mutexes
 	pthread_mutex_t p_mutex = PTHREAD_MUTEX_INITIALIZER;
-//	std::mutex cpp11_mutex;
-//	boost::mutex boost_mutex;
+//	pthread_mutex_t p_mutex_hle = PTHREAD_MUTEX_HLE_ADAPTIVE_NP;
 	type type_mutex = 0;
+//	short padding[1024];
 	// different lock functions for different mutexes
 	void no_lock();
 	void no_unlock();
 	void pthread_lock();
 	void pthread_unlock();
+//	void pthread_hle_lock();
+//	void pthread_hle_unlock();
 	void cpp11_lock();
 	void cpp11_unlock();
 	void boost_mutex_lock();

@@ -9,7 +9,7 @@
 
 #include "../../../util.h"
 
-#define RAND_FUNCTION(lim) rand2(lim)
+#define RAND(lim) rand_gerhard(lim)
 
 #define FILE_VALUE_SEPARATOR ";"
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 			10000 };
 
 	srand (time(NULL)); // pseudo-randomness for current time
-int 	rnd = RAND_FUNCTION(9999);
+int 	rnd = RAND(9999);
 
 	// execute suite: check the failure rate for all accesses in all retries
 	int repeats = sizeof(retries) / sizeof(retries[0]);
@@ -77,11 +77,11 @@ int 	rnd = RAND_FUNCTION(9999);
 				int retrynum = 0;
 				attempts++;
 				retry: srand(rnd); // generate new randomness
-				rnd = RAND_FUNCTION(size);
+				rnd = RAND(size);
 				partial_attempts++;
 				if (_xbegin() == _XBEGIN_STARTED) {
 					for (int i = 0; i < size; i++) {
-						array[RAND_FUNCTION(size)]++;
+						array[RAND(size)]++;
 					}
 					_xend();
 				} else {

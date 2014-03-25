@@ -1,0 +1,17 @@
+                         Response Time (s)
+ Transaction      %    Average :    90th %        Total        Rollbacks      %     Ser. Retries      %
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----
+    Delivery   3.01      0.068 :     0.080            5                0   0.00                0   0.00
+   New Order  18.07      0.013 :     0.024           30                0   0.00                0   0.00
+Order Status  39.76      0.003 :     0.005           66                0   0.00                0   0.00
+     Payment   6.63      0.003 :     0.005           11                0   0.00                0   0.00
+ Stock Level  29.52      0.005 :     0.012           49                0   0.00                0   0.00
+Credit Check   3.01      0.000 :     0.001            5                0   0.00                0   0.00
+------------  -----  ---------------------  -----------  ---------------  -----
+
+26.09 new-order transactions per minute (NOTPM)
+144.35 total transactions per minute (TTPM)
+1.1 minute duration
+0 total unknown errors
+0.6 second(s) ramping up
+------------  -----  ---------------------  -----------  ---------------  -----  ---------------  -----

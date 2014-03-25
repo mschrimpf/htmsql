@@ -1,0 +1,14 @@
+HLE_RETIRED.ABORTED                                         :
+TX_MEM.ABORT_HLE_ELISION_BUFFER_NOT_EMPTY                   :
+TX_MEM.ABORT_HLE_STORE_TO_ELIDED_LOCK                       :
+HLE_RETIRED.START                                           :
+TX_MEM.ABORT_HLE_ELISION_BUFFER_UNSUPPORTED_ALIGNMENT       :
+HLE_RETIRED.ABORTED_MISC5                                   :
+HLE_RETIRED.COMMIT                                          :
+HLE_RETIRED.ABORTED_MISC4                                   :
+TX_MEM.ABORT_CONFLICT                                       :
+HLE_RETIRED.ABORTED_MISC1                                   :
+HLE_RETIRED.ABORTED_MISC3                                   :
+HLE_RETIRED.ABORTED_MISC2                                   :
+TX_MEM.HLE_ELISION_BUFFER_FULL                              :
+TX_MEM.ABORT_CAPACITY_WRITE                                 :

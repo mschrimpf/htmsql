@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '29683':
+
+      27461,970063 task-clock                #    1,998 CPUs utilized          
+   378.123.629.355 instructions              #    4,33  insns per cycle         [100,00%]
+    87.412.227.936 cycles                    #    3,183 GHz                     [100,00%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [100,00%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+      13,746656666 seconds time elapsed
+

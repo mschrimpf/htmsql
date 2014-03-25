@@ -1,0 +1,9 @@
+Thu Feb 27 01:11:50 2014
+tid:1046619904 /home/htmsql/develop/mysql/dbt2++/dbt2/src/mysql/dbc_common.c:45
+Connection to database 'dbt2' failed.
+Thu Feb 27 01:11:50 2014
+tid:1046619904 /home/htmsql/develop/mysql/dbt2++/dbt2/src/mysql/dbc_common.c:47
+mysql reports: 2002 Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)
+Thu Feb 27 01:11:50 2014
+tid:1046619904 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db_threadpool.c:108
+connect_to_db() error, terminating program

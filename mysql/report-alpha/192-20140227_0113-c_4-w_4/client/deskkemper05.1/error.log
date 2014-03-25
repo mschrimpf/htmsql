@@ -1,0 +1,61 @@
+Thu Feb 27 01:15:16 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:15:16 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/mysql/dbc_common.c:97
+ROLLBACK INITIATED
+
+Thu Feb 27 01:15:22 2014
+tid:-1354922240 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:15:46 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:15:51 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:15:51 2014
+tid:-1354922240 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:15:55 2014
+tid:-1355720960 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:15:57 2014
+tid:-1354922240 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:00 2014
+tid:-1354922240 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:04 2014
+tid:-1354922240 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:10 2014
+tid:-1355454720 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:12 2014
+tid:-1355720960 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:13 2014
+tid:-1355454720 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:15 2014
+tid:-1355720960 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:18 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:23 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:23 2014
+tid:-1354922240 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:24 2014
+tid:-1355454720 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:29 2014
+tid:-1355454720 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist
+Thu Feb 27 01:16:40 2014
+tid:-1355188480 /home/htmsql/develop/mysql/dbt2++/dbt2/src/db.c:186
+Cannot execute_credit_check since the code does not exist

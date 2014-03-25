@@ -1,0 +1,91 @@
+connecting to client at 'localhost'
+connecting to client port at '30000'
+
+database table cardinalities:
+warehouses = 4
+districts = 10
+customers = 3000
+items = 100000
+orders = 3000
+stock = 100000
+new-orders = 900
+
+transaction mix:
+new-order mix 0.09
+payment mix 0.08
+order-status mix 0.38
+delivery mix 0.04
+stock-level mix 0.38
+credit-check mix 0.04
+
+transaction thresholds:
+new-order threshold 0.09
+payment threshold 0.17
+order-status threshold 0.54
+delivery threshold 0.58
+stock-level threshold 0.96
+credit-check threshold 1.00
+
+delivery keying time 2 s
+new_order keying time 18 s
+order-status keying time 2 s
+payment keying time 3 s
+stock-level keying time 2 s
+credit-check keying time 2 s
+
+delivery thinking time 5000 ms
+new_order thinking time 12000 ms
+order-status thinking time 10000 ms
+payment thinking time 12000 ms
+stock-level thinking time 5000 ms
+credit-check thinking time 5000 ms
+
+w_id range 1 to 4
+
+10 terminals per warehouse
+
+60 second steady state duration
+
+driver is starting to ramp up at time 1393477675
+driver will ramp up in  30 seconds
+will stop test at time 1393477765
+seed for 11471:bb09d700 : 3892853592
+seed for 11471:bb07c700 : 3892718144
+seed for 11471:bb05b700 : 3892599199
+seed for 11471:bb03a700 : 3892463801
+seed for 11471:bb019700 : 3892346833
+seed for 11471:baff8700 : 3925765874
+seed for 11471:bafd7700 : 3925646868
+seed for 11471:bafb6700 : 3925511464
+seed for 11471:baf95700 : 3925392458
+seed for 11471:baf74700 : 3925259094
+seed for 11471:baf53700 : 3925131981
+seed for 11471:baf32700 : 3925004768
+seed for 11471:baf11700 : 3924877565
+seed for 11471:baef0700 : 3924750350
+seed for 11471:ba3a6700 : 3912996643
+seed for 11471:ba385700 : 3912869444
+seed for 11471:ba364700 : 3912742243
+seed for 11471:ba343700 : 3912615038
+seed for 11471:ba322700 : 3912489895
+seed for 11471:ba301700 : 3912362735
+seed for 11471:ba2e0700 : 3912235550
+seed for 11471:ba2bf700 : 3911846268
+seed for 11471:ba29e700 : 3911718998
+seed for 11471:ba27d700 : 3911593783
+seed for 11471:ba25c700 : 3911466521
+seed for 11471:ba23b700 : 3911339270
+seed for 11471:ba21a700 : 3911212218
+seed for 11471:ba1f9700 : 3911078803
+seed for 11471:ba1d8700 : 3910943390
+seed for 11471:ba1b7700 : 3910840921
+seed for 11471:ba196700 : 3910705506
+seed for 11471:ba175700 : 3910570020
+seed for 11471:ba154700 : 3910436614
+seed for 11471:ba133700 : 3910334186
+seed for 11471:ba112700 : 3910198730
+seed for 11471:ba0f1700 : 3910063452
+seed for 11471:ba0d0700 : 3909928005
+seed for 11471:ba0af700 : 3909827332
+seed for 11471:ba08e700 : 3909692071
+seed for 11471:ba06d700 : 3909556834

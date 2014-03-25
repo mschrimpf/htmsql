@@ -51,7 +51,7 @@ void *run(void * attr) {
 #endif
 		attrs.lock_function(&locks[access]);
 //		_mm_pause();
-		nop_sleep(sleep_time);
+		nop_wait(sleep_time);
 //		usleep(1); // does only make a difference for array_size=1
 #if DEBUG == 1
 		printf("[T#%d] Unlocking %d (%p)\n", attrs.tid, access, &locks[access]);

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1155':
+
+      23233,760684 task-clock                #    2,146 CPUs utilized          
+   300.251.696.252 instructions              #    4,12  insns per cycle         [100,00%]
+    72.957.441.303 cycles                    #    3,140 GHz                     [100,00%]
+               416 cpu/cycles-t/             #    0,00% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+                 1 cpu/el-start/             #      416 cycles / elision        [100,00%]
+                 4 cpu/cycles-ct/            #    0,00% aborted cycles          [100,00%]
+
+      10,827667126 seconds time elapsed
+

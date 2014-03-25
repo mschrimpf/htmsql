@@ -1,6 +1,0 @@
-Fri Feb 21 04:41:33 2014
-tid:-765671680 /home/htmsql/develop/mysql/dbt2++/dbt2/src/driver.c:516
-connect_to_client() failed, thread exiting...
-Fri Feb 21 04:41:34 2014
-tid:-765806848 /home/htmsql/develop/mysql/dbt2++/dbt2/src/driver.c:516
-connect_to_client() failed, thread exiting...

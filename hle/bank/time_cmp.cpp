@@ -302,15 +302,13 @@ int main(int argc, char *argv[]) {
 	}
 
 	// define locktypes
-	LockType::EnumType lockTypesEnum[] = { LockType::PTHREAD,
-	// atomic - tas
-			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
-			// atomic - exch
-			LockType::ATOMIC_EXCH_BUSY, LockType::ATOMIC_EXCH_SPEC,
-			// hle - tas
-			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
-			// hle - exch
-			LockType::HLE_EXCH_BUSY, LockType::HLE_EXCH_SPEC,
+	LockType::EnumType lockTypesEnum[] = {
+	// pthread
+			LockType::PTHREAD,
+			// atomic
+			LockType::ATOMIC_EXCH_SPEC,
+			// hle
+			LockType::HLE_EXCH_SPEC,
 			// rtm
 			LockType::RTM };
 	int lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
@@ -354,8 +352,8 @@ int main(int argc, char *argv[]) {
 				for (int i = 0; i < num_threads; i++) {
 					switch (lockTypes[t].enum_type) {
 					case LockType::EnumType::RTM:
-						threads[i] = std::thread(xrun_partitioned, i, repeats[r],
-								account_pool, account_pool_size);
+						threads[i] = std::thread(xrun_partitioned, i,
+								repeats[r], account_pool, account_pool_size);
 						break;
 					default:
 						threads[i] = std::thread(run_object_partitioned, i,

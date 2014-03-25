@@ -12,3 +12,8 @@ test.s: test.cpp ../util.cpp
 SOURCES_SUITE = suite.cpp ../../util.cpp
 suite: $(SOURCES_SUITE)
 	$(CC) -o $@ $(LDFLAGS) -O0 $(SOURCES_SUITE)
+
+# simple size
+SOURCES_SIZE_SIMPLE=size_simple.cpp ../../util.cpp
+size_simple: $(SOURCES_SIZE_SIMPLE)
+	$(CC) -o $@ $(LDFLAGS) -O0 $(SOURCES_SIZE_SIMPLE)

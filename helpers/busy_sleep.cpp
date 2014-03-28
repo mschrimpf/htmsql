@@ -6,15 +6,15 @@
 //
 
 int dummy = 0;
-void busy_sleep() { // X
+void busy_wait_nop() { // X
 	int loops = 1000;
 	for (int i = 0; i < loops; i++)
 		for (int j = 0; j < loops; j++)
 			dummy++;
 }
 
-void sleep_nop(int microseconds) { // <--
-	for (int i = 0; i < microseconds * 750; ++i) {
+void wait_nop_nop(int microseconds) { // <--
+	for (int i = 0; i < microseconds * 800; ++i) {
 		asm volatile("nop");
 	}
 }
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	struct timeval start, end;
 	gettimeofday(&start, NULL);
 
-	sleep_nop(duration);
+	wait_nop_nop(duration);
 
 	gettimeofday(&end, NULL);
 	long elapsed = (end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec

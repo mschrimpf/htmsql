@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '1544':
-
-           262.176 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
-           262.175 r01C8 (HLE_RETIRED.START)                                                       
-                 0 r02C8 (HLE_RETIRED.COMMIT)                                                       
-
-      11,479569670 seconds time elapsed
-

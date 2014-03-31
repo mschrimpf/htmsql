@@ -20,7 +20,9 @@ int main(int argc, char* argv[]) {
 
 	FILE * out = stdout;
 
-	fprintf(out, "Size;Uninitialized;Initialized\n");
+	fprintf(out,
+			"Size (array length = Byte);Uninitialized ExpectedValue;"
+			"Uninitialized Stddev;Initialized ExpectedValue;Initialized Stddev\n");
 	for (int s = sizes_min; s <= sizes_max; s += sizes_step) {
 		fprintf(out, "%d", s);
 		for (int init = 0; init <= 1; init++) {
@@ -36,6 +38,7 @@ int main(int argc, char* argv[]) {
 				if (_xbegin() == _XBEGIN_STARTED) {
 					// access all entries of the array, beginning from zero
 					for (int i = 0; i < s; i++) {
+//						array[i]++;
 						dummy = array[i];
 					}
 					_xend();

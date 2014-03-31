@@ -8,7 +8,6 @@
 #ifndef ACCOUNT_H_
 #define ACCOUNT_H_
 
-
 class Account {
 public:
 	Account(double budget = 0);
@@ -27,7 +26,10 @@ public:
 	double getBalance();
 private:
 	double balance;
-};
 
+#ifdef PADDING
+	unsigned char padding[64-8];
+#endif
+};
 
 #endif /* ACCOUNT_H_ */

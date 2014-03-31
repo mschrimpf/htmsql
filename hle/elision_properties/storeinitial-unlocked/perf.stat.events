@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '2403':
-
-             3.542 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
-       540.572.896 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
-       540.569.188 r02C8 (HLE_RETIRED.COMMIT)                                                       
-
-      10,148812113 seconds time elapsed
-

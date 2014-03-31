@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '10572':
+
+       1477,634999 task-clock                #    0,997 CPUs utilized          
+     4.774.753.828 instructions              #    0,99  insns per cycle         [50,20%]
+     4.830.745.753 cycles                    #    3,269 GHz                     [50,19%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [50,19%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [50,19%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [50,19%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles          [50,19%]
+
+       1,482482239 seconds time elapsed
+

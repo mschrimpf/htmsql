@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '19397':
-
-             1.001 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
-       212.753.820 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
-       212.752.595 r02C8 (HLE_RETIRED.COMMIT)                                                       
-
-       3,343596035 seconds time elapsed
-

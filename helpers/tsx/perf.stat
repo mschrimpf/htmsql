@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '11204':
+
+        531,691713 task-clock                #    0,992 CPUs utilized          
+     6.321.369.020 instructions              #    3,62  insns per cycle         [100,00%]
+     1.745.410.559 cycles                    #    3,283 GHz                     [100,00%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [100,00%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [100,00%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [100,00%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+       0,535805541 seconds time elapsed
+

@@ -58,7 +58,7 @@ void wait_tas_read_tas_wait(int tid) {
 //	usleep(wait_timeout);
 
 // try to elide
-	while (__hle_acquire_exchange_n4((unsigned *) &mutex, 1)) {
+	while (__hle_acquire_exchange_n4(const_cast<unsigned*> &mutex, 1)) {
 		printf("Inside tas loop\n");
 		unsigned val;
 		do {
@@ -79,46 +79,46 @@ void wait_tas_read_tas_wait(int tid) {
 		asm volatile("nop");
 	}
 	// release
-	__hle_release_clear4((unsigned *) &mutex);
+__hle_release_clear4(const_cast<unsigned*> &mutex);
 }
 
 long long mutex_checks = 100000;
 long long mutex_sum = 0;
 
 void check_mutex(int tid) {
-	if (stick_this_thread_to_core(tid % num_cores) != 0)
-		printf("Could not pin thread\n");
+if (stick_this_thread_to_core(tid % num_cores) != 0)
+	printf("Could not pin thread\n");
 
-	// wait for notify
-	while (!notify) {
-		asm volatile("nop");
-	}
+// wait for notify
+while (!notify) {
+	asm volatile("nop");
+}
 
-	// read mutex
-	for (int i = 0; i < mutex_checks; i++) {
-		mutex_sum += mutex;
-	}
+// read mutex
+for (int i = 0; i < mutex_checks; i++) {
+	mutex_sum += mutex;
+}
 
-	float mutex_rate = (float) mutex_sum / mutex_checks * 100;
-	printf("Mutex was set to one in %lld cases out of %lld (%.2f%%)\n",
-			mutex_sum, mutex_checks, mutex_rate);
+float mutex_rate = (float) mutex_sum / mutex_checks * 100;
+printf("Mutex was set to one in %lld cases out of %lld (%.2f%%)\n", mutex_sum,
+		mutex_checks, mutex_rate);
 
-	run = 0;
+run = 0;
 }
 
 //
 int main(int argc, char *argv[]) {
-	printf("CPU has hle: %d\n", cpu_has_hle());
+printf("CPU has hle: %d\n", cpu_has_hle());
 
-	// start
-	std::thread tas_thread = std::thread(wait_tas_read_tas_wait, 0);
-	std::thread check_thread = std::thread(check_mutex, 1);
-	std::thread abort_thread = std::thread(abort_write, 2);
+// start
+std::thread tas_thread = std::thread(wait_tas_read_tas_wait, 0);
+std::thread check_thread = std::thread(check_mutex, 1);
+std::thread abort_thread = std::thread(abort_write, 2);
 
-	// join
-	tas_thread.join();
-	check_thread.join();
-	abort_thread.join();
+// join
+tas_thread.join();
+check_thread.join();
+abort_thread.join();
 
-	printf("Reads: %lld\n", read_counter);
+printf("Reads: %lld\n", read_counter);
 }

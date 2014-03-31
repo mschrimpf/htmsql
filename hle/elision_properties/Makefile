@@ -1,7 +1,7 @@
 CC=g++
 SC=gcc
 CCFLAGS=-std=c++0x -O0 # compiler flags
-LDLAGS=-fgnu-tm -mrtm -pthread -Wl,--no-as-needed # linker flags
+LDLAGS=-fgnu-tm -mrtm -pthread #-Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 
 # locked
@@ -28,7 +28,7 @@ EXECUTABLE_ABORT=mutual_abort
 $(EXECUTABLE_ABORT): $(SOURCES_ABORT)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_ABORT) $(LDLAGS)
 
-# abort
+# hle
 SOURCES_READ_ELISION=read-second_elision.cpp \
 ../../util.cpp
 EXECUTABLE_READ_ELISION=read-second_elision

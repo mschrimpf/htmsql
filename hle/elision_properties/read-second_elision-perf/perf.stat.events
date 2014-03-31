@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '29683':
-
-                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
-                 0 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
-                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [100,00%]
-
-      13,749956797 seconds time elapsed
-

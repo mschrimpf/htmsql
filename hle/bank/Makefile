@@ -16,10 +16,8 @@ entities/Account.cpp entities/ThreadsafeAccount.cpp \
 ../lock_functions/hle_asm_exch_lock-asm_spec.cpp \
 ../lock_functions/LockType.cpp \
 ../../util.cpp
-# ../boost_mutex_lock.cpp # Problems with includes
 
 OBJECTS=$(SOURCES:.cpp=.o)
-ASM=$(SOURCES:.cpp=.s)
 EXECUTABLE=time_cmp
 
 # time_cmp
@@ -30,5 +28,3 @@ $(EXECUTABLE): $(SOURCES)
 
 #all: $(EXECUTABLE)
 
-#.cpp.o:
-#	$(CC) $(CFLAGS) $< -o $@

@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '1155':
-
-                 1 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
-                 1 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
-                 0 r02C8 (HLE_RETIRED.COMMIT)                                                       
-
-      10,824664930 seconds time elapsed
-

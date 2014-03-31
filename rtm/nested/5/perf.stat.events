@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '10660':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [50,00%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [50,00%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [50,00%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [50,00%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [50,00%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [50,00%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [50,00%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [50,00%]
+
+       1,478454229 seconds time elapsed
+

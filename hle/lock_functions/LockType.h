@@ -83,10 +83,6 @@ private:
 	void pthread_unlock();
 //	void pthread_hle_lock();
 //	void pthread_hle_unlock();
-	void cpp11_lock();
-	void cpp11_unlock();
-	void boost_mutex_lock();
-	void boost_mutex_unlock();
 	void type_lock();
 	void type_unlock();
 };

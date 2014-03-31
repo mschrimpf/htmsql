@@ -1,7 +1,7 @@
 CC=g++
 SC=gcc
 CCFLAGS=-std=c++0x -O2
-LDLAGS=-fgnu-tm -mrtm -lpthread -Wl,--no-as-needed # linker flags
+LDLAGS=-fgnu-tm -mrtm -pthread #-Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 
 
@@ -37,14 +37,16 @@ pthread_lock: $(SOURCES_PTHREAD_LOCK)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_PTHREAD_LOCK) $(LDLAGS)
 	
 SOURCES_PTHREAD_LOCK_GLIBC=pthread_lock.o util.o
+GLIBC=/home/htmsql/develop/glibc-elision
 DEBUG_FLAGS=-Og -ggdb
 pthread_lock.o: pthread_lock.cpp
 	$(CC) $(DEBUG_FLAGS) -c $(CCFLAGS) -o $@ pthread_lock.cpp $(LDLAGS)
 util.o: ../util.cpp
 	$(CC) $(DEBUG_FLAGS) -c $(CCFLAGS) -o $@ ../util.cpp $(LDLAGS)
 pthread_lock_glibc: $(SOURCES_PTHREAD_LOCK_GLIBC)
-	$(CC) $(DEBUG_FLAGS) -Wl,--rpath=/home/htmsql/develop/glibc/build/lib:/usr/lib:/lib -Wl,--dynamic-linker=/home/htmsql/develop/glibc/build/lib/ld-linux-x86-64.so.2 \
-			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS)
+	$(CC) $(DEBUG_FLAGS) \
+			-Wl,--rpath=$(GLIBC)/build/lib -Wl,--dynamic-linker=$(GLIBC)/build/lib/ld-linux-x86-64.so.2 \
+			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS) --enable-lock-elision=yes
 pthread_lock_glibc_nolinker: $(SOURCES_PTHREAD_LOCK_GLIBC)
 	$(CC) $(DEBUG_FLAGS) -Wl,--rpath=/home/htmsql/develop/glibc/build/lib \
 			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS)

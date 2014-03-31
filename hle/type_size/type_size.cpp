@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
 							lock_accesses[t][a] = partition_left
 									+ (rand() % partition_size);
 //							printf("lock_accesses[%d][%d] = %d\n", t, a, lock_accesses[t][a]);
-						} else { // hotspot
+						} else { // shared
 							lock_accesses[t][a] = rand() % lock_array_size;
 						}
 					}

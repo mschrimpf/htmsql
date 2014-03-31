@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '2428':
-
-               960 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
-       146.319.493 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
-       146.318.364 r02C8 (HLE_RETIRED.COMMIT)                                                       
-
-       2,724706335 seconds time elapsed
-

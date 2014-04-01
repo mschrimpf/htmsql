@@ -7,8 +7,7 @@
 class LockType {
 public:
 	enum EnumType {
-		NONE,
-		PTHREAD,
+		NONE, PTHREAD,
 //		PTHREAD_HLE,
 		ATOMIC_EXCH_BUSY,
 		ATOMIC_EXCH_SPEC,
@@ -66,8 +65,14 @@ public:
 	static void printHeader(LockType *lockTypes[], int size,
 			FILE *out = stdout);
 	static void printHeader(LockType lockTypes[], int size, FILE *out = stdout);
+	static void printHeader(LockType *lockTypes[], int size, const char *appendings[],
+			int appendings_length, FILE *out = stdout);
+	static void printHeader(LockType lockTypes[], int size, const char *appendings[],
+			int appendings_length, FILE *out = stdout);
 	static void printHeaderRange(LockType lockTypes[], int from, int to,
 			FILE *out = stdout);
+	static void printHeaderRange(LockType lockTypes[], int from, int to,
+			const char *appendings[], int appendings_length, FILE *out = stdout);
 private:
 	void (*type_lock_function)(type *lock);
 	void (*type_unlock_function)(type *lock);

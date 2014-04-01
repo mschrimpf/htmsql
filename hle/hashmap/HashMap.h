@@ -20,21 +20,21 @@ private:
 	void init(int data, LinkedListItem *successor);
 };
 
-class HLEBucket {
+class LockedBucket {
 public:
 	LinkedListItem *item;
 	LockType locker;
-	HLEBucket(LockType locker);
-	HLEBucket(LinkedListItem *item, LockType locker);
-	~HLEBucket();
+	LockedBucket(LockType locker);
+	LockedBucket(LinkedListItem *item, LockType locker);
+	~LockedBucket();
 private:
 	void init(LinkedListItem *item, LockType locker);
 };
 
 class HashMap {
-private:
+protected:
 	int size;
-	HLEBucket** map;
+	LockedBucket** map;
 	int hash(int value);
 	int printLinkedList(LinkedListItem* item);
 

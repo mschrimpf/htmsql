@@ -28,17 +28,17 @@ void LinkedListItem::init(int data, LinkedListItem *successor) {
 	this->successor = successor;
 }
 
-HLEBucket::HLEBucket(LinkedListItem *item, LockType locker) {
+LockedBucket::LockedBucket(LinkedListItem *item, LockType locker) {
 	init(item, locker);
 }
-HLEBucket::HLEBucket(LockType locker) {
+LockedBucket::LockedBucket(LockType locker) {
 	init(NULL, locker);
 }
-void HLEBucket::init(LinkedListItem *item, LockType locker) {
+void LockedBucket::init(LinkedListItem *item, LockType locker) {
 	this->item = item;
 //	this->locker = locker; // do not set
 }
-HLEBucket::~HLEBucket() {
+LockedBucket::~LockedBucket() {
 	LinkedListItem* item = this->item;
 	while (item) {
 		LinkedListItem* old = item;
@@ -56,9 +56,9 @@ HLEBucket::~HLEBucket() {
  */
 HashMap::HashMap(int size, LockType _locker) {
 	this->size = size;
-	this->map = (HLEBucket**) calloc(size, sizeof(HLEBucket*));
+	this->map = (LockedBucket**) calloc(size, sizeof(LockedBucket*));
 	for (int i = 0; i < size; i++) {
-		this->map[i] = new HLEBucket(_locker);
+		this->map[i] = new LockedBucket(_locker);
 //		printf("Locker[%d]: %p | mutex: %p\n", i, &this->map[i]->locker, &this->map[i]->locker.type_mutex);
 	}
 	locker = _locker;

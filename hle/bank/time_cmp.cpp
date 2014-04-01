@@ -308,10 +308,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	printf("Repeats;");
-//	LockType::printHeader(lockTypes, sizeof(lockTypes) / sizeof(lockTypes[0]));
-	printf(
-			"pthread ExpectedValue;pthread Stddev;atomic_exch-spec ExpectedValue;atomic_exch-spec Stddev;"
-					"hle_exch-spec ExpectedValue;hle_exch-spec Stddev;rtm ExpectedValue;rtm Stddev\n");
+	const char *appendings[2];
+	appendings[0] = "ExpectedValue";
+	appendings[1] = "Stddev";
+	LockType::printHeader(lockTypes, sizeof(lockTypes) / sizeof(lockTypes[0]), appendings, 2);
 	for (int r = repeats_min; r <= repeats_max; r += repeats_step) {
 		printf("%d", r);
 		std::cout.flush();

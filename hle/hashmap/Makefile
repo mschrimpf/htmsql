@@ -17,10 +17,12 @@ SOURCES_LOCK=../lock_functions/pthread_lock.cpp ../lock_functions/thread_lock.cp
 
 SOURCES_BUCKET=time_cmp.cpp \
 HashMap.cpp \
+HashMap-rtm.cpp \
 $(SOURCES_LOCK)
 
 SOURCES_GLOBAL=time_cmp.cpp \
 HashMap-global.cpp \
+HashMap-rtm.cpp \
 $(SOURCES_LOCK)
 
 OBJECTS=$(SOURCES:.cpp=.o)

@@ -6,9 +6,11 @@
 #include <sys/time.h> // time measurement
 #include <vector> // time measurement
 #include <set>
+#include <cmath> // sqrt
 #include <limits.h> // INT_MAX
 #include "../lock_functions/LockType.h"
 #include "HashMap.h"
+#include "HashMap-rtm.h"
 #include "../../util.h"
 
 #define CORES 4
@@ -138,19 +140,16 @@ int main(int argc, char *argv[]) {
 
 	// define locktypes
 	LockType::EnumType lockTypesEnum[] = {
-			// pthread (0)
+	// 0
 			LockType::PTHREAD,
-//			// atomic - tas (1, 2)
-//			LockType::ATOMIC_TAS_BUSY, LockType::ATOMIC_TAS_SPEC,
-			// atomic - exch (3, 4)
-//			LockType::ATOMIC_EXCH_BUSY,
+			// 1
 			LockType::ATOMIC_EXCH_SPEC,
-//			// hle - tas (5, 6)
-//			LockType::HLE_TAS_BUSY, LockType::HLE_TAS_SPEC,
-			// hle - exch (7, 8)
-//			LockType::HLE_EXCH_BUSY,
+			// 2
 			LockType::HLE_EXCH_SPEC,
-			LockType::NONE};
+			// 3
+			LockType::RTM
+	//
+			};
 	int lockTypesCount, lockTypesMin, lockTypesMax;
 	lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	if (lockType > -1) {
@@ -166,7 +165,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	printf("Repeats;");
-	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax);
+	const char *appendings[2];
+	appendings[0] = "ExpectedValue";
+	appendings[1] = "Stddev";
+	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
+			appendings, 2);
 	for (int r = 0; r < sizeof(repeats) / sizeof(repeats[0]); r++) {
 		printf("%d", repeats[r]);
 		std::cout.flush();
@@ -174,19 +177,26 @@ int main(int argc, char *argv[]) {
 		// run all lock-types
 		for (int t = lockTypesMin; t < lockTypesMax; t++) {
 			// use a loop to check the time more than once --> normalize
-			std::vector<double> times;
+			float expected_value_sum = 0, variance_sum = 0;
 			for (int l = 0; l < loops; l++) {
 				// init
-				HashMap map(mapSize, lockTypes[t]);
-//				values.clear();
-//				operations.clear();
+//				HashMap map(mapSize, lockTypes[t]);
+				HashMap * map = NULL;
+				switch (lockTypes[t].enum_type) {
+				case LockType::EnumType::RTM:
+					map = new HashMapRtm(mapSize);
+					break;
+				default:
+					map = new HashMap(mapSize, lockTypes[t]);
+					break;
+				}
 
 				// measure
 				struct timeval start, end;
 				gettimeofday(&start, NULL);
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(random_operations, i, &map,
+					threads[i] = std::thread(random_operations, i, map,
 							repeats[r], base_inserts, probability_insert,
 							probability_remove, probability_contains);
 				}
@@ -197,15 +207,23 @@ int main(int argc, char *argv[]) {
 
 				// measure time
 				gettimeofday(&end, NULL);
-				double elapsed = ((end.tv_sec - start.tv_sec) * 1000)
-						+ (end.tv_usec / 1000 - start.tv_usec / 1000);
-				times.push_back(elapsed);
+				float elapsed = ((end.tv_sec - start.tv_sec) * 1000000)
+						+ (end.tv_usec - start.tv_usec);
+				expected_value_sum += elapsed;
+				variance_sum += (elapsed * elapsed);
 
 				// check result
 //				checkResult(&map);
+
+				delete map;
 			} // end of loops loop
 
-			printf(";%.0f", average(times));
+			float expected_value = expected_value_sum * 1.0 / loops; // mu = p * sum(x_i)
+			float variance = 1.0 / loops * variance_sum
+					- expected_value * expected_value; // var = p * sum(x_i^2) - mu^2
+			float stddev = sqrt(variance);
+			float stderror = stddev / sqrt(loops);
+			printf(";%.2f;%.2f", expected_value, stddev);
 			std::cout.flush();
 		} // end of locktype-loop
 		printf("\n");

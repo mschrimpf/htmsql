@@ -20,7 +20,6 @@
 #include "hle_asm_exch_lock-spec.h"
 #include "hle_asm_exch_lock-asm_spec.h"
 
-
 LockType::LockType() {
 	this->lock = this->unlock = NULL;
 	this->type_lock_function = this->type_unlock_function = NULL;
@@ -173,6 +172,25 @@ void LockType::printHeaderRange(LockType lockTypes[], int from, int to,
 	for (int t = from; t < to; t++) {
 		fprintf(out, "%s", LockType::getEnumText(lockTypes[t].enum_type));
 		fprintf(out, "%s", t < to - 1 ? ";" : "\n");
+	}
+}
+void LockType::printHeader(LockType *lockTypes[], int size, const char *appendings[],
+		int appendings_length, FILE *out) {
+	printHeader(*lockTypes, size, appendings, appendings_length, out);
+}
+void LockType::printHeader(LockType lockTypes[], int size, const char *appendings[],
+		int appendings_length, FILE *out) {
+	printHeaderRange(lockTypes, 0, size, appendings, appendings_length, out);
+}
+void LockType::printHeaderRange(LockType lockTypes[], int from, int to,
+		const char *appendings[], int appendings_length, FILE *out) {
+	for (int t = from; t < to; t++) {
+		for (int a = 0; a < appendings_length; a++) {
+			fprintf(out, "%s", LockType::getEnumText(lockTypes[t].enum_type));
+			fprintf(out, " %s", appendings[a]);
+			fprintf(out, "%s",
+					a < appendings_length - 1 || t < to - 1 ? ";" : "\n");
+		}
 	}
 }
 

@@ -43,6 +43,11 @@ void xrun(int tid, int repeats, int * counter, int pin) {
 
 const int SINGLE_COUNTER = 0, COUNTER_PER_CORE = 1;
 int main(int argc, char *argv[]) {
+	if(sizeof(ThreadsafeCounter) < 64) {
+		fprintf(stderr, "Size of ThreadsafeCounter is smaller than a cache line\n");
+		return 1;
+	}
+
 	// arguments
 	int num_threads = CORES, loops = 100, repeats_min = 100000, repeats_max =
 			1500000, repeats_step = 700000, lockType = -1, mode = 0, pin = 0;

@@ -4,6 +4,7 @@
 #include <thread>
 #include <unistd.h>
 #include <sys/time.h> // time measurement
+#include <ctime> // clock
 #include <vector> // time measurement
 #include <set>
 #include <cmath> // sqrt
@@ -12,6 +13,7 @@
 #include "HashMap.h"
 #include "HashMap-rtm.h"
 #include "../../util.h"
+#include "../../Stats.h"
 
 #define CORES 4
 
@@ -22,7 +24,8 @@ std::vector<int> operations;
 #define OPERATION_CONTAINS 0
 #define OPERATION_REMOVE -1
 
-#define RAND(limit) rand_gerhard(limit)
+//#define RAND(limit) rand_gerhard(limit)
+#define RAND(limit) rand() % (limit)
 
 // NOTE: not used, approach does not work
 void checkResult(HashMap *map) {
@@ -109,34 +112,25 @@ void random_operations(int tid, HashMap *map, int repeats, int base_inserts,
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
-	int mapSize = 1000, loops = 100, repeats_min = 100000,
-			repeats_max = 1500000, repeats_step = 700000, probability_insert =
-					25, probability_remove = 25, probability_contains = 50,
-			base_inserts = 5000, lockType = -1;
+	int repeats = 1000000, loops = 100, probability_insert = 25,
+			probability_remove = 25, probability_contains = 50, base_inserts =
+					5000, lockType = -1;
+	int sizes[] = { /*1, 100,*/ 1000, 1000000 };
 	int *arg_values[] =
-			{ &mapSize, &num_threads, &loops, &repeats_min, &repeats_max,
-					&repeats_step, &probability_insert, &probability_remove,
-					&probability_contains, &base_inserts, &lockType };
-	const char *identifier[] = { "-s", "-n", "-l", "-rmin", "-rmax", "-rstep",
-			"-pi", "-pr", "-pc", "-bi", "-t" };
-	handle_args(argc, argv, 11, arg_values, identifier);
+			{ &repeats, &num_threads, &loops, &probability_insert,
+					&probability_remove, &probability_contains, &base_inserts,
+					&lockType };
+	const char *identifier[] = { "-r", "-n", "-l", "-pi", "-pr", "-pc", "-bi",
+			"-t" };
+	handle_args(argc, argv, 8, arg_values, identifier);
 
-	printf("MapSize:      %d\n", mapSize);
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
-	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
-			repeats_step);
 	printf(
-			"run function: %s\n\t(base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
-			"random_operations", base_inserts, probability_insert,
+			"run function: %s\n\t(repeats=%d, base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
+			"random_operations", repeats, base_inserts, probability_insert,
 			probability_remove, probability_contains);
 	printf("\n");
-	int repeats_count = (repeats_max - repeats_min + repeats_step)
-			/ repeats_step;
-	int repeats[repeats_count];
-	for (int i = 0; i < repeats_count; i++) {
-		repeats[i] = repeats_min + i * repeats_step;
-	}
 
 	// define locktypes
 	LockType::EnumType lockTypesEnum[] = {
@@ -164,40 +158,44 @@ int main(int argc, char *argv[]) {
 		lockTypes[t].init(lockTypesEnum[t]);
 	}
 
-	printf("Repeats;");
+	printf("Size;");
 	const char *appendings[2];
 	appendings[0] = "ExpectedValue";
 	appendings[1] = "Stddev";
 	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
 			appendings, 2);
-	for (int r = 0; r < sizeof(repeats) / sizeof(repeats[0]); r++) {
-		printf("%d", repeats[r]);
+	for (int s = 0; s < sizeof(sizes) / sizeof(sizes[0]); s++) {
+		printf("%d", sizes[s]);
 		std::cout.flush();
+
+		if (sizes[s] < 100)
+			repeats = 1000;
 
 		// run all lock-types
 		for (int t = lockTypesMin; t < lockTypesMax; t++) {
 			// use a loop to check the time more than once --> normalize
-			float expected_value_sum = 0, variance_sum = 0;
+			Stats stats;
 			for (int l = 0; l < loops; l++) {
 				// init
 //				HashMap map(mapSize, lockTypes[t]);
 				HashMap * map = NULL;
 				switch (lockTypes[t].enum_type) {
 				case LockType::EnumType::RTM:
-					map = new HashMapRtm(mapSize);
+					map = new HashMapRtm(sizes[s]);
 					break;
 				default:
-					map = new HashMap(mapSize, lockTypes[t]);
+					map = new HashMap(sizes[s], lockTypes[t]);
 					break;
 				}
 
 				// measure
 				struct timeval start, end;
 				gettimeofday(&start, NULL);
+
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(random_operations, i, map,
-							repeats[r], base_inserts, probability_insert,
+					threads[i] = std::thread(random_operations, i, map, repeats,
+							base_inserts, probability_insert,
 							probability_remove, probability_contains);
 				}
 				// wait for threads
@@ -207,10 +205,10 @@ int main(int argc, char *argv[]) {
 
 				// measure time
 				gettimeofday(&end, NULL);
-				float elapsed = ((end.tv_sec - start.tv_sec) * 1000000)
-						+ (end.tv_usec - start.tv_usec);
-				expected_value_sum += elapsed;
-				variance_sum += (elapsed * elapsed);
+				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
+						+ (end.tv_usec - start.tv_usec) / 1000;
+				float throughput_per_milli = repeats / elapsed_millis;
+				stats.addValue(throughput_per_milli);
 
 				// check result
 //				checkResult(&map);
@@ -218,12 +216,8 @@ int main(int argc, char *argv[]) {
 				delete map;
 			} // end of loops loop
 
-			float expected_value = expected_value_sum * 1.0 / loops; // mu = p * sum(x_i)
-			float variance = 1.0 / loops * variance_sum
-					- expected_value * expected_value; // var = p * sum(x_i^2) - mu^2
-			float stddev = sqrt(variance);
-			float stderror = stddev / sqrt(loops);
-			printf(";%.2f;%.2f", expected_value, stddev);
+			printf(";%.2f;%.2f", stats.getExpectedValue(),
+					stats.getStandardDeviation());
 			std::cout.flush();
 		} // end of locktype-loop
 		printf("\n");

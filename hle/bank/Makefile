@@ -15,7 +15,8 @@ entities/Account.cpp entities/ThreadsafeAccount.cpp \
 ../lock_functions/hle_asm_exch_lock-busy.cpp ../lock_functions/hle_asm_exch_lock-spec.cpp \
 ../lock_functions/hle_asm_exch_lock-asm_spec.cpp \
 ../lock_functions/LockType.cpp \
-../../util.cpp
+../../util.cpp \
+../../Stats.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=time_cmp

@@ -12,15 +12,17 @@
 #include <iostream>
 #include <thread>
 #include <immintrin.h> // RTM
-
 #include "HashMap-rtm.h"
 #include "../lock_functions/LockType.h"
 
-const int MAX_RETRIES = 1000000;
+const int MAX_RETRIES = 10000000;
 
 LockType rtm_locker(LockType::NONE);
 
-HashMapRtm::HashMapRtm(int size) : HashMap(size, rtm_locker) {
+HashMapRtm::HashMapRtm(int size) :
+		HashMap(size, rtm_locker) {
+}
+HashMapRtm::~HashMapRtm() {
 }
 
 /**
@@ -32,18 +34,19 @@ LinkedListItem* HashMapRtm::insert(int value) {
 	int h = hash(value);
 
 	int failures = 0;
+	LinkedListItem* insert_item = new LinkedListItem(value);
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
 		LinkedListItem *prev_item = NULL;
 		LinkedListItem *item_ptr = map[h]->item;
 		while (item_ptr) { // move to last list item
 			if (item_ptr->data == value) { // value already exists
+				delete insert_item;
 				_xend();
 				return item_ptr;
 			}
 			prev_item = item_ptr; // next
 			item_ptr = item_ptr->successor;
 		}
-		LinkedListItem* insert_item = new LinkedListItem(value);
 		if (prev_item) { // item(s) in list
 			// -> link to new item from list
 			prev_item->successor = insert_item;
@@ -57,8 +60,10 @@ LinkedListItem* HashMapRtm::insert(int value) {
 	} else {
 		if (++failures < MAX_RETRIES)
 			goto retry;
-		else
+		else {
+			fprintf(stderr, "Max retries reached for insert %d\n", value);
 			exit(1);
+		}
 	}
 }
 /**
@@ -95,8 +100,10 @@ int HashMapRtm::remove(int value) {
 	} else {
 		if (++failures < MAX_RETRIES)
 			goto retry;
-		else
+		else {
+			fprintf(stderr, "Max retries reached for remove %d\n", value);
 			exit(1);
+		}
 	}
 }
 
@@ -123,8 +130,10 @@ int HashMapRtm::contains(int value) {
 	} else {
 		if (++failures < MAX_RETRIES)
 			goto retry;
-		else
+		else {
+			fprintf(stderr, "Max retries reached for contains %d\n", value);
 			exit(1);
+		}
 	}
 }
 

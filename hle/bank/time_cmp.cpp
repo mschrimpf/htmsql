@@ -12,6 +12,7 @@
 #include "entities/ThreadsafeAccount.h"
 #include "../lock_functions/LockType.h"
 #include "../../util.h"
+#include "../../Stats.h"
 
 #define CORES 4
 #define RTM_MAX_RETRIES 1000000
@@ -319,7 +320,7 @@ int main(int argc, char *argv[]) {
 		// run all lock-types
 		for (int t = 0; t < sizeof(lockTypes) / sizeof(lockTypes[0]); t++) {
 			// use a loop to check the time more than once --> normalize
-			float expected_value_sum = 0, variance_sum = 0;
+			Stats stats;
 			for (int l = 0; l < loops; l++) {
 				// init accounts
 				ThreadsafeAccount ts_account_pool[ACCOUNT_COUNT];
@@ -367,10 +368,9 @@ int main(int argc, char *argv[]) {
 
 				// measure time
 				gettimeofday(&end, NULL);
-				float elapsed = ((end.tv_sec - start.tv_sec) * 1000000)
+				float elapsed_ms = ((end.tv_sec - start.tv_sec) * 1000000)
 						+ (end.tv_usec - start.tv_usec);
-				expected_value_sum += elapsed;
-				variance_sum += (elapsed * elapsed);
+				stats.addValue(elapsed_ms);
 
 				// check result
 				switch (lockTypes[t].enum_type) {
@@ -383,12 +383,7 @@ int main(int argc, char *argv[]) {
 				}
 			} // end of loops loop
 
-			float expected_value = expected_value_sum * 1.0 / loops; // mu = p * sum(x_i)
-			float variance = 1.0 / loops * variance_sum
-					- expected_value * expected_value; // var = p * sum(x_i^2) - mu^2
-			float stddev = sqrt(variance);
-			float stderror = stddev / sqrt(loops);
-			printf(";%.2f;%.2f", expected_value, stddev);
+			printf(";%.2f;%.2f", stats.getExpectedValue(), stats.getStandardDeviation());
 
 //			printf(";%.0f", average(times));
 

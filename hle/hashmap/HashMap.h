@@ -40,13 +40,13 @@ protected:
 
 public:
 	HashMap(int size, LockType locker);
-	~HashMap();
-	LinkedListItem* insert(int value);
-	int remove(int value);
-	int contains(int value);
+	virtual ~HashMap();
+	virtual LinkedListItem* insert(int value);
+	virtual int remove(int value);
+	virtual int contains(int value);
 	int countElements();
 
-	void print();
+	virtual void print();
 	void printLocks();
 };
 

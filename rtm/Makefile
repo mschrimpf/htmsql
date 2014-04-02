@@ -12,6 +12,6 @@ benchmarker: benchmarker.cpp
 
 # nesting
 SOURCES_NESTING=nesting.cpp \
-../util.cpp
+../util.cpp ../Stats.cpp
 nesting: $(SOURCES_NESTING)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING) $(LDLAGS)

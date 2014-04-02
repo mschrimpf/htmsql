@@ -10,6 +10,7 @@
 #include <cmath> // sqrt
 #include <immintrin.h> // rtm
 #include "../../util.h"
+#include "../../Stats.h"
 
 int main(int argc, char *argv[]) {
 	int loops = 10, inner_loops = 100, rmin = 10000, rmax =
@@ -32,8 +33,7 @@ int main(int argc, char *argv[]) {
 
 	for (int clocks = rmin; clocks <= rmax; clocks *= rstep) {
 		fprintf(out, "%d", clocks);
-		float variance_sum = 0;
-		float expected_value_sum = 0;
+		Stats stats;
 		for (int l = 0; l < loops; l++) {
 			int failures = 0;
 			for (int p = 0; p < inner_loops; p++) {
@@ -47,13 +47,9 @@ int main(int argc, char *argv[]) {
 				}
 			}
 			float failure_rate = (float) failures / inner_loops * 100;
-			variance_sum += failure_rate * failure_rate;
-			expected_value_sum += failure_rate;
+			stats.addValue(failure_rate);
 		}
 
-		float expected_value = expected_value_sum * 1.0 / loops; // mu = p * sum(x_i)
-		float variance = 1.0 / loops * variance_sum
-				- expected_value * expected_value; // var = p * sum(x_i^2) - mu^2
 
 //		float failure_rate = (float) failures / attempts * 100;
 //		fprintf(out, "%d;%d;%.2f", attempts, failures, failure_rate);
@@ -62,10 +58,7 @@ int main(int argc, char *argv[]) {
 //		int successful = loops - failures;
 //		float variance = (float) (successful * failures) / (loops * loops);
 
-		float stddev = sqrt(variance);
-		float stderror = stddev / sqrt(loops);
-		fprintf(out, ";%f;%f;%f;%f", expected_value, variance, stddev,
-				stderror);
+		printf(";%.2f;%.2f", stats.getExpectedValue(), stats.getVariance(), stats.getStandardDeviation(), stats.getStandardError());
 		fprintf(out, "\n");
 	}
 

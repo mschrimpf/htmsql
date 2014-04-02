@@ -19,7 +19,7 @@ private:
 };
 
 class HashMap {
-private:
+protected:
 	int size;
 	LinkedListItem** map;
 	int hash(int value);

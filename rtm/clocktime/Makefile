@@ -8,7 +8,7 @@ clocktime_avg.s: clocktime_avg.cpp
 	gcc -S -masm=intel $(CCFLAGS) clocktime_avg.cpp -lpthread
 	
 # Nop
-SOURCES_CLOCKTIME_NOP=clocktime_nop.cpp ../../util.cpp
+SOURCES_CLOCKTIME_NOP=clocktime_nop.cpp ../../util.cpp ../../Stats.cpp
 clocktime_nop: $(SOURCES_CLOCKTIME_NOP)
 	g++ -o $@ $(CCFLAGS) $(SOURCES_CLOCKTIME_NOP)
 

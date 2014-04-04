@@ -1,0 +1,3 @@
+unmodified: no changes
+alpha:      replaced test_and_set with hle
+beta:       rewrite spin-lock to speculation-lock

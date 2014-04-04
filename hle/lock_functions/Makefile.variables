@@ -1,0 +1,14 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+current_dir := $(patsubst %/,%,$(dir $(mkfile_path)))
+
+SOURCES_LOCK=$(current_dir)/../lock_functions/LockType.cpp \
+$(current_dir)/../lock_functions/pthread_lock.cpp $(current_dir)/../lock_functions/thread_lock.cpp \
+$(current_dir)/../lock_functions/atomic_exch_lock-busy.cpp $(current_dir)/../lock_functions/atomic_exch_lock-spec.cpp \
+$(current_dir)/../lock_functions/atomic_tas_lock-busy.cpp $(current_dir)/../lock_functions/atomic_tas_lock-spec.cpp \
+$(current_dir)/../lock_functions/atomic_exch_hle_lock-busy.cpp $(current_dir)/../lock_functions/atomic_exch_hle_lock-spec.cpp \
+$(current_dir)/../lock_functions/atomic_tas_hle_lock-busy.cpp $(current_dir)/../lock_functions/atomic_tas_hle_lock-spec.cpp \
+$(current_dir)/../lock_functions/hle_tas_lock-busy.cpp $(current_dir)/../lock_functions/hle_tas_lock-spec.cpp \
+$(current_dir)/../lock_functions/hle_exch_lock-busy.cpp $(current_dir)/../lock_functions/hle_exch_lock-spec.cpp \
+$(current_dir)/../lock_functions/hle_exch_lock-spec-checked.cpp \
+$(current_dir)/../lock_functions/hle_asm_exch_lock-busy.cpp $(current_dir)/../lock_functions/hle_asm_exch_lock-spec.cpp \
+$(current_dir)/../lock_functions/hle_asm_exch_lock-asm_spec.cpp

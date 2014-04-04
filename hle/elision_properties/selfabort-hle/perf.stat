@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '14164':
+
+        999,994757 task-clock                #    0,504 CPUs utilized          
+       317.692.103 instructions              #    0,10  insns per cycle        
+     3.238.698.562 cycles                    #    3,239 GHz                    
+       552.469.312 cpu/cycles-t/             #   17,06% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+        15.782.478 cpu/el-start/             #       35 cycles / elision       
+        63.129.912 cpu/cycles-ct/            #   15,11% aborted cycles         
+
+       1,986073486 seconds time elapsed
+

@@ -16,6 +16,7 @@
 #include "hle_tas_lock-spec.h"
 #include "hle_exch_lock-busy.h"
 #include "hle_exch_lock-spec.h"
+#include "hle_exch_lock-spec-checked.h"
 #include "hle_asm_exch_lock-busy.h"
 #include "hle_asm_exch_lock-spec.h"
 #include "hle_asm_exch_lock-asm_spec.h"
@@ -60,6 +61,7 @@ void LockType::init(LockType::EnumType enum_type) {
 	case HLE_TAS_SPEC:
 	case HLE_EXCH_BUSY:
 	case HLE_EXCH_SPEC:
+	case HLE_EXCH_SPEC_CHECKED:
 	case HLE_ASM_EXCH_BUSY:
 	case HLE_ASM_EXCH_SPEC:
 	case HLE_ASM_EXCH_ASM_SPEC:
@@ -117,6 +119,10 @@ void LockType::init(LockType::EnumType enum_type) {
 	case HLE_EXCH_SPEC:
 		this->type_lock_function = hle_exch_lock_spec;
 		this->type_unlock_function = hle_exch_unlock_spec;
+		break;
+	case HLE_EXCH_SPEC_CHECKED:
+		this->type_lock_function = hle_exch_lock_spec_checked;
+		this->type_unlock_function = hle_exch_unlock_spec_checked;
 		break;
 	case HLE_ASM_EXCH_BUSY:
 		this->type_lock_function = hle_asm_exch_lock_busy;
@@ -228,6 +234,8 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "HLE_EXCH_BUSY";
 	case HLE_EXCH_SPEC:
 		return "HLE_EXCH_SPEC";
+	case HLE_EXCH_SPEC_CHECKED:
+		return "HLE_EXCH_SPEC_CHECKED";
 	case HLE_ASM_EXCH_BUSY:
 		return "HLE_ASM_EXCH-busy";
 	case HLE_ASM_EXCH_SPEC:

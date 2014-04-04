@@ -1,19 +1,12 @@
+include ../lock_functions/Makefile.variables
+
 CC=g++
 SC=gcc
 CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -pthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES_ALL=time_cmp.cpp \
-../lock_functions/pthread_lock.cpp ../lock_functions/thread_lock.cpp \
-../lock_functions/atomic_exch_lock-busy.cpp ../lock_functions/atomic_exch_lock-spec.cpp \
-../lock_functions/atomic_tas_lock-busy.cpp ../lock_functions/atomic_tas_lock-spec.cpp \
-../lock_functions/atomic_exch_hle_lock-busy.cpp ../lock_functions/atomic_exch_hle_lock-spec.cpp \
-../lock_functions/atomic_tas_hle_lock-busy.cpp ../lock_functions/atomic_tas_hle_lock-spec.cpp \
-../lock_functions/hle_tas_lock-busy.cpp ../lock_functions/hle_tas_lock-spec.cpp \
-../lock_functions/hle_exch_lock-busy.cpp ../lock_functions/hle_exch_lock-spec.cpp \
-../lock_functions/hle_asm_exch_lock-busy.cpp ../lock_functions/hle_asm_exch_lock-spec.cpp \
-../lock_functions/hle_asm_exch_lock-asm_spec.cpp \
-../lock_functions/LockType.cpp \
+$(SOURCES_LOCK) \
 ../../util.cpp \
 ../../Stats.cpp
 

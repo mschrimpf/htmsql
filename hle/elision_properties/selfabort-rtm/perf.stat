@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '14054':
+
+          1,906991 task-clock                #    0,002 CPUs utilized          
+         1.207.191 instructions              #    0,81  insns per cycle        
+         1.491.173 cycles                    #    0,782 GHz                    
+           423.100 cpu/cycles-t/             #   28,37% transactional cycles   
+                 1 cpu/tx-start/             #   423100 cycles / transaction   
+                 0 cpu/el-start/             #    0,000 K/sec                  
+                 4 cpu/cycles-ct/            #   28,37% aborted cycles         
+
+       0,996203173 seconds time elapsed
+

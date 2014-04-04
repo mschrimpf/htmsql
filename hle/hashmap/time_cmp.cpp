@@ -24,8 +24,8 @@ std::vector<int> operations;
 #define OPERATION_CONTAINS 0
 #define OPERATION_REMOVE -1
 
-//#define RAND(limit) rand_gerhard(limit)
-#define RAND(limit) rand() % (limit)
+#define RAND(limit) rand_gerhard(limit)
+//#define RAND(limit) rand() % (limit)
 
 // NOTE: not used, approach does not work
 void checkResult(HashMap *map) {
@@ -112,10 +112,10 @@ void random_operations(int tid, HashMap *map, int repeats, int base_inserts,
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
-	int repeats = 1000000, loops = 100, probability_insert = 25,
+	int repeats = 100000, loops = 100, probability_insert = 25,
 			probability_remove = 25, probability_contains = 50, base_inserts =
 					5000, lockType = -1;
-	int sizes[] = { /*1, 100,*/ 1000, 1000000 };
+	int sizes[] = { 1, 100, 1000, 10000 };
 	int *arg_values[] =
 			{ &repeats, &num_threads, &loops, &probability_insert,
 					&probability_remove, &probability_contains, &base_inserts,
@@ -126,21 +126,21 @@ int main(int argc, char *argv[]) {
 
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
-	printf(
-			"run function: %s\n\t(repeats=%d, base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
-			"random_operations", repeats, base_inserts, probability_insert,
-			probability_remove, probability_contains);
+	printf("Repeats:      %d\n", repeats);
+	printf("(base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
+			base_inserts, probability_insert, probability_remove,
+			probability_contains);
 	printf("\n");
 
 	// define locktypes
 	LockType::EnumType lockTypesEnum[] = {
-	// 0
+	//
 			LockType::PTHREAD,
-			// 1
+			//
 			LockType::ATOMIC_EXCH_SPEC,
-			// 2
+			//
 			LockType::HLE_EXCH_SPEC,
-			// 3
+			//
 			LockType::RTM
 	//
 			};

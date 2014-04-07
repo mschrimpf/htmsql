@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '31037':
+
+     1.614.526.398 r21D0                                                        [20,63%]
+       679.667.986 r01C8                                                        [20,63%]
+   685.371.707.981 cycles                    #    0,000 GHz                     [20,63%]
+
+     222,722121576 seconds time elapsed
+

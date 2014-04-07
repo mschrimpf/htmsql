@@ -8,7 +8,7 @@
 int nest(int nesting_count, int max_nesting) {
 	int failures = 0;
 	if (_xbegin() == _XBEGIN_STARTED) {
-		if (++nesting_count < max_nesting)
+		if (++nesting_count <= max_nesting)
 			nest(nesting_count, max_nesting);
 		_xend();
 	} else {

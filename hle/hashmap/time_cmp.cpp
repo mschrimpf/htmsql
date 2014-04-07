@@ -177,16 +177,11 @@ int main(int argc, char *argv[]) {
 			Stats stats;
 			for (int l = 0; l < loops; l++) {
 				// init
-//				HashMap map(mapSize, lockTypes[t]);
-				HashMap * map = NULL;
-				switch (lockTypes[t].enum_type) {
-				case LockType::EnumType::RTM:
-					map = new HashMapRtm(sizes[s]);
-					break;
-				default:
-					map = new HashMap(sizes[s], lockTypes[t]);
-					break;
-				}
+//				HashMap map(sizes[s], lockTypes[t]);
+				HashMap * map =
+						lockTypes[t].enum_type == LockType::EnumType::RTM ?
+								new HashMapRtm(sizes[s]) :
+								new HashMap(sizes[s], lockTypes[t]);
 
 				// measure
 				struct timeval start, end;
@@ -194,8 +189,8 @@ int main(int argc, char *argv[]) {
 
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(random_operations, i, map, repeats,
-							base_inserts, probability_insert,
+					threads[i] = std::thread(random_operations, i, map,
+							repeats, base_inserts, probability_insert,
 							probability_remove, probability_contains);
 				}
 				// wait for threads
@@ -212,7 +207,6 @@ int main(int argc, char *argv[]) {
 
 				// check result
 //				checkResult(&map);
-
 				delete map;
 			} // end of loops loop
 

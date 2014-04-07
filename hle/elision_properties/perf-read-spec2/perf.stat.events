@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '326':
+
+            30.834 r04C8                                                       
+            30.834 r01C8                                                       
+                 0 r02C8                                                       
+                 2 r80C8                                                       
+                 0 r40C8                                                       
+                 1 r08C8                                                       
+            30.831 r20C8                                                       
+                 0 r10C8                                                       
+
+       0,995486810 seconds time elapsed
+

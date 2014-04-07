@@ -32,7 +32,22 @@ int nest_multiple(unsigned mutexes[], int mutexes_length) {
 	}
 	return 0;
 }
+int nest_multiple_unlockorder(unsigned mutexes[], int mutexes_length) {
+	for (int m = 0; m < mutexes_length; m++) {
+		if (hle_lock(&mutexes[m]) != 0)
+			return 1;
+	}
 
+	i++;
+
+	// unlock in same order
+	for (int m = 0; m < mutexes_length; m++) {
+		hle_unlock(&mutexes[m]);
+	}
+	return 0;
+}
+
+// Leads to zero failures
 int main(int argc, char *argv[]) {
 	int loops = argc > 1 ? atoi(argv[1]) : 10;
 	int max_mutexes = argc > 2 ? atoi(argv[2]) : 10;
@@ -49,7 +64,7 @@ int main(int argc, char *argv[]) {
 					sizeof(unsigned));
 			for (int m = 0; m < mutex_count; m++)
 				mutexes[m] = 0; // make sure the mutex is not set
-			failures += nest_multiple(mutexes, mutex_count);
+			failures += nest_multiple_unlockorder(mutexes, mutex_count);
 			free(mutexes);
 		}
 

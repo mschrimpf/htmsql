@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '32462':
+
+                 1 r04C8                                                       
+                 1 r01C8                                                       
+                 0 r02C8                                                       
+                 1 r80C8                                                       
+                 0 r40C8                                                       
+                 0 r08C8                                                       
+                 0 r20C8                                                       
+                 0 r10C8                                                       
+
+       0,998613202 seconds time elapsed
+

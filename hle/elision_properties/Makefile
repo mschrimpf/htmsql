@@ -51,3 +51,9 @@ SOURCES_NESTING_MULTIPLE=nesting-multiple.cpp \
 ../../util.cpp ../../Stats.cpp
 nesting-multiple: $(SOURCES_NESTING_MULTIPLE)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING_MULTIPLE) $(LDLAGS)
+
+# nesting method
+SOURCES_NESTING_METHOD=nesting-method.cpp \
+../../util.cpp ../../Stats.cpp
+nesting-method: $(SOURCES_NESTING_METHOD)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING_METHOD) $(LDLAGS)

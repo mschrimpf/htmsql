@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '406':
+
+        15.806.884 r04C8                                                       
+        15.806.884 r01C8                                                       
+                 0 r02C8                                                       
+                63 r80C8                                                       
+                 0 r40C8                                                       
+                 0 r08C8                                                       
+        15.806.821 r20C8                                                       
+                 0 r10C8                                                       
+
+       1,993544120 seconds time elapsed
+

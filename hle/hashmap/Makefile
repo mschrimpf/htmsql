@@ -6,16 +6,15 @@ CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -pthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES_ALL=time_cmp.cpp \
+HashMap-rtm.cpp \
 $(SOURCES_LOCK) \
 ../../util.cpp \
 ../../Stats.cpp
 
 SOURCES_BUCKET=HashMap.cpp \
-HashMap-rtm.cpp \
 $(SOURCES_ALL)
 
 SOURCES_GLOBAL=HashMap-global.cpp \
-HashMap-rtm.cpp \
 $(SOURCES_ALL)
 
 OBJECTS=$(SOURCES:.cpp=.o)

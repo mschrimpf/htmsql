@@ -18,6 +18,8 @@ public:
 	LinkedListItem(int data, LinkedListItem *successor);
 private:
 	void init(int data, LinkedListItem *successor);
+
+	unsigned char padding[64 - 16];
 };
 
 class LockedBucket {
@@ -29,6 +31,8 @@ public:
 	~LockedBucket();
 private:
 	void init(LinkedListItem *item, LockType locker);
+
+	unsigned char padding[2*64 - 112];
 };
 
 class HashMap {

@@ -15,3 +15,9 @@ SOURCES_NESTING=nesting.cpp \
 ../util.cpp ../Stats.cpp
 nesting: $(SOURCES_NESTING)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING) $(LDLAGS)
+
+# method-nesting
+SOURCES_METHOD_NESTING=method-nesting.cpp \
+../util.cpp ../Stats.cpp
+method-nesting: $(SOURCES_METHOD_NESTING)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_METHOD_NESTING) $(LDLAGS)

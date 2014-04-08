@@ -110,7 +110,7 @@ void wait_tas_read_tas_wait() {
 //}
 
 // speculation: 5 starts, 5 aborts (3 misc5 - other, 1 misc1 - conflict, 1 misc3 - unfriendly)
-// 		- why not 6 starts, 4 aborts and 2 commits?
+// 		- expected 6 starts, 4 aborts and 2 commits
 
 int main(int argc, char *argv[]) {
 	usleep(1 * 1000000); // let perf catch up

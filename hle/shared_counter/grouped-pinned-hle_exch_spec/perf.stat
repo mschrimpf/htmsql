@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '24655':
+
+      25612,132115 task-clock                #    2,801 CPUs utilized          
+    17.083.250.808 instructions              #    0,23  insns per cycle         [50,58%]
+    74.130.639.187 cycles                    #    2,894 GHz                     [50,58%]
+    35.381.983.140 cpu/cycles-t/             #   47,73% transactional cycles    [50,58%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [50,58%]
+       391.091.425 cpu/el-start/             #       90 cycles / elision        [50,58%]
+    26.711.743.462 cpu/cycles-ct/            #   11,70% aborted cycles          [50,58%]
+
+       9,142500051 seconds time elapsed
+

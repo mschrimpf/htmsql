@@ -6,13 +6,13 @@
 #include <sys/time.h>
 #include <vector>
 
-#include <immintrin.h> // RTM: _x
 #include "ThreadsafeCounter.h"
+#include "RtmCounter.h"
 #include "../lock_functions/LockType.h"
 #include "../../util.h"
+#include "../../Stats.h"
 
 #define CORES 4
-#define RTM_MAX_RETRIES 1000000
 
 void run(int tid, int repeats, ThreadsafeCounter * counter, int pin) {
 	if (pin && stick_this_thread_to_core(tid % num_cores) != 0)
@@ -23,40 +23,24 @@ void run(int tid, int repeats, ThreadsafeCounter * counter, int pin) {
 	}
 }
 
-void xrun(int tid, int repeats, int * counter, int pin) {
-	if (pin && stick_this_thread_to_core(tid % num_cores) != 0)
-		printf("Could not pin thread\n");
-
-	for (int r = 0; r < repeats; r++) {
-		int failures = 0;
-		retry: if (_xbegin() == _XBEGIN_STARTED) {
-			(*counter)++;
-			_xend();
-		} else {
-			if (failures++ < RTM_MAX_RETRIES)
-				goto retry;
-			else
-				fprintf(stderr, "Max retry count reached\n");
-		}
-	}
-}
-
 const int SINGLE_COUNTER = 0, COUNTER_PER_CORE = 1;
 int main(int argc, char *argv[]) {
-	if(sizeof(ThreadsafeCounter) < 64) {
-		fprintf(stderr, "Size of ThreadsafeCounter is smaller than a cache line\n");
+	if (sizeof(ThreadsafeCounter) < 64) {
+		fprintf(stderr,
+				"Size of ThreadsafeCounter is smaller than a cache line\n");
 		return 1;
 	}
 
 	// arguments
-	int num_threads = CORES, loops = 100, repeats_min = 100000, repeats_max =
-			1500000, repeats_step = 700000, lockType = -1, mode = 0, pin = 0;
+	int num_threads = CORES, loops = 100, repeats_min = 1000000, repeats_max =
+			1000000, repeats_step = 700000, lockType = -1, mode = 0, pin = 0;
 	int *values[] = { &num_threads, &loops, &repeats_min, &repeats_max,
 			&repeats_step, &lockType, &mode, &pin };
 	const char *identifier[] = { "-n", "-l", "-rmin", "-rmax", "-rstep", "-t",
 			"-m", "-p" };
 	handle_args(argc, argv, 8, values, identifier);
 
+	printf("Throughput per millisecond\n");
 	printf("Running %d threads in %d loops\n", num_threads, loops);
 	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
 			repeats_step);
@@ -64,12 +48,6 @@ int main(int argc, char *argv[]) {
 			mode == SINGLE_COUNTER ? "single counter" : "counter per core");
 	printf("Pinned: %s\n", pin ? "yes" : "no");
 	printf("\n");
-	int repeats_count = (repeats_max - repeats_min + repeats_step)
-			/ repeats_step;
-	int repeats[repeats_count];
-	for (int i = 0; i < repeats_count; i++) {
-		repeats[i] = repeats_min + i * repeats_step;
-	}
 
 	// locking
 	LockType::EnumType lockTypesEnum[] = {
@@ -98,45 +76,50 @@ int main(int argc, char *argv[]) {
 	}
 
 	printf("Repeats;");
-	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax);
-	for (int r = 0; r < sizeof(repeats) / sizeof(repeats[0]); r++) {
-		printf("%d", repeats[r]);
+	const char *appendings[2];
+	appendings[0] = "ExpectedValue";
+	appendings[1] = "Stddev";
+	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
+			appendings, 2);
+	for (int repeats = repeats_min; repeats <= repeats_max; repeats +=
+			repeats_step) {
+		printf("%d", repeats);
 		std::cout.flush();
 
 		// run all lock-types
 		for (int t = lockTypesMin; t < lockTypesMax; t++) {
 			// use a loop to check the time more than once --> normalize
-			std::vector<double> times;
+			Stats stats;
 			for (int l = 0; l < loops; l++) {
 				// init all counters - decide which one to use later on
 				// this also comes in handy in a way that the memory allocated
 				// is the same for all tests
-				ThreadsafeCounter counter(lockTypes[t]);
-				ThreadsafeCounter counters[CORES];
-				int rtm_counter = 0;
-				int rtm_counters[CORES];
+				ThreadsafeCounter * singleCounter =
+						lockTypes[t].enum_type == LockType::EnumType::RTM ?
+								new RtmCounter() :
+								new ThreadsafeCounter(lockTypes[t]);
+				ThreadsafeCounter * perCoreCounters[CORES];
 				for (int c = 0; c < CORES; c++) {
-					counters[c].init(lockTypes[t]);
-					rtm_counters[c] = 0;
+					perCoreCounters[c] =
+							lockTypes[t].enum_type == LockType::EnumType::RTM ?
+									new RtmCounter() :
+									new ThreadsafeCounter(lockTypes[t]);
 				}
 				// run
 				struct timeval start, end;
 				gettimeofday(&start, NULL);
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					switch (lockTypes[t].enum_type) {
-					case LockType::EnumType::RTM:
-						threads[i] = std::thread(xrun, i, repeats[r],
-								mode == SINGLE_COUNTER ?
-										&rtm_counter :
-										&rtm_counters[i % CORES], pin);
+					ThreadsafeCounter * counter;
+					switch (mode) {
+					case SINGLE_COUNTER:
+						counter = singleCounter;
 						break;
-					default:
-						threads[i] = std::thread(run, i, repeats[r],
-								mode == SINGLE_COUNTER ?
-										&counter : &counters[i % CORES], pin);
+					case COUNTER_PER_CORE:
+						counter = perCoreCounters[i % CORES];
 						break;
 					}
+					threads[i] = std::thread(run, i, repeats, counter, pin);
 				}
 				// wait for threads
 				for (int i = 0; i < num_threads; i++) {
@@ -144,26 +127,22 @@ int main(int argc, char *argv[]) {
 				}
 
 				gettimeofday(&end, NULL);
-				double elapsed = ((end.tv_sec - start.tv_sec) * 1000)
-						+ (end.tv_usec / 1000 - start.tv_usec / 1000);
-				times.push_back(elapsed);
+				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
+						+ (end.tv_usec - start.tv_usec) / 1000;
+				float throughput_per_milli = repeats / elapsed_millis;
+				stats.addValue(throughput_per_milli);
 				// end run
 
 				// check result
-				int expected = num_threads * repeats[r];
+				int expected = num_threads * repeats;
 				int actual = 0;
 				switch (mode) {
 				case SINGLE_COUNTER:
-					actual +=
-							lockTypes[t].enum_type == LockType::EnumType::RTM ?
-									rtm_counter : counter.get();
+					actual += singleCounter->get();
 					break;
 				case COUNTER_PER_CORE:
 					for (int c = 0; c < CORES; c++) {
-						actual +=
-								lockTypes[t].enum_type
-										== LockType::EnumType::RTM ?
-										rtm_counters[c] : counters[c].get();
+						actual += perCoreCounters[c]->get();
 					}
 					break;
 				}
@@ -173,9 +152,15 @@ int main(int argc, char *argv[]) {
 					printf("CHECK: counter should be %d, is %d - %s\n",
 							expected, actual,
 							expected == actual ? "OK" : "ERROR");
+
+				delete singleCounter;
+				for (int c = 0; c < CORES; c++) {
+					delete perCoreCounters[c];
+				}
 			}
 
-			printf(";%.0f", average(times));
+			printf(";%.2f;%.2f", stats.getExpectedValue(),
+					stats.getStandardDeviation());
 			std::cout.flush();
 		} // end of locktype-loop
 		printf("\n");

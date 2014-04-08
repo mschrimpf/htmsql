@@ -4,15 +4,18 @@
 #include "../lock_functions/LockType.h"
 
 class ThreadsafeCounter {
+protected:
+	int counter = 0;
 private:
-	int counter;
 	LockType locker;
+
+	unsigned char padding[2 * 64 - 120];
 public:
 	ThreadsafeCounter();
 	ThreadsafeCounter(LockType locker);
 	void init(LockType locker);
-	void increment();
-	int get();
+	virtual void increment();
+	virtual int get();
 };
 
 #endif // _THREADSAFE_COUNTER_H

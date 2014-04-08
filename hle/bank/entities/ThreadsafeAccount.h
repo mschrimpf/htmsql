@@ -36,6 +36,7 @@ private:
 	LockType locker;
 //	void (*lock)();
 //	void (*unlock)();
+	unsigned char padding[2 * 64 - 112];
 };
 
 #endif /* THREADSAFEACCOUNT_H_ */

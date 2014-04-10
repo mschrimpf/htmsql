@@ -80,8 +80,17 @@ ib_mutex_test_and_set(
 	ib_mutex_t*	mutex)	/*!< in: mutex */
 {
 /* BEGIN: HTMSQL */
-#if defined(HAVE_HLE)
-	return(__hle_acquire_exchange_n4(&mutex->lock_word));
+#if defined(HAVE_RTM)
+	// do not set mutex->lock_word=1
+	int failures = 0, failures_max = 1000000;
+	retry: if (_xbegin() == _XBEGIN_STARTED) {
+		return 0;
+	} else if (++failures <= failures_max) {
+		goto retry;
+	} else {
+		printf("Max failure count (%d) reached\n", failures);
+		exit(1);
+	}
 /* END: HTMSQL */ 
 #elif defined(HAVE_ATOMIC_BUILTINS)
 	return(os_atomic_test_and_set_byte(&mutex->lock_word, 1));
@@ -112,9 +121,9 @@ mutex_reset_lock_word(
 	ib_mutex_t*	mutex)	/*!< in: mutex */
 {
 /* BEGIN: HTMSQL */
-#if defined(HAVE_HLE)
-	// release the lock
-	__hle_release_clear4(&mutex->lock_word);
+#if defined(HAVE_RTM)
+	// end the elision
+	_xend();
 /* END: HTMSQL */
 #elif defined(HAVE_ATOMIC_BUILTINS)
 	/* In theory __sync_lock_release should be used to release the lock.

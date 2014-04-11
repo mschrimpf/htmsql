@@ -10,26 +10,30 @@ public:
 };
 
 class List {
-private:
+protected:
 	ListItem * first;
 	ListItem * last;
 public:
+	List();
+	~List();
+
 	/** @see #insertHead(int data) */
 	ListItem * insert(int data);
-	ListItem * insertHead(int data);
-	ListItem * insertTail(int data);
+	virtual ListItem * insertHead(ListItem * item);
+//	virtual ListItem * insertTail(ListItem * item);
 	/**
 	 * Removes the occurrences of data in the list.
 	 * If removeAll is != 0, all occurrences are removed, otherwise only the first one.
 	 * */
-	void remove(int data, int removeAll = 0);
+	virtual void remove(int data, int removeAll = 0);
 	/** @return 1 if data is contained, 0 if not */
-	int contains(int data);
+	virtual int contains(int data);
+	/** Deletes the whole list, defined as consecutive list->nexts */
+	virtual void deleteAll(ListItem * list);
 
-	void print();
+	virtual int size();
 
-	List();
-	~List();
+	virtual void print();
 };
 
 #endif // _LIST_H_

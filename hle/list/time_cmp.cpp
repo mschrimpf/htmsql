@@ -12,9 +12,9 @@
 #include "../../util.h"
 #include "../../Stats.h"
 
-#define CORES 4
+const int CORES = 4;
 
-#define VALUE_RANGE INT_MAX
+const int VALUE_RANGE = 1000; // INT_MAX
 
 #define OPERATION_INSERT 1
 #define OPERATION_CONTAINS 0
@@ -26,14 +26,8 @@
 /**
  * Performs random operations, based on the defined probabilities.
  */
-void run(int tid, ThreadsafeList * list, int repeats, int base_inserts,
-		int probability_insert, int probability_remove,
-		int probability_contains) {
-	// insert base-values to achieve a defined base-size of the list
-	for (int i = 0; i < base_inserts; i++) {
-		int rnd_val = RAND(VALUE_RANGE);
-		list->insert(rnd_val);
-	}
+void run(int tid, List * list, int repeats, int probability_insert,
+		int probability_remove, int probability_contains) {
 	// operations run
 	for (int r = 0; r < repeats; r++) {
 		int rnd_op = RAND(
@@ -57,7 +51,7 @@ int main(int argc, char *argv[]) {
 	int num_threads = CORES;
 	int repeats_min = 1000, repeats_step = 1000, repeats_max = 10000, loops =
 			100, probability_insert = 25, probability_remove = 25,
-			probability_contains = 50, base_inserts = 5000, lockType = -1;
+			probability_contains = 50, base_inserts = 1000, lockType = -1;
 	int *arg_values[] = { &num_threads, &loops, &probability_insert,
 			&probability_remove, &probability_contains, &base_inserts,
 			&lockType, &repeats_min, &repeats_max, &repeats_step };
@@ -65,13 +59,15 @@ int main(int argc, char *argv[]) {
 			"-rmin", "-rmax", "-rstep" };
 	handle_args(argc, argv, 10, arg_values, identifier);
 
+	printf("Throughput per millisecond\n");
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
 	printf("Repeats:      %d - %d with steps of %d\n", repeats_min, repeats_max,
 			repeats_step);
-	printf("(base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
+	printf(
+			"(base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d, value_range=%d)\n",
 			base_inserts, probability_insert, probability_remove,
-			probability_contains);
+			probability_contains, VALUE_RANGE);
 	printf("\n");
 
 	// define locktypes
@@ -100,12 +96,14 @@ int main(int argc, char *argv[]) {
 		lockTypes[t].init(lockTypesEnum[t]);
 	}
 
-	printf("Size;");
-	const char *appendings[2];
+	printf("Repeats;");
+//	printf("p_ins;p_rem;p_con;");
+	const char *appendings[3];
 	appendings[0] = "ExpectedValue";
 	appendings[1] = "Stddev";
+	appendings[2] = "List size";
 	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
-			appendings, 2);
+			appendings, 3);
 	for (int repeats = repeats_min; repeats <= repeats_max; repeats +=
 			repeats_step) {
 		printf("%d", repeats);
@@ -115,12 +113,18 @@ int main(int argc, char *argv[]) {
 		for (int t = lockTypesMin; t < lockTypesMax; t++) {
 			// use a loop to check the time more than once --> normalize
 			Stats stats;
+			Stats listSizeStats;
 			for (int l = 0; l < loops; l++) {
 				// init
-				ThreadsafeList * list =
+				List * list =
 						lockTypes[t].enum_type == LockType::EnumType::RTM ?
-								new ThreadsafeListRtm() :
-								new ThreadsafeList(lockTypes[t]);
+								(List *) new ThreadsafeListRtm() :
+								(List *) new ThreadsafeList(lockTypes[t]);
+				// insert base-values to achieve a defined base-size of the list
+				for (int i = 0; i < base_inserts; i++) {
+					int rnd_val = RAND(VALUE_RANGE);
+					list->insert(rnd_val);
+				}
 
 				// measure
 				struct timeval start, end;
@@ -129,8 +133,8 @@ int main(int argc, char *argv[]) {
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
 					threads[i] = std::thread(run, i, list, repeats,
-							base_inserts, probability_insert,
-							probability_remove, probability_contains);
+							probability_insert, probability_remove,
+							probability_contains);
 				}
 				// wait for threads
 				for (int i = 0; i < num_threads; i++) {
@@ -144,11 +148,13 @@ int main(int argc, char *argv[]) {
 				float throughput_per_milli = repeats / elapsed_millis;
 				stats.addValue(throughput_per_milli);
 
+				listSizeStats.addValue(list->size());
+
 				delete list;
 			} // end of loops loop
 
-			printf(";%.2f;%.2f", stats.getExpectedValue(),
-					stats.getStandardDeviation());
+			printf(";%.2f;%.2f;%.2f", stats.getExpectedValue(),
+					stats.getStandardDeviation(), listSizeStats.getExpectedValue());
 			std::cout.flush();
 		} // end of locktype-loop
 		printf("\n");

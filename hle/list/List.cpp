@@ -12,39 +12,34 @@ List::List() {
 	this->first = this->last = NULL;
 }
 List::~List() {
-	ListItem * item = this->first;
-	while (item) {
-		ListItem * next = item->next;
-		delete item;
-		item = next;
-	}
+	this->deleteAll(this->first);
 	this->first = this->last = NULL;
 }
 
 ListItem* List::insert(int data) {
-	return this->insertHead(data);
+	return this->insertHead(new ListItem(data, NULL, NULL));
 }
-ListItem* List::insertHead(int data) {
-	ListItem * item = new ListItem(data, NULL, this->first);
+ListItem* List::insertHead(ListItem * item) {
+	item->next = this->first;
 	this->first = item;
 	if (this->last == NULL)
 		this->last = item;
 	return item;
 }
-ListItem* List::insertTail(int data) {
-	ListItem * item = new ListItem(data, this->last, NULL);
-	this->last = item;
-	if (this->first == NULL)
-		this->first = item;
-	return item;
-}
+//ListItem* List::insertTail(ListItem * item) {
+//	item->prev = this->last;
+//	this->last = item;
+//	if (this->first == NULL)
+//		this->first = item;
+//	return item;
+//}
 
 void List::remove(int data, int removeAll) {
 	ListItem * prev = NULL;
 	ListItem * item = this->first;
 	while (item) {
 		if (item->data == data) {
-			if (prev == NULL) // item is start item
+			if (prev == NULL) // item == this->first
 				this->first = item->next;
 			else
 				prev->next = item->next;
@@ -67,11 +62,28 @@ int List::contains(int data) {
 	return 0;
 }
 
+void List::deleteAll(ListItem * list) {
+	while (list) {
+		ListItem * next = list->next;
+		delete list;
+		list = next;
+	}
+}
+
+int List::size() {
+	int count = 0;
+	ListItem * item = this->first;
+	while (item) {
+		count++;
+		item = item->next;
+	}
+	return count;
+}
+
 void List::print() {
 	ListItem * item = this->first;
 	while (item) {
 		printf("%d ", item->data);
 		item = item->next;
 	}
-	printf("\n");
 }

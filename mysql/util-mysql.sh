@@ -1,15 +1,12 @@
 #!/bin/bash
 
 # 
-# This file provides utilities for ./run_dbt2_suite.sh
-# For further specification, see that file and the comments.
+# This file provides utilities for running mysql and storing benchmark results.
 # 
 #
-# To add another MySQL-version, you need to define a new $_TYPE
-# and specify the location of the MySQL-version in the 
-# $_MYSQL_PATHS array.
-# 
-# You will also want to adjust the $_MYSQLDIRS_ROOTPATH
+# To add another MySQL-version, you need to add its name to the $_TYPE_ALL array.
+# The corresponding MySQL-version has to be located in 
+# ${_MYSQLDIRS_ROOTPATH}/$_MYSQLDIR_PREFIX$_TYPE where _TYPE is your added type.
 #
 #
 # Author: Martin Schrimpf
@@ -19,11 +16,8 @@
 
 source ~/develop/util.sh
 
-_MYSQLDIRS_ROOTPATH="/home/htmsql/develop/mysql"
 
-_TYPE_UNMODIFIED="unmodified"
-_TYPE_ALPHA="alpha"
-_TYPE_SSSI="ssi"
+_TYPE_ALL=(unmodified alpha beta gamma delta epsilon ssi ssi_alpha)
 
 
 
@@ -54,17 +48,22 @@ function get_full_type {
 	if [ "$1" == "" ]; then
 		echo "Error: No type-argument provided"
 		return 2
-	elif [ "$1" == "u" ] || [ "$1" == "$_TYPE_UNMODIFIED" ]; then
-		export _TYPE=$_TYPE_UNMODIFIED
-	elif [ "$1" == "a" ] || [ "$1" == "$_TYPE_ALPHA" ]; then
-		export _TYPE=$_TYPE_ALPHA
-	elif [ "$1" == "s" ] || [ "$1" == "$_TYPE_SSSI" ]; then
-		export _TYPE=$_TYPE_SSSI
-	else
-		echo "Error: Type has to be one of: u|unmodified|a|alpha|s|sssi"
-		return 1
 	fi
-	return 0
+		
+	available_types="" # collect available settings on the fly
+	
+	for type in "${_TYPE_ALL[@]}"
+	do
+		first_char=${type:0:1}
+		if [ "$1" == "$first_char" ] || [ "$1" == "$type" ]; then
+			export _TYPE=$type
+			return 0
+		fi
+		available_types="$available_types|$first_char|$type"
+	done
+	
+	echo "Error: Type has to be one of: $available_types"
+	return 1
 }
 
 
@@ -75,20 +74,29 @@ _REPORTDIR_PREFIX="report-"
 # _TYPES_REPORTDIRS[$_TYPE_SSSI]="${_MYSQLDIRS_ROOTPATH}/$_REPORTDIR_PREFIX-sssi"
 
 # Retrieves the report folder for the given type (u|unmofidied|a|alpha).
-# The folder will be stored in $DBT2_REPORTDIR.
+# The folder will be stored in $DBT2_REPORTDIR as well as $SYSBENCH_REPORTDIR.
 function get_report_folder_from_type {
 	get_full_type "$1"
 	exit_if_status_error
+	
+	if [ ! -d "$_MYSQLDIRS_ROOTPATH" ]; then
+		echo "Error: mysql directories root $_MYSQLDIRS_ROOTPATH does not exist"
+		return 1
+	fi
+	
 	#export DBT2_REPORTDIR="${_TYPES_REPORTDIRS[${_TYPE}]}"
-	export DBT2_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}-dbt2$_TYPE"
-	export SYSBENCH_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}-sysbench$_TYPE"
+	export DBT2_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}${_TYPE}-dbt2"
+	export SYSBENCH_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}${_TYPE}-sysbench"
+	export TXBENCH_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}${_TYPE}-txbench"
+	
+	if [ ! -d "$TXBENCH_REPORTDIR" ]; then
+		mkdir "$TXBENCH_REPORTDIR"
+	fi
 }
 
 
-declare -A _MYSQL_PATHS
-_MYSQL_PATHS[$_TYPE_UNMODIFIED]="${_MYSQLDIRS_ROOTPATH}/mysql-5.6.10-unmodified"
-_MYSQL_PATHS[$_TYPE_ALPHA]="${_MYSQLDIRS_ROOTPATH}/mysql-5.6.10-alpha"
-_MYSQL_PATHS[$_TYPE_SSSI]="${_MYSQLDIRS_ROOTPATH}/mysql-5.6.10-sssi"
+_MYSQLDIRS_ROOTPATH="/home/htmsql/develop/mysql"
+_MYSQLDIR_PREFIX="mysql-5.6.10-"
 export _MYSQL_PATH_INSTALL="install"
 export _MYSQL_PATH_BIN="bin"
 export _MYSQL_FILE_MYSQL="mysql"
@@ -112,9 +120,6 @@ _MYSQL_CMD_START="mysqld --no-defaults \
 		#--innodb_buffer_pool_size=21474836480
 _MYSQL_CMD_SHUTDOWN="mysqladmin --no-defaults -u root shutdown"
 
-# declare -A _TYPES_MYSQLBINDIRS
-# _TYPES_MYSQLBINDIRS[$_TYPE_UNMODIFIED]="${_MYSQL_PATHS[${_TYPE_UNMODIFIED}]}/$_MYSQL_PATH_INSTALL/$_MYSQL_PATH_BIN"
-# _TYPES_MYSQLBINDIRS[$_TYPE_ALPHA]="${_MYSQL_PATHS[${_TYPE_ALPHA}]}/$_MYSQL_PATH_INSTALL/$_MYSQL_PATH_BIN"
 
 # Retrieves the folder for the given type.
 # The mysql-root-folder will be stored in $DBT2_MYSQLPATH.
@@ -122,7 +127,7 @@ _MYSQL_CMD_SHUTDOWN="mysqladmin --no-defaults -u root shutdown"
 function get_mysql_folder_from_type {
 	get_full_type "$1"
 	exit_if_status_error
-	export DBT2_MYSQLPATH="${_MYSQL_PATHS[${_TYPE}]}"
+	export DBT2_MYSQLPATH="${_MYSQLDIRS_ROOTPATH}/$_MYSQLDIR_PREFIX$_TYPE"
 	#export DBT2_MYSQLBINDIR="${_TYPES_MYSQLBINDIRS[${_TYPE}]}"
 	export DBT2_MYSQLBINDIR="$DBT2_MYSQLPATH/$_MYSQL_PATH_INSTALL/$_MYSQL_PATH_BIN"
 }

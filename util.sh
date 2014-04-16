@@ -67,3 +67,19 @@ function exit_if_status_error {
 		exit "$_STATUS"
 	fi
 }
+
+# Take care of special characters (such as / or &) in $2 and $3 
+# and escape them with a \
+# $1: path
+# $2: old string
+# $3: replace string
+function replace_string_recursive {
+	path="$1"
+	oldstring="$2"
+	newstring="$3"
+	if [ "$path" == "" ] || [ "$oldstring" == "" ] || [ "$newstring" == "" ]; then
+		echo "Not enough parameters provided - Usage: replace_string_recursive path oldstring newstring"
+		return
+	fi
+	grep -rl "$oldstring" "$path" | xargs sed -i s/"$oldstring"/"$newstring"/g
+}

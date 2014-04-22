@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '15845':
+
+     119921,067737 task-clock                #    3,722 CPUs utilized          
+   278.163.449.718 instructions              #    0,80  insns per cycle         [50,23%]
+   345.727.890.731 cycles                    #    2,883 GHz                     [50,23%]
+   304.627.212.352 cpu/cycles-t/             #   88,11% transactional cycles    [50,23%]
+       337.847.862 cpu/tx-start/             #      902 cycles / transaction    [50,23%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [50,23%]
+     3.090.222.228 cpu/cycles-ct/            #   87,22% aborted cycles          [50,23%]
+
+      32,215324521 seconds time elapsed
+

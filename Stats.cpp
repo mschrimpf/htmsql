@@ -4,7 +4,7 @@
 Stats::Stats() {
 	this->expectedValueSum = 0.0;
 	this->varianceSum = 0.0;
-	this->count = 0.0;
+	this->count = 0;
 }
 Stats::~Stats() {
 }

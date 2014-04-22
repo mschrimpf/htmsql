@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '10153':
+
+               100 r01C9                                                        [100,00%]
+               100 r04C9                                                        [100,00%]
+                 0 r80C9                                                        [100,00%]
+                 0 r40C9                                                        [100,00%]
+               100 r20C9                                                        [100,00%]
+                 0 r10C9                                                        [100,00%]
+                 0 r08C9                                                        [100,00%]
+                 0 r02C9                                                       
+
+       1,476047143 seconds time elapsed
+

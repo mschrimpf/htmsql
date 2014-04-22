@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '5628':
+
+    1053309,938712 task-clock                #    3,395 CPUs utilized          
+ 2.503.148.012.232 instructions              #    0,85  insns per cycle         [31,29%]
+ 2.961.044.618.305 cycles                    #    2,811 GHz                     [31,29%]
+   253.483.438.011 cpu/cycles-t/             #    8,56% transactional cycles    [31,29%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [31,29%]
+     3.724.484.738 cpu/el-start/             #       68 cycles / elision        [31,29%]
+   156.286.933.517 cpu/cycles-ct/            #    3,28% aborted cycles          [31,29%]
+
+     310,236714267 seconds time elapsed
+

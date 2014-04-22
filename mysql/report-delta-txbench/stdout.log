@@ -1,0 +1,24 @@
+Started on:   Di 22. Apr 11:00:47 CEST 2014
+COMPILING: javac *.java
+STARTING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqld --no-defaults 		--max_connections=1000 		--performance_schema=OFF 		--table_open_cache_instances=32 		--query_cache_type=0 		--query_cache_size=0 		--innodb_buffer_pool_size=2684354560 		--innodb_log_file_size=268435456 		--innodb_log_buffer_size=16777216 		--innodb_flush_method=fsync 		--innodb_flush_log_at_trx_commit=2
+2014-04-22 11:00:48 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2014-04-22 11:00:48 0 [Warning] Changed limits: max_open_files: 4096  max_connections: 1000  table_cache: 1543
+2014-04-22 11:00:48 5847 [Note] Plugin 'FEDERATED' is disabled.
+2014-04-22 11:00:48 5847 [Note] InnoDB: The InnoDB memory heap is disabled
+2014-04-22 11:00:48 5847 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2014-04-22 11:00:48 5847 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2014-04-22 11:00:48 5847 [Note] InnoDB: CPU does not support crc32 instructions
+2014-04-22 11:00:48 5847 [Note] InnoDB: Initializing buffer pool, size = 2.5G
+2014-04-22 11:00:48 5847 [Note] InnoDB: Completed initialization of buffer pool
+2014-04-22 11:00:48 5847 [Note] InnoDB: Highest supported file format is Barracuda.
+2014-04-22 11:00:48 5847 [Note] InnoDB: 128 rollback segment(s) are active.
+2014-04-22 11:00:48 5847 [Note] InnoDB: Waiting for purge to start
+2014-04-22 11:00:48 5847 [Note] InnoDB: 1.2.10 started; log sequence number 8126109558
+2014-04-22 11:00:48 5847 [Note] Server hostname (bind-address): '*'; port: 3306
+2014-04-22 11:00:48 5847 [Note] IPv6 is available.
+2014-04-22 11:00:48 5847 [Note]   - '::' resolves to '::';
+2014-04-22 11:00:48 5847 [Note] Server socket created on IP: '::'.
+2014-04-22 11:00:48 5847 [Note] Event Scheduler: Loaded 0 events
+2014-04-22 11:00:48 5847 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqld: ready for connections.
+Version: '5.6.10'  socket: '/tmp/mysql.sock'  port: 3306  Source distribution
+INITIALIZING: java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar DBGen

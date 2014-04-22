@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '22476':
+
+           415.378 r21D0                                                        [62,45%]
+       647.600.042 r01C8                                                        [62,45%]
+   643.170.615.448 cycles                    #    0,000 GHz                     [62,45%]
+
+      70,241312181 seconds time elapsed
+

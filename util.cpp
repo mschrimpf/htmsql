@@ -41,7 +41,7 @@ int stick_this_thread_to_core(int core_id) {
 	return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
 }
 
-void nop_sleep(int microseconds) {
+void nop_wait(int microseconds) {
 	for (int i = 0; i < microseconds * 800; ++i) {
 		asm volatile("nop");
 	}
@@ -60,15 +60,24 @@ int rand_tausworth(int limit) {
 }
 
 int rand_lcg(int limit) {
-	static int lcg_state = 777;
+	static long lcg_state = 777;
 
-	lcg_state = lcg_state * 1664525 + 1013904223;
-	return (lcg_state >> 24) % limit;
+	return rand_lcg(lcg_state, limit);
+}
+int rand_lcg(long& state, int limit) {
+	state = state * 1664525 + 1013904223;
+	int res = (state >> 24) % limit;
+	return res >= 0 ? res : -res;
 }
 
 int rand_gerhard(int limit) {
 	static long a = 1;
 
-	a = (a * 32719 + 3) % 32749;
-	return a % limit;
+	return rand_gerhard(a, limit);
+}
+
+int rand_gerhard(long& state, int limit) {
+	state = (state * 32719 + 3) % 32749;
+	int res = state % limit;
+	return res >= 0 ? res : -res;
 }

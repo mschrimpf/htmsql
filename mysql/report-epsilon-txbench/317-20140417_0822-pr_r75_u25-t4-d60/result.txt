@@ -1,0 +1,17 @@
+THREADS:   4
+R_WEIGHT:  75% reads
+RW_WEIGHT: 25% updates
+duration:  60s
+warmup:    10s
+Warmup phase elapsed, measuring
+
+READ_Trx (succ/fail)   455747/0
+RU_Trx (succ/fail)     152631/0
+TOTAL_Trx (succ/fail)  608378/0 (2.54 tx/ms)
+AVG_READ_TX_TIME       0.26 ms/read tx
+AVG_READ_COMMIT_TIME   0.08 ms/read commit
+AVG_READ_TX_PER_MS     3.81 read tx/ms
+AVG_RU_TX_TIME         0.79 ms/update tx
+AVG_RU_COMMIT_TIME     0.25 ms/update commit
+AVG_RU_TX_PER_MS       1.27 update tx/ms
+

@@ -1,9 +1,0 @@
-DB.User=root
-DB.Pass=
-DB.Url=jdbc:mysql://127.0.0.1:3307/sibench
-DB.JdbcDriver=com.mysql.jdbc.Driver
-DB.TableSize=100000
-EXP.NumOfRowRead=100
-EXP.NumOfRowUpdate=20
-EXP.Duration=60
-EXP.WarmUp=10

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '10599':
+
+               100 r01C9 (RTM_RETIRED.START)                                                       
+               100 r04C9 (RTM_RETIRED.ABORTED)                                                       
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                       
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                       
+               100 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                       
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                       
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                       
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                       
+
+       0,087829311 seconds time elapsed
+

@@ -1,8 +1,0 @@
-Started on:   Mo 7. Apr 07:10:19 CEST 2014
-COMPILING: javac *.java
-INITIALIZING: java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar DBGen
-output: /home/htmsql/develop/mysql/report-alpha-txbench/261-20140407_0710-s50000-c4-d150
-waiting for run_pid 31692
-RUNNING TXBENCH: java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar SibenchClient 10 75 25 S2PL > /home/htmsql/develop/mysql/report-alpha-txbench/261-20140407_0710-s50000-c4-d150/result.txt
-PROFILING PERF STAT EVENTS: perf stat 			-e '{r04C8,r01C8,r02C8,r80C8,r40C8,r08C8,r20C8,r10C8}' 			-p 31037 			&>/home/htmsql/develop/mysql/report-alpha-txbench/261-20140407_0710-s50000-c4-d150/perf.stat.events
-Profiling stopped

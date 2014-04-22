@@ -12,6 +12,7 @@ public:
 	ThreadsafeList(LockType &locker);
 	~ThreadsafeList();
 
+	ListItem * insert(int value);
 	ListItem * insertHead(ListItem * item);
 //	ListItem * insertTail(ListItem * item);
 	/**

@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '5449':
+
+     1.090.477.386 r21D0                                                        [55,89%]
+     2.964.026.014 r01C8                                                        [55,89%]
+ 2.688.281.390.149 cycles                    #    0,000 GHz                     [55,89%]
+
+     310,241618044 seconds time elapsed
+

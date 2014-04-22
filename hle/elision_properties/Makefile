@@ -20,12 +20,6 @@ EXECUTABLE_RETRIED=retried_elision
 $(EXECUTABLE_RETRIED): $(SOURCES_RETRIED)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_RETRIED) $(LDLAGS)
 
-# self abort
-SOURCES_SELF_ABORT=self-abort.cpp \
-../../util.cpp
-self-abort: $(SOURCES_SELF_ABORT)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_SELF_ABORT) $(LDLAGS)
-
 # mutual abort
 SOURCES_ABORT=mutual_abort.cpp \
 ../../util.cpp
@@ -57,3 +51,15 @@ SOURCES_NESTING_METHOD=nesting-method.cpp \
 ../../util.cpp ../../Stats.cpp
 nesting-method: $(SOURCES_NESTING_METHOD)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING_METHOD) $(LDLAGS)
+
+# nesting method
+SOURCES_UNFRIENDLY_INSTRUCTIONS=unfriendly_instructions.cpp \
+../../util.cpp ../../Stats.cpp
+unfriendly_instructions: $(SOURCES_UNFRIENDLY_INSTRUCTIONS)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_UNFRIENDLY_INSTRUCTIONS) $(LDLAGS)
+
+# nesting method
+SOURCES_DATA_CONFLICT=data_conflict.cpp \
+../../util.cpp ../../Stats.cpp
+data_conflict: $(SOURCES_DATA_CONFLICT)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_DATA_CONFLICT) $(LDLAGS)

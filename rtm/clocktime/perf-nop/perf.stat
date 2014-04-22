@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '3086':
+
+       5002,841558 task-clock                #    0,998 CPUs utilized          
+    62.170.249.998 instructions              #    3,79  insns per cycle         [33,44%]
+    16.388.636.983 cycles                    #    3,276 GHz                     [33,44%]
+    16.372.745.313 cpu/cycles-t/             #   99,90% transactional cycles    [33,44%]
+            41.166 cpu/tx-start/             #   397725 cycles / transaction    [33,44%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [33,44%]
+    14.272.570.694 cpu/cycles-ct/            #   12,81% aborted cycles          [33,44%]
+
+       5,011096405 seconds time elapsed
+

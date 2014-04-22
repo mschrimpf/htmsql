@@ -1,7 +1,0 @@
-/bin/dbt-plot-iostat
-/bin/dbt-plot-mpstat
-/bin/dbt-plot-transaction-distribution
-/bin/dbt-plot-vmstat
-/bin/dbt-pgsql-plot-database-stats
-/bin/dbt-pgsql-plot-index-stats
-/bin/dbt-pgsql-plot-table-stats

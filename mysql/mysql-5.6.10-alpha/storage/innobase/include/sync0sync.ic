@@ -30,6 +30,12 @@ Mutex, the basic synchronization primitive
 Created 9/5/1995 Heikki Tuuri
 *******************************************************/
 
+/* BEGIN: HTMSQL */
+#if defined(HAVE_HLE)
+# include "hle.h"
+#endif
+/* END: HTMSQL */
+
 /******************************************************************//**
 Sets the waiters field in a mutex. */
 UNIV_INTERN
@@ -81,7 +87,7 @@ ib_mutex_test_and_set(
 {
 /* BEGIN: HTMSQL */
 #if defined(HAVE_HLE)
-	return(hle_acquire_test_and_set4(&mutex->lock_word, 1));
+	return(__hle_acquire_test_and_set4(&mutex->lock_word, 1));
 /* END: HTMSQL */ 
 #elif defined(HAVE_ATOMIC_BUILTINS)
 	return(os_atomic_test_and_set_byte(&mutex->lock_word, 1));
@@ -114,7 +120,7 @@ mutex_reset_lock_word(
 /* BEGIN: HTMSQL */
 #if defined(HAVE_HLE)
 	// release the lock
-	hle_release_test_and_set4(&mutex->lock_word, 0);
+	__hle_release_test_and_set4(&mutex->lock_word, 0);
 /* END: HTMSQL */
 #elif defined(HAVE_ATOMIC_BUILTINS)
 	/* In theory __sync_lock_release should be used to release the lock.

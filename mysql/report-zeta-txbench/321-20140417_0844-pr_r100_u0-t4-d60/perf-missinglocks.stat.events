@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '20742':
+
+     1.951.090.648 r21D0                                                        [31,25%]
+       647.633.837 r01C8                                                        [31,25%]
+   644.018.426.152 cycles                    #    0,000 GHz                     [31,25%]
+
+      70,239330151 seconds time elapsed
+

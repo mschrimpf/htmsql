@@ -5,14 +5,20 @@ SC=gcc
 CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -pthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
-SOURCES=time_cmp.cpp \
-List.cpp \
+SOURCES_ALL=List.cpp \
 ThreadsafeList.cpp \
 ThreadsafeListRtm.cpp \
 $(SOURCES_LOCK) \
 ../../util.cpp \
 ../../Stats.cpp
 
-# time_cmp
-time_cmp: $(SOURCES)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES) $(LDLAGS)
+
+SOURCES_PROB=time_cmp.cpp \
+$(SOURCES_ALL)
+prob_cmp: $(SOURCES_PROB)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_PROB) $(LDLAGS)
+
+SOURCES_REP=time_cmp-repeats.cpp \
+$(SOURCES_ALL)
+repeats_cmp: $(SOURCES_REP)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_REP) $(LDLAGS)

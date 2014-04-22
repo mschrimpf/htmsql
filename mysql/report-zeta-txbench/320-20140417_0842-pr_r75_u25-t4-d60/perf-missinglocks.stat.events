@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '20616':
+
+     1.322.560.053 r21D0                                                        [39,55%]
+       415.601.953 r01C8                                                        [39,55%]
+   578.984.132.866 cycles                    #    0,000 GHz                     [39,55%]
+
+      70,238901356 seconds time elapsed
+

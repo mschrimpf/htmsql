@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '19694':
+
+    10.319.973.985 r21D0                                                        [31,23%]
+     1.385.899.618 r01C8                                                        [31,23%]
+ 2.859.869.968.013 cycles                    #    0,000 GHz                     [31,23%]
+
+     310,241368371 seconds time elapsed
+

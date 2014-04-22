@@ -937,12 +937,14 @@ extern lock_sys_t*	lock_sys;
 
 /** Acquire the lock_sys->mutex. */
 #define lock_mutex_enter() do {			\
-	mutex_enter(&lock_sys->mutex);		\
+	/* hle_mutex_enter(&lock_sys->mutex); */		\
+	mutex_enter(&lock_sys->mutex); \
 } while (0)
 
 /** Release the lock_sys->mutex. */
 #define lock_mutex_exit() do {			\
-	mutex_exit(&lock_sys->mutex);		\
+	/* hle_mutex_exit(&lock_sys->mutex); */		\
+	mutex_exit(&lock_sys->mutex); \
 } while (0)
 
 /** Test if lock_sys->wait_mutex is owned. */
@@ -950,12 +952,12 @@ extern lock_sys_t*	lock_sys;
 
 /** Acquire the lock_sys->wait_mutex. */
 #define lock_wait_mutex_enter() do {		\
-	mutex_enter(&lock_sys->wait_mutex);	\
+	hle_mutex_enter(&lock_sys->wait_mutex);	\
 } while (0)
 
 /** Release the lock_sys->wait_mutex. */
 #define lock_wait_mutex_exit() do {		\
-	mutex_exit(&lock_sys->wait_mutex);	\
+	hle_mutex_exit(&lock_sys->wait_mutex);	\
 } while (0)
 
 #ifndef UNIV_NONINL

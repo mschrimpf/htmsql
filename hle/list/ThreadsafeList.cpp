@@ -11,6 +11,13 @@ ThreadsafeList::~ThreadsafeList() {
 	(this->locker.*(this->locker.unlock))();
 }
 
+ListItem* ThreadsafeList::insert(int data) {
+	// TODO: this leads to lots of RTM aborts
+	if(this->contains(data))
+		return NULL;
+	ListItem * item = new ListItem(data, NULL, NULL);
+	return this->insertHead(item);
+}
 ListItem* ThreadsafeList::insertHead(ListItem * item) {
 	(this->locker.*(this->locker.lock))();
 	ListItem * result = List::insertHead(item);
@@ -58,7 +65,7 @@ int ThreadsafeList::contains(int data) {
 	(this->locker.*(this->locker.lock))();
 	int result = 0; // 100% fails if executed with List::contains
 	ListItem * item = this->first;
-	while (item) {
+	while (item) { // jne amounts for most aborts
 		if (item->data == data) {
 			result = 1;
 			break;

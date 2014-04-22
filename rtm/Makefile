@@ -23,3 +23,13 @@ SOURCES_MEMORY=memory.cpp \
 ../util.cpp ../Stats.cpp
 memory: $(SOURCES_MEMORY)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_MEMORY) $(LDLAGS)
+
+SOURCES_FUNC_RET=inner-function-return.cpp \
+../util.cpp ../Stats.cpp
+inner_function_return: $(SOURCES_FUNC_RET)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_FUNC_RET) $(LDLAGS)
+
+SOURCES_LIST_RTM=ThreadsafeListRtm_contains.cpp \
+../util.cpp ../Stats.cpp
+list_rtm: $(SOURCES_LIST_RTM)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_LIST_RTM) $(LDLAGS)

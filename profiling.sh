@@ -18,9 +18,9 @@ _HARDWARE_EVENTS[HLE_RETIRED.ABORTED]=04C8
 _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC1]=08C8
 _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC2]=10C8
 _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC3]=20C8
-_HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC4]=40C8
 _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC5]=80C8
-# RTM - amounts to zero in our case
+_HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC4]=40C8
+# RTM
 # _HARDWARE_EVENTS[RTM_RETIRED.START]=01C9
 # _HARDWARE_EVENTS[RTM_RETIRED.COMMIT]=02C9
 # _HARDWARE_EVENTS[RTM_RETIRED.ABORTED]=04C9
@@ -36,17 +36,22 @@ _HTM_LOCKS_EVENTS[MEM_UOPS_RETIRED.LOCK_LOADS]=21D0
 _HTM_LOCKS_EVENTS[CYCLES]=cycles
 
 
+
+_OUTPUT_FOLDER=
+
 _FILENAME_PERF_STAT="perf.stat"
 _FILENAME_PERF_STAT_EVENTS="perf.stat.events"
 _FILENAME_PERF_STAT_MISSINGLOCKS_EVENTS="perf-missinglocks.stat.events"
 _FILENAME_PERF_RECORD="perf.data"
+_FILENAME_PERF_RECORD_ABORTS="perf-aborts.data"
 
 
 # profile
 # $1: pid
-# $2: output
+# $2: output-dir
 # $3: (optional) silent
 function profile_perf_stat {
+	_OUTPUT_FOLDER="$2"
 	_EXEC_CMD="perf stat \
 		-T \
 		-p $1 \
@@ -74,7 +79,7 @@ function profile_perf_stat_events_build_eventstring {
 			_PERF_STAT_EVENTS="${_PERF_STAT_EVENTS}," # add a comma for all items except the first one
 		fi
 		if [[ "${_array[$_event_label]}" =~ ^[0-9].* ]]; then
-			_PERF_STAT_EVENTS="${_PERF_STAT_EVENTS}r" # add a comma for unmask-vals/event-nums
+			_PERF_STAT_EVENTS="${_PERF_STAT_EVENTS}r" # add an r for unmask-vals/event-nums
 		fi
 		_PERF_STAT_EVENTS="${_PERF_STAT_EVENTS}${_array[$_event_label]}"
 	done
@@ -84,6 +89,7 @@ function profile_perf_stat_events_build_eventstring {
 # $2: output-dir
 # $3: (optional) silent
 function profile_perf_stat_events {
+	_OUTPUT_FOLDER="$2"
 	profile_perf_stat_events_build_eventstring "$(declare -p _HARDWARE_EVENTS)"
 	_EXEC_CMD="perf stat \
 			$_PERF_STAT_EVENTS \
@@ -99,9 +105,28 @@ function profile_perf_stat_events {
 # $1: pid
 # $2: output-dir
 # $3: (optional) silent
-function profile_perf_record {
+function profile_perf_record_aborts {
+	_OUTPUT_FOLDER="$2"
 	_EXEC_CMD="perf record \
 				-e cpu/el-abort/pp \
+				-g \
+				--transaction \
+				--weight \
+				-p $1 \
+				-o $2/$_FILENAME_PERF_RECORD_ABORTS"
+	if [ "$3" == true ]; then
+		execute_cmd "$_EXEC_CMD"
+	else
+		execute_cmd "$_EXEC_CMD" "PROFILING PERF RECORD ABORTS"
+	fi
+}
+# Profile everything
+# $1: pid
+# $2: output-dir
+# $3: (optional) silent
+function profile_perf_record {
+	_OUTPUT_FOLDER="$2"
+	_EXEC_CMD="perf record \
 				-g \
 				--transaction \
 				--weight \
@@ -117,6 +142,7 @@ function profile_perf_record {
 # $2: output-dir
 # $3: (optional) silent
 function profile_perf_missinglocks {
+	_OUTPUT_FOLDER="$2"
 	profile_perf_stat_events_build_eventstring "$(declare -p _HTM_LOCKS_EVENTS)"
 	_EXEC_CMD="perf stat \
 			$_PERF_STAT_EVENTS \
@@ -129,19 +155,12 @@ function profile_perf_missinglocks {
 	fi
 }
 
-# $1: pid
-# $2: output-dir
-# $3: (optional) silent
-function profile_all {
-	profile_perf_stat "$1" "$2" "$3" &
-	profile_perf_stat_events "$1" "$2" "$3" &
-	profile_perf_record "$1" "$2" "$3" &
-	profile_perf_missinglocks "$1" "$2" "$3" &
-}
-
 
 # Stops the perf processes (as defined by their pids) if they exist.
+# $1: output-folder
 function stop_profiling {
+	_OUTPUT_FOLDER="$1"
+
 	# _PERF_PROCESSES_BEFORE=$(pidof -x perf | wc -w) 
 	# _PID_FILE="$_OUTPUT_DIR/$_FILENAME_PERF_STAT$_FILENAME_PID_SUFFIX" 
 	# if [ -f "$_PID_FILE" ]; then
@@ -166,4 +185,20 @@ function stop_profiling {
 	# fi
 	
 	echo "Profiling stopped"
+	
+	process_perf_events "$_OUTPUT_FOLDER"
+}
+
+# Adds labels to the event-desciprots of the perf-stat-events output-file
+# $1: output-folder
+function process_perf_events {
+	if [ -f "$1/$_FILENAME_PERF_STAT_EVENTS" ]; then
+		for _event_label in "${!_HARDWARE_EVENTS[@]}"
+		do
+			echo "Replacing ${_HARDWARE_EVENTS[$_event_label]}"
+			sed -i "s/${_HARDWARE_EVENTS[$_event_label]}/${_HARDWARE_EVENTS[$_event_label]} ($_event_label)/g" "$1/$_FILENAME_PERF_STAT_EVENTS"
+		done
+	else
+		echo "File $1/$_FILENAME_PERF_STAT_EVENTS does not exist"
+	fi
 }

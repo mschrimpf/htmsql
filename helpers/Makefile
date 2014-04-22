@@ -1,3 +1,5 @@
+include ../hle/lock_functions/Makefile.variables
+
 CC=g++
 SC=gcc
 CCFLAGS=-std=c++0x -O2
@@ -13,16 +15,7 @@ busy_wait: $(SOURCES_BUSYWAIT)
 # padding
 SOURCES_PADDING=padding.cpp ../util.cpp \
 ../hle/bank/entities/Account.cpp \
-../hle/lock_functions/LockType.cpp \
-../hle/lock_functions/pthread_lock.cpp ../hle/lock_functions/thread_lock.cpp \
-../hle/lock_functions/atomic_exch_lock-busy.cpp ../hle/lock_functions/atomic_exch_lock-spec.cpp \
-../hle/lock_functions/atomic_tas_lock-busy.cpp ../hle/lock_functions/atomic_tas_lock-spec.cpp \
-../hle/lock_functions/atomic_exch_hle_lock-busy.cpp ../hle/lock_functions/atomic_exch_hle_lock-spec.cpp \
-../hle/lock_functions/atomic_tas_hle_lock-busy.cpp ../hle/lock_functions/atomic_tas_hle_lock-spec.cpp \
-../hle/lock_functions/hle_tas_lock-busy.cpp ../hle/lock_functions/hle_tas_lock-spec.cpp \
-../hle/lock_functions/hle_exch_lock-busy.cpp ../hle/lock_functions/hle_exch_lock-spec.cpp \
-../hle/lock_functions/hle_asm_exch_lock-busy.cpp ../hle/lock_functions/hle_asm_exch_lock-spec.cpp \
-../hle/lock_functions/hle_asm_exch_lock-asm_spec.cpp
+$(SOURCES_LOCK)
 padding: $(SOURCES_PADDING)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_PADDING) $(LDLAGS)
 

@@ -8,6 +8,7 @@
 #include <immintrin.h>
 
 #include "../../util.h"
+#include "../../Stats.h"
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
@@ -186,9 +187,9 @@ int main(int argc, char *argv[]) {
 //			&MeasureType::NOINIT_SEQ_READ, &MeasureType::INIT_SEQ_READ,
 			// write random
 			&MeasureType::NOINIT_RND_WRITE, &MeasureType::INIT_RND_WRITE,
-			// read random
+	// read random
 //			&MeasureType::NOINIT_RND_READ, &MeasureType::INIT_RND_READ
-	//
+			//
 			};
 
 	// open files
@@ -218,6 +219,8 @@ int main(int argc, char *argv[]) {
 		fprintf(time_out, "%lu", s * sizeof(type));
 		for (int t = 0; t < sizeof(measureTypes) / sizeof(measureTypes[0]);
 				t++) {
+			Stats failureStats;
+			Stats timeStats;
 			float failure_expected_value_sum = 0, failure_variance_sum = 0;
 			float time_expected_value_sum = 0, time_variance_sum = 0;
 			for (int l = 0; l < loops; l++) {
@@ -244,28 +247,14 @@ int main(int argc, char *argv[]) {
 					free((void*) array);
 				} // end inner loops loop
 				float failure_rate = (float) failures * 100 / attempts;
-				failure_expected_value_sum += failure_rate;
-				failure_variance_sum += (failure_rate * failure_rate);
+				failureStats.addValue(failure_rate);
 				float time_avg = average(times);
-				time_expected_value_sum += time_avg;
-				time_variance_sum += (time_avg * time_avg);
+				timeStats.addValue(time_avg);
 			} // end loops loop
-			  // failures
-			float failure_expected_value = failure_expected_value_sum * 1.0
-					/ loops; // mu = p * sum(x_i)
-			float failure_variance = 1.0 / loops * failure_variance_sum
-					- (failure_expected_value * failure_expected_value); // var = p * sum(x_i^2) - mu^2
-			float failure_stddev = sqrt(failure_variance);
-			if (failure_expected_value + failure_stddev > 100)
-				printf("BEEP BEEP BEEP\n"); // TODO is this case allowed from a math point of view?
-			fprintf(failures_out, ";%.4f;%.4f", failure_expected_value,
-					failure_stddev);
-			// time
-			float time_expected_value = time_expected_value_sum * 1.0 / loops; // mu = p * sum(x_i)
-			float time_variance = 1.0 / loops * time_variance_sum
-					- (time_expected_value * time_expected_value); // var = p * sum(x_i^2) - mu^2
-			float time_stddev = sqrt(time_variance);
-			fprintf(time_out, ";%.4f;%.4f", time_expected_value, time_stddev);
+			fprintf(failures_out, ";%.4f;%.4f", failureStats.getExpectedValue(),
+					failureStats.getStandardDeviation());
+			fprintf(time_out, ";%.4f;%.4f", timeStats.getExpectedValue(),
+					timeStats.getStandardDeviation());
 		} // end types loop
 		fprintf(failures_out, "\n");
 		fprintf(time_out, "\n");

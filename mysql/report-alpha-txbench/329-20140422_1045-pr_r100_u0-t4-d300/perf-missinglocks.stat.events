@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '5628':
+
+     1.538.092.798 r21D0                                                        [62,49%]
+     3.788.002.092 r01C8                                                        [62,49%]
+ 2.998.372.612.029 cycles                    #    0,000 GHz                     [62,49%]
+
+     310,239771188 seconds time elapsed
+

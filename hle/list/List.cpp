@@ -17,7 +17,10 @@ List::~List() {
 }
 
 ListItem* List::insert(int data) {
-	return this->insertHead(new ListItem(data, NULL, NULL));
+	if(this->contains(data))
+		return NULL;
+	ListItem * item = new ListItem(data, NULL, NULL);
+	return this->insertHead(item);
 }
 ListItem* List::insertHead(ListItem * item) {
 	item->next = this->first;

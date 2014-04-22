@@ -1,0 +1,5 @@
+THREADS:   4
+R_WEIGHT:  75% reads
+RW_WEIGHT: 25% updates
+duration:  300s
+warmup:    10s

@@ -13,14 +13,20 @@ class List {
 protected:
 	ListItem * first;
 	ListItem * last;
+
+	virtual ListItem * insertHead(ListItem * item);
+//	virtual ListItem * insertTail(ListItem * item);
 public:
 	List();
 	~List();
 
-	/** @see #insertHead(int data) */
+	/**
+	 * Inserts the given data at the head of the list.
+	 * If the data is already contained, NULL is returned (O(n)),
+	 * otherwise the pointer to the new list item.
+	 * @return NULL if the data is contained in this list, the data's item otherwise
+	 */
 	ListItem * insert(int data);
-	virtual ListItem * insertHead(ListItem * item);
-//	virtual ListItem * insertTail(ListItem * item);
 	/**
 	 * Removes the occurrences of data in the list.
 	 * If removeAll is != 0, all occurrences are removed, otherwise only the first one.

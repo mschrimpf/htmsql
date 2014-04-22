@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '19012':
+
+         4.012.058 r04C8 (HLE_RETIRED.ABORTED)                                                        [30,85%]
+       862.196.470 r01C8 (HLE_RETIRED.START)                                                        [30,85%]
+       858.184.412 r02C8 (HLE_RETIRED.COMMIT)                                                        [30,85%]
+            28.634 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [30,85%]
+                29 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [30,85%]
+         3.865.849 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [30,85%]
+           119.747 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [30,85%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [30,85%]
+
+     310,237870560 seconds time elapsed
+

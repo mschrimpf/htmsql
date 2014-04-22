@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '22476':
+
+     226752,814018 task-clock                #    3,228 CPUs utilized          
+   639.900.617.955 instructions              #    1,00  insns per cycle         [31,36%]
+   636.929.637.741 cycles                    #    2,809 GHz                     [31,36%]
+    50.465.391.309 cpu/cycles-t/             #    7,92% transactional cycles    [31,36%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [31,36%]
+       640.049.781 cpu/el-start/             #       79 cycles / elision        [31,36%]
+    50.322.816.062 cpu/cycles-ct/            #    0,02% aborted cycles          [31,36%]
+
+      70,241989586 seconds time elapsed
+

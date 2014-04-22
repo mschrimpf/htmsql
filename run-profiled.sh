@@ -40,8 +40,9 @@ echo "output: $OUTPUT_FOLDER"
 mkdir "$OUTPUT_FOLDER" -p
 
 ###
+own_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source ./profiling.sh
+source "$own_path/profiling.sh"
 
 # $1: program to run
 function run_program {
@@ -53,12 +54,16 @@ run_program "$PROGRAM"
 PROGRAM_CALLER_PID=$!
 PROGRAM_ARR=($PROGRAM)
 PROGRAM_NAME=${PROGRAM_ARR[0]}
+#sleep 1
 PROGRAM_PID=$(pidof $PROGRAM_NAME)
+#echo "pid of $PROGRAM_NAME: $PROGRAM_PID"
 
-sleep 1
-profile_all "$PROGRAM_PID" "$OUTPUT_FOLDER" true
+# profile_perf_stat "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+profile_perf_stat_events "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+# profile_perf_record_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+
 
 wait "$PROGRAM_CALLER_PID"
-stop_profiling
+stop_profiling "$OUTPUT_FOLDER"
 
 

@@ -87,7 +87,7 @@ ib_mutex_test_and_set(
 {
 /* BEGIN: HTMSQL */
 #if defined(HAVE_HLE)
-	return(__hle_acquire_test_and_set4(&mutex->lock_word, 1));
+	return(__hle_acquire_test_and_set4(const_cast<unsigned *>(&mutex->lock_word)));
 /* END: HTMSQL */ 
 #elif defined(HAVE_ATOMIC_BUILTINS)
 	return(os_atomic_test_and_set_byte(&mutex->lock_word, 1));
@@ -120,7 +120,7 @@ mutex_reset_lock_word(
 /* BEGIN: HTMSQL */
 #if defined(HAVE_HLE)
 	// release the lock
-	__hle_release_test_and_set4(&mutex->lock_word, 0);
+	__hle_release_clear4(const_cast<unsigned *>(&mutex->lock_word));
 /* END: HTMSQL */
 #elif defined(HAVE_ATOMIC_BUILTINS)
 	/* In theory __sync_lock_release should be used to release the lock.

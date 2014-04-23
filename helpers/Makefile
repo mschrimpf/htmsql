@@ -24,6 +24,11 @@ SOURCES_CACHE_SIZES=cache_sizes.cpp ../util.cpp
 cache_sizes: $(SOURCES_CACHE_SIZES)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_CACHE_SIZES) $(LDLAGS)
 
+# cycles
+SOURCES_COUNT_CYCLES=count-cycles.cpp ../util.cpp ../Stats.cpp
+count-cycles: $(SOURCES_COUNT_CYCLES)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_COUNT_CYCLES) $(LDLAGS)
+
 # glibc
 SOURCES_PTHREAD_LOCK=pthread_lock.cpp ../util.cpp
 pthread_lock: $(SOURCES_PTHREAD_LOCK)

@@ -33,3 +33,8 @@ SOURCES_LIST_RTM=ThreadsafeListRtm_contains.cpp \
 ../util.cpp ../Stats.cpp
 list_rtm: $(SOURCES_LIST_RTM)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_LIST_RTM) $(LDLAGS)
+
+SOURCES_ABORT_COSTS=abort-costs.cpp \
+../util.cpp ../Stats.cpp
+abort-costs: $(SOURCES_ABORT_COSTS)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_ABORT_COSTS) $(LDLAGS)

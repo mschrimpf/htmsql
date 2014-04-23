@@ -166,7 +166,7 @@ void printHeader(const MeasureType *types[], int size, FILE *out = stdout) {
 
 int main(int argc, char *argv[]) {
 	// arguments
-	int loops = 10, sizes_min = 1, sizes_max = 800000, sizes_step = 5000,
+	int loops = 10, sizes_min = 1, sizes_max = 900000, sizes_step = 5000,
 			write = 0;
 	int *values[] = { &loops, &sizes_min, &sizes_min, &sizes_max, &sizes_max,
 			&sizes_step, &sizes_step, &write, &max_retries };
@@ -184,9 +184,9 @@ int main(int argc, char *argv[]) {
 	// write sequential
 //			&MeasureType::NOINIT_SEQ_WRITE, &MeasureType::INIT_SEQ_WRITE,
 			// read sequential
-//			&MeasureType::NOINIT_SEQ_READ, &MeasureType::INIT_SEQ_READ,
+			&MeasureType::NOINIT_SEQ_READ, &MeasureType::INIT_SEQ_READ,
 			// write random
-			&MeasureType::NOINIT_RND_WRITE, &MeasureType::INIT_RND_WRITE,
+//			&MeasureType::NOINIT_RND_WRITE, &MeasureType::INIT_RND_WRITE,
 	// read random
 //			&MeasureType::NOINIT_RND_READ, &MeasureType::INIT_RND_READ
 			//
@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
 	// open files
 	char retries_str[21]; // enough to hold all numbers up to 64-bits
 	sprintf(retries_str, "%d", max_retries);
-	std::string file_prefix = "write-rnd-", failures_file_suffix =
+	std::string file_prefix = "read-seq-", failures_file_suffix =
 			"retries-failures.csv", time_file_suffix = "retries-time.csv";
 	std::string failures_filename = file_prefix + retries_str
 			+ failures_file_suffix; //"write-seq-failures.csv"; //

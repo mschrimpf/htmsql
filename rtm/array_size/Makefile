@@ -17,3 +17,8 @@ suite: $(SOURCES_SUITE)
 SOURCES_SIZE_SIMPLE=size_simple.cpp ../../util.cpp
 size_simple: $(SOURCES_SIZE_SIMPLE)
 	$(CC) -o $@ $(LDFLAGS) -O0 $(SOURCES_SIZE_SIMPLE)
+
+# read_write_mix
+SOURCES_READ_WRITE_MIX=read-write-mix.cpp ../../util.cpp ../../Stats.cpp
+read_write_mix: $(SOURCES_READ_WRITE_MIX)
+	$(CC) -o $@ $(LDFLAGS) -O0 $(SOURCES_READ_WRITE_MIX)

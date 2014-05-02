@@ -14,7 +14,7 @@
 
 const int CORES = 4;
 
-const int VALUE_RANGE = 1000; // INT_MAX
+int VALUE_RANGE = 1000; // INT_MAX
 
 #define OPERATION_INSERT 1
 #define OPERATION_CONTAINS 0
@@ -54,10 +54,10 @@ int main(int argc, char *argv[]) {
 			probability_contains = 50, base_inserts = 1000, lockType = -1;
 	int *arg_values[] = { &num_threads, &loops, &probability_insert,
 			&probability_remove, &probability_contains, &base_inserts,
-			&lockType, &repeats_min, &repeats_max, &repeats_step };
+			&lockType, &repeats_min, &repeats_max, &repeats_step, &VALUE_RANGE };
 	const char *identifier[] = { "-n", "-l", "-pi", "-pr", "-pc", "-bi", "-t",
-			"-rmin", "-rmax", "-rstep" };
-	handle_args(argc, argv, 10, arg_values, identifier);
+			"-rmin", "-rmax", "-rstep", "-v" };
+	handle_args(argc, argv, 11, arg_values, identifier);
 
 	printf("Throughput per millisecond\n");
 	printf("Threads:      %d\n", num_threads);
@@ -154,7 +154,8 @@ int main(int argc, char *argv[]) {
 			} // end of loops loop
 
 			printf(";%.2f;%.2f;%.2f", stats.getExpectedValue(),
-					stats.getStandardDeviation(), listSizeStats.getExpectedValue());
+					stats.getStandardDeviation(),
+					listSizeStats.getExpectedValue());
 			std::cout.flush();
 		} // end of locktype-loop
 		printf("\n");

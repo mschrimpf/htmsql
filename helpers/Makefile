@@ -29,6 +29,11 @@ SOURCES_COUNT_CYCLES=count-cycles.cpp ../util.cpp ../Stats.cpp
 count-cycles: $(SOURCES_COUNT_CYCLES)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_COUNT_CYCLES) $(LDLAGS)
 
+# cache miss cycles
+SOURCES_CACHE_MISS_CYCLES=cache-miss-cycles.cpp ../util.cpp ../Stats.cpp
+cache-miss-cycles: $(SOURCES_CACHE_MISS_CYCLES)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_CACHE_MISS_CYCLES) $(LDLAGS)
+
 # glibc
 SOURCES_PTHREAD_LOCK=pthread_lock.cpp ../util.cpp
 pthread_lock: $(SOURCES_PTHREAD_LOCK)

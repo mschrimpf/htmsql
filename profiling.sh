@@ -44,6 +44,7 @@ _FILENAME_PERF_STAT_EVENTS="perf.stat.events"
 _FILENAME_PERF_STAT_MISSINGLOCKS_EVENTS="perf-missinglocks.stat.events"
 _FILENAME_PERF_RECORD="perf.data"
 _FILENAME_PERF_RECORD_ABORTS="perf-aborts.data"
+_FILENAME_PERF_RECORD_RTM_ABORTS="perf-rtm_aborts.data"
 
 
 # profile
@@ -101,7 +102,7 @@ function profile_perf_stat_events {
 		execute_cmd "$_EXEC_CMD" "PROFILING PERF STAT EVENTS"
 	fi
 }
-# Profile for abort causes
+# Profile for HLE abort causes
 # $1: pid
 # $2: output-dir
 # $3: (optional) silent
@@ -118,6 +119,25 @@ function profile_perf_record_aborts {
 		execute_cmd "$_EXEC_CMD"
 	else
 		execute_cmd "$_EXEC_CMD" "PROFILING PERF RECORD ABORTS"
+	fi
+}
+# Profile for RTM abort causes
+# $1: pid
+# $2: output-dir
+# $3: (optional) silent
+function profile_perf_record_rtm_aborts {
+	_OUTPUT_FOLDER="$2"
+	_EXEC_CMD="perf record \
+				-e cpu/tx-abort/pp \
+				-g \
+				--transaction \
+				--weight \
+				-p $1 \
+				-o $2/$_FILENAME_PERF_RECORD_RTM_ABORTS"
+	if [ "$3" == true ]; then
+		execute_cmd "$_EXEC_CMD"
+	else
+		execute_cmd "$_EXEC_CMD" "PROFILING PERF RECORD RTM ABORTS"
 	fi
 }
 # Profile everything
@@ -195,7 +215,6 @@ function process_perf_events {
 	if [ -f "$1/$_FILENAME_PERF_STAT_EVENTS" ]; then
 		for _event_label in "${!_HARDWARE_EVENTS[@]}"
 		do
-			echo "Replacing ${_HARDWARE_EVENTS[$_event_label]}"
 			sed -i "s/${_HARDWARE_EVENTS[$_event_label]}/${_HARDWARE_EVENTS[$_event_label]} ($_event_label)/g" "$1/$_FILENAME_PERF_STAT_EVENTS"
 		done
 	else

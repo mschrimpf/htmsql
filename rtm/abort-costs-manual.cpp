@@ -50,6 +50,7 @@ void execute_array_access(unsigned char * a, int size,
  * @param mode 0 to access only the first element, 1 to access all
  */
 int run(int size, int mode, int abort_trx) {
+	stick_this_thread_to_core(0);
 	void (*access)(unsigned char*, int);
 	switch (mode) {
 	case SINGLE_ACCESS:

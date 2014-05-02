@@ -62,6 +62,7 @@ void ThreadsafeList::remove(int data, int removeAll) {
 }
 
 int ThreadsafeList::contains(int data) {
+	// TODO lots of aborts here
 	(this->locker.*(this->locker.lock))();
 	int result = 0; // 100% fails if executed with List::contains
 	ListItem * item = this->first;

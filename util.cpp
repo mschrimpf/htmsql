@@ -47,6 +47,14 @@ void nop_wait(int microseconds) {
 	}
 }
 
+void clear_cache() {
+	int size = 32 * 1024 * /* just to be sure (i.e. victim cache) */ 2;
+	unsigned char arr /* I'm a pirate! */[size];
+	for(int i=0; i<size; i++) {
+		arr[i] = 0;
+	}
+}
+
 // DO NOT USE
 int rand_tausworth(int limit) {
 #define TAUSWORTHE(s,a,b,c,d) ((s&c)<<d) ^ (((s <<a) ^ s)>>b)

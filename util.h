@@ -23,6 +23,8 @@ int stick_this_thread_to_core(int core_id);
 
 void nop_wait(int microseconds);
 
+void clear_cache();
+
 //int rand_tausworth(int limit); // segmentation faults
 int rand_lcg(int limit);
 int rand_lcg(long& state, int limit);

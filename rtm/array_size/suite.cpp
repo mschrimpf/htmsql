@@ -166,7 +166,7 @@ void printHeader(const MeasureType *types[], int size, FILE *out = stdout) {
 
 int main(int argc, char *argv[]) {
 	// arguments
-	int loops = 10, sizes_min = 1, sizes_max = 900000, sizes_step = 5000,
+	int loops = 10, sizes_min = 1, sizes_max = 1000000, sizes_step = 5000,
 			write = 0;
 	int *values[] = { &loops, &sizes_min, &sizes_min, &sizes_max, &sizes_max,
 			&sizes_step, &sizes_step, &write, &max_retries };

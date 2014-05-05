@@ -7,14 +7,19 @@
 #include <limits.h> // INT_MAX
 #include "../lock_functions/LockType.h"
 #include "List.h"
+#include "PreAllocatedList.h"
 #include "ThreadsafeList.h"
 #include "ThreadsafeListRtm.h"
+#include "ThreadsafePreAllocatedList.h"
+#include "ThreadsafePreAllocatedListRtm.h"
 #include "../../util.h"
 #include "../../Stats.h"
 
 const int CORES = 4;
 
 int VALUE_RANGE = 1000; // INT_MAX
+
+#define USE_PRE_ALLOCATED 1
 
 #define OPERATION_INSERT 1
 #define OPERATION_CONTAINS 0
@@ -79,7 +84,7 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::HLE_EXCH_SPEC,
 			//
-			LockType::RTM
+//			LockType::RTM
 	//
 			};
 	int lockTypesCount, lockTypesMin, lockTypesMax;
@@ -116,10 +121,17 @@ int main(int argc, char *argv[]) {
 			Stats listSizeStats;
 			for (int l = 0; l < loops; l++) {
 				// init
+#if USE_PRE_ALLOCATED == 1
+				List * list =
+						lockTypes[t].enum_type == LockType::EnumType::RTM ?
+								(List *) new ThreadsafePreAllocatedListRtm() :
+								(List *) new ThreadsafePreAllocatedList(lockTypes[t]);
+#else
 				List * list =
 						lockTypes[t].enum_type == LockType::EnumType::RTM ?
 								(List *) new ThreadsafeListRtm() :
 								(List *) new ThreadsafeList(lockTypes[t]);
+#endif
 				// insert base-values to achieve a defined base-size of the list
 				for (int i = 0; i < base_inserts; i++) {
 					int rnd_val = RAND(VALUE_RANGE);

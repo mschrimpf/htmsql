@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '3221':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [100,00%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [100,00%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [100,00%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [100,00%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [100,00%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [100,00%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [100,00%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                       
+
+       1,771105266 seconds time elapsed
+

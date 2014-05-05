@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '3673':
+
+         1.809.304 r04C8 (HLE_RETIRED.ABORTED)                                                        [48,97%]
+         1.877.271 r01C8 (HLE_RETIRED.START)                                                        [48,97%]
+            67.965 r02C8 (HLE_RETIRED.COMMIT)                                                        [48,97%]
+             1.146 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [48,97%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [48,97%]
+         1.807.538 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [48,97%]
+               641 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [48,97%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [48,97%]
+
+       1,364909512 seconds time elapsed
+

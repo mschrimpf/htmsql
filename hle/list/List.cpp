@@ -16,10 +16,18 @@ List::~List() {
 	this->first = this->last = NULL;
 }
 
+ListItem* List::createListItem(int data, ListItem * prev, ListItem * next) {
+	return new ListItem(data, prev, next);
+}
+
+void List::deleteListItem(ListItem * item) {
+	delete item;
+}
+
 ListItem* List::insert(int data) {
-	if(this->contains(data))
+	if (this->contains(data))
 		return NULL;
-	ListItem * item = new ListItem(data, NULL, NULL);
+	ListItem * item = createListItem(data, NULL, NULL);
 	return this->insertHead(item);
 }
 ListItem* List::insertHead(ListItem * item) {
@@ -46,7 +54,7 @@ void List::remove(int data, int removeAll) {
 				this->first = item->next;
 			else
 				prev->next = item->next;
-			delete item;
+			deleteListItem(item);
 			if (!removeAll)
 				break;
 		}
@@ -68,7 +76,7 @@ int List::contains(int data) {
 void List::deleteAll(ListItem * list) {
 	while (list) {
 		ListItem * next = list->next;
-		delete list;
+		deleteListItem(list);
 		list = next;
 	}
 }

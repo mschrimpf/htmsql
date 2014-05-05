@@ -1,16 +1,16 @@
-#include "ThreadsafeListRtm.h"
+#include "ThreadsafePreAllocatedListRtm.h"
 #include <immintrin.h>
 #include <stdio.h>
 
 const int MAX_RETRIES = 10000000;
 
-ThreadsafeListRtm::ThreadsafeListRtm() :
-		List() {
+ThreadsafePreAllocatedListRtm::ThreadsafePreAllocatedListRtm() :
+		PreAllocatedList() {
 }
-ThreadsafeListRtm::~ThreadsafeListRtm() {
+ThreadsafePreAllocatedListRtm::~ThreadsafePreAllocatedListRtm() {
 }
 
-ListItem* ThreadsafeListRtm::insertHead(ListItem * item) {
+ListItem* ThreadsafePreAllocatedListRtm::insertHead(ListItem * item) {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
 		ListItem * result = List::insertHead(item);
@@ -40,7 +40,7 @@ ListItem* ThreadsafeListRtm::insertHead(ListItem * item) {
 //	}
 //}
 
-void ThreadsafeListRtm::remove(int data, int removeAll) {
+void ThreadsafePreAllocatedListRtm::remove(int data, int removeAll) {
 	ListItem * removeList = NULL; // build a list of items to be removed to remove them outside htm
 	ListItem * prev = NULL;
 
@@ -79,7 +79,7 @@ void ThreadsafeListRtm::remove(int data, int removeAll) {
 	this->deleteAll(removeList);
 }
 
-int ThreadsafeListRtm::contains(int data) {
+int ThreadsafePreAllocatedListRtm::contains(int data) {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
 		int result = 0; // 100% fails if executed with List::contains

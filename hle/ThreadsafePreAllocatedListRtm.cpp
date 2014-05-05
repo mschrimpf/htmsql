@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 const int MAX_RETRIES = 10000000;
+LockType rtm_locker(LockType::NONE);
 
 ThreadsafeListRtm::ThreadsafeListRtm() :
 		List() {
@@ -16,7 +17,7 @@ ListItem* ThreadsafeListRtm::insertHead(ListItem * item) {
 		ListItem * result = List::insertHead(item);
 		_xend();
 		return result;
-	} else if (++failures < MAX_RETRIES) {
+	} else if (++failures <= MAX_RETRIES) {
 		goto retry;
 	} else {
 		fprintf(stderr, "Max failures %d reached in function %s\n", failures,

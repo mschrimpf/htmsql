@@ -48,4 +48,9 @@ overhead: $(SOURCES_OVERHEAD)
 SOURCES_SET_ASSOCIATIVITY=set-associativity.cpp \
 ../util.cpp ../Stats.cpp
 set-associativity: $(SOURCES_SET_ASSOCIATIVITY)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_SET_ASSOCIATIVITY) $(LDLAGS)
+	$(CC) $(CCFLAGS) -O2 -o $@ $(SOURCES_SET_ASSOCIATIVITY) $(LDLAGS)
+
+SOURCES_SET_ASSOCIATIVITY_DYNAMIC=set-associativity-dynamic.cpp \
+../util.cpp ../Stats.cpp
+set-associativity-dynamic: $(SOURCES_SET_ASSOCIATIVITY_DYNAMIC)
+	$(CC) $(CCFLAGS) -O2 -o $@ $(SOURCES_SET_ASSOCIATIVITY_DYNAMIC) $(LDLAGS)

@@ -19,8 +19,8 @@ public:
  */
 int main(int argc, char *argv[]) {
 	int loops = 100, inner_loops = 100;
-	int size_min = 0, size_max = 35 * 1024 / sizeof(CacheLine), size_step =
-			1000 / sizeof(CacheLine);
+	int size_min = 0, size_max = 35 * 1024 / sizeof(CacheLine), size_step = 1000
+			/ sizeof(CacheLine);
 	int step_min = 1, step_max = 6, step_step = 1;
 	int *values[] = { &loops, &size_min, &size_min, &size_max, &size_max,
 			&size_step, &size_step };
@@ -55,11 +55,12 @@ int main(int argc, char *argv[]) {
 			for (int l = 0; l < loops; l++) {
 				int failures = 0;
 				// init
-				CacheLine data[array_size];
+				CacheLine *data[array_size];
 				for (int i = 0; i < array_size; i++) {
-					data[i].value = 0;
+					data[i] = new CacheLine();
+					data[i]->value = 0;
 					for (int ip = 0; ip < PADDING_SIZE; ip++) {
-						data[i].padding[ip] = 0;
+						data[i]->padding[ip] = 0;
 					}
 				}
 
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
 					// run
 					if (_xbegin() == _XBEGIN_STARTED) {
 						for (int i = 0; i < adjusted_size; i += step) {
-							data[i].value = 1;
+							data[i]->value = 1;
 						}
 						_xend();
 					} else {
@@ -76,6 +77,10 @@ int main(int argc, char *argv[]) {
 				}
 				float failure_rate = (float) failures * 100 / inner_loops;
 				stats.addValue(failure_rate);
+
+				for (int i = 0; i < array_size; i++) {
+					delete data[i];
+				}
 			}
 			printf(";%.2f;%.2f", stats.getExpectedValue(),
 					stats.getStandardDeviation());

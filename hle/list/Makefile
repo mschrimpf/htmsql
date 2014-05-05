@@ -6,8 +6,11 @@ CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -pthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES_ALL=List.cpp \
+PreAllocatedList.cpp \
 ThreadsafeList.cpp \
+ThreadsafePreAllocatedList.cpp \
 ThreadsafeListRtm.cpp \
+ThreadsafePreAllocatedListRtm.cpp \
 $(SOURCES_LOCK) \
 ../../util.cpp \
 ../../Stats.cpp
@@ -22,3 +25,4 @@ SOURCES_REP=time_cmp-repeats.cpp \
 $(SOURCES_ALL)
 repeats_cmp: $(SOURCES_REP)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_REP) $(LDLAGS)
+

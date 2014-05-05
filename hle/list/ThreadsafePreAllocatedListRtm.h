@@ -1,17 +1,14 @@
-#ifndef _THREADSAFE_LIST_H_
-#define _THREADSAFE_LIST_H_ 1
+#ifndef THREADSAFE_PRE_ALLOCATED_LIST_RTM_H_
+#define THREADSAFE_PRE_ALLOCATED_LIST_RTM_H_
 
-#include "List.h"
-#include "../lock_functions/LockType.h"
+#include "ThreadsafePreAllocatedList.h" // extend
 
-class ThreadsafeList : public List {
-protected:
-	LockType locker;
+
+class ThreadsafePreAllocatedListRtm : public PreAllocatedList {
 public:
-	ThreadsafeList(LockType &locker);
-	~ThreadsafeList();
+	ThreadsafePreAllocatedListRtm();
+	~ThreadsafePreAllocatedListRtm();
 
-	ListItem * insert(int value);
 	ListItem * insertHead(ListItem * item);
 //	ListItem * insertTail(ListItem * item);
 	/**
@@ -21,8 +18,6 @@ public:
 	void remove(int data, int removeAll = 0);
 	/** @return 1 if data is contained, 0 if not */
 	int contains(int data);
-
-	void print();
 };
 
-#endif // _THREADSAFE_LIST_H_
+#endif /* THREADSAFE_PRE_ALLOCATED_LIST_RTM_H_ */

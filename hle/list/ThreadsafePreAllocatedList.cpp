@@ -1,33 +1,33 @@
-#include "ThreadsafeList.h"
+#include "ThreadsafePreAllocatedList.h"
 
-ThreadsafeList::ThreadsafeList(LockType &locker) :
-		List() {
+ThreadsafePreAllocatedList::ThreadsafePreAllocatedList(LockType &locker) :
+		PreAllocatedList() {
 	this->locker = locker;
 }
-ThreadsafeList::~ThreadsafeList() {
+ThreadsafePreAllocatedList::~ThreadsafePreAllocatedList() {
 }
 
-ListItem* ThreadsafeList::insert(int data) {
+ListItem* ThreadsafePreAllocatedList::insert(int data) {
 	// TODO: this leads to lots of RTM aborts
-	if(this->contains(data))
+	if (this->contains(data))
 		return NULL;
 	ListItem * item = createListItem(data, NULL, NULL);
 	return this->insertHead(item);
 }
-ListItem* ThreadsafeList::insertHead(ListItem * item) {
+ListItem* ThreadsafePreAllocatedList::insertHead(ListItem * item) {
 	(this->locker.*(this->locker.lock))();
 	ListItem * result = List::insertHead(item);
 	(this->locker.*(this->locker.unlock))();
 	return result;
 }
-//ListItem* ThreadsafeList::insertTail(ListItem * item) {
+//ListItem* ThreadsafePreAllocatedList::insertTail(ListItem * item) {
 //	(this->locker.*(this->locker.lock))();
 //	ListItem * result = List::insertTail(item);
 //	(this->locker.*(this->locker.unlock))();
 //	return result;
 //}
 
-void ThreadsafeList::remove(int data, int removeAll) {
+void ThreadsafePreAllocatedList::remove(int data, int removeAll) {
 	ListItem * removeList = NULL; // build a list of items to be removed to remove them outside htm
 	ListItem * prev = NULL;
 	(this->locker.*(this->locker.lock))();
@@ -57,7 +57,7 @@ void ThreadsafeList::remove(int data, int removeAll) {
 	this->deleteAll(removeList);
 }
 
-int ThreadsafeList::contains(int data) {
+int ThreadsafePreAllocatedList::contains(int data) {
 	// TODO lots of aborts here
 	(this->locker.*(this->locker.lock))();
 	int result = 0; // 100% fails if executed with List::contains
@@ -73,7 +73,7 @@ int ThreadsafeList::contains(int data) {
 	return result;
 }
 
-void ThreadsafeList::print() {
+void ThreadsafePreAllocatedList::print() {
 	(this->locker.*(this->locker.lock))(); // pay attention when using RTM - this will never elide
 	List::print();
 	(this->locker.*(this->locker.unlock))();

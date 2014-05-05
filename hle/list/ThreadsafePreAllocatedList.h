@@ -1,15 +1,16 @@
-#ifndef _THREADSAFE_LIST_H_
-#define _THREADSAFE_LIST_H_ 1
+#ifndef _THREADSAFE_PRE_ALLOCATED_LIST_H_
+#define _THREADSAFE_PRE_ALLOCATED_LIST_H_ 1
 
-#include "List.h"
+#include "PreAllocatedList.h"
 #include "../lock_functions/LockType.h"
 
-class ThreadsafeList : public List {
+class ThreadsafePreAllocatedList : public PreAllocatedList {
 protected:
+	List * list;
 	LockType locker;
 public:
-	ThreadsafeList(LockType &locker);
-	~ThreadsafeList();
+	ThreadsafePreAllocatedList(LockType &locker);
+	~ThreadsafePreAllocatedList();
 
 	ListItem * insert(int value);
 	ListItem * insertHead(ListItem * item);
@@ -25,4 +26,4 @@ public:
 	void print();
 };
 
-#endif // _THREADSAFE_LIST_H_
+#endif // _THREADSAFE_PRE_ALLOCATED_LIST_H_

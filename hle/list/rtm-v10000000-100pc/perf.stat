@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '10634':
+
+       1630,802472 task-clock                #    3,026 CPUs utilized          
+     4.254.780.865 instructions              #    1,07  insns per cycle         [56,74%]
+     3.975.786.076 cycles                    #    2,438 GHz                     [56,74%]
+     3.791.672.787 cpu/cycles-t/             #   95,37% transactional cycles    [56,74%]
+         1.009.360 cpu/tx-start/             #     3757 cycles / transaction    [56,73%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [56,73%]
+     3.696.705.250 cpu/cycles-ct/            #    2,39% aborted cycles          [56,73%]
+
+       0,539011155 seconds time elapsed
+

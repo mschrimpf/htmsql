@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '3673':
+
+       4217,658738 task-clock                #    3,087 CPUs utilized          
+     7.589.483.189 instructions              #    0,64  insns per cycle         [52,10%]
+    11.878.104.179 cycles                    #    2,816 GHz                     [52,10%]
+     3.246.795.641 cpu/cycles-t/             #   27,33% transactional cycles    [52,10%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [52,10%]
+         1.911.966 cpu/el-start/             #     1698 cycles / elision        [52,10%]
+       576.138.384 cpu/cycles-ct/            #   22,48% aborted cycles          [52,10%]
+
+       1,366450435 seconds time elapsed
+

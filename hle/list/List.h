@@ -18,7 +18,11 @@ protected:
 //	virtual ListItem * insertTail(ListItem * item);
 public:
 	List();
-	~List();
+	virtual ~List();
+
+	virtual ListItem* createListItem(int data, ListItem * prev,
+			ListItem * next);
+	virtual void deleteListItem(ListItem * item);
 
 	/**
 	 * Inserts the given data at the head of the list.
@@ -26,7 +30,7 @@ public:
 	 * otherwise the pointer to the new list item.
 	 * @return NULL if the data is contained in this list, the data's item otherwise
 	 */
-	ListItem * insert(int data);
+	virtual ListItem * insert(int data);
 	/**
 	 * Removes the occurrences of data in the list.
 	 * If removeAll is != 0, all occurrences are removed, otherwise only the first one.

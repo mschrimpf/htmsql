@@ -11,16 +11,12 @@ public:
 	ThreadsafeList(LockType &locker);
 	~ThreadsafeList();
 
-	ListItem * insert(int value);
-	ListItem * insertHead(ListItem * item);
-//	ListItem * insertTail(ListItem * item);
+	virtual void insertTail(ListItem * item);
+	virtual void removeFromList(ListItem * item);
 	/**
-	 * Removes the occurrences of data in the list.
-	 * If removeAll is != 0, all occurrences are removed, otherwise only the first one.
-	 * */
-	void remove(int data, int removeAll = 0);
-	/** @return 1 if data is contained, 0 if not */
-	int contains(int data);
+	 * @return the list item holding the specified data or NULL if no such item exists
+	 */
+	virtual ListItem * get(int data);
 
 	void print();
 };

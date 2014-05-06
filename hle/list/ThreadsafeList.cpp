@@ -7,68 +7,21 @@ ThreadsafeList::ThreadsafeList(LockType &locker) :
 ThreadsafeList::~ThreadsafeList() {
 }
 
-ListItem* ThreadsafeList::insert(int data) {
-	// TODO: this leads to lots of RTM aborts
-	if(this->contains(data))
-		return NULL;
-	ListItem * item = createListItem(data, NULL, NULL);
-	return this->insertHead(item);
-}
-ListItem* ThreadsafeList::insertHead(ListItem * item) {
+void ThreadsafeList::insertTail(ListItem * item) {
 	(this->locker.*(this->locker.lock))();
-	ListItem * result = List::insertHead(item);
+	List::insertTail(item);
 	(this->locker.*(this->locker.unlock))();
-	return result;
 }
-//ListItem* ThreadsafeList::insertTail(ListItem * item) {
-//	(this->locker.*(this->locker.lock))();
-//	ListItem * result = List::insertTail(item);
-//	(this->locker.*(this->locker.unlock))();
-//	return result;
-//}
 
-void ThreadsafeList::remove(int data, int removeAll) {
-	ListItem * removeList = NULL; // build a list of items to be removed to remove them outside htm
-	ListItem * prev = NULL;
+void ThreadsafeList::removeFromList(ListItem * item) {
 	(this->locker.*(this->locker.lock))();
-	ListItem * item = this->first;
-	while (item) {
-		if (item->data == data) {
-			if (prev == NULL) // item is start item
-				this->first = item->next;
-			else
-				prev->next = item->next;
-			// add to remove list
-			item->prev = NULL;
-			item->next = removeList;
-			if (!removeList) {
-				removeList = item;
-			}
-			// stop if one item suffices
-			if (!removeAll)
-				break;
-		}
-		prev = item;
-		item = item->next;
-	}
+	List::removeFromList(item);
 	(this->locker.*(this->locker.unlock))();
-
-	// delete all items in the remove list
-	this->deleteAll(removeList);
 }
 
-int ThreadsafeList::contains(int data) {
-	// TODO lots of aborts here
+ListItem * ThreadsafeList::get(int data)  {
 	(this->locker.*(this->locker.lock))();
-	int result = 0; // 100% fails if executed with List::contains
-	ListItem * item = this->first;
-	while (item) { // jne amounts for most aborts
-		if (item->data == data) {
-			result = 1;
-			break;
-		}
-		item = item->next;
-	}
+	ListItem * result = List::get(data);
 	(this->locker.*(this->locker.unlock))();
 	return result;
 }

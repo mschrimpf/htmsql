@@ -25,52 +25,56 @@ void List::deleteListItem(ListItem * item) {
 }
 
 ListItem* List::insert(int data) {
-	if (this->contains(data))
-		return NULL;
 	ListItem * item = createListItem(data, NULL, NULL);
-	return this->insertHead(item);
-}
-ListItem* List::insertHead(ListItem * item) {
-	item->next = this->first;
-	this->first = item;
-	if (this->last == NULL)
-		this->last = item;
+	this->insertTail(item);
 	return item;
 }
-//ListItem* List::insertTail(ListItem * item) {
-//	item->prev = this->last;
-//	this->last = item;
-//	if (this->first == NULL)
-//		this->first = item;
-//	return item;
-//}
 
-void List::remove(int data, int removeAll) {
-	ListItem * prev = NULL;
-	ListItem * item = this->first;
-	while (item) {
-		if (item->data == data) {
-			if (prev == NULL) // item == this->first
-				this->first = item->next;
-			else
-				prev->next = item->next;
-			deleteListItem(item);
-			if (!removeAll)
-				break;
-		}
-		prev = item;
-		item = item->next;
-	}
+void List::insertTail(ListItem * item) {
+	item->prev = this->last;
+	if (this->last != NULL)
+		this->last->next = item;
+	this->last = item;
+	if (this->first == NULL)
+		this->first = item;
+}
+
+void List::removeFromList(ListItem * item) {
+	ListItem * prev = item->prev;
+	ListItem * next = item->next;
+
+	if (item == this->first)
+		this->first = next;
+	if (item == this->last)
+		this->last = prev;
+
+	if (next != NULL)
+		next->prev = prev;
+	if (prev != NULL)
+		prev->next = next;
+}
+
+void List::remove(ListItem * item) {
+	if (item == NULL)
+		return;
+	removeFromList(item);
+	deleteListItem(item);
 }
 
 int List::contains(int data) {
+	if (get(data) != NULL)
+		return 1;
+	return 0;
+}
+
+ListItem* List::get(int data) {
 	ListItem * item = this->first;
 	while (item) {
 		if (item->data == data)
-			return 1;
+			return item;
 		item = item->next;
 	}
-	return 0;
+	return NULL;
 }
 
 void List::deleteAll(ListItem * list) {

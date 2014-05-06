@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-const int allocations_size = 1000;
+const int allocations_size = 10000;
 
 PreAllocatedList::PreAllocatedList() {
 	allocations.reserve(allocations_size); //  reserve the memory upfront
@@ -15,10 +15,12 @@ PreAllocatedList::~PreAllocatedList() {
 
 ListItem* PreAllocatedList::createListItem(int data, ListItem * prev,
 		ListItem * next) {
+//	printf("Looking for item\n");
 	// find free item to allocate
-	int allocation_slot_begin = last_allocation_slot;
+	int allocation_slot_begin = this->last_allocation_slot;
 	do {
-		last_allocation_slot = (last_allocation_slot + 1) % allocations_size;
+		this->last_allocation_slot = (this->last_allocation_slot + 1)
+				% allocations_size;
 		ListItem * item = &(allocations[last_allocation_slot]);
 		if (item->data == -1) {
 			item->data = data;
@@ -26,12 +28,12 @@ ListItem* PreAllocatedList::createListItem(int data, ListItem * prev,
 			item->next = next;
 			return item;
 		}
-	} while (last_allocation_slot != allocation_slot_begin);
+	} while (this->last_allocation_slot != allocation_slot_begin);
 	fprintf(stderr, "Error: no space in pre-allocated list items available\n");
 	exit(1);
 }
 void PreAllocatedList::deleteListItem(ListItem * item) {
 	item->data = -1; // indicate as free
-	item->prev = NULL;
-	item->next = NULL;
+//	item->prev = NULL;
+//	item->next = NULL;
 }

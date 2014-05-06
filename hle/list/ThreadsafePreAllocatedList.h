@@ -4,7 +4,7 @@
 #include "PreAllocatedList.h"
 #include "../lock_functions/LockType.h"
 
-class ThreadsafePreAllocatedList : public PreAllocatedList {
+class ThreadsafePreAllocatedList: public PreAllocatedList {
 protected:
 	List * list;
 	LockType locker;
@@ -12,16 +12,16 @@ public:
 	ThreadsafePreAllocatedList(LockType &locker);
 	~ThreadsafePreAllocatedList();
 
-	ListItem * insert(int value);
-	ListItem * insertHead(ListItem * item);
-//	ListItem * insertTail(ListItem * item);
+	virtual void insertTail(ListItem * item);
+	ListItem * createListItem(int data, ListItem * prev, ListItem * next);
 	/**
-	 * Removes the occurrences of data in the list.
-	 * If removeAll is != 0, all occurrences are removed, otherwise only the first one.
-	 * */
-	void remove(int data, int removeAll = 0);
-	/** @return 1 if data is contained, 0 if not */
-	int contains(int data);
+	 * Removes the given item from list structure only, not from memory.
+	 */
+	virtual void removeFromList(ListItem * item);
+	/**
+	 * @return the list item holding the specified data or NULL if no such item exists
+	 */
+	virtual ListItem * get(int data);
 
 	void print();
 };

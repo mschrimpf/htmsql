@@ -14,15 +14,24 @@ protected:
 	ListItem * first;
 	ListItem * last;
 
-	virtual ListItem * insertHead(ListItem * item);
-//	virtual ListItem * insertTail(ListItem * item);
+//	virtual void * insertHead(ListItem * item);
+	virtual void insertTail(ListItem * item);
+	/**
+	 * Removes the given item from list structure only, not from memory.
+	 */
+	virtual void removeFromList(ListItem * item);
 public:
 	List();
 	virtual ~List();
 
+	// memory operations
+
 	virtual ListItem* createListItem(int data, ListItem * prev,
 			ListItem * next);
 	virtual void deleteListItem(ListItem * item);
+
+
+	// list operations
 
 	/**
 	 * Inserts the given data at the head of the list.
@@ -31,12 +40,14 @@ public:
 	 * @return NULL if the data is contained in this list, the data's item otherwise
 	 */
 	virtual ListItem * insert(int data);
+	virtual void remove(ListItem * item);
 	/**
-	 * Removes the occurrences of data in the list.
-	 * If removeAll is != 0, all occurrences are removed, otherwise only the first one.
-	 * */
-	virtual void remove(int data, int removeAll = 0);
-	/** @return 1 if data is contained, 0 if not */
+	 * @return the list item holding the specified data or NULL if no such item exists
+	 */
+	virtual ListItem * get(int data);
+	/**
+	 * @return 1 if contained, 0 if not
+	 */
 	virtual int contains(int data);
 	/** Deletes the whole list, defined as consecutive list->nexts */
 	virtual void deleteAll(ListItem * list);

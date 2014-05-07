@@ -21,14 +21,15 @@ _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC3]=20C8
 _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC5]=80C8
 _HARDWARE_EVENTS[HLE_RETIRED.ABORTED_MISC4]=40C8
 # RTM
-# _HARDWARE_EVENTS[RTM_RETIRED.START]=01C9
-# _HARDWARE_EVENTS[RTM_RETIRED.COMMIT]=02C9
-# _HARDWARE_EVENTS[RTM_RETIRED.ABORTED]=04C9
-# _HARDWARE_EVENTS[RTM_RETIRED.ABORTED_MISC1]=08C9
-# _HARDWARE_EVENTS[RTM_RETIRED.ABORTED_MISC2]=10C9
-# _HARDWARE_EVENTS[RTM_RETIRED.ABORTED_MISC3]=20C9
-# _HARDWARE_EVENTS[RTM_RETIRED.ABORTED_MISC4]=40C9
-# _HARDWARE_EVENTS[RTM_RETIRED.ABORTED_MISC5]=80C9
+declare -A _HARDWARE_EVENTS_RTM
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.START]=01C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.COMMIT]=02C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.ABORTED]=04C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.ABORTED_MISC1]=08C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.ABORTED_MISC2]=10C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.ABORTED_MISC3]=20C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.ABORTED_MISC4]=40C9
+_HARDWARE_EVENTS_RTM[RTM_RETIRED.ABORTED_MISC5]=80C9
 
 declare -A _HTM_LOCKS_EVENTS
 _HTM_LOCKS_EVENTS[HLE_RETIRED.START]=01C8
@@ -41,6 +42,7 @@ _OUTPUT_FOLDER=
 
 _FILENAME_PERF_STAT="perf.stat"
 _FILENAME_PERF_STAT_EVENTS="perf.stat.events"
+_FILENAME_PERF_STAT_EVENTS_RTM="perf.stat.rtm-events"
 _FILENAME_PERF_STAT_MISSINGLOCKS_EVENTS="perf-missinglocks.stat.events"
 _FILENAME_PERF_RECORD="perf.data"
 _FILENAME_PERF_RECORD_ABORTS="perf-aborts.data"
@@ -96,6 +98,22 @@ function profile_perf_stat_events {
 			$_PERF_STAT_EVENTS \
 			-p $1 \
 			&>$2/$_FILENAME_PERF_STAT_EVENTS"
+	if [ "$3" == true ]; then
+		execute_cmd "$_EXEC_CMD"
+	else
+		execute_cmd "$_EXEC_CMD" "PROFILING PERF STAT EVENTS RTM"
+	fi
+}
+# $1: pid
+# $2: output-dir
+# $3: (optional) silent
+function profile_perf_stat_rtm_events {
+	_OUTPUT_FOLDER="$2"
+	profile_perf_stat_events_build_eventstring "$(declare -p _HARDWARE_EVENTS_RTM)"
+	_EXEC_CMD="perf stat \
+			$_PERF_STAT_EVENTS \
+			-p $1 \
+			&>$2/$_FILENAME_PERF_STAT_EVENTS_RTM"
 	if [ "$3" == true ]; then
 		execute_cmd "$_EXEC_CMD"
 	else
@@ -201,7 +219,7 @@ function stop_profiling {
 	# # no profile processes have been killed and they were active
 	# if [ "$_PERF_PROCESSES_BEFORE" == "$_PERF_PROCESSES" ] && [ "$_PERF_PROCESSES_BEFORE" != "0" ]; then
 		# echo ">> Perf processes could not be stopped - using pkill (FIXME)"
-		pkill -INT perf
+		pkill -INT -u $(id -u) perf # only kill processes of own user
 	# fi
 	
 	echo "Profiling stopped"
@@ -212,6 +230,7 @@ function stop_profiling {
 # Adds labels to the event-desciprots of the perf-stat-events output-file
 # $1: output-folder
 function process_perf_events {
+	#hle
 	if [ -f "$1/$_FILENAME_PERF_STAT_EVENTS" ]; then
 		for _event_label in "${!_HARDWARE_EVENTS[@]}"
 		do
@@ -219,5 +238,14 @@ function process_perf_events {
 		done
 	else
 		echo "File $1/$_FILENAME_PERF_STAT_EVENTS does not exist"
+	fi
+	#rtm
+	if [ -f "$1/$_FILENAME_PERF_STAT_EVENTS_RTM" ]; then
+		for _event_label in "${!_HARDWARE_EVENTS_RTM[@]}"
+		do
+			sed -i "s/${_HARDWARE_EVENTS_RTM[$_event_label]}/${_HARDWARE_EVENTS_RTM[$_event_label]} ($_event_label)/g" "$1/$_FILENAME_PERF_STAT_EVENTS_RTM"
+		done
+	else
+		echo "File $1/$_FILENAME_PERF_STAT_EVENTS_RTM does not exist"
 	fi
 }

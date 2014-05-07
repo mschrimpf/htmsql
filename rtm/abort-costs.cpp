@@ -22,15 +22,7 @@ __inline__ uint64_t rdtsc() {
 }
 #endif
 
-const int SINGLE_ACCESS = 0;
-const int ALL_ACCESS = 1;
 
-unsigned char * initArray(int size) {
-	unsigned char * a = new unsigned char[size];
-	for (int i = 0; i < size; i++)
-		a[i] = 0;
-	return a;
-}
 
 void access_array_all(unsigned char * array, int index) {
 	array[index] = 1;
@@ -49,20 +41,14 @@ void execute_array_access(unsigned char * a, int size,
 /**
  * @param mode 0 to access only the first element, 1 to access all
  */
-int run(int size, int mode, int abort_trx) {
-	void (*access)(unsigned char*, int);
-	switch (mode) {
-	case SINGLE_ACCESS:
-		access = &access_array_single;
-		break;
-	case ALL_ACCESS:
-		access = &access_array_all;
-		break;
-	}
-	unsigned char * a = initArray(size);
-	// make sure array is in cache
+int run(int size, void (*access)(unsigned char*, int), int abort_trx) {
+	// init array
+	unsigned char a[size];
 	for (int i = 0; i < size; i++)
-		a[i]++;
+		a[i] = 0;
+	/* array is in cache */
+
+	// benchmark
 	uint64_t t; // count cycles
 	t = rdtsc();
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
@@ -89,37 +75,44 @@ int main(int argc, char *argv[]) {
 	printf("Size:  %d\n", size);
 	printf("\n");
 
-	Stats statsArraySingle, statsArrayAll, statsArraySingleAbort,
-			statsArrayAllAbort;
+	Stats statsSingle, statsAll, statsSingleAbort,
+			statsAllAbort;
 	for (int l = 0; l < loops; l++) {
-		int cyclesArraySingle = run(size, SINGLE_ACCESS, 0);
-		int cyclesArrayAll = run(size, ALL_ACCESS, 0);
-		int cyclesArraySingleAbort = run(size, SINGLE_ACCESS, 1);
-		int cyclesArrayAllAbort = run(size, ALL_ACCESS, 1);
+		int cyclesArraySingle = run(size, &access_array_single, 0);
+		int cyclesArraySingleAbort = run(size, &access_array_single, 1);
+		int cyclesArrayAll = run(size, &access_array_all, 0);
+		int cyclesArrayAllAbort = run(size, &access_array_all, 1);
 
-		statsArraySingle.addValue(cyclesArraySingle);
-		statsArrayAll.addValue(cyclesArrayAll);
-		statsArraySingleAbort.addValue(cyclesArraySingleAbort);
-		statsArrayAllAbort.addValue(cyclesArrayAllAbort);
+		statsSingle.addValue(cyclesArraySingle);
+		statsAll.addValue(cyclesArrayAll);
+		statsSingleAbort.addValue(cyclesArraySingleAbort);
+		statsAllAbort.addValue(cyclesArrayAllAbort);
 	}
 
 	printf("_Cycles needed_\n");
-	printf("array single:         %.2f cycles (%.2f stddev)\n",
-			statsArraySingle.getExpectedValue(),
-			statsArraySingle.getStandardDeviation());
-	printf("array all:            %.2f cycles (%.2f stddev)\n",
-			statsArrayAll.getExpectedValue(),
-			statsArrayAll.getStandardDeviation());
-	printf("array single (abort): %.2f cycles (%.2f stddev)\n",
-			statsArraySingleAbort.getExpectedValue(),
-			statsArraySingleAbort.getStandardDeviation());
-	printf("array all (abort):    %.2f cycles (%.2f stddev)\n",
-			statsArrayAllAbort.getExpectedValue(),
-			statsArrayAllAbort.getStandardDeviation());
-	printf("estimated second run single: %.2f cycles\n",
-			statsArraySingleAbort.getExpectedValue()
-					- statsArraySingle.getExpectedValue());
-	printf("estimated second run all:    %.2f cycles\n",
-			statsArrayAllAbort.getExpectedValue()
-					- statsArrayAll.getExpectedValue());
+	printf("SINGLE\n");
+	printf("no abort:             %.2f cycles (%.2f stddev)\n",
+			statsSingle.getExpectedValue(),
+			statsSingle.getStandardDeviation());
+	printf("abort:                %.2f cycles (%.2f stddev)\n",
+			statsSingleAbort.getExpectedValue(),
+			statsSingleAbort.getStandardDeviation());
+	printf("estimated second run: %.2f cycles (additional: %.2f)\n",
+			statsSingleAbort.getExpectedValue()
+					- statsSingle.getExpectedValue(),
+			statsSingleAbort.getExpectedValue()
+					- 2 * statsSingle.getExpectedValue());
+
+	printf("ALL\n");
+	printf("no abort:             %.2f cycles (%.2f stddev)\n",
+			statsAll.getExpectedValue(),
+			statsAll.getStandardDeviation());
+	printf("abort:                %.2f cycles (%.2f stddev)\n",
+			statsAllAbort.getExpectedValue(),
+			statsAllAbort.getStandardDeviation());
+	printf("estimated second run: %.2f cycles (additional: %.2f)\n",
+			statsAllAbort.getExpectedValue()
+					- statsAll.getExpectedValue(),
+			statsAllAbort.getExpectedValue()
+					- 2 * statsAll.getExpectedValue());
 }

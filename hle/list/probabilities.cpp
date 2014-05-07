@@ -26,10 +26,13 @@ int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
 	int repeats = 5000, loops = 100, base_inserts = 1000, lockType = -1;
+	int wait = 0;
 	int *arg_values[] = { &num_threads, &loops, &base_inserts, &lockType,
-			&repeats };
-	const char *identifier[] = { "-n", "-l", "-bi", "-t", "-r" };
-	handle_args(argc, argv, 5, arg_values, identifier);
+			&repeats, &wait };
+	const char *identifier[] = { "-n", "-l", "-bi", "-t", "-r", "-w" };
+	handle_args(argc, argv, 6, arg_values, identifier);
+
+	usleep(wait);
 
 	printf("Throughput per millisecond\n");
 	printf("Threads:      %d\n", num_threads);
@@ -72,14 +75,10 @@ int main(int argc, char *argv[]) {
 	appendings[1] = "Stddev";
 	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
 			appendings, 2);
-	for (int p = 0;
-			p
-					< sizeof(probabilities_contains)
-							/ sizeof(probabilities_contains[0]); p++) {
+	for (int p = 0; p < sizeof(probabilities_contains) / sizeof(probabilities_contains[0]); p++) {
 		int probability_contains = probabilities_contains[p];
 		int probability_update = 100 - probability_contains;
-		int probability_insert = probability_update / 2;
-		int probability_remove = probability_insert;
+		int probability_insert = probability_remove = probability_update / 2;
 		printf("%d;%d;%d", probability_insert, probability_remove,
 				probability_contains);
 		std::cout.flush();

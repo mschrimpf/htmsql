@@ -5,6 +5,13 @@
 #include <xmmintrin.h> // _mm_pause
 #include "../../util.h"
 
+class PaddedMutex {
+private:
+	unsigned char padding[64 - 4];
+public:
+	unsigned mutex;
+};
+
 int i = 0;
 
 int hle_lock(unsigned * mutex) {
@@ -18,54 +25,50 @@ void hle_unlock(unsigned * mutex) {
 	__hle_release_clear4(mutex);
 }
 
-int nest_multiple(unsigned mutexes[], int mutexes_length) {
-	for (int m = 0; m < mutexes_length; m++) {
-		if (hle_lock(&mutexes[m]) != 0)
+int nest_multiple(int mutex_count) {
+	//			unsigned mutexes[mutex_count];
+	PaddedMutex mutexes[mutex_count];
+	for (int m = 0; m < mutex_count; m++)
+		mutexes[m].mutex = 0; // make sure the mutex is not set
+
+	for (int m = 0; m < mutex_count; m++) {
+		if (hle_lock(&mutexes[m].mutex) != 0)
 			return 1;
 	}
 
 	i++;
 
 	// unlock in reverse order
-	for (int m = mutexes_length - 1; m >= 0; m--) {
-		hle_unlock(&mutexes[m]);
-	}
-	return 0;
-}
-int nest_multiple_unlockorder(unsigned mutexes[], int mutexes_length) {
-	for (int m = 0; m < mutexes_length; m++) {
-		if (hle_lock(&mutexes[m]) != 0)
-			return 1;
-	}
-
-	i++;
-
-	// unlock in same order
-	for (int m = 0; m < mutexes_length; m++) {
-		hle_unlock(&mutexes[m]);
+	for (int m = mutex_count - 1; m >= 0; m--) {
+		hle_unlock(&mutexes[m].mutex);
 	}
 	return 0;
 }
 
 // Leads to zero failures
 int main(int argc, char *argv[]) {
-	int loops = argc > 1 ? atoi(argv[1]) : 10;
-	int max_mutexes = argc > 2 ? atoi(argv[2]) : 10;
-	int mutex_count_step = max_mutexes > 10 ? max_mutexes / 10 : 1;
+	int loops = 10, wait = 0;
+	int min_mutexes = 0, max_mutexes = 10;
+	int *values[] = { &loops, &min_mutexes, &max_mutexes, &wait };
+	const char *identifier[] = { "-l", "-mmin", "-mmax", "-w" };
+	handle_args(argc, argv, 4, values, identifier);
+
+	if (wait)
+		usleep(500000);
+
+	int mutex_diff = max_mutexes - min_mutexes;
+	int mutex_count_step = mutex_diff > 10 ? mutex_diff / 10 : 1;
+
+	printf("Sizeof PaddexMutex: %lu\n", sizeof(PaddedMutex));
 
 	printf("Mutexes;Attempts;Failures;Failure Rate\n");
-	for (int mutex_count = 0; mutex_count <= max_mutexes;
+	for (int mutex_count = min_mutexes; mutex_count <= max_mutexes;
 			mutex_count += mutex_count_step) {
 		printf("%d", mutex_count);
 		int failures = 0;
 
 		for (int l = 0; l < loops; l++) {
-			unsigned * mutexes = (unsigned *) calloc(mutex_count,
-					sizeof(unsigned));
-			for (int m = 0; m < mutex_count; m++)
-				mutexes[m] = 0; // make sure the mutex is not set
-			failures += nest_multiple_unlockorder(mutexes, mutex_count);
-			free(mutexes);
+			failures += nest_multiple(mutex_count);
 		}
 
 		float failure_rate = (float) failures / loops * 100;

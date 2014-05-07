@@ -19,7 +19,7 @@ void PreAllocatedListRtm::insertTail(ListItem * item) {
 		goto retry;
 	} else {
 		fprintf(stderr, "Max failures %d reached in function %s\n", failures,
-				"insertHead");
+				"insertTail");
 		exit(1);
 	}
 }
@@ -40,31 +40,17 @@ ListItem* PreAllocatedListRtm::createListItem(int data,
 	}
 }
 
-void PreAllocatedListRtm::removeFromList(ListItem * item) {
+ListItem * PreAllocatedListRtm::findAndRemoveFromList(int data) {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		List::removeFromList(item);
+		ListItem * item = this->List::findAndRemoveFromList(data);
 		_xend();
-	} else if (++failures <= MAX_RETRIES) {
-		goto retry;
-	} else {
-		fprintf(stderr, "Max failures %d reached in function %s\n", failures,
-				"remove");
-		exit(1);
-	}
-}
-
-ListItem * PreAllocatedListRtm::get(int data) {
-	int failures = 0;
-	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		ListItem * result = List::get(data);
-		_xend();
-		return result;
+		return item;
 	} else if (++failures < MAX_RETRIES) {
 		goto retry;
 	} else {
 		fprintf(stderr, "Max failures %d reached in function %s\n", failures,
-				"contains");
+				"findAndRemoveFromList");
 		exit(1);
 	}
 }

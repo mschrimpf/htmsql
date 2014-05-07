@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '10587':
+
+         4.762.473 r01C9 (RTM_RETIRED.START)                                                        [49,49%]
+         4.661.817 r04C9 (RTM_RETIRED.ABORTED)                                                        [49,49%]
+               804 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [49,48%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [49,48%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [49,48%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [49,49%]
+         4.660.231 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [49,49%]
+           100.655 r02C9 (RTM_RETIRED.COMMIT)                                                        [49,49%]
+
+       0,969556784 seconds time elapsed
+

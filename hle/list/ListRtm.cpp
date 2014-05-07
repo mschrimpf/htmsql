@@ -19,36 +19,46 @@ void ListRtm::insertTail(ListItem * item) {
 		goto retry;
 	} else {
 		fprintf(stderr, "Max failures %d reached in function %s\n", failures,
-				"insertHead");
+				"insertTail");
 		exit(1);
 	}
 }
 
-void ListRtm::removeFromList(ListItem * item) {
+ListItem * ListRtm::findAndRemoveFromList(int data) {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		List::removeFromList(item);
-		_xend();
-	} else if (++failures <= MAX_RETRIES) {
-		goto retry;
-	} else {
-		fprintf(stderr, "Max failures %d reached in function %s\n", failures,
-				"remove");
-		exit(1);
-	}
-}
+		ListItem * item = List::findAndRemoveFromList(data);
 
-ListItem * ListRtm::get(int data) {
-	int failures = 0;
-	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		ListItem * result = List::get(data);
+// get
+//		ListItem * item = this->first;
+//		while (item) {
+//			if (item->data == data)
+//				break;
+//			item = item->next;
+//		}
+//		// removefromlist
+//		if (item != NULL) {
+//			ListItem * prev = item->prev;
+//			ListItem * next = item->next;
+//
+//			if (item == this->first)
+//				this->first = next;
+//			if (item == this->last)
+//				this->last = prev;
+//
+//			if (next != NULL)
+//				next->prev = prev;
+//			if (prev != NULL)
+//				prev->next = next;
+//		}
+
 		_xend();
-		return result;
+		return item;
 	} else if (++failures < MAX_RETRIES) {
 		goto retry;
 	} else {
 		fprintf(stderr, "Max failures %d reached in function %s\n", failures,
-				"contains");
+				"findAndRemoveFromList");
 		exit(1);
 	}
 }

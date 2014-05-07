@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '30290':
+
+          0,563620 task-clock                #    0,001 CPUs utilized          
+           257.822 instructions              #    0,62  insns per cycle        
+           417.072 cycles                    #    0,740 GHz                    
+             9.959 cpu/cycles-t/             #    2,39% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+               200 cpu/el-start/             #       50 cycles / elision       
+             1.631 cpu/cycles-ct/            #    2,00% aborted cycles         
+
+       0,490890255 seconds time elapsed
+

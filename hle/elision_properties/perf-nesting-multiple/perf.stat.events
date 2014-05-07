@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '30290':
+
+     <not counted> r04C8 (HLE_RETIRED.ABORTED)                   
+     <not counted> r01C8 (HLE_RETIRED.START)                   
+     <not counted> r02C8 (HLE_RETIRED.COMMIT)                   
+     <not counted> r80C8 (HLE_RETIRED.ABORTED_MISC5)                   
+     <not counted> r40C8 (HLE_RETIRED.ABORTED_MISC4)                   
+     <not counted> r08C8 (HLE_RETIRED.ABORTED_MISC1)                   
+     <not counted> r20C8 (HLE_RETIRED.ABORTED_MISC3)                   
+     <not counted> r10C8 (HLE_RETIRED.ABORTED_MISC2)                   
+
+       0,488789366 seconds time elapsed
+

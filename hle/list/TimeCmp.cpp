@@ -22,7 +22,7 @@ void TimeCmp::run(int tid, List * list, int repeats, int probability_insert,
 				&& !queue.empty()) { // remove
 			int val = queue.front();
 			queue.pop();
-			list->remove(list->get(val));
+			list->remove(val);
 		} else { // contains
 			list->contains(rnd_val);
 		}

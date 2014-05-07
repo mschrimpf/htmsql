@@ -13,17 +13,11 @@ void ThreadsafeList::insertTail(ListItem * item) {
 	(this->locker.*(this->locker.unlock))();
 }
 
-void ThreadsafeList::removeFromList(ListItem * item) {
+ListItem * ThreadsafeList::findAndRemoveFromList(int data) {
 	(this->locker.*(this->locker.lock))();
-	List::removeFromList(item);
+	ListItem * item = this->List::findAndRemoveFromList(data);
 	(this->locker.*(this->locker.unlock))();
-}
-
-ListItem * ThreadsafeList::get(int data)  {
-	(this->locker.*(this->locker.lock))();
-	ListItem * result = List::get(data);
-	(this->locker.*(this->locker.unlock))();
-	return result;
+	return item;
 }
 
 void ThreadsafeList::print() {

@@ -17,8 +17,6 @@
 #include "../../util.h"
 #include "../../Stats.h"
 
-#define USE_PRE_ALLOCATED 1
-
 const int CORES = 4;
 
 ///
@@ -27,17 +25,25 @@ const int CORES = 4;
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
+	int use_preallocated = 1;
 	int repeats_min = 1000, repeats_step = 1000, repeats_max = 10000, loops =
 			100, probability_insert = 25, probability_remove = 25,
 			probability_contains = 50, base_inserts = 1000, lockType = -1;
+	int wait = 0;
 	int *arg_values[] = { &num_threads, &loops, &probability_insert,
 			&probability_remove, &probability_contains, &base_inserts,
-			&lockType, &repeats_min, &repeats_max, &repeats_step };
+			&lockType, &repeats_min, &repeats_max, &repeats_step, &wait,
+			&use_preallocated };
 	const char *identifier[] = { "-n", "-l", "-pi", "-pr", "-pc", "-bi", "-t",
-			"-rmin", "-rmax", "-rstep" };
-	handle_args(argc, argv, 10, arg_values, identifier);
+			"-rmin", "-rmax", "-rstep", "-w", "-a" };
+	handle_args(argc, argv, 12, arg_values, identifier);
+
+	if (wait)
+		usleep(500000);
 
 	printf("Throughput per millisecond\n");
+	printf("Sizeof ListItem: %lu\n", sizeof(ListItem));
+	printf("Preallocated: %d\n", use_preallocated);
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
 	printf("Repeats:      %d - %d with steps of %d\n", repeats_min, repeats_max,
@@ -94,18 +100,17 @@ int main(int argc, char *argv[]) {
 			Stats listSizeStats;
 			for (int l = 0; l < loops; l++) {
 				// init
-#if USE_PRE_ALLOCATED == 1
-				List * list =
-						lockTypes[t].enum_type == LockType::EnumType::RTM ?
-								(List *) new PreAllocatedListRtm() :
-								(List *) new ThreadsafePreAllocatedList(
-										lockTypes[t]);
-#else
-				List * list =
-				lockTypes[t].enum_type == LockType::EnumType::RTM ?
-				(List *) new ListRtm() :
-				(List *) new ThreadsafeList(lockTypes[t]);
-#endif
+				List * list;
+				if (use_preallocated) {
+					list = lockTypes[t].enum_type == LockType::EnumType::RTM ?
+							(List *) new PreAllocatedListRtm() :
+							(List *) new ThreadsafePreAllocatedList(
+									lockTypes[t]);
+				} else {
+					list = lockTypes[t].enum_type == LockType::EnumType::RTM ?
+							(List *) new ListRtm() :
+							(List *) new ThreadsafeList(lockTypes[t]);
+				}
 
 				// distribute base values among multiple queues
 				// to avoid the extreme shrinking of the list in the beginning
@@ -126,8 +131,8 @@ int main(int argc, char *argv[]) {
 				TimeCmp timeCmp;
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(&TimeCmp::run, timeCmp, i, list, repeats,
-							probability_insert, probability_remove,
+					threads[i] = std::thread(&TimeCmp::run, timeCmp, i, list,
+							repeats, probability_insert, probability_remove,
 							probability_contains,
 							queues[rotation++ % num_threads]);
 				}

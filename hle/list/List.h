@@ -2,24 +2,33 @@
 #define _LIST_H_ 1
 
 class ListItem {
+//private:
+//	unsigned char padding[64-24];
 public:
-	ListItem * prev;
-	ListItem * next;
-	int data;
+	ListItem * prev; // 8 bit
+	ListItem * next; // 8 bit
+	int data; // 8 bit
 	ListItem(int data, ListItem * prev, ListItem * next);
 };
 
 class List {
+private:
+	/**
+	 * @return the list item holding the specified data or NULL if no such item exists
+	 */
+	ListItem * get(int data);
+	/**
+	 * Removes the given item from list structure only, not from memory.
+	 */
+	void removeFromList(ListItem * item);
 protected:
 	ListItem * first;
 	ListItem * last;
 
 //	virtual void * insertHead(ListItem * item);
 	virtual void insertTail(ListItem * item);
-	/**
-	 * Removes the given item from list structure only, not from memory.
-	 */
-	virtual void removeFromList(ListItem * item);
+	virtual ListItem * findAndRemoveFromList(int data);
+	void remove(ListItem * item);
 public:
 	List();
 	virtual ~List();
@@ -39,18 +48,14 @@ public:
 	 * otherwise the pointer to the new list item.
 	 * @return NULL if the data is contained in this list, the data's item otherwise
 	 */
-	virtual ListItem * insert(int data);
-	virtual void remove(ListItem * item);
-	/**
-	 * @return the list item holding the specified data or NULL if no such item exists
-	 */
-	virtual ListItem * get(int data);
+	ListItem * insert(int data);
+	virtual void remove(int data);
 	/**
 	 * @return 1 if contained, 0 if not
 	 */
-	virtual int contains(int data);
+	int contains(int data);
 	/** Deletes the whole list, defined as consecutive list->nexts */
-	virtual void deleteAll(ListItem * list);
+	void deleteAll(ListItem * list);
 
 	virtual int size();
 

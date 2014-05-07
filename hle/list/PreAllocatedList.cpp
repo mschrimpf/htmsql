@@ -6,8 +6,10 @@ const int allocations_size = 10000;
 
 PreAllocatedList::PreAllocatedList() {
 	allocations.reserve(allocations_size); //  reserve the memory upfront
-	for (int i = 0; i < allocations_size; ++i)
-		allocations.push_back(ListItem(-1, NULL, NULL)); // ith element is a copy of this
+	ListItem dummy(-1, NULL, NULL);
+	for (int i = 0; i < allocations_size; ++i) {
+		allocations.push_back(dummy); // ith element is a copy of this
+	}
 }
 PreAllocatedList::~PreAllocatedList() {
 	this->first = this->last = NULL;

@@ -3,9 +3,10 @@
 
 #include <queue>
 #include "List.h"
+#include "../../util.h"
 
-#define RAND(limit) rand_gerhard(limit)
-//#define RAND(limit) rand() % (limit)
+#define RAND(limit) concurrent_rand_gerhard(limit)
+//#define RAND(limit) (rand() % (limit))
 
 #define VALUE_RANGE 1000
 // INT_MAX

@@ -60,8 +60,9 @@ echo "pid of $PROGRAM_NAME: $PROGRAM_PID"
 
 profile_perf_stat "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
 profile_perf_stat_events "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
-profile_perf_record_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
-profile_perf_record_rtm_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+# profile_perf_stat_rtm_events "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+# profile_perf_record_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+# profile_perf_record_rtm_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
 
 
 wait "$PROGRAM_CALLER_PID"

@@ -28,6 +28,7 @@ void clear_cache();
 //int rand_tausworth(int limit); // segmentation faults
 int rand_lcg(int limit);
 int rand_lcg(long& state, int limit);
+int concurrent_rand_gerhard(int limit);
 int rand_gerhard(int limit);
 /** Use the rand_var as your own random variable that is not shared amongst other threads */
 int rand_gerhard(long& state, int limit);

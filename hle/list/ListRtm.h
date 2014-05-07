@@ -5,16 +5,13 @@
 
 
 class ListRtm : public List {
+protected:
+	virtual ListItem * findAndRemoveFromList(int data);
 public:
 	ListRtm();
 	~ListRtm();
 
 	virtual void insertTail(ListItem * item);
-	virtual void removeFromList(ListItem * item);
-	/**
-	 * @return the list item holding the specified data or NULL if no such item exists
-	 */
-	virtual ListItem * get(int data);
 };
 
 #endif /* LIST_RTM_H_ */

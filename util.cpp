@@ -48,9 +48,9 @@ void nop_wait(int microseconds) {
 }
 
 void clear_cache() {
-	int size = 32 * 1024 * /* just to be sure (i.e. victim cache) */ 2;
+	int size = 32 * 1024 * /* just to be sure (i.e. victim cache) */2;
 	unsigned char arr /* I'm a pirate! */[size];
-	for(int i=0; i<size; i++) {
+	for (int i = 0; i < size; i++) {
 		arr[i] = 0;
 	}
 }
@@ -76,6 +76,14 @@ int rand_lcg(long& state, int limit) {
 	state = state * 1664525 + 1013904223;
 	int res = (state >> 24) % limit;
 	return res >= 0 ? res : -res;
+}
+
+pthread_mutex_t mutex_rand_gerhard;
+int concurrent_rand_gerhard(int limit) {
+	pthread_mutex_lock(&mutex_rand_gerhard);
+	int result = rand_gerhard(limit);
+	pthread_mutex_unlock(&mutex_rand_gerhard);
+	return result;
 }
 
 int rand_gerhard(int limit) {

@@ -40,6 +40,9 @@ void List::insertTail(ListItem * item) {
 }
 
 void List::removeFromList(ListItem * item) {
+	if (item == NULL)
+		return;
+
 	ListItem * prev = item->prev;
 	ListItem * next = item->next;
 
@@ -59,6 +62,17 @@ void List::remove(ListItem * item) {
 		return;
 	removeFromList(item);
 	deleteListItem(item);
+}
+
+void List::remove(int data) {
+	ListItem * item = findAndRemoveFromList(data);
+	deleteListItem(item);
+}
+
+ListItem * List::findAndRemoveFromList(int data) {
+	ListItem * item = get(data);
+	removeFromList(item);
+	return item;
 }
 
 int List::contains(int data) {

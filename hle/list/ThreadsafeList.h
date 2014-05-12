@@ -8,8 +8,9 @@ class ThreadsafeList : public List {
 protected:
 	LockType locker;
 	virtual ListItem * findAndRemoveFromList(int data);
+	ListItem * get(int data);
 public:
-	ThreadsafeList(LockType &locker);
+	ThreadsafeList(Allocator * allocator, LockType &locker);
 	~ThreadsafeList();
 
 	virtual void insertTail(ListItem * item);

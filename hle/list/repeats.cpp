@@ -6,14 +6,18 @@
 #include <sys/time.h> // time measurement
 #include <limits.h> // INT_MAX
 #include <queue>
+
 #include "TimeCmp.h"
 #include "../lock_functions/LockType.h"
+
 #include "List.h"
-#include "PreAllocatedList.h"
 #include "ThreadsafeList.h"
 #include "ListRtm.h"
-#include "ThreadsafePreAllocatedList.h"
-#include "PreAllocatedListRtm.h"
+#include "Allocator.h"
+#include "DefaultAllocator.h"
+#include "PreAllocator.h"
+#include "AlignedAllocator.h"
+
 #include "../../util.h"
 #include "../../Stats.h"
 
@@ -25,15 +29,15 @@ const int CORES = 4;
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
-	int use_preallocated = 1;
+	int align = 1;
 	int repeats_min = 1000, repeats_step = 1000, repeats_max = 10000, loops =
 			100, probability_insert = 25, probability_remove = 25,
 			probability_contains = 50, base_inserts = 1000, lockType = -1;
 	int wait = 0;
-	int *arg_values[] = { &num_threads, &loops, &probability_insert,
-			&probability_remove, &probability_contains, &base_inserts,
-			&lockType, &repeats_min, &repeats_max, &repeats_step, &wait,
-			&use_preallocated };
+	int *arg_values[] =
+			{ &num_threads, &loops, &probability_insert, &probability_remove,
+					&probability_contains, &base_inserts, &lockType,
+					&repeats_min, &repeats_max, &repeats_step, &wait, &align };
 	const char *identifier[] = { "-n", "-l", "-pi", "-pr", "-pc", "-bi", "-t",
 			"-rmin", "-rmax", "-rstep", "-w", "-a" };
 	handle_args(argc, argv, 12, arg_values, identifier);
@@ -43,7 +47,7 @@ int main(int argc, char *argv[]) {
 
 	printf("Throughput per millisecond\n");
 	printf("Sizeof ListItem: %lu\n", sizeof(ListItem));
-	printf("Preallocated: %d\n", use_preallocated);
+	printf("Aligned:      %d\n", align);
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
 	printf("Repeats:      %d - %d with steps of %d\n", repeats_min, repeats_max,
@@ -100,17 +104,12 @@ int main(int argc, char *argv[]) {
 			Stats listSizeStats;
 			for (int l = 0; l < loops; l++) {
 				// init
-				List * list;
-				if (use_preallocated) {
-					list = lockTypes[t].enum_type == LockType::EnumType::RTM ?
-							(List *) new PreAllocatedListRtm() :
-							(List *) new ThreadsafePreAllocatedList(
-									lockTypes[t]);
-				} else {
-					list = lockTypes[t].enum_type == LockType::EnumType::RTM ?
-							(List *) new ListRtm() :
-							(List *) new ThreadsafeList(lockTypes[t]);
-				}
+				Allocator * allocator =
+						align ? (Allocator *) new AlignedAllocator() : (Allocator *) new DefaultAllocator();
+				List * list =
+						lockTypes[t].enum_type == LockType::EnumType::RTM ?
+								(List *) new ListRtm(allocator) :
+								(List *) new ThreadsafeList(allocator, lockTypes[t]);
 
 				// distribute base values among multiple queues
 				// to avoid the extreme shrinking of the list in the beginning
@@ -145,12 +144,13 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli = repeats / elapsed_millis;
+				float throughput_per_milli = repeats * num_threads / elapsed_millis;
 				stats.addValue(throughput_per_milli);
 
 				listSizeStats.addValue(list->size());
 
 				delete list;
+				delete allocator;
 			} // end of loops loop
 
 			printf(";%.2f;%.2f;%.2f", stats.getExpectedValue(),

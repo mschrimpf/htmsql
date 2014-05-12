@@ -2,13 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-ListItem::ListItem(int data, ListItem * prev, ListItem * next) {
-	this->data = data;
-	this->prev = prev;
-	this->next = next;
-}
-
-List::List() {
+List::List(Allocator * allocator) {
+	this->allocator = allocator;
 	this->first = this->last = NULL;
 }
 List::~List() {
@@ -16,16 +11,8 @@ List::~List() {
 	this->first = this->last = NULL;
 }
 
-ListItem* List::createListItem(int data, ListItem * prev, ListItem * next) {
-	return new ListItem(data, prev, next);
-}
-
-void List::deleteListItem(ListItem * item) {
-	delete item;
-}
-
 ListItem* List::insert(int data) {
-	ListItem * item = createListItem(data, NULL, NULL);
+	ListItem * item = allocator->createListItem(data, NULL, NULL);
 	this->insertTail(item);
 	return item;
 }
@@ -61,15 +48,16 @@ void List::remove(ListItem * item) {
 	if (item == NULL)
 		return;
 	removeFromList(item);
-	deleteListItem(item);
+	this->allocator->deleteListItem(item);
 }
 
 void List::remove(int data) {
 	ListItem * item = findAndRemoveFromList(data);
-	deleteListItem(item);
+	this->allocator->deleteListItem(item);
 }
 
 ListItem * List::findAndRemoveFromList(int data) {
+	// when get is protected, rewrite the logic of this function
 	ListItem * item = get(data);
 	removeFromList(item);
 	return item;
@@ -84,7 +72,7 @@ int List::contains(int data) {
 ListItem* List::get(int data) {
 	ListItem * item = this->first;
 	while (item) {
-		if (item->data == data)
+		if (item->data == data) // 83.78% * 43.46% = 36.41% of aborts
 			return item;
 		item = item->next;
 	}
@@ -94,7 +82,7 @@ ListItem* List::get(int data) {
 void List::deleteAll(ListItem * list) {
 	while (list) {
 		ListItem * next = list->next;
-		deleteListItem(list);
+		this->allocator->deleteListItem(list);
 		list = next;
 	}
 }

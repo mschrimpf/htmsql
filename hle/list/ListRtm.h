@@ -7,8 +7,9 @@
 class ListRtm : public List {
 protected:
 	virtual ListItem * findAndRemoveFromList(int data);
+	ListItem * get(int data);
 public:
-	ListRtm();
+	ListRtm(Allocator * allocator);
 	~ListRtm();
 
 	virtual void insertTail(ListItem * item);

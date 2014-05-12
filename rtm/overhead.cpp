@@ -25,9 +25,12 @@ __inline__ uint64_t rdtsc() {
 }
 #endif
 
+int dummy;
+
 void access_array(unsigned char * a, int size) {
 	for (int i = 0; i < size; i++)
-		a[i]++;
+//		a[i]++;
+		dummy += a[i];
 }
 
 /**
@@ -94,6 +97,8 @@ int main(int argc, char *argv[]) {
 
 	usleep(wait);
 
+	stick_this_thread_to_core(1);
+
 	Stats statsBaseline, statsPosix, statsAtomic, statsRtm, statsHle;
 	Stats * stats[] = { &statsBaseline, &statsPosix, &statsAtomic, &statsHle,
 			&statsRtm };
@@ -102,16 +107,27 @@ int main(int argc, char *argv[]) {
 			stats[i]->addValue(run(size, i));
 	}
 
-	float baseline = statsBaseline.getExpectedValue(), atomic =
-			statsAtomic.getExpectedValue();
+	float baselineEP = statsBaseline.getExpectedValue(), baselineSD =
+			statsBaseline.getStandardDeviation();
+	float atomicEP = statsAtomic.getExpectedValue(), atomicSD =
+			statsAtomic.getStandardDeviation();
 	printf(
-			"Label;Cycles;Cycles standard deviation;Compared to baseline (%%);Compared to atomic lock (%%)\n");
+			"Label;Cycles;Cycles standard deviation;"
+					"Compared to baseline (cycles);"
+					"Compared to baseline standard deviation;"
+					"Compared to atomic lock (cycles);"
+					"Compared to atomic lock standard deviation"
+					"\n");
 	const char* labels[] = { "No synchronization", "POSIX", "atomic", "HLE",
 			"RTM" };
 	for (int i = tmin; i < tmax; i++) {
 		float ep = stats[i]->getExpectedValue();
 		float stddev = stats[i]->getStandardDeviation();
-		printf("%s;%.2f;%.2f;%.2f;%.2f\n", labels[i], ep, stddev, ep / baseline,
-				ep / atomic);
+		printf("%s;%.2f;%.2f", labels[i], ep, stddev);
+		printf(";%.2f;%.2f", ep - baselineEP,
+				subtractStddev(stddev, baselineSD));
+		printf(";%.2f;%.2f\n", ep - atomicEP, subtractStddev(stddev, atomicSD));
 	}
+
+	printf("Dummy: %d\n", dummy);
 }

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '21227':
+
+          9,494289 task-clock                #    0,019 CPUs utilized          
+         7.207.722 instructions              #    0,82  insns per cycle         [57,99%]
+         8.778.161 cycles                    #    0,925 GHz                     [57,99%]
+         6.227.485 cpu/cycles-t/             #   70,94% transactional cycles    [57,99%]
+           103.665 cpu/tx-start/             #       60 cycles / transaction    [57,99%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [57,99%]
+         6.225.407 cpu/cycles-ct/            #    0,02% aborted cycles          [57,99%]
+
+       0,497539191 seconds time elapsed
+

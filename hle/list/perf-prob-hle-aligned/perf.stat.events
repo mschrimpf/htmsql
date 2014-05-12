@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '24369':
+
+        18.950.369 r04C8 (HLE_RETIRED.ABORTED)                                                        [51,13%]
+        23.352.517 r01C8 (HLE_RETIRED.START)                                                        [51,13%]
+         4.402.148 r02C8 (HLE_RETIRED.COMMIT)                                                        [51,13%]
+             7.266 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [51,13%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [51,13%]
+        15.862.911 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [51,13%]
+         3.204.501 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [51,13%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [51,13%]
+
+      26,241678010 seconds time elapsed
+

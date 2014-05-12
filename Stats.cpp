@@ -30,3 +30,7 @@ double Stats::getStandardError() {
 	double stddev = this->getStandardDeviation();
 	return stddev / sqrt(this->count);
 }
+
+double subtractStddev(double sd1, double sd2) {
+	return sqrt(sd1 * sd1 + sd2 * sd2);
+}

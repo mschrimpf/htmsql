@@ -6,12 +6,8 @@ CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -pthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES_ALL=TimeCmp.cpp \
-List.cpp \
-PreAllocatedList.cpp \
-ThreadsafeList.cpp \
-ThreadsafePreAllocatedList.cpp \
-ListRtm.cpp \
-PreAllocatedListRtm.cpp \
+ListItem.cpp List.cpp ThreadsafeList.cpp ListRtm.cpp \
+DefaultAllocator.cpp PreAllocator.cpp AlignedAllocator.cpp \
 $(SOURCES_LOCK) \
 ../../util.cpp \
 ../../Stats.cpp

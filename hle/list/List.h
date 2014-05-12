@@ -1,44 +1,31 @@
 #ifndef _LIST_H_
 #define _LIST_H_ 1
 
-class ListItem {
-//private:
-//	unsigned char padding[64-24];
-public:
-	ListItem * prev; // 8 bit
-	ListItem * next; // 8 bit
-	int data; // 8 bit
-	ListItem(int data, ListItem * prev, ListItem * next);
-};
+#include "ListItem.h"
+#include "Allocator.h"
 
 class List {
 private:
-	/**
-	 * @return the list item holding the specified data or NULL if no such item exists
-	 */
-	ListItem * get(int data);
-	/**
-	 * Removes the given item from list structure only, not from memory.
-	 */
-	void removeFromList(ListItem * item);
+	Allocator * allocator;
 protected:
 	ListItem * first;
 	ListItem * last;
 
+	/**
+	 * @return the list item holding the specified data or NULL if no such item exists
+	 */
+	virtual ListItem * get(int data);
+	/**
+	 * Removes the given item from list structure only, not from memory.
+	 */
+	void removeFromList(ListItem * item);
 //	virtual void * insertHead(ListItem * item);
 	virtual void insertTail(ListItem * item);
 	virtual ListItem * findAndRemoveFromList(int data);
 	void remove(ListItem * item);
 public:
-	List();
+	List(Allocator * allocator);
 	virtual ~List();
-
-	// memory operations
-
-	virtual ListItem* createListItem(int data, ListItem * prev,
-			ListItem * next);
-	virtual void deleteListItem(ListItem * item);
-
 
 	// list operations
 

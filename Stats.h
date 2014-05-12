@@ -20,4 +20,6 @@ public:
 	double getStandardError();
 };
 
+double subtractStddev(double sd1, double sd2);
+
 #endif // STATS_H_

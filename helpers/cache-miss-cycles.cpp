@@ -38,7 +38,8 @@ void fill_prefetching_unfriendly(int * a, int size) {
 		int val = i * (cache_line * 4) + offset;
 		if (val > (offset-1) * size)
 			offset++;
-		a[i] = rand() % size; //val % size;
+		//a[i] = val % size;
+		a[i] = rand() % size;
 //		printf("a[%d] = %d\n", i, a[i]);
 	}
 }

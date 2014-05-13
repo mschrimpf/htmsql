@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '6371':
+
+         9.391.450 r04C8 (HLE_RETIRED.ABORTED)                                                        [31,27%]
+     1.384.296.350 r01C8 (HLE_RETIRED.START)                                                        [31,27%]
+     1.374.904.900 r02C8 (HLE_RETIRED.COMMIT)                                                        [31,27%]
+             9.587 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [31,27%]
+                 3 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [31,27%]
+         9.351.694 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [31,27%]
+            33.146 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [31,27%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [31,27%]
+
+     310,246621438 seconds time elapsed
+

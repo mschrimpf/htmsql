@@ -17,7 +17,7 @@
 source ~/develop/util.sh
 
 
-_TYPE_ALL=(unmodified alpha beta gamma delta epsilon zeta theta iota ssi ssi_alpha)
+_TYPE_ALL=(unmodified alpha beta gamma delta epsilon zeta theta innobase_glibc glibc ssi ssi_alpha)
 
 
 

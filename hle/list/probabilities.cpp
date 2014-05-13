@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
 	int align = 1;
-	int repeats = 5000, loops = 100, base_inserts = 1000, lockType = -1;
+	int repeats = 5000, loops = 100, base_inserts = 100, lockType = -1;
 	int wait = 0;
 	int *arg_values[] = { &num_threads, &loops, &base_inserts, &lockType,
 			&repeats, &wait, &align };
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
 	usleep(wait);
 
-	printf("Throughput per millisecond\n");
+	printf("Throughput per millisecond and per thread\n");
 	printf("Threads:      %d\n", num_threads);
 	printf("Aligned:      %d\n", align);
 	printf("Loops:        %d\n", loops);
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::HLE_EXCH_SPEC,
 			//
-//			LockType::RTM
+			LockType::RTM
 	//
 			};
 	int lockTypesCount, lockTypesMin, lockTypesMax;
@@ -137,8 +137,8 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli = repeats * num_threads / elapsed_millis;
-				stats.addValue(throughput_per_milli);
+				float throughput_per_milli_and_thread = repeats / elapsed_millis;
+				stats.addValue(throughput_per_milli_and_thread);
 
 				delete list;
 			} // end of loops loop

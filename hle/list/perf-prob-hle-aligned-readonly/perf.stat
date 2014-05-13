@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '30828':
+
+      41193,006452 task-clock                #    2,857 CPUs utilized          
+    51.426.270.712 instructions              #    0,52  insns per cycle         [50,75%]
+    99.360.866.038 cycles                    #    2,412 GHz                     [50,75%]
+    11.211.696.243 cpu/cycles-t/             #   11,28% transactional cycles    [50,75%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [50,75%]
+        21.462.367 cpu/el-start/             #      522 cycles / elision        [50,75%]
+    10.695.843.379 cpu/cycles-ct/            #    0,52% aborted cycles          [50,75%]
+
+      14,417011098 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '2657':
+
+      43245,898519 task-clock                #    3,456 CPUs utilized          
+   143.577.104.940 instructions              #    1,26  insns per cycle         [34,57%]
+   114.334.702.532 cycles                    #    2,644 GHz                     [34,57%]
+                 0 cpu/cycles-t/             #    0,00% transactional cycles    [34,57%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [34,57%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [34,57%]
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles          [34,57%]
+
+      12,511913397 seconds time elapsed
+

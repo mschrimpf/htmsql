@@ -1,0 +1,99 @@
+Started on:   Di 22. Apr 11:25:56 CEST 2014
+COMPILING: javac *.java
+STARTING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqld --no-defaults 		--max_connections=1000 		--performance_schema=OFF 		--table_open_cache_instances=32 		--query_cache_type=0 		--query_cache_size=0 		--innodb_buffer_pool_size=2684354560 		--innodb_log_file_size=268435456 		--innodb_log_buffer_size=16777216 		--innodb_flush_method=fsync 		--innodb_flush_log_at_trx_commit=2
+2014-04-22 11:25:57 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2014-04-22 11:25:57 0 [Warning] Changed limits: max_open_files: 4096  max_connections: 1000  table_cache: 1543
+2014-04-22 11:25:57 6371 [Note] Plugin 'FEDERATED' is disabled.
+2014-04-22 11:25:57 6371 [Note] InnoDB: The InnoDB memory heap is disabled
+2014-04-22 11:25:57 6371 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2014-04-22 11:25:57 6371 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2014-04-22 11:25:57 6371 [Note] InnoDB: CPU does not support crc32 instructions
+2014-04-22 11:25:57 6371 [Note] InnoDB: Initializing buffer pool, size = 2.5G
+2014-04-22 11:25:57 6371 [Note] InnoDB: Completed initialization of buffer pool
+2014-04-22 11:25:57 6371 [Note] InnoDB: Highest supported file format is Barracuda.
+2014-04-22 11:25:57 6371 [Note] InnoDB: 128 rollback segment(s) are active.
+2014-04-22 11:25:57 6371 [Note] InnoDB: Waiting for purge to start
+2014-04-22 11:25:57 6371 [Note] InnoDB: 1.2.10 started; log sequence number 8516396316
+2014-04-22 11:25:57 6371 [Note] Server hostname (bind-address): '*'; port: 3306
+2014-04-22 11:25:57 6371 [Note] IPv6 is available.
+2014-04-22 11:25:57 6371 [Note]   - '::' resolves to '::';
+2014-04-22 11:25:57 6371 [Note] Server socket created on IP: '::'.
+2014-04-22 11:25:57 6371 [Note] Event Scheduler: Loaded 0 events
+2014-04-22 11:25:57 6371 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqld: ready for connections.
+Version: '5.6.10'  socket: '/tmp/mysql.sock'  port: 3306  Source distribution
+INITIALIZING: java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar DBGen
+output: /home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300
+waiting for run_pid 6410
+RUNNING TXBENCH: java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar SibenchClient 4 100 0 S2PL 300 > /home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300/result.txt
+PROFILING PERF STAT: perf stat 		-T 		-p 6371 		&>/home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300/perf.stat
+PROFILING PERF RECORD ABORTS: perf record 				-e cpu/el-abort/pp 				-g 				--transaction 				--weight 				-p 6371 				-o /home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300/perf-aborts.data
+PROFILING PERF STAT EVENTS missing locks: perf stat 			-e '{r21D0,r01C8,cycles}' 			-p 6371 			&>/home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300/perf-missinglocks.stat.events
+PROFILING PERF STAT EVENTS: perf stat 			-e '{r04C8,r01C8,r02C8,r80C8,r40C8,r08C8,r20C8,r10C8}' 			-p 6371 			&>/home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300/perf.stat.events
+Profiling stopped
+Replacing 04C8
+[ perf record: Woken up 4 times to write data ]
+[ perf record: Captured and wrote 1.016 MB /home/htmsql/develop/mysql/report-delta-txbench/332-20140422_1125-pr_r100_u0-t4-d300/perf-aborts.data (~44403 samples) ]
+Replacing 01C8
+Replacing 80C8
+Replacing 02C8
+Replacing 40C8
+Replacing 08C8
+Replacing 20C8
+Replacing 10C8
+File /perf.stat.events does not exist
+CLEANING DATABASE: java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar Cleanup
+STOPPING DATABASE: /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqladmin --no-defaults -u root shutdown
+2014-04-22 11:31:44 6371 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqld: Normal shutdown
+
+2014-04-22 11:31:44 6371 [Note] Giving 0 client threads a chance to die gracefully
+2014-04-22 11:31:44 6371 [Note] Event Scheduler: Purging the queue. 0 events
+2014-04-22 11:31:44 6371 [Note] Shutting down slave threads
+2014-04-22 11:31:44 6371 [Note] Forcefully disconnecting 0 remaining clients
+2014-04-22 11:31:44 6371 [Note] Binlog end
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'partition'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'ARCHIVE'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'BLACKHOLE'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_INSERTED'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_METRICS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_CMP'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_LOCKS'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'INNODB_TRX'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'InnoDB'
+2014-04-22 11:31:44 6371 [Note] InnoDB: FTS optimize thread exiting.
+2014-04-22 11:31:44 6371 [Note] InnoDB: Starting shutdown...
+2014-04-22 11:31:44 6371 [Note] InnoDB: Shutdown completed; log sequence number 8711542519
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'MRG_MYISAM'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'CSV'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'MyISAM'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'MEMORY'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'sha256_password'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'mysql_old_password'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'mysql_native_password'
+2014-04-22 11:31:44 6371 [Note] Shutting down plugin 'binlog'
+2014-04-22 11:31:44 6371 [Note] /home/htmsql/develop/mysql/mysql-5.6.10-delta/install/bin/mysqld: Shutdown complete
+

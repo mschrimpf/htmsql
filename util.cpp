@@ -55,6 +55,13 @@ void clear_cache() {
 	}
 }
 
+pthread_mutex_t mutex_sysrand;
+int concurrent_sysrand(int limit) {
+	pthread_mutex_lock(&mutex_sysrand);
+	int result = rand() % limit;
+	pthread_mutex_unlock(&mutex_sysrand);
+	return result;
+}
 // DO NOT USE
 int rand_tausworth(int limit) {
 #define TAUSWORTHE(s,a,b,c,d) ((s&c)<<d) ^ (((s <<a) ^ s)>>b)
@@ -95,5 +102,6 @@ int rand_gerhard(int limit) {
 int rand_gerhard(long& state, int limit) {
 	state = (state * 32719 + 3) % 32749;
 	int res = state % limit;
-	return res >= 0 ? res : -res;
+//	return res >= 0 ? res : -res;
+	return res;
 }

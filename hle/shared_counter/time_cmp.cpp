@@ -13,9 +13,30 @@
 #include "../../Stats.h"
 
 #define CORES 4
+const int cache_line_size = 64;
+const int SINGLE_COUNTER = 0, COUNTER_PER_CORE = 1;
+
+ThreadsafeCounter * createCounter(LockType& lockType, int align) {
+	ThreadsafeCounter * counter;
+	switch (lockType.enum_type) {
+	case LockType::EnumType::RTM:
+		counter = (RtmCounter *) (align ?
+				aligned_alloc(cache_line_size, sizeof(RtmCounter))
+				: malloc(sizeof(RtmCounter)));
+		new (counter) RtmCounter();
+		break;
+	default:
+		counter = (ThreadsafeCounter *) (align ?
+				aligned_alloc(cache_line_size, sizeof(ThreadsafeCounter))
+				: malloc(sizeof(ThreadsafeCounter)));
+		new (counter) ThreadsafeCounter(lockType);
+		break;
+	}
+	return counter;
+}
 
 void run(int tid, int repeats, ThreadsafeCounter * counter, int pin) {
-	if (pin && stick_this_thread_to_core(tid % num_cores) != 0)
+	if (pin && stick_this_thread_to_core(tid % CORES) != 0)
 		printf("Could not pin thread\n");
 
 	for (int r = 0; r < repeats; r++) {
@@ -23,42 +44,40 @@ void run(int tid, int repeats, ThreadsafeCounter * counter, int pin) {
 	}
 }
 
-const int SINGLE_COUNTER = 0, COUNTER_PER_CORE = 1;
 int main(int argc, char *argv[]) {
-	if (sizeof(ThreadsafeCounter) < 64) {
-		fprintf(stderr,
-				"Size of ThreadsafeCounter is smaller than a cache line\n");
-		return 1;
-	}
-
 	// arguments
 	int num_threads = CORES, loops = 100, repeats_min = 1000000, repeats_max =
-			1000000, repeats_step = 700000, lockType = -1, mode = 0, pin = 0;
+			1000000, repeats_step = 700000, lockType = -1, mode = 1, pin = 1,
+			align = 1, wait = 0;
 	int *values[] = { &num_threads, &loops, &repeats_min, &repeats_max,
-			&repeats_step, &lockType, &mode, &pin };
+			&repeats_step, &lockType, &mode, &pin, &wait, &align };
 	const char *identifier[] = { "-n", "-l", "-rmin", "-rmax", "-rstep", "-t",
-			"-m", "-p" };
-	handle_args(argc, argv, 8, values, identifier);
+			"-m", "-p", "-w", "-a" };
+	handle_args(argc, argv, 10, values, identifier);
+
+	if (wait)
+		usleep(1000000);
 
 	printf("Throughput per millisecond\n");
 	printf("Running %d threads in %d loops\n", num_threads, loops);
 	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
 			repeats_step);
-	printf("Mode:   %s\n",
-			mode == SINGLE_COUNTER ? "single counter" : "counter per core");
-	printf("Pinned: %s\n", pin ? "yes" : "no");
+	printf("Mode:    %s\n",
+			mode == COUNTER_PER_CORE ? "counter per core" : "single counter");
+	printf("Pinned:  %s\n", pin ? "yes" : "no");
+	printf("Aligned: %s\n", align ? "yes" : "no");
 	printf("\n");
 
 	// locking
 	LockType::EnumType lockTypesEnum[] = {
-	// pthread (0)
-			LockType::PTHREAD,
-			// atomic (1)
-			LockType::ATOMIC_EXCH_SPEC,
-			// hle (2)
-			LockType::HLE_EXCH_SPEC,
-			// unsynchronized (3)
+	// unsynchronized (0)
 			LockType::NONE,
+			// pthread (1)
+			LockType::PTHREAD,
+			// atomic (2)
+			LockType::ATOMIC_EXCH_SPEC,
+			// hle (3)
+			LockType::HLE_EXCH_SPEC,
 			// rtm (4)
 			LockType::RTM };
 	int lockTypesCount, lockTypesMin, lockTypesMax;
@@ -94,16 +113,10 @@ int main(int argc, char *argv[]) {
 				// init all counters - decide which one to use later on
 				// this also comes in handy in a way that the memory allocated
 				// is the same for all tests
-				ThreadsafeCounter * singleCounter =
-						lockTypes[t].enum_type == LockType::EnumType::RTM ?
-								new RtmCounter() :
-								new ThreadsafeCounter(lockTypes[t]);
+				ThreadsafeCounter * singleCounter = createCounter(lockTypes[t], align);
 				ThreadsafeCounter * perCoreCounters[CORES];
 				for (int c = 0; c < CORES; c++) {
-					perCoreCounters[c] =
-							lockTypes[t].enum_type == LockType::EnumType::RTM ?
-									new RtmCounter() :
-									new ThreadsafeCounter(lockTypes[t]);
+					perCoreCounters[c] = createCounter(lockTypes[t], align);
 				}
 				// run
 				struct timeval start, end;
@@ -129,8 +142,8 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli = repeats / elapsed_millis;
-				stats.addValue(throughput_per_milli);
+				float throughput_per_milli_and_thread = repeats / elapsed_millis;
+				stats.addValue(throughput_per_milli_and_thread);
 				// end run
 
 				// check result
@@ -146,16 +159,14 @@ int main(int argc, char *argv[]) {
 					}
 					break;
 				}
-				if (expected != actual &&
-				/* only check for synchronized versions */
-				lockTypes[t].enum_type != LockType::EnumType::NONE)
+				if (expected != actual && lockTypes[t].enum_type != LockType::EnumType::NONE)
 					printf("CHECK: counter should be %d, is %d - %s\n",
 							expected, actual,
 							expected == actual ? "OK" : "ERROR");
 
-				delete singleCounter;
+				free(singleCounter);
 				for (int c = 0; c < CORES; c++) {
-					delete perCoreCounters[c];
+					free(perCoreCounters[c]);
 				}
 			}
 

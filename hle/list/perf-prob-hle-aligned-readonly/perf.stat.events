@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '30828':
+
+         1.505.801 r04C8 (HLE_RETIRED.ABORTED)                                                        [49,57%]
+        20.802.209 r01C8 (HLE_RETIRED.START)                                                        [49,57%]
+        19.296.408 r02C8 (HLE_RETIRED.COMMIT)                                                        [49,57%]
+             3.129 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [49,57%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [49,57%]
+         1.444.363 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [49,57%]
+            62.321 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [49,57%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [49,57%]
+
+      14,414245297 seconds time elapsed
+

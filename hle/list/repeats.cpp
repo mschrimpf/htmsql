@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	if (wait)
 		usleep(500000);
 
-	printf("Throughput per millisecond\n");
+	printf("Throughput per millisecond and per thread\n");
 	printf("Sizeof ListItem: %lu\n", sizeof(ListItem));
 	printf("Aligned:      %d\n", align);
 	printf("Threads:      %d\n", num_threads);
@@ -144,8 +144,8 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli = repeats * num_threads / elapsed_millis;
-				stats.addValue(throughput_per_milli);
+				float throughput_per_milli_and_thread = repeats / elapsed_millis;
+				stats.addValue(throughput_per_milli_and_thread);
 
 				listSizeStats.addValue(list->size());
 

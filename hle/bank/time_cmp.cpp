@@ -246,14 +246,14 @@ void checkResult(int account_pool_size, ThreadsafeAccount ts_account_pool[]) {
 int main(int argc, char *argv[]) {
 // arguments
 	num_threads = CORES;
-	int loops = 100, repeats_min = 10000, repeats_max = 150000, repeats_step =
-			70000, probability_transfer = 50, probability_read = 50,
-	/* 0: sysrand, 1: customrand, 2: savedrand */rgen = 1;
-	int *values[] = { &num_threads, &loops, &repeats_min, &repeats_max,
-			&repeats_step, &probability_transfer, &probability_read, &rgen };
-	const char *identifier[] = { "-n", "-l", "-rmin", "-rmax", "-rstep", "-pt",
-			"-pr", "-rgen" };
-	handle_args(argc, argv, 8, values, identifier);
+	int loops = 100, repeats = 100000, /* 0: sysrand, 1: customrand, 2: savedrand */
+	rgen = 2;
+	int *values[] = { &num_threads, &loops, &repeats, &rgen };
+	const char *identifier[] = { "-n", "-l", "-r", "-rgen" };
+	handle_args(argc, argv, 4, values, identifier);
+
+	int probabilities_read[] = { 0, 50, 100 };
+	int probabilities_transfer[] = { 100, 50, 0 };
 
 	printf("random generator: ");
 	int (*random_generator)(int limit);
@@ -272,14 +272,12 @@ int main(int argc, char *argv[]) {
 		break;
 	}
 
-	printf("%d Threads\n", num_threads);
-	printf("%d Accounts\n", ACCOUNT_COUNT);
-	printf("Loops:            %d\n", loops);
-	printf("%d - %d repeats with steps of %d\n", repeats_min, repeats_max,
-			repeats_step);
-	printf("run function:     %s\n", "run_object");
-	printf("probabilities: transfer=%d | read=%d", probability_transfer,
-			probability_read);
+	printf("throughput_per_milli_and_thread\n");
+	printf("Threads:   %d\n", num_threads);
+	printf("Accounts:  %d\n", ACCOUNT_COUNT);
+	printf("Loops:     %d\n", loops);
+	printf("Repeats:   %d\n", repeats);
+	printf("function:  %s\n", "run_object");
 	printf("\n");
 
 // randomness setup
@@ -308,13 +306,18 @@ int main(int argc, char *argv[]) {
 		lockTypes[t].init(lockTypesEnum[t]);
 	}
 
-	printf("Repeats;");
+	printf("Read probability;Transfer probability;");
 	const char *appendings[2];
 	appendings[0] = "ExpectedValue";
 	appendings[1] = "Stddev";
-	LockType::printHeader(lockTypes, sizeof(lockTypes) / sizeof(lockTypes[0]), appendings, 2);
-	for (int r = repeats_min; r <= repeats_max; r += repeats_step) {
-		printf("%d", r);
+	LockType::printHeader(lockTypes, sizeof(lockTypes) / sizeof(lockTypes[0]),
+			appendings, 2);
+	for (int p = 0;
+			p < sizeof(probabilities_read) / sizeof(probabilities_read[0]);
+			p++) {
+		int probability_read = probabilities_read[p], probability_transfer =
+				probabilities_transfer[p];
+		printf("%d;%d", probability_read, probability_transfer);
 		std::cout.flush();
 
 		// run all lock-types
@@ -340,12 +343,12 @@ int main(int argc, char *argv[]) {
 				for (int i = 0; i < num_threads; i++) {
 					switch (lockTypes[t].enum_type) {
 					case LockType::EnumType::RTM:
-						threads[i] = std::thread(xrun, i, r, account_pool,
+						threads[i] = std::thread(xrun, i, repeats, account_pool,
 								ACCOUNT_COUNT, random_generator,
 								probability_transfer, probability_read);
 						break;
 					default:
-						threads[i] = std::thread(run_object, i, r,
+						threads[i] = std::thread(run_object, i, repeats,
 								ts_account_pool, ACCOUNT_COUNT,
 //								account_pool, ACCOUNT_COUNT, &lockTypes[t],
 								random_generator, probability_transfer,
@@ -358,19 +361,13 @@ int main(int argc, char *argv[]) {
 					threads[i].join();
 				}
 
-				// TODO: we could would use a different metric here.
-				// Rather than measuring the total time it took until ALL threads
-				// are done, we can measure the time per thread.
-				// With this method, we award threads that are done very quickly.
-				// --
-				// This technique might not be needed, since htop does not show us
-				// huge differences in runtimes
-
 				// measure time
 				gettimeofday(&end, NULL);
-				float elapsed_ms = ((end.tv_sec - start.tv_sec) * 1000000)
-						+ (end.tv_usec - start.tv_usec);
-				stats.addValue(elapsed_ms);
+				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
+						+ (end.tv_usec - start.tv_usec) / 1000;
+				float throughput_per_milli_and_thread = repeats
+						/ elapsed_millis;
+				stats.addValue(throughput_per_milli_and_thread);
 
 				// check result
 				switch (lockTypes[t].enum_type) {
@@ -383,9 +380,8 @@ int main(int argc, char *argv[]) {
 				}
 			} // end of loops loop
 
-			printf(";%.2f;%.2f", stats.getExpectedValue(), stats.getStandardDeviation());
-
-//			printf(";%.0f", average(times));
+			printf(";%.2f;%.2f", stats.getExpectedValue(),
+					stats.getStandardDeviation());
 
 			std::cout.flush();
 		} // end of locktype-loop

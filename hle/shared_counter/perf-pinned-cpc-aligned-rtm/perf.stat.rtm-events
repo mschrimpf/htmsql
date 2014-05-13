@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '26866':
+
+       389.374.509 r01C9 (RTM_RETIRED.START)                                                        [50,12%]
+             2.295 r04C9 (RTM_RETIRED.ABORTED)                                                        [50,12%]
+             2.289 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [50,12%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [50,12%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [50,12%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [50,12%]
+                 6 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [50,12%]
+       389.372.214 r02C9 (RTM_RETIRED.COMMIT)                                                        [50,12%]
+
+       3,943412460 seconds time elapsed
+

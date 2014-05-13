@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <immintrin.h>
+#include <vector>
 
 #include "../util.h"
 #include "../hle/lib/hle-emulation.h"
@@ -19,4 +20,9 @@ int main(int argc, char *argv[]) {
 		pthread_mutex_unlock(&mutex);
 	}
 	printf("n: %d\n", n);
+
+	// force usage of libstdc++.so.6
+	std::vector<int> v;
+	v.push_back(n);
+	printf("v: %lu\n", v.size());
 }

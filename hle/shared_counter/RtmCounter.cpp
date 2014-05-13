@@ -7,13 +7,13 @@
 #include <immintrin.h> // RTM: _x
 #define RTM_MAX_RETRIES 1000000
 
-RtmCounter::RtmCounter() {
+RtmCounter::RtmCounter() : ThreadsafeCounter() {
 }
 
 void RtmCounter::increment() {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		this->counter++;
+		this->counter[0]++;
 		_xend();
 	} else {
 		if (failures++ < RTM_MAX_RETRIES)
@@ -26,7 +26,7 @@ void RtmCounter::increment() {
 int RtmCounter::get() {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		int res = this->counter;
+		int res = this->counter[0];
 		_xend();
 		return res;
 	} else {

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '26866':
+
+      10988,730345 task-clock                #    2,785 CPUs utilized          
+     5.939.152.556 instructions              #    0,20  insns per cycle         [52,36%]
+    30.335.268.545 cycles                    #    2,761 GHz                     [52,36%]
+    23.935.709.507 cpu/cycles-t/             #   78,90% transactional cycles    [52,36%]
+       391.279.051 cpu/tx-start/             #       61 cycles / transaction    [52,36%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [52,36%]
+    23.935.683.283 cpu/cycles-ct/            #    0,00% aborted cycles          [52,36%]
+
+       3,945564173 seconds time elapsed
+

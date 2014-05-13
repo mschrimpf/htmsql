@@ -54,13 +54,13 @@ run_program "$PROGRAM"
 PROGRAM_CALLER_PID=$!
 PROGRAM_ARR=($PROGRAM)
 PROGRAM_NAME=${PROGRAM_ARR[0]}
-# sleep 1
+# sleep 1 # let the program sleep and thus wait for perf instead
 PROGRAM_PID=$(pidof $PROGRAM_NAME)
 echo "pid of $PROGRAM_NAME: $PROGRAM_PID"
 
 profile_perf_stat "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
 profile_perf_stat_events "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
-# profile_perf_stat_rtm_events "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
+profile_perf_stat_rtm_events "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
 # profile_perf_record_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
 # profile_perf_record_rtm_aborts "$PROGRAM_PID" "$OUTPUT_FOLDER" true &
 

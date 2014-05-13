@@ -1,0 +1,9 @@
+
+ Performance counter stats for process id '6371':
+
+    10.309.569.566 r21D0                                                        [31,19%]
+     1.373.899.242 r01C8                                                        [31,19%]
+ 2.854.604.500.323 cycles                    #    0,000 GHz                     [31,19%]
+
+     310,242305406 seconds time elapsed
+

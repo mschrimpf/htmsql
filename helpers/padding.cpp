@@ -16,6 +16,11 @@ int main(int argc, char * argv[]) {
 			3 * 64);
 	printf("\n");
 
+	printf("int size:               %lu Byte\n", sizeof(int));
+	int intarr[16];
+	printf("int[16] size:           %lu Byte\n", sizeof(intarr));
+	printf("\n");
+
 	printf("LockType Size:          %lu Byte\n", sizeof(LockType));
 	printf("\n");
 

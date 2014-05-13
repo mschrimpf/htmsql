@@ -1,14 +1,14 @@
 
- Performance counter stats for process id '24369':
+ Performance counter stats for process id '10563':
 
-        18.950.369 r04C8 (HLE_RETIRED.ABORTED)                                                        [51,13%]
-        23.352.517 r01C8 (HLE_RETIRED.START)                                                        [51,13%]
-         4.402.148 r02C8 (HLE_RETIRED.COMMIT)                                                        [51,13%]
-             7.266 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [51,13%]
-                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [51,13%]
-        15.862.911 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [51,13%]
-         3.204.501 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [51,13%]
-                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [51,13%]
+       132.683.311 r04C8 (HLE_RETIRED.ABORTED)                                                        [49,50%]
+       187.672.709 r01C8 (HLE_RETIRED.START)                                                        [49,50%]
+        54.989.398 r02C8 (HLE_RETIRED.COMMIT)                                                        [49,50%]
+            14.374 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [49,50%]
+                 4 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [49,50%]
+       110.391.057 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [49,50%]
+        23.259.337 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [49,50%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [49,50%]
 
-      26,241678010 seconds time elapsed
+      57,078929370 seconds time elapsed
 

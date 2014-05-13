@@ -5,11 +5,11 @@
 
 class ThreadsafeCounter {
 protected:
-	int counter = 0;
+	int counter[16]; // avoid having counter and mutex in same cache line
 private:
 	LockType locker;
 
-	unsigned char padding[2 * 64 - 120];
+	unsigned char padding[3 * 64 - 176];
 public:
 	ThreadsafeCounter();
 	ThreadsafeCounter(LockType locker);

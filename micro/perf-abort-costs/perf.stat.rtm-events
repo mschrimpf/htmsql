@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '12531':
+
+           600.646 r01C9 (RTM_RETIRED.START)                                                        [33,32%]
+           201.141 r04C9 (RTM_RETIRED.ABORTED)                                                        [33,32%]
+             2.047 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [33,32%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [33,32%]
+           199.046 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [33,32%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [33,32%]
+                48 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [33,32%]
+           399.501 r02C9 (RTM_RETIRED.COMMIT)                                                        [33,32%]
+
+       5,145625369 seconds time elapsed
+

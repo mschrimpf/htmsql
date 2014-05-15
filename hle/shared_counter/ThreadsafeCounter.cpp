@@ -8,29 +8,29 @@
 #include "ThreadsafeCounter.h"
 #include "../lock_functions/LockType.h"
 
-ThreadsafeCounter::ThreadsafeCounter() {
-	this->counter[0] = 0;
+ThreadsafeCounter::ThreadsafeCounter() :
+		PaddedCounter() {
 	// need to call argument-constructor afterwards
 }
 
-ThreadsafeCounter::ThreadsafeCounter(LockType locker) {
+ThreadsafeCounter::ThreadsafeCounter(LockType locker) :
+		PaddedCounter() {
 	init(locker);
 }
 
 void ThreadsafeCounter::init(LockType locker) {
-	this->counter[0] = 0;
 	this->locker = locker;
 }
 
 void ThreadsafeCounter::increment() {
 	(this->locker.*(this->locker.lock))();
-	this->counter[0]++;
+	this->PaddedCounter::increment();
 	(this->locker.*(this->locker.unlock))();
 }
 
 int ThreadsafeCounter::get() {
 	(this->locker.*(this->locker.lock))();
-	int result = this->counter[0];
+	int result = this->PaddedCounter::get();
 	(this->locker.*(this->locker.unlock))();
 	return result;
 }

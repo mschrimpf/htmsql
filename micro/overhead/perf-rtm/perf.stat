@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '11587':
+
+        644,684140 task-clock                #    0,995 CPUs utilized          
+     2.825.073.197 instructions              #    1,34  insns per cycle         [33,65%]
+     2.107.013.004 cycles                    #    3,268 GHz                     [33,65%]
+        35.639.132 cpu/cycles-t/             #    1,69% transactional cycles    [33,65%]
+           990.821 cpu/tx-start/             #       36 cycles / transaction    [33,65%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [33,65%]
+        35.639.503 cpu/cycles-ct/            #    0,00% aborted cycles          [33,65%]
+
+       0,648025544 seconds time elapsed
+

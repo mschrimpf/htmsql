@@ -4,9 +4,18 @@
 #include <immintrin.h>
 #include <vector>
 #include <unistd.h> // usleep
-
 #include "../hle/lib/hle-emulation.h"
 
+
+/**
+ * _INIT_
+ *   works with PTHREAD_MUTEX_INITIALIZER
+ *   works with pthread_mutex_init(&mutex, &attr);
+ *
+ * _LOCK_
+ *   works with pthread_mutex_lock: ~zero aborts
+ *   works with pthread_mutex_trylock: lots of aborts
+ */
 int main(int argc, char *argv[]) {
 	usleep(5 * 100000); // allow perf to catch up
 
@@ -14,13 +23,18 @@ int main(int argc, char *argv[]) {
 	int add = 5;
 
 	pthread_mutex_t mutex;
-	mutex = PTHREAD_MUTEX_INITIALIZER; // default init
+	pthread_mutexattr_t my_fast_mutexattr;
+	pthread_mutex_init(&mutex, &my_fast_mutexattr);
+//	mutex = PTHREAD_MUTEX_INITIALIZER; // default init
 
 	int n = 0;
 	for (int i = 0; i < loops; i++) {
-		pthread_mutex_lock(&mutex);
-		n += add;
-		pthread_mutex_unlock(&mutex);
+		if (pthread_mutex_trylock(&mutex) != 0) {
+			printf("Lock occupied\n");
+		} else {
+			n += add;
+			pthread_mutex_unlock(&mutex);
+		}
 	}
 	printf("n: %d (%s)\n", n, n == loops * add ? "correct" : "incorrect");
 

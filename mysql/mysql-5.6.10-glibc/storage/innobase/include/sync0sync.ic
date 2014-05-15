@@ -30,6 +30,8 @@ Mutex, the basic synchronization primitive
 Created 9/5/1995 Heikki Tuuri
 *******************************************************/
 
+#include <stdio.h>
+
 /******************************************************************//**
 Sets the waiters field in a mutex. */
 UNIV_INTERN
@@ -80,10 +82,12 @@ ib_mutex_test_and_set(
 	ib_mutex_t*	mutex)	/*!< in: mutex */
 {
 #if defined(HAVE_ATOMIC_BUILTINS)
+	printf("ib_mutex_test_and_set::os_atomic_test_and_set_byte\n");
 	return(os_atomic_test_and_set_byte(&mutex->lock_word, 1));
 #else
 	ibool	ret;
 
+//	printf("ib_mutex_test_and_set::os_fast_mutex_trylock (pthread)\n");
 	ret = os_fast_mutex_trylock(&(mutex->os_fast_mutex));
 
 	if (ret == 0) {

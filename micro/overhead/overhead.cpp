@@ -5,11 +5,11 @@
 #include <sys/time.h>
 #include <immintrin.h> // _mm_pause
 #include <xmmintrin.h> // rtm
-#include "../util.h"
-#include "../Stats.h"
+#include "../../util.h"
+#include "../../Stats.h"
 #include <stdint.h> // uint64_t
-#include "../hle/lock_functions/atomic_exch_lock-spec.h"
-#include "../hle/lock_functions/hle_exch_lock-spec.h"
+#include "../../hle/lock_functions/atomic_exch_lock-spec.h"
+#include "../../hle/lock_functions/hle_exch_lock-spec.h"
 
 #ifdef __i386
 __inline__ uint64_t rdtsc() {
@@ -38,43 +38,52 @@ void access_array(unsigned char * a, int size) {
  */
 uint64_t run(int size, int mode) {
 	stick_this_thread_to_core(0);
+	// init and write array
 	unsigned char * a = new unsigned char[size];
 	for (int i = 0; i < size; i++)
 		a[i] = 0;
+	// mutexes
 	unsigned lock = 0;
 	pthread_mutex_t p_mutex = PTHREAD_MUTEX_INITIALIZER;
-	uint64_t t; // count cycles
-	t = rdtsc();
+//	uint64_t t; // count cycles
+//	t = rdtsc();
+	// measure time
+	struct timeval start, end;
+	gettimeofday(&start, NULL);
 	switch (mode) {
 	case 0:
-		access_array(a, size);
+//		access_array(a, size);
 		break;
 	case 1:
 		pthread_mutex_lock(&p_mutex);
-		access_array(a, size);
+//		access_array(a, size);
 		pthread_mutex_unlock(&p_mutex);
 		break;
 	case 2:
 		atomic_exch_lock_spec(&lock);
-		access_array(a, size);
+//		access_array(a, size);
 		atomic_exch_unlock_spec(&lock);
 		break;
 	case 3:
 		hle_exch_lock_spec(&lock);
-		access_array(a, size);
+//		access_array(a, size);
 		hle_exch_unlock_spec(&lock);
 		break;
 	case 4:
 		retry: if (_xbegin() == _XBEGIN_STARTED) {
-			access_array(a, size);
+//			access_array(a, size);
 			_xend();
 		} else {
 			goto retry;
 		}
 		break;
 	}
-	t = rdtsc() - t;
-	return t;
+//	t = rdtsc() - t;
+//	return t;
+	gettimeofday(&end, NULL);
+	float elapsed_micros = (end.tv_sec - start.tv_sec) * 1000000
+			+ (end.tv_usec - start.tv_usec);
+	return elapsed_micros * 1000; // nanos
 }
 
 int main(int argc, char *argv[]) {

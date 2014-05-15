@@ -47,13 +47,9 @@ util.o: ../util.cpp
 	$(CC) -c $(CCFLAGS) -o $@ ../util.cpp $(LDLAGS)
 pthread_lock_glibc: $(SOURCES_PTHREAD_LOCK_GLIBC)
 	$(CC) \
-			-Wl,--rpath=$(GLIBC)/build/lib -Wl,--dynamic-linker=$(GLIBC)/build/lib/ld-linux-x86-64.so.2 \
+			-Wl,--rpath=$(GLIBC)/build/lib:/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu -Wl,--dynamic-linker=$(GLIBC)/build/lib/ld-linux-x86-64.so.2 \
 			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS) --enable-lock-elision=yes
-pthread_lock_glibc_nolinker: $(SOURCES_PTHREAD_LOCK_GLIBC)
-	$(CC) -Wl,--rpath=/home/htmsql/develop/glibc/build/lib \
-			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS)
-
-
-
+			
+			
 clean:
 	rm *.o

@@ -4,6 +4,7 @@
 #define PADDING 1
 
 #include "../hle/lock_functions/LockType.h"
+#include "../hle/shared_counter/PaddedCounter.h"
 #include "../hle/shared_counter/ThreadsafeCounter.h"
 #include "../hle/shared_counter/RtmCounter.h"
 #include "../hle/bank/entities/Account.h"
@@ -25,6 +26,7 @@ int main(int argc, char * argv[]) {
 	printf("\n");
 
 	// shared counter
+	printf("PaddedCounter Size:     %lu Byte\n", sizeof(PaddedCounter));
 	printf("ThreadsafeCounter Size: %lu Byte\n", sizeof(ThreadsafeCounter));
 	printf("RtmCounter Size:        %lu Byte\n", sizeof(RtmCounter));
 	printf("\n");

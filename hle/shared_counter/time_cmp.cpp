@@ -6,6 +6,7 @@
 #include <sys/time.h>
 #include <vector>
 
+#include "PaddedCounter.h"
 #include "ThreadsafeCounter.h"
 #include "RtmCounter.h"
 #include "../lock_functions/LockType.h"
@@ -13,11 +14,10 @@
 #include "../../Stats.h"
 
 #define CORES 4
-const int cache_line_size = 64;
 const int SINGLE_COUNTER = 0, COUNTER_PER_CORE = 1;
 
-ThreadsafeCounter * createCounter(LockType& lockType, int align) {
-	ThreadsafeCounter * counter;
+PaddedCounter * createCounter(LockType& lockType, int align) {
+	PaddedCounter * counter;
 	switch (lockType.enum_type) {
 	case LockType::EnumType::RTM:
 		counter = (RtmCounter *) (align ?
@@ -35,7 +35,7 @@ ThreadsafeCounter * createCounter(LockType& lockType, int align) {
 	return counter;
 }
 
-void run(int tid, int repeats, ThreadsafeCounter * counter, int pin) {
+void run(int tid, int repeats, PaddedCounter * counter, int pin) {
 	if (pin && stick_this_thread_to_core(tid % CORES) != 0)
 		printf("Could not pin thread\n");
 
@@ -113,8 +113,8 @@ int main(int argc, char *argv[]) {
 				// init all counters - decide which one to use later on
 				// this also comes in handy in a way that the memory allocated
 				// is the same for all tests
-				ThreadsafeCounter * singleCounter = createCounter(lockTypes[t], align);
-				ThreadsafeCounter * perCoreCounters[CORES];
+				PaddedCounter * singleCounter = createCounter(lockTypes[t], align);
+				PaddedCounter * perCoreCounters[CORES];
 				for (int c = 0; c < CORES; c++) {
 					perCoreCounters[c] = createCounter(lockTypes[t], align);
 				}
@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&start, NULL);
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					ThreadsafeCounter * counter;
+					PaddedCounter * counter;
 					switch (mode) {
 					case SINGLE_COUNTER:
 						counter = singleCounter;

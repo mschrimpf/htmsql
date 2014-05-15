@@ -39,12 +39,6 @@ SOURCES_ABORT_COSTS=abort-costs.cpp \
 abort-costs: $(SOURCES_ABORT_COSTS)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_ABORT_COSTS) $(LDLAGS)
 
-SOURCES_OVERHEAD=overhead.cpp \
-../util.cpp ../Stats.cpp \
-../hle/lock_functions/atomic_exch_lock-spec.cpp ../hle/lock_functions/hle_exch_lock-spec.cpp
-overhead: $(SOURCES_OVERHEAD)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_OVERHEAD) $(LDLAGS)
-
 SOURCES_SET_ASSOCIATIVITY=set-associativity.cpp \
 ../util.cpp ../Stats.cpp
 set-associativity: $(SOURCES_SET_ASSOCIATIVITY)

@@ -55,6 +55,22 @@ void clear_cache() {
 	}
 }
 
+/**
+ * Fills the given array so that accessing a different array with the sequentially retrieved values of this array can not be hardware-prefetched
+ * Guarantees:
+ * (1) all values in the array are reached
+ * (2) two values a[i] and a[i+1] have a distance of at least cache_line_size+1
+ */
+void fill_prefetching_unfriendly(int * a, int size) {
+	int offset = 0;
+	for (int i = 0; i < size; i++) {
+		int val = i * (cache_line_size * 4) + offset;
+		if (val > (offset-1) * size)
+			offset++;
+		a[i] = val % size;
+	}
+}
+
 pthread_mutex_t mutex_sysrand;
 int concurrent_sysrand(int limit) {
 	pthread_mutex_lock(&mutex_sysrand);

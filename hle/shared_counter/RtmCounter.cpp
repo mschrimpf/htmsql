@@ -13,7 +13,7 @@ RtmCounter::RtmCounter() : ThreadsafeCounter() {
 void RtmCounter::increment() {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		this->counter[0]++;
+		this->PaddedCounter::increment();
 		_xend();
 	} else {
 		if (failures++ < RTM_MAX_RETRIES)
@@ -26,7 +26,7 @@ void RtmCounter::increment() {
 int RtmCounter::get() {
 	int failures = 0;
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
-		int res = this->counter[0];
+		int res = this->PaddedCounter::get();
 		_xend();
 		return res;
 	} else {

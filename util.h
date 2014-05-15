@@ -13,6 +13,9 @@
 #include <unistd.h> // num_cores
 #include <sched.h> // thread affinity
 
+/** size of a cache line in Byte */
+const int cache_line_size = 64;
+
 void handle_args(int argc, char *argv[], int value_len, int **values,
 		const char* identifier[]);
 /** Calculates the average value of the values in the given vector */
@@ -24,6 +27,8 @@ int stick_this_thread_to_core(int core_id);
 void nop_wait(int microseconds);
 
 void clear_cache();
+
+void fill_prefetching_unfriendly(int * array, int size);
 
 int concurrent_sysrand(int limit);
 //int rand_tausworth(int limit); // segmentation faults

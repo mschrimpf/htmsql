@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '12531':
+
+       5142,113151 task-clock                #    0,999 CPUs utilized          
+    28.747.970.690 instructions              #    1,70  insns per cycle         [33,38%]
+    16.865.706.650 cycles                    #    3,280 GHz                     [33,38%]
+     7.750.919.284 cpu/cycles-t/             #   45,96% transactional cycles    [33,38%]
+           601.450 cpu/tx-start/             #    12887 cycles / transaction    [33,38%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [33,38%]
+     5.170.235.618 cpu/cycles-ct/            #   15,30% aborted cycles          [33,38%]
+
+       5,149464981 seconds time elapsed
+

@@ -1,11 +1,10 @@
 #ifndef _THREADSAFE_COUNTER_H
 #define _THREADSAFE_COUNTER_H 1
 
+#include "PaddedCounter.h"
 #include "../lock_functions/LockType.h"
 
-class ThreadsafeCounter {
-protected:
-	int counter[16]; // avoid having counter and mutex in same cache line
+class ThreadsafeCounter : public PaddedCounter {
 private:
 	LockType locker;
 

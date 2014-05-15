@@ -24,30 +24,28 @@ __inline__ uint64_t rdtsc() {
 #endif
 
 int dummy;
-int * rands;
+int * array_accesses;
 
-/**
- * Fills the given array so that accessing a different array with the sequentially retrieved values of this array can not be hardware-prefetched
- * Guarantees:
- * (1) all values in the array are reached
- * (2) two values a[i] and a[i+1] have a distance of at least cache_line_size+1
- */
-void fill_prefetching_unfriendly(int * a, int size) {
-	int offset = 0;
-	for (int i = 0; i < size; i++) {
-		int val = i * (cache_line * 4) + offset;
-		if (val > (offset-1) * size)
-			offset++;
-		//a[i] = val % size;
-		a[i] = rand() % size;
-//		printf("a[%d] = %d\n", i, a[i]);
-	}
+void set_accesses(int * a, int size) {
+	/**
+	 * Fills the given array so that accessing a different array with the sequentially retrieved values of this array can not be hardware-prefetched
+	 * Guarantees:
+	 * (1) all values in the array are reached
+	 * (2) two values a[i] and a[i+1] have a distance of at least cache_line_size+1
+	 * @see /home/htmsql/develop/util.cpp
+	 */
+	fill_prefetching_unfriendly(a, size);
+
+//	for (int i = 0; i < size; i++) {
+//		a[i] = rand() % size;
+////		printf("a[%d] = %d\n", i, a[i]);
+//	}
 }
 
 int access_array(unsigned char a[], int size) {
 	for (int i = 0; i < size; i++) {
 //		a[i] = 1;
-		dummy += a[rands[i]];
+		dummy += a[array_accesses[i]];
 	}
 }
 
@@ -84,8 +82,8 @@ int main(int argc, char *argv[]) {
 	stick_this_thread_to_core(1);
 
 	// rands
-	rands = new int[size];
-	fill_prefetching_unfriendly(rands, size);
+	array_accesses = new int[size];
+	set_accesses(array_accesses, size);
 
 	// run
 	int modes[] = { COLD, WARM };
@@ -116,7 +114,7 @@ int main(int argc, char *argv[]) {
 				stats.getStandardDeviation());
 	}
 
-	delete rands;
+	delete[] array_accesses;
 
 	printf("Dummy: %d\n", dummy);
 }

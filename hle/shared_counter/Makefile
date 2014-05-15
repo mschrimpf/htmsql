@@ -6,8 +6,7 @@ CCFLAGS=-std=c++0x -O2 # compiler flags
 LDLAGS=-fgnu-tm -mrtm -lpthread -Wl,--no-as-needed # linker flags
 SFLAGS=-S -masm=intel
 SOURCES=time_cmp.cpp \
-ThreadsafeCounter.cpp \
-RtmCounter.cpp \
+PaddedCounter.cpp ThreadsafeCounter.cpp RtmCounter.cpp \
 $(SOURCES_LOCK) \
 ../../util.cpp \
 ../../Stats.cpp

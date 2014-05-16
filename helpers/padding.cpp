@@ -4,11 +4,16 @@
 #define PADDING 1
 
 #include "../hle/lock_functions/LockType.h"
+
 #include "../hle/shared_counter/PaddedCounter.h"
 #include "../hle/shared_counter/ThreadsafeCounter.h"
 #include "../hle/shared_counter/RtmCounter.h"
+
 #include "../hle/bank/entities/Account.h"
 #include "../hle/bank/entities/ThreadsafeAccount.h"
+
+#include "../hle/list/ListItem.h"
+
 #include "../hle/hashmap/HashMap.h"
 
 int main(int argc, char * argv[]) {
@@ -34,7 +39,10 @@ int main(int argc, char * argv[]) {
 	printf("Account Size:           %lu Byte\n", sizeof(Account));
 	printf("ThreadsafeAccount Size: %lu Byte\n", sizeof(ThreadsafeAccount));
 	printf("\n");
-	// bank
+	// list
+	printf("ListItem Size:          %lu Byte\n", sizeof(ListItem));
+	printf("\n");
+	// hashmap
 	printf("HashMap Size:           %lu Byte\n", sizeof(HashMap));
 	printf("LockedBucket Size:      %lu Byte\n", sizeof(LockedBucket));
 	printf("LinkedListItem Size:    %lu Byte\n", sizeof(LinkedListItem));

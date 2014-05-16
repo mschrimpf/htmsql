@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '3097':
+
+     100355,209894 task-clock                #    1,865 CPUs utilized          
+   114.617.902.593 instructions              #    0,48  insns per cycle         [41,30%]
+   240.775.835.057 cycles                    #    2,399 GHz                     [41,30%]
+    40.232.189.107 cpu/cycles-t/             #   16,71% transactional cycles    [41,30%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [41,30%]
+       103.244.275 cpu/el-start/             #      390 cycles / elision        [41,30%]
+    29.706.957.318 cpu/cycles-ct/            #    4,37% aborted cycles          [41,30%]
+
+      53,806531492 seconds time elapsed
+

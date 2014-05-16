@@ -25,30 +25,25 @@ void hle_unlock(unsigned * mutex) {
 
 int nest_multiple(int mutex_count) {
 //	PaddedMutex * mutexes = (PaddedMutex *) malloc(sizeof(PaddedMutex) * mutex_count);
-	PaddedMutex ** mutexes = (PaddedMutex **) aligned_alloc(cache_line_size,
+	PaddedMutex * mutexes = (PaddedMutex *) aligned_alloc(cache_line_size,
 			sizeof(PaddedMutex*) * mutex_count);
-	for (int i = 0; i < mutex_count; i++) {
-		mutexes[i] = (PaddedMutex*) aligned_alloc(cache_line_size,
-				sizeof(PaddedMutex));
-	}
 	if (!mutexes) {
 		printf("Could not allocate memory for %d mutexes\n", mutex_count);
 		exit(1);
 	}
-	for (int m = 0; m < mutex_count; m++)
-		mutexes[m]->mutex = 0; // make sure the mutex is not set
+	for (int m = 0; m < mutex_count; m++) {
+		mutexes[m].mutex = 0; // make sure the mutex is not set
+//			printf("&mutexes[%d]: %p\n", m, &mutexes[m]); // they are actually aligned on multiples of 64
+	}
 
 	for (int m = 0; m < mutex_count; m++) {
-		hle_lock(&mutexes[m]->mutex);
+		hle_lock(&mutexes[m].mutex);
 	}
 
 	i++;
 
 	for (int m = 0; m < mutex_count; m++) {
-		hle_unlock(&mutexes[m]->mutex);
-	}
-	for (int i = 0; i < mutex_count; i++) {
-		free(mutexes[i]);
+		hle_unlock(&mutexes[m].mutex);
 	}
 	free(mutexes);
 	return 0;

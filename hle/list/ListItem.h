@@ -3,7 +3,7 @@
 
 class ListItem {
 //private:
-//	unsigned char padding[64-24];
+//	unsigned char padding[64-24]; // do not have to be padded since we align them at 64 byte
 public:
 	ListItem * prev; // 8 bit
 	ListItem * next; // 8 bit

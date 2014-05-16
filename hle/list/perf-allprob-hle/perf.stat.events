@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '3097':
+
+        35.135.811 r04C8 (HLE_RETIRED.ABORTED)                                                        [39,10%]
+        98.728.406 r01C8 (HLE_RETIRED.START)                                                        [39,10%]
+        63.592.595 r02C8 (HLE_RETIRED.COMMIT)                                                        [39,10%]
+         2.385.249 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [39,10%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [39,10%]
+        22.546.868 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [39,10%]
+        10.313.976 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [39,10%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [39,10%]
+
+      53,804135826 seconds time elapsed
+

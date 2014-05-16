@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '31319':
+
+         1.004.547 r04C8 (HLE_RETIRED.ABORTED)                                                        [42,04%]
+        16.306.271 r01C8 (HLE_RETIRED.START)                                                        [42,04%]
+        15.301.671 r02C8 (HLE_RETIRED.COMMIT)                                                        [42,04%]
+           364.829 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [42,04%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [42,04%]
+           464.840 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [42,04%]
+           175.891 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [42,04%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [42,04%]
+
+       7,804974912 seconds time elapsed
+

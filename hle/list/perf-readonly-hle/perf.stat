@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '31319':
+
+      14273,464188 task-clock                #    1,829 CPUs utilized          
+    17.547.116.680 instructions              #    0,54  insns per cycle         [40,09%]
+    32.765.205.882 cycles                    #    2,296 GHz                     [40,09%]
+     7.061.252.295 cpu/cycles-t/             #   21,55% transactional cycles    [40,09%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [40,09%]
+        16.354.803 cpu/el-start/             #      432 cycles / elision        [40,09%]
+     6.717.099.303 cpu/cycles-ct/            #    1,05% aborted cycles          [40,09%]
+
+       7,804322813 seconds time elapsed
+

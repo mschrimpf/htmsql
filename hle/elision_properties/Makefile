@@ -34,31 +34,13 @@ EXECUTABLE_READ_ELISION=read-second_elision
 $(EXECUTABLE_READ_ELISION): $(SOURCES_READ_ELISION)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_READ_ELISION) $(LDLAGS)
 
-# nesting
-SOURCES_NESTING=nesting.cpp \
-../../util.cpp ../../Stats.cpp
-nesting: $(SOURCES_NESTING)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING) $(LDLAGS)
-
-# nesting multiple
-SOURCES_NESTING_MULTIPLE=nesting-multiple.cpp \
-../../util.cpp ../../Stats.cpp
-nesting-multiple: $(SOURCES_NESTING_MULTIPLE)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING_MULTIPLE) $(LDLAGS)
-
-# nesting method
-SOURCES_NESTING_METHOD=nesting-method.cpp \
-../../util.cpp ../../Stats.cpp
-nesting-method: $(SOURCES_NESTING_METHOD)
-	$(CC) $(CCFLAGS) -o $@ $(SOURCES_NESTING_METHOD) $(LDLAGS)
-
-# nesting method
+# 
 SOURCES_UNFRIENDLY_INSTRUCTIONS=unfriendly_instructions.cpp \
 ../../util.cpp ../../Stats.cpp
 unfriendly_instructions: $(SOURCES_UNFRIENDLY_INSTRUCTIONS)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_UNFRIENDLY_INSTRUCTIONS) $(LDLAGS)
 
-# nesting method
+# 
 SOURCES_DATA_CONFLICT=data_conflict.cpp \
 ../../util.cpp ../../Stats.cpp
 data_conflict: $(SOURCES_DATA_CONFLICT)

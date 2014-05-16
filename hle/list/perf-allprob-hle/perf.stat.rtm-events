@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '3097':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [39,83%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [39,83%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [39,83%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [39,83%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [39,83%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [39,83%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [39,83%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [39,83%]
+
+      53,810921566 seconds time elapsed
+

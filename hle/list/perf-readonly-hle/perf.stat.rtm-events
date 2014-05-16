@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '31319':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [43,13%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [43,13%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [43,13%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [43,13%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [43,13%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [43,13%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [43,13%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [43,13%]
+
+       7,803842919 seconds time elapsed
+

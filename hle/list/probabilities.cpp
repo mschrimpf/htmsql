@@ -74,7 +74,8 @@ int main(int argc, char *argv[]) {
 		lockTypes[t].init(lockTypesEnum[t]);
 	}
 
-	int probabilities_contains[5] = { 0, 20, 50, 80, 100 };
+	int probabilities_contains[] = { 0, 25, 50, 75, 100 };
+//	int probabilities_contains[] = { 100 };
 
 	printf("p_ins;p_rem;p_con;");
 	const char *appendings[3];

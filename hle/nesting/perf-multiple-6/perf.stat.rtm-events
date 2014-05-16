@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '15974':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [33,49%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [33,49%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [33,49%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [33,49%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [33,49%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [33,49%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [33,49%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [33,49%]
+
+       5,454311718 seconds time elapsed
+

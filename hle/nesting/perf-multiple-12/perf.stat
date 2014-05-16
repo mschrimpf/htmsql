@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '16291':
+
+       1018,638095 task-clock                #    0,996 CPUs utilized          
+     1.492.685.533 instructions              #    0,49  insns per cycle         [33,44%]
+     3.021.651.244 cycles                    #    2,966 GHz                     [33,44%]
+       588.263.158 cpu/cycles-t/             #   19,47% transactional cycles    [33,44%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,44%]
+        11.745.774 cpu/el-start/             #       50 cycles / elision        [33,44%]
+       119.747.134 cpu/cycles-ct/            #   15,51% aborted cycles          [33,44%]
+
+       1,022632079 seconds time elapsed
+

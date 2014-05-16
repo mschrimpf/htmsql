@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '16046':
+
+       7205,981032 task-clock                #    0,998 CPUs utilized          
+    10.389.699.814 instructions              #    0,49  insns per cycle         [33,37%]
+    21.215.454.278 cycles                    #    2,944 GHz                     [33,37%]
+     4.031.850.662 cpu/cycles-t/             #   19,00% transactional cycles    [33,37%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,37%]
+        79.906.471 cpu/el-start/             #       50 cycles / elision        [33,37%]
+     1.020.693.265 cpu/cycles-ct/            #   14,19% aborted cycles          [33,37%]
+
+       7,221968666 seconds time elapsed
+

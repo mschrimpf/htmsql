@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '16010':
+
+        69.795.464 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,29%]
+        69.795.380 r01C8 (HLE_RETIRED.START)                                                        [33,29%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,29%]
+           123.238 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,29%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,29%]
+         9.953.341 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,29%]
+        59.718.716 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,29%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,29%]
+
+       6,374862308 seconds time elapsed
+

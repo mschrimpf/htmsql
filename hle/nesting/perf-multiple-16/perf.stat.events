@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '16326':
+
+        15.718.603 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,41%]
+        15.718.631 r01C8 (HLE_RETIRED.START)                                                        [33,41%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,41%]
+            29.361 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,41%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,41%]
+           980.672 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,41%]
+        14.708.743 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,41%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,41%]
+
+       1,374024817 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '16898':
+
+          0,122087 task-clock                #    0,001 CPUs utilized          
+           181.973 instructions              #    0,66  insns per cycle        
+           274.823 cycles                    #    2,251 GHz                    
+                 0 cpu/cycles-t/             #    0,00% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+                 0 cpu/el-start/             #    0,000 K/sec                  
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+       0,086675221 seconds time elapsed
+

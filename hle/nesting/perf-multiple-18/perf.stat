@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '16363':
+
+       1545,879267 task-clock                #    0,997 CPUs utilized          
+     2.228.263.148 instructions              #    0,48  insns per cycle         [33,63%]
+     4.601.669.920 cycles                    #    2,977 GHz                     [33,63%]
+       871.556.920 cpu/cycles-t/             #   18,94% transactional cycles    [33,63%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,63%]
+        17.823.115 cpu/el-start/             #       49 cycles / elision        [33,63%]
+       141.440.768 cpu/cycles-ct/            #   15,87% aborted cycles          [33,63%]
+
+       1,550347359 seconds time elapsed
+

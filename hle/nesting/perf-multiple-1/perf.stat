@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '15797':
+
+        428,629434 task-clock                #    0,992 CPUs utilized          
+     1.374.059.473 instructions              #    1,08  insns per cycle         [33,62%]
+     1.268.395.467 cycles                    #    2,959 GHz                     [33,63%]
+       816.203.099 cpu/cycles-t/             #   64,35% transactional cycles    [33,63%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,63%]
+         9.469.111 cpu/el-start/             #       86 cycles / elision        [33,63%]
+       815.674.333 cpu/cycles-ct/            #    0,04% aborted cycles          [33,63%]
+
+       0,432156944 seconds time elapsed
+

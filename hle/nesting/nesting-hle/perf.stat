@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '28888':
+
+        710,499657 task-clock                #    0,995 CPUs utilized          
+       986.127.701 instructions              #    0,42  insns per cycle         [66,26%]
+     2.323.854.858 cycles                    #    3,271 GHz                     [66,26%]
+       585.075.785 cpu/cycles-t/             #   25,18% transactional cycles    [66,26%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [66,26%]
+         8.758.771 cpu/el-start/             #       67 cycles / elision        [66,26%]
+       378.563.256 cpu/cycles-ct/            #    8,89% aborted cycles          [66,26%]
+
+       0,713802320 seconds time elapsed
+

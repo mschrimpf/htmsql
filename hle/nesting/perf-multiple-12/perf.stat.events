@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '16291':
+
+        11.797.566 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,37%]
+        11.797.478 r01C8 (HLE_RETIRED.START)                                                        [33,37%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,37%]
+            20.949 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,37%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,37%]
+           981.636 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,37%]
+        10.794.576 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,37%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,37%]
+
+       1,022686510 seconds time elapsed
+

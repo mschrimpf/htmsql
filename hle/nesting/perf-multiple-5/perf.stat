@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '16934':
+
+          0,131619 task-clock                #    0,002 CPUs utilized          
+           183.084 instructions              #    0,62  insns per cycle        
+           297.277 cycles                    #    2,259 GHz                    
+                 0 cpu/cycles-t/             #    0,00% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+                 0 cpu/el-start/             #    0,000 K/sec                  
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+       0,083910851 seconds time elapsed
+

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '15974':
+
+        59.869.157 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,33%]
+        59.869.029 r01C8 (HLE_RETIRED.START)                                                        [33,33%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,33%]
+           118.546 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,33%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,33%]
+         9.963.742 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,33%]
+        49.787.312 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,33%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,33%]
+
+       5,443985597 seconds time elapsed
+

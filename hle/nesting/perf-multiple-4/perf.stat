@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '15904':
+
+       3785,734168 task-clock                #    0,997 CPUs utilized          
+     5.525.623.130 instructions              #    0,50  insns per cycle         [33,40%]
+    11.156.614.865 cycles                    #    2,947 GHz                     [33,40%]
+     2.141.357.331 cpu/cycles-t/             #   19,19% transactional cycles    [33,40%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,40%]
+        39.745.835 cpu/el-start/             #       54 cycles / elision        [33,40%]
+       855.296.370 cpu/cycles-ct/            #   11,53% aborted cycles          [33,40%]
+
+       3,796213835 seconds time elapsed
+

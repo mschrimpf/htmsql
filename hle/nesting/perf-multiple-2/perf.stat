@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '17170':
+
+       4684,903559 task-clock                #    0,998 CPUs utilized          
+    20.626.315.056 instructions              #    1,48  insns per cycle         [33,29%]
+    13.951.018.250 cycles                    #    2,978 GHz                     [33,29%]
+     1.324.134.157 cpu/cycles-t/             #    9,49% transactional cycles    [33,29%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,29%]
+        19.902.566 cpu/el-start/             #       67 cycles / elision        [33,29%]
+       834.322.462 cpu/cycles-ct/            #    3,51% aborted cycles          [33,29%]
+
+       4,693310626 seconds time elapsed
+

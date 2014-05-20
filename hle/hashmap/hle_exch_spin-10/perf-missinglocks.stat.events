@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '4057':
-
-     1.130.612.085 r21D0                                                        [33,30%]
-       566.410.997 r01C8                                                        [33,30%]
-   833.828.613.857 cycles                    #    0,000 GHz                     [33,30%]
-
-      72,974658804 seconds time elapsed
-

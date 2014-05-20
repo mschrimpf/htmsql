@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '4815':
+
+        35.182.031 r04C8 (HLE_RETIRED.ABORTED)                                                        [34,45%]
+        59.393.253 r01C8 (HLE_RETIRED.START)                                                        [34,45%]
+        24.210.878 r02C8 (HLE_RETIRED.COMMIT)                                                        [34,44%]
+             2.854 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [34,44%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [34,44%]
+        22.898.478 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [34,44%]
+        15.604.014 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [34,44%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [34,45%]
+
+       3,855313331 seconds time elapsed
+

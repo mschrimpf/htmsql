@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '13407':
-
-       144.679.966 r21D0                                                        [28,25%]
-                 0 r01C8                                                        [28,25%]
-    19.262.440.584 cycles                    #    0,000 GHz                     [28,25%]
-
-       4,614969239 seconds time elapsed
-

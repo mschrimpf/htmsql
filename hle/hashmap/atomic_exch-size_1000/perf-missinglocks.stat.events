@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '13814':
-
-        74.922.943 r21D0                                                        [34,14%]
-                 0 r01C8                                                        [34,14%]
-    45.743.528.142 cycles                    #    0,000 GHz                     [34,14%]
-
-       4,147714589 seconds time elapsed
-

@@ -6,6 +6,7 @@
 #include <sys/time.h> // time measurement
 #include <ctime> // clock
 #include <vector> // time measurement
+#include <queue>
 #include <set>
 #include <cmath> // sqrt
 #include <limits.h> // INT_MAX
@@ -18,8 +19,6 @@
 #define CORES 4
 
 #define VALUE_RANGE INT_MAX
-std::vector<int> values;
-std::vector<int> operations;
 #define OPERATION_INSERT 1
 #define OPERATION_CONTAINS 0
 #define OPERATION_REMOVE -1
@@ -27,79 +26,24 @@ std::vector<int> operations;
 #define RAND(limit) rand_gerhard(limit)
 //#define RAND(limit) rand() % (limit)
 
-// NOTE: not used, approach does not work
-void checkResult(HashMap *map) {
-	return; // vector is not thread-safe
-	std::set<int> expectedValues;
-	// collect expectedValues
-	std::vector<int>::iterator vIt = values.begin();
-	std::vector<int>::const_iterator oIt = operations.begin();
-	for (; vIt != values.end(); vIt++, oIt++) {
-		int value = *vIt;
-		int operation = *oIt;
-		switch (operation) {
-		case OPERATION_INSERT:
-			expectedValues.insert(value);
-			break;
-		case OPERATION_REMOVE:
-			expectedValues.erase(value);
-			break;
-			// nothing changed for OPERATION_CONTAINS
-		}
-	}
-
-	for (std::set<int>::iterator sIt = expectedValues.begin();
-			sIt != expectedValues.end(); sIt++) {
-		int value = *sIt;
-		if (!map->remove(value)) {
-			printf("ERROR: map is supposed to contain %d\n", value);
-		}
-	}
-	if (map->countElements() > 0) {
-		printf("ERROR: Map is not supposed to contain any more values\n");
-	}
-}
-
-/**
- * Use the values- and operations-vector partitioned for each thread.
- */
-void createValues(int threads_count, int repeats, int probability_insert,
-		int probability_remove, int probability_contains) {
-	for (int r = 0; r < threads_count * repeats; r++) {
-		int rnd_op = RAND(
-				probability_insert + probability_remove + probability_contains);
-		int rnd_val = RAND(VALUE_RANGE);
-		values.push_back(rnd_val);
-		if (rnd_op < probability_insert) { // insert
-			operations.push_back(OPERATION_INSERT);
-		} else if (rnd_op < probability_insert + probability_remove) { // remove
-			operations.push_back(OPERATION_INSERT);
-		} else { // contains
-			operations.push_back(OPERATION_CONTAINS);
-		}
-	}
-}
-
 /**
  * Performs random operations, based on the defined probabilities.
  */
-void random_operations(int tid, HashMap *map, int repeats, int base_inserts,
-		int probability_insert, int probability_remove,
-		int probability_contains) {
-	// insert base-values to achieve a defined base-size of the map
-	for (int i = 0; i < base_inserts; i++) {
-		int rnd_val = RAND(VALUE_RANGE);
-		map->insert(rnd_val);
-	}
-	// operations run
+void run(int tid, HashMap *map, int repeats, int probability_insert,
+		int probability_remove, int probability_contains,
+		std::queue<int> queue) {
 	for (int r = 0; r < repeats; r++) {
 		int rnd_op = RAND(
 				probability_insert + probability_remove + probability_contains);
 		int rnd_val = RAND(VALUE_RANGE);
 		if (rnd_op < probability_insert) { // insert
 			map->insert(rnd_val);
-		} else if (rnd_op < probability_insert + probability_remove) { // remove
-			map->remove(rnd_val);
+			queue.push(rnd_val);
+		} else if (rnd_op < probability_insert + probability_remove
+				&& !queue.empty()) { // remove
+			int val = queue.front();
+			queue.pop();
+			map->remove(val);
 		} else { // contains
 			map->contains(rnd_val);
 		}
@@ -114,16 +58,31 @@ int main(int argc, char *argv[]) {
 	int num_threads = CORES;
 	int repeats = 100000, loops = 100, probability_insert = 25,
 			probability_remove = 25, probability_contains = 50, base_inserts =
-					5000, lockType = -1;
-	int sizes[] = { 1, 100, 1000, 10000 };
+					1000, lockType = -1, size = -1;
 	int *arg_values[] =
 			{ &repeats, &num_threads, &loops, &probability_insert,
 					&probability_remove, &probability_contains, &base_inserts,
-					&lockType };
+					&lockType, &size };
 	const char *identifier[] = { "-r", "-n", "-l", "-pi", "-pr", "-pc", "-bi",
-			"-t" };
-	handle_args(argc, argv, 8, arg_values, identifier);
+			"-t", "-s" };
+	handle_args(argc, argv, 9, arg_values, identifier);
 
+	int * sizes = NULL;
+	int sizes_len;
+	if(size > 0) {
+		sizes_len = 1;
+		sizes = new int[sizes_len];
+		sizes[0] = size;
+	} else {
+		sizes_len = 4;
+		sizes = new int[sizes_len];
+		sizes[0] = 10000;
+		sizes[1] = 1000;
+		sizes[2] = 100;
+		sizes[3] = 1;
+	}
+
+	printf("Throughput per millis\n");
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
 	printf("Repeats:      %d\n", repeats);
@@ -164,7 +123,7 @@ int main(int argc, char *argv[]) {
 	appendings[1] = "Stddev";
 	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
 			appendings, 2);
-	for (int s = 0; s < sizeof(sizes) / sizeof(sizes[0]); s++) {
+	for (int s = 0; s < sizes_len; s++) {
 		printf("%d", sizes[s]);
 		std::cout.flush();
 
@@ -182,6 +141,18 @@ int main(int argc, char *argv[]) {
 						lockTypes[t].enum_type == LockType::EnumType::RTM ?
 								new HashMapRtm(sizes[s]) :
 								new HashMap(sizes[s], lockTypes[t]);
+				// insert base-values to achieve a defined base-size of the map
+				// and distribute base values among multiple queues
+				// to avoid the extreme shrinking of the list in the beginning
+				std::queue<int> queues[num_threads];
+				int rotation = 0;
+				// insert base-values to achieve a defined base-size of the list
+				for (int i = 0; i < base_inserts; i++) {
+					int rnd_val = RAND(VALUE_RANGE);
+					map->insert(rnd_val);
+					queues[rotation++ % num_threads].push(rnd_val);
+				}
+				rotation = 0;
 
 				// measure
 				struct timeval start, end;
@@ -189,9 +160,10 @@ int main(int argc, char *argv[]) {
 
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(random_operations, i, map,
-							repeats, base_inserts, probability_insert,
-							probability_remove, probability_contains);
+					threads[i] = std::thread(run, i, map, repeats,
+							probability_insert, probability_remove,
+							probability_contains,
+							queues[rotation++ % num_threads]);
 				}
 				// wait for threads
 				for (int i = 0; i < num_threads; i++) {
@@ -215,5 +187,6 @@ int main(int argc, char *argv[]) {
 			std::cout.flush();
 		} // end of locktype-loop
 		printf("\n");
-	} // end of repeats loop
+	} // end of sizes loop
+	delete[] sizes;
 }

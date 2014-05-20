@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '11421':
-
-           159.385 r21D0                                                        [65,84%]
-        11.187.720 r01C8                                                        [65,84%]
-     8.265.379.220 cycles                    #    0,000 GHz                     [65,84%]
-
-       0,755464084 seconds time elapsed
-

@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '13364':
-
-        14.737.841 r21D0                                                        [34,74%]
-                 0 r01C8                                                        [34,74%]
-     6.601.926.382 cycles                    #    0,000 GHz                     [34,74%]
-
-       0,637104204 seconds time elapsed
-

@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '17409':
-
-       133.896.095 r21D0                                                        [32,78%]
-                 0 r01C8                                                        [32,78%]
-    56.777.413.274 cycles                    #    0,000 GHz                     [32,78%]
-
-       6,850913242 seconds time elapsed
-

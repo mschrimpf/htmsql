@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '14383':
-
-        60.917.076 r21D0                                                        [33,37%]
-        57.277.638 r01C8                                                        [33,37%]
-    41.143.508.719 cycles                    #    0,000 GHz                     [33,37%]
-
-       3,746846915 seconds time elapsed
-

@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '13692':
-
-        57.155.203 r21D0                                                        [33,38%]
-        55.762.323 r01C8                                                        [33,38%]
-    40.494.120.213 cycles                    #    0,000 GHz                     [33,38%]
-
-       3,683750231 seconds time elapsed
-

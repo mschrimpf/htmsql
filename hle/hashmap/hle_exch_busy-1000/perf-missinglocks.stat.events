@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '25431':
-
-        16.048.459 r21D0                                                        [66,70%]
-     1.146.285.951 r01C8                                                        [66,70%]
-   835.671.029.921 cycles                    #    0,000 GHz                     [66,70%]
-
-      75,909684713 seconds time elapsed
-

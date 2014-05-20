@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '31316':
-
-     1.012.717.671 r21D0                                                        [33,40%]
-       965.168.935 r01C8                                                        [33,40%]
- 4.498.098.958.777 cycles                    #    0,000 GHz                     [33,40%]
-
-     394,956479646 seconds time elapsed
-

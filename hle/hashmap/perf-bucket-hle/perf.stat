@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '2647':
+
+       8248,686433 task-clock                #    3,588 CPUs utilized          
+     6.557.941.061 instructions              #    0,30  insns per cycle         [37,01%]
+    22.125.244.762 cycles                    #    2,682 GHz                     [37,01%]
+     6.066.795.305 cpu/cycles-t/             #   27,42% transactional cycles    [37,01%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [37,00%]
+        40.399.104 cpu/el-start/             #      150 cycles / elision        [37,00%]
+     4.775.346.788 cpu/cycles-ct/            #    5,84% aborted cycles          [37,00%]
+
+       2,298764385 seconds time elapsed
+

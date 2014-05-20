@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '27728':
-
-     1.045.181.780 r21D0                                                        [33,68%]
-       982.762.971 r01C8                                                        [33,68%]
-   715.225.088.986 cycles                    #    0,000 GHz                     [33,68%]
-
-      64,777392651 seconds time elapsed
-

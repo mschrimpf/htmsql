@@ -3,7 +3,7 @@
 
 CC=g++
 SC=gcc
-CCFLAGS=-std=c++0x -O2 # compiler flags
+CCFLAGS=-std=c++0x -O3 # compiler flags
 LDLAGS=-fgnu-tm -mrtm # linker flags
 SFLAGS=-S -masm=intel
 VPATH=../lock_functions # add to search path
@@ -19,3 +19,9 @@ all: $(OBJECTS)
 clean:
 	@echo scc is $(SC) sflags are $(SFLAGS)
 	rm -f $(OBJECTS)
+	
+atomic_vs_header: atomic_exch_hle_lock-busy.s hle_exch_lock-busy.s
+atomic_exch_hle_lock-busy.s: ../lock_functions/atomic_exch_hle_lock-busy.cpp
+	 $(SC) $(SFLAGS) $(CCFLAGS) $< -o $@
+hle_exch_lock-busy.s: ../lock_functions/hle_exch_lock-busy.cpp
+	 $(SC) $(SFLAGS) $(CCFLAGS) $< -o $@

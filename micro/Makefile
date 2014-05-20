@@ -48,3 +48,8 @@ SOURCES_SET_ASSOCIATIVITY_DYNAMIC=set-associativity-dynamic.cpp \
 ../util.cpp ../Stats.cpp
 set-associativity-dynamic: $(SOURCES_SET_ASSOCIATIVITY_DYNAMIC)
 	$(CC) $(CCFLAGS) -O2 -o $@ $(SOURCES_SET_ASSOCIATIVITY_DYNAMIC) $(LDLAGS)
+
+SOURCES_DATA_CONFLICT=data-conflict.cpp \
+../util.cpp ../Stats.cpp
+data-conflict: $(SOURCES_DATA_CONFLICT)
+	$(CC) $(CCFLAGS) -O2 -o $@ $(SOURCES_DATA_CONFLICT) $(LDLAGS)

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '9270':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [36,09%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [36,09%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [36,09%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [36,09%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [36,09%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [36,09%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [36,09%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [36,09%]
+
+       1,968361300 seconds time elapsed
+

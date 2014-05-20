@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '8148':
+
+        41.219.040 r01C9 (RTM_RETIRED.START)                                                        [39,71%]
+         3.728.312 r04C9 (RTM_RETIRED.ABORTED)                                                        [39,71%]
+             1.073 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [39,71%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [39,71%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [39,71%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [39,71%]
+         3.727.061 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [39,71%]
+        37.488.118 r02C9 (RTM_RETIRED.COMMIT)                                                        [39,71%]
+
+       1,941655370 seconds time elapsed
+

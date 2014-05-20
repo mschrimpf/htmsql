@@ -15,7 +15,7 @@
 #include "HashMap-rtm.h"
 #include "../lock_functions/LockType.h"
 
-const int MAX_RETRIES = 10000000;
+const int MAX_RETRIES = 1000000;
 
 LockType rtm_locker(LockType::NONE);
 
@@ -40,14 +40,14 @@ LinkedListItem* HashMapRtm::insert(int value) {
 		LinkedListItem *item_ptr = map[h]->item;
 		while (item_ptr) { // move to last list item
 			if (item_ptr->data == value) { // value already exists
-				delete insert_item;
 				_xend();
+				delete insert_item;
 				return item_ptr;
 			}
 			prev_item = item_ptr; // next
 			item_ptr = item_ptr->successor;
 		}
-		if (prev_item) { // item(s) in list
+		if (prev_item) { // list not empty
 			// -> link to new item from list
 			prev_item->successor = insert_item;
 		} else { // list is empty
@@ -61,7 +61,7 @@ LinkedListItem* HashMapRtm::insert(int value) {
 		if (++failures < MAX_RETRIES)
 			goto retry;
 		else {
-			fprintf(stderr, "Max retries reached for insert %d\n", value);
+			this->maxRetries("insert", value);
 			exit(1);
 		}
 	}
@@ -90,8 +90,8 @@ int HashMapRtm::remove(int value) {
 				LinkedListItem* successor = item->successor;
 				map[h]->item = successor;
 			}
-			delete item;
 			_xend();
+			delete item;
 			return 1;
 		} else { // value does not exist in map
 			_xend();
@@ -101,7 +101,7 @@ int HashMapRtm::remove(int value) {
 		if (++failures < MAX_RETRIES)
 			goto retry;
 		else {
-			fprintf(stderr, "Max retries reached for remove %d\n", value);
+			this->maxRetries("remove", value);
 			exit(1);
 		}
 	}
@@ -131,13 +131,13 @@ int HashMapRtm::contains(int value) {
 		if (++failures < MAX_RETRIES)
 			goto retry;
 		else {
-			fprintf(stderr, "Max retries reached for contains %d\n", value);
+			this->maxRetries("contains", value);
 			exit(1);
 		}
 	}
 }
 
-// override
-void HashMapRtm::print() {
-	fprintf(stderr, "Unsupported operation print\n");
+void HashMapRtm::maxRetries(const char *function_name, int value) {
+	this->print();
+	fprintf(stderr, "Max retries reached for %s %d\n", function_name, value);
 }

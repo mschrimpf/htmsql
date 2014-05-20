@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '4815':
+
+      14061,890646 task-clock                #    3,647 CPUs utilized          
+     8.200.637.059 instructions              #    0,21  insns per cycle         [34,23%]
+    39.098.591.254 cycles                    #    2,780 GHz                     [34,23%]
+    11.247.468.555 cpu/cycles-t/             #   28,77% transactional cycles    [34,23%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [34,23%]
+        59.499.099 cpu/el-start/             #      189 cycles / elision        [34,23%]
+     5.506.399.558 cpu/cycles-ct/            #   14,68% aborted cycles          [34,23%]
+
+       3,856079183 seconds time elapsed
+

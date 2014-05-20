@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '8148':
+
+       7018,522398 task-clock                #    3,565 CPUs utilized          
+     6.037.724.636 instructions              #    0,32  insns per cycle         [30,30%]
+    18.844.483.261 cycles                    #    2,685 GHz                     [30,30%]
+     5.521.478.427 cpu/cycles-t/             #   29,30% transactional cycles    [30,30%]
+        41.386.658 cpu/tx-start/             #      133 cycles / transaction    [30,30%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [30,30%]
+     5.394.379.004 cpu/cycles-ct/            #    0,67% aborted cycles          [30,30%]
+
+       1,968845540 seconds time elapsed
+

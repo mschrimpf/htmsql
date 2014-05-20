@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '29910':
-
-         9.752.252 r21D0                                                        [66,66%]
-     1.071.642.231 r01C8                                                        [66,66%]
- 4.549.780.920.433 cycles                    #    0,000 GHz                     [66,66%]
-
-     398,853331964 seconds time elapsed
-

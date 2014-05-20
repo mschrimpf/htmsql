@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '2647':
+
+         9.513.137 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,85%]
+        41.299.947 r01C8 (HLE_RETIRED.START)                                                        [33,85%]
+        31.786.641 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,85%]
+             1.648 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,85%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,85%]
+         8.841.451 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,85%]
+           831.902 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,85%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,85%]
+
+       2,293649519 seconds time elapsed
+

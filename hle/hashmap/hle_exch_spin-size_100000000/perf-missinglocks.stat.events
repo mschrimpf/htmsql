@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '13582':
-
-           633.542 r21D0                                                        [50,85%]
-        73.944.845 r01C8                                                        [50,85%]
-   618.925.115.907 cycles                    #    0,000 GHz                     [50,85%]
-
-     184,435730692 seconds time elapsed
-

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '23741':
+
+         3.838.288 r01C9 (RTM_RETIRED.START)                                                        [49,38%]
+         2.079.614 r04C9 (RTM_RETIRED.ABORTED)                                                        [49,38%]
+               209 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [49,39%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [49,40%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [49,41%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [49,41%]
+         2.077.849 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [49,42%]
+         1.756.328 r02C9 (RTM_RETIRED.COMMIT)                                                        [49,43%]
+
+       0,116595906 seconds time elapsed
+

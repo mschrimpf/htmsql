@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '5086':
-
-           559.084 r21D0                                                        [65,31%]
-        51.968.923 r01C8                                                        [65,31%]
-    30.161.543.896 cycles                    #    0,000 GHz                     [65,31%]
-
-       3,684978894 seconds time elapsed
-

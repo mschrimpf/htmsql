@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '8148':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [37,96%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [37,96%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [37,96%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [37,96%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [37,96%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [37,96%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [37,96%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [37,96%]
+
+       1,959681786 seconds time elapsed
+

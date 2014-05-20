@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '13448':
-
-            37.641 r21D0                                                        [55,88%]
-        13.416.781 r01C8                                                        [55,88%]
-    18.339.821.041 cycles                    #    0,000 GHz                     [55,88%]
-
-       4,460356014 seconds time elapsed
-

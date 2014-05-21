@@ -1,14 +1,14 @@
 
- Performance counter stats for process id '2647':
+ Performance counter stats for process id '31623':
 
-                 0 r01C9 (RTM_RETIRED.START)                                                        [35,46%]
-                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [35,46%]
-                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [35,46%]
-                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [35,46%]
-                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [35,46%]
-                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [35,46%]
-                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [35,46%]
-                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [35,46%]
+     <not counted> r01C9 (RTM_RETIRED.START)                   
+     <not counted> r04C9 (RTM_RETIRED.ABORTED)                   
+     <not counted> r80C9 (RTM_RETIRED.ABORTED_MISC5)                   
+     <not counted> r40C9 (RTM_RETIRED.ABORTED_MISC4)                   
+     <not counted> r20C9 (RTM_RETIRED.ABORTED_MISC3)                   
+     <not counted> r10C9 (RTM_RETIRED.ABORTED_MISC2)                   
+     <not counted> r08C9 (RTM_RETIRED.ABORTED_MISC1)                   
+     <not counted> r02C9 (RTM_RETIRED.COMMIT)                   
 
-       2,295258755 seconds time elapsed
+       0,069604486 seconds time elapsed
 

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '11036':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [35,23%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [35,23%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [35,23%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [35,23%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [35,23%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [35,23%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [35,23%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [35,23%]
+
+       2,452555317 seconds time elapsed
+

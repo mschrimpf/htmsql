@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '11613':
+
+      11037,515188 task-clock                #    3,834 CPUs utilized          
+     6.883.782.310 instructions              #    0,24  insns per cycle         [31,96%]
+    29.028.455.474 cycles                    #    2,630 GHz                     [31,96%]
+    21.950.015.101 cpu/cycles-t/             #   75,62% transactional cycles    [31,96%]
+       361.206.799 cpu/tx-start/             #       61 cycles / transaction    [31,96%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [31,96%]
+    21.949.995.322 cpu/cycles-ct/            #    0,00% aborted cycles          [31,96%]
+
+       2,879170675 seconds time elapsed
+

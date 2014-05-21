@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '10874':
+
+       3919,542198 task-clock                #    1,227 CPUs utilized          
+     2.312.265.493 instructions              #    0,18  insns per cycle         [34,59%]
+    12.539.948.708 cycles                    #    3,199 GHz                     [34,59%]
+     8.888.979.134 cpu/cycles-t/             #   70,89% transactional cycles    [34,59%]
+       123.190.174 cpu/tx-start/             #       72 cycles / transaction    [34,59%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [34,59%]
+     8.880.909.656 cpu/cycles-ct/            #    0,06% aborted cycles          [34,59%]
+
+       3,194758927 seconds time elapsed
+

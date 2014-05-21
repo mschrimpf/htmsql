@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '11171':
+
+                 0 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,42%]
+                 0 r01C8 (HLE_RETIRED.START)                                                        [33,42%]
+                 0 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,42%]
+                 0 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,42%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,42%]
+                 0 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,42%]
+                 0 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,42%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,42%]
+
+     100,288760192 seconds time elapsed
+

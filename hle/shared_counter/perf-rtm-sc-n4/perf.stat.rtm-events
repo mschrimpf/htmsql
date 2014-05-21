@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '11171':
+
+     4.406.195.836 r01C9 (RTM_RETIRED.START)                                                        [33,45%]
+     3.992.793.278 r04C9 (RTM_RETIRED.ABORTED)                                                        [33,45%]
+            59.866 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [33,45%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [33,45%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [33,45%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [33,45%]
+     3.992.732.634 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [33,45%]
+       413.397.908 r02C9 (RTM_RETIRED.COMMIT)                                                        [33,45%]
+
+     100,292835403 seconds time elapsed
+

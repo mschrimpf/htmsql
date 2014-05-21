@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '10874':
+
+       116.718.367 r01C9 (RTM_RETIRED.START)                                                        [34,52%]
+        10.918.622 r04C9 (RTM_RETIRED.ABORTED)                                                        [34,52%]
+             1.063 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [34,52%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [34,52%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [34,52%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [34,52%]
+        10.917.460 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [34,52%]
+       105.798.365 r02C9 (RTM_RETIRED.COMMIT)                                                        [34,52%]
+
+       3,191380074 seconds time elapsed
+

@@ -17,7 +17,7 @@
 source ~/develop/util.sh
 
 
-_TYPE_ALL=(unmodified alpha beta gamma delta epsilon zeta theta innobase_glibc glibc ssi ssi_alpha)
+_TYPE_ALL=(unmodified alpha beta gamma delta epsilon zeta theta innobase_glibc glibc global_lock ssi ssi_alpha)
 
 
 
@@ -55,7 +55,10 @@ function get_full_type {
 	for type in "${_TYPE_ALL[@]}"
 	do
 		first_char=${type:0:1}
-		if [ "$1" == "$first_char" ] || [ "$1" == "$type" ]; then
+		# starts with
+		pattern="$1"*
+		if [[ "$type" == $pattern ]]; then
+		# if [ "$1" == "$first_char" ] || [ "$1" == "$type" ]; then
 			export _TYPE=$type
 			return 0
 		fi

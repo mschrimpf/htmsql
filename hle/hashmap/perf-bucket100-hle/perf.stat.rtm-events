@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '6199':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [35,15%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [35,15%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [35,15%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [35,15%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [35,15%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [35,15%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [35,15%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [35,15%]
+
+       2,531413589 seconds time elapsed
+

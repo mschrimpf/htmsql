@@ -136,7 +136,7 @@ read_view_remove(
 
 		ut_ad(read_view_validate(view));
 
-		printf("Read view list size: %d\n", trx_sys->view_list.size);
+//		printf("Read view list size: %lu\n", trx_sys->view_list.count);
 
 		UT_LIST_REMOVE(view_list, trx_sys->view_list, view);
 

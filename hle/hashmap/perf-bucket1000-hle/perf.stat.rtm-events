@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '8255':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [36,93%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [36,93%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [36,93%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [36,93%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [36,93%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [36,93%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [36,93%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [36,93%]
+
+       3,101827876 seconds time elapsed
+

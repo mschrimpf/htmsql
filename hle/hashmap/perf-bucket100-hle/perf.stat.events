@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '6199':
+
+        10.574.829 r04C8 (HLE_RETIRED.ABORTED)                                                        [35,27%]
+        40.563.768 r01C8 (HLE_RETIRED.START)                                                        [35,27%]
+        29.988.800 r02C8 (HLE_RETIRED.COMMIT)                                                        [35,27%]
+             2.206 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [35,27%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [35,27%]
+        10.198.837 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [35,27%]
+           482.209 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [35,27%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [35,27%]
+
+       2,529450930 seconds time elapsed
+

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '11036':
+
+       2442,657658 task-clock                #    0,995 CPUs utilized          
+     1.915.246.657 instructions              #    0,24  insns per cycle         [34,80%]
+     7.939.778.547 cycles                    #    3,250 GHz                     [34,80%]
+     5.958.466.805 cpu/cycles-t/             #   75,05% transactional cycles    [34,80%]
+        98.983.996 cpu/tx-start/             #       60 cycles / transaction    [34,80%]
+                 0 cpu/el-start/             #    0,000 K/sec                   [34,80%]
+     5.958.467.088 cpu/cycles-ct/            #    0,00% aborted cycles          [34,80%]
+
+       2,453937044 seconds time elapsed
+

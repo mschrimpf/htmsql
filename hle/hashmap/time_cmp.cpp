@@ -74,12 +74,13 @@ int main(int argc, char *argv[]) {
 		sizes = new int[sizes_len];
 		sizes[0] = size;
 	} else {
-		sizes_len = 4;
+		sizes_len = 5;
 		sizes = new int[sizes_len];
 		sizes[0] = 10000;
 		sizes[1] = 1000;
 		sizes[2] = 100;
-		sizes[3] = 1;
+		sizes[3] = 10;
+		sizes[4] = 1;
 	}
 
 	printf("Total Throughput per millis\n");

@@ -1068,12 +1068,12 @@ struct commit_node_t{
 
 /** Acquire the trx->mutex. */
 #define trx_mutex_enter(t) do {			\
-	hle_mutex_enter(&t->mutex);			\
+	rtm_mutex_enter(&t->mutex);			\
 } while (0)
 
 /** Release the trx->mutex. */
 #define trx_mutex_exit(t) do {			\
-	hle_mutex_exit(&t->mutex);			\
+	rtm_mutex_exit(&t->mutex);			\
 } while (0)
 
 /** @brief The latch protecting the adaptive search system

@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '24914':
-
-     8.820.552.195 r21D0                                                        [37,52%]
-     2.930.134.332 r01C8                                                        [37,52%]
- 2.884.711.039.030 cycles                    #    0,000 GHz                     [37,52%]
-
-     310,240101751 seconds time elapsed
-

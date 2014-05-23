@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '19012':
-
-     1.913.348.515 r21D0                                                        [61,70%]
-       867.192.982 r01C8                                                        [61,70%]
- 2.441.638.333.991 cycles                    #    0,000 GHz                     [61,70%]
-
-     310,239518230 seconds time elapsed
-

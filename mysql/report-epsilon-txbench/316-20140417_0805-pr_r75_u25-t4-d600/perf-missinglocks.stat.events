@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '31799':
-
-    17.702.979.831 r21D0                                                        [37,02%]
-     1.949.938.075 r01C8                                                        [37,02%]
- 5.042.743.763.670 cycles                    #    0,000 GHz                     [37,02%]
-
-     610,209292572 seconds time elapsed
-

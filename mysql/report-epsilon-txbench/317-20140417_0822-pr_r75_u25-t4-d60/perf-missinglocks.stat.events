@@ -1,9 +1,0 @@
-
- Performance counter stats for process id '9850':
-
-     1.593.795.697 r21D0                                                        [30,66%]
-            15.477 r01C8                                                        [30,66%]
-   437.764.652.136 cycles                    #    0,000 GHz                     [30,66%]
-
-      70,242788978 seconds time elapsed
-

@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
 		sizes[3] = 1;
 	}
 
-	printf("Throughput per millis\n");
+	printf("Total Throughput per millis\n");
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
 	printf("Repeats:      %d\n", repeats);
@@ -174,8 +174,9 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli = repeats / elapsed_millis;
-				stats.addValue(throughput_per_milli);
+				float throughput_total = ((float) num_threads * repeats)
+						/ elapsed_millis;
+				stats.addValue(throughput_total);
 
 				// check result
 //				checkResult(&map);

@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
 	// arguments
 	int loops = 100, repeats = 1000000, threads_min = 1, threads_max = 8,
 			threads_mult = 2, lockType = -1, mode = 1, pin = 1, align = 1,
-			wait = 0, global = 1;
+			wait = 0, global = 0;
 	int *values[] = { &loops, &repeats, &threads_min, &threads_max,
 			&threads_mult, &lockType, &mode, &pin, &wait, &align, &global };
 	const char *identifier[] = { "-l", "-r", "-tmin", "-tmax", "-tmult", "-t",
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 	if (wait)
 		usleep(1000000);
 
-	printf("Throughput per millisecond\n");
+	printf("Total Throughput per millisecond\n");
 	printf("Loops:   %d\n", loops);
 	printf("%d - %d threads in multiples of %d\n", threads_min, threads_max,
 			threads_mult);
@@ -224,9 +224,9 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli_and_thread = repeats
+				float throughput_total = ((float) num_threads * repeats)
 						/ elapsed_millis;
-				stats.addValue(throughput_per_milli_and_thread);
+				stats.addValue(throughput_total);
 				// end run
 
 				// check result

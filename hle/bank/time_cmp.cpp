@@ -272,7 +272,7 @@ int main(int argc, char *argv[]) {
 		break;
 	}
 
-	printf("throughput_per_milli_and_thread\n");
+	printf("Total Throughput per millisecond\n");
 	printf("Threads:   %d\n", num_threads);
 	printf("Accounts:  %d\n", ACCOUNT_COUNT);
 	printf("Loops:     %d\n", loops);
@@ -365,9 +365,9 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli_and_thread = repeats
+				float throughput_total = ((float) num_threads * repeats)
 						/ elapsed_millis;
-				stats.addValue(throughput_per_milli_and_thread);
+				stats.addValue(throughput_total);
 
 				// check result
 				switch (lockTypes[t].enum_type) {

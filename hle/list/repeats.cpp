@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	if (wait)
 		usleep(500000);
 
-	printf("Throughput per millisecond and per thread\n");
+	printf("Total Throughput per millisecond\n");
 	printf("Sizeof ListItem: %lu\n", sizeof(ListItem));
 	printf("Aligned:      %d\n", align);
 	printf("Threads:      %d\n", num_threads);
@@ -109,7 +109,8 @@ int main(int argc, char *argv[]) {
 				List * list =
 						lockTypes[t].enum_type == LockType::EnumType::RTM ?
 								(List *) new ListRtm(allocator) :
-								(List *) new ThreadsafeList(allocator, lockTypes[t]);
+								(List *) new ThreadsafeList(allocator,
+										lockTypes[t]);
 
 				// distribute base values among multiple queues
 				// to avoid the extreme shrinking of the list in the beginning
@@ -144,8 +145,9 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&end, NULL);
 				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
 						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_per_milli_and_thread = repeats / elapsed_millis;
-				stats.addValue(throughput_per_milli_and_thread);
+				float throughput_total = ((float) num_threads * repeats)
+						/ elapsed_millis;
+				stats.addValue(throughput_total);
 
 				listSizeStats.addValue(list->size());
 

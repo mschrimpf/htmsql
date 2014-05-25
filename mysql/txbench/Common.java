@@ -52,21 +52,33 @@ public abstract class Common
 
 	public Connection getDBConnection()
 	{
+		Connection conn = null;
 		try
 		{
-			Connection conn = DriverManager.getConnection(db_url, dbprops);
+			conn = DriverManager.getConnection(db_url, dbprops);
 			Statement statement = conn.createStatement();
 			statement.executeUpdate( "CREATE DATABASE IF NOT EXISTS " + db_database );
 			statement.executeUpdate( "USE " + db_database );
+			statement.executeUpdate( "SET @@local.wait_timeout = 5" );
 			statement.close();
 			return conn;
 		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
+			if( conn != null )
+				try {
+					conn.close();
+				} catch(Exception ignored) {}
 			System.exit ( 0 );
 			return null;
 		}
+	}
+	
+	public Statement getStatement(Connection conn) throws Exception
+	{
+		conn.setAutoCommit( true );
+		return conn.createStatement();
 	}
 
        	public static String ALPHABET = "abcdefghijklmnopqrstuvwxyz";

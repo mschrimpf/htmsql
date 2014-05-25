@@ -41,6 +41,7 @@ _HTM_LOCKS_EVENTS[CYCLES]=cycles
 _OUTPUT_FOLDER=
 
 _FILENAME_PERF_STAT="perf.stat"
+_FILENAME_MY_PERF_STAT="my-perf.stat"
 _FILENAME_PERF_STAT_EVENTS="perf.stat.events"
 _FILENAME_PERF_STAT_EVENTS_RTM="perf.stat.rtm-events"
 _FILENAME_PERF_STAT_MISSINGLOCKS_EVENTS="perf-missinglocks.stat.events"
@@ -224,7 +225,38 @@ function stop_profiling {
 	
 	echo "Profiling stopped"
 	
+	process_perf_stat "$_OUTPUT_FOLDER"
 	process_perf_events "$_OUTPUT_FOLDER"
+}
+
+# Outputs the perf stat results with more accurate cycles-t and cycles-abort relative to cycles-t
+function process_perf_stat {
+	if [ -f "$1/$_FILENAME_PERF_STAT" ]; then
+		# sed without -E flag does not support the quantifiers + and ?
+		# extract variables
+		cycles=$(sed -ne "s/\([0-9\.]*\) cycles.*GHz/\1/p" $1/$_FILENAME_PERF_STAT)
+		cycles_t=$(sed -ne "s/\([0-9\.]*\) *cpu\/cycles-t.*/\1/p" $1/$_FILENAME_PERF_STAT)
+		cycles_ct=$(sed -ne "s/\([0-9\.]*\) *cpu\/cycles-ct.*/\1/p" $1/$_FILENAME_PERF_STAT)
+		# remove the dots
+		cycles=$(echo $cycles | sed 's/[\.]*//g')
+		cycles=$(echo $cycles | sed 's/\(\[[0-9]*,[0-9]*%\]\)*//g') # I know this is ugly but I couldn't get the first mutex right in a reasonable amount of time
+		cycles_t=$(echo $cycles_t | sed 's/[\.]*//g')
+		cycles_ct=$(echo $cycles_ct | sed 's/[\.]*//g')
+		# calculate vals
+		share_cycles_transactional=$(bc -l <<< "$cycles_t / $cycles")
+		share_cycles_abort=$(bc -l <<< "1 - $cycles_ct / $cycles_t")
+		cycles_aborted=$(bc -l <<< "$cycles_t - $cycles_ct")
+		# output
+		out_filename="$1/$_FILENAME_MY_PERF_STAT"
+		echo "Total cycles:         $cycles" 											> "$out_filename"
+		echo "Transactional cycles: $cycles_t" 											>> "$out_filename"
+		echo "Committed cycles:     $cycles_ct" 										>> "$out_filename"
+		echo "Aborted cycles:       $cycles_aborted" 									>> "$out_filename"
+		echo "Transactional cycles relative to total:   $share_cycles_transactional" 	>> "$out_filename"
+		echo "Aborted cycles relative to transactional: $share_cycles_abort" 			>> "$out_filename"
+	else
+		echo "File $1/$_FILENAME_PERF_STAT does not exist"
+	fi
 }
 
 # Adds labels to the event-desciprots of the perf-stat-events output-file

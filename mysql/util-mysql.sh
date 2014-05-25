@@ -17,7 +17,7 @@
 source ~/develop/util.sh
 
 
-_TYPE_ALL=(unmodified all glibc global_lock global_lock_hle lock_word lock_word-extra system trx_all trx_lock_func trx_lock_func-rtm)
+_TYPE_ALL=(unmodified all all-byte glibc global_lock global_lock_hle lock_word lock_word-extra system trx_all trx_lock_func trx_lock_func-rtm)
 
 
 

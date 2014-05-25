@@ -239,7 +239,7 @@ rtm_mutex_exit_func(
 #ifdef UNIV_SYNC_DEBUG
         sync_thread_reset_level(mutex);
 #endif
-        rtm_unlock();
+        rtm_unlock(mutex);
 
         /* A problem: we assume that mutex_reset_lock word
         is a memory barrier, that is when we read the waiters
@@ -282,7 +282,7 @@ rtm_mutex_enter_func(
         ut_ad(mutex_validate(mutex));
         ut_ad(!mutex_own(mutex));
 
-        rtm_lock();
+        rtm_lock(mutex, file_name, line);
 }
 
 

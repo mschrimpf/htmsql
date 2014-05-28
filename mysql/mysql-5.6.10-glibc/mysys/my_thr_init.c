@@ -34,6 +34,7 @@ uint 		my_thread_end_wait_time= 5;
 #if !defined(HAVE_LOCALTIME_R) || !defined(HAVE_GMTIME_R)
 mysql_mutex_t LOCK_localtime_r;
 #endif
+pthread_mutexattr_t my_mutexattr_htm;
 #ifdef PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP
 pthread_mutexattr_t my_fast_mutexattr;
 #endif
@@ -138,6 +139,10 @@ my_bool my_thread_global_init(void)
     return 0;
   my_thread_global_init_done= 1;
 
+  pthread_mutexattr_init(&my_mutexattr_htm);
+  pthread_mutexattr_settype(&my_mutexattr_htm,
+		  PTHREAD_MUTEX_DEFAULT);
+
 #ifdef PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP
   /*
     Set mutex type to "fast" a.k.a "adaptive"
@@ -149,8 +154,7 @@ my_bool my_thread_global_init(void)
     short).
   */
   pthread_mutexattr_init(&my_fast_mutexattr);
-  pthread_mutexattr_settype(&my_fast_mutexattr,
-                            PTHREAD_MUTEX_ADAPTIVE_NP);
+
 #endif
 
 #ifdef PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP

@@ -29,7 +29,7 @@ function get_run_number {
 			read RUN_NUMBER < /tmp/.run_number
 		fi
 		if [ "$RUN_NUMBER" -eq -1 ]; then
-			RUN_NUMBER=0
+			RUN_NUMBER=1
 		fi
 		# Update the run number for the next test.
 		NEW_RUN_NUMBER=$(expr $RUN_NUMBER + 1)

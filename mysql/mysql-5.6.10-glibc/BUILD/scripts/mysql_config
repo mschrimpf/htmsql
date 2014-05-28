@@ -98,11 +98,9 @@ elif [ -f "$basedir/include/mysql.h" ]; then
   pkgincludedir="$basedir/include"
 fi
 
-glibc_libs=" -Wl,--rpath=/home/htmsql/develop/glibc-elision/build/lib:/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu -Wl,--dynamic-linker=/home/htmsql/develop/glibc-elision/build/lib/ld-linux-x86-64.so.2 "
-
 version='5.6.10'
 socket='/tmp/mysql.sock'
-ldflags="$glibc_libs"
+ldflags=''
 
 if [ 0 -eq 0 ]; then
   port=0
@@ -113,7 +111,6 @@ fi
 # Create options 
 # We intentionally add a space to the beginning and end of lib strings, simplifies replace later
 libs=" $ldflags -L$pkglibdir -lmysqlclient   -lpthread -lm -ldl "
-libs="$libs $glibc_libs "
 libs="$libs   "
 libs_r=" $ldflags -L$pkglibdir -lmysqlclient_r   -lpthread -lm -ldl   "
 embedded_libs=" $ldflags -L$pkglibdir -lmysqld    -lpthread -lm -lcrypt -ldl    "

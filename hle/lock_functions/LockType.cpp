@@ -141,6 +141,7 @@ void LockType::init(LockType::EnumType enum_type) {
 
 // unsynchronized
 void LockType::no_lock() {
+//	printf("Doing nothing\n");
 }
 void LockType::no_unlock() {
 }

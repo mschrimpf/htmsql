@@ -1,5 +1,6 @@
 #include "atomic_exch_lock-spec.h"
 #include <xmmintrin.h> // _mm_pause
+#include <stdio.h>
 
 void atomic_exch_lock_spec(type *lock) {
 	while (__atomic_exchange_n(lock, 1, __ATOMIC_ACQUIRE)) {

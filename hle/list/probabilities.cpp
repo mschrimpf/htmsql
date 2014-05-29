@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <sys/time.h> // time measurement
 #include <limits.h> // INT_MAX
-
 #include "TimeCmp.h"
 #include "../lock_functions/LockType.h"
 
@@ -31,12 +30,14 @@ int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
 	int align = 1;
-	int repeats = 5000, loops = 100, base_inserts = 100, lockType = -1;
+	int repeats = 5000, loops = 100, base_inserts = 100, lockType = -1,
+			duration = 5000, warmup = 1000;
 	int wait = 0;
 	int *arg_values[] = { &num_threads, &loops, &base_inserts, &lockType,
-			&repeats, &wait, &align };
-	const char *identifier[] = { "-n", "-l", "-bi", "-t", "-r", "-w", "-a" };
-	handle_args(argc, argv, 7, arg_values, identifier);
+			&repeats, &wait, &align, &duration, &warmup };
+	const char *identifier[] =
+			{ "-n", "-l", "-bi", "-t", "-r", "-w", "-a", "-d", "-wu" };
+	handle_args(argc, argv, 9, arg_values, identifier);
 
 	usleep(wait);
 
@@ -44,7 +45,9 @@ int main(int argc, char *argv[]) {
 	printf("Threads:      %d\n", num_threads);
 	printf("Aligned:      %d\n", align);
 	printf("Loops:        %d\n", loops);
-	printf("Repeats:      %d\n", repeats);
+//	printf("Repeats:      %d\n", repeats);
+	printf("Duration:     %d microseconds\n", duration);
+	printf("Warmup:       %d microseconds\n", warmup);
 	printf("(base_inserts=%d, value_range=%d)\n", base_inserts, VALUE_RANGE);
 	printf("\n");
 
@@ -55,11 +58,11 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::ATOMIC_EXCH_SPEC,
 			//
-			LockType::HLE_EXCH_SPEC,
+			LockType::HLE_EXCH_SPIN,
 			//
-			LockType::RTM
-	//
-			};
+			LockType::RTM,
+			//
+			LockType::NONE };
 	int lockTypesCount, lockTypesMin, lockTypesMax;
 	lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
 	if (lockType > -1) {
@@ -67,15 +70,15 @@ int main(int argc, char *argv[]) {
 		lockTypesMax = lockType + 1;
 	} else {
 		lockTypesMin = 0;
-		lockTypesMax = lockTypesCount;
+		lockTypesMax = lockTypesCount - 1; // ignore nosync (has to be selected explicitly)
 	}
 	LockType lockTypes[lockTypesCount];
 	for (int t = lockTypesMin; t < lockTypesMax; t++) {
 		lockTypes[t].init(lockTypesEnum[t]);
 	}
 
-	int probabilities_contains[] = { 0, 25, 50, 75, 100 };
-//	int probabilities_contains[] = { 100 };
+//	int probabilities_contains[] = { 0, 25, 50, 75, 100 };
+	int probabilities_contains[] = { 100 };
 
 	printf("p_ins;p_rem;p_con;");
 	const char *appendings[3];
@@ -83,7 +86,10 @@ int main(int argc, char *argv[]) {
 	appendings[1] = "Stddev";
 	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
 			appendings, 2);
-	for (int p = 0; p < sizeof(probabilities_contains) / sizeof(probabilities_contains[0]); p++) {
+	for (int p = 0;
+			p
+					< sizeof(probabilities_contains)
+							/ sizeof(probabilities_contains[0]); p++) {
 		int probability_contains = probabilities_contains[p];
 		int probability_update = 100 - probability_contains;
 		int probability_insert = probability_update / 2;
@@ -103,7 +109,8 @@ int main(int argc, char *argv[]) {
 				List * list =
 						lockTypes[t].enum_type == LockType::EnumType::RTM ?
 								(List *) new ListRtm(allocator) :
-								(List *) new ThreadsafeList(allocator, lockTypes[t]);
+								(List *) new ThreadsafeList(allocator,
+										lockTypes[t]);
 
 				// distribute base values among multiple queues
 				// to avoid the extreme shrinking of the list in the beginning
@@ -118,28 +125,34 @@ int main(int argc, char *argv[]) {
 				rotation = 0;
 
 				// measure
-				struct timeval start, end;
-				gettimeofday(&start, NULL);
-
-				TimeCmp timeCmp;
+				TimeCmp timeCmps[num_threads];
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(&TimeCmp::run, timeCmp, i, list, repeats,
+					threads[i] = std::thread(&TimeCmp::run_infinite, &timeCmps[i], i,
+							list, //repeats,
 							probability_insert, probability_remove,
 							probability_contains,
 							queues[rotation++ % num_threads]);
 				}
-				// wait for threads
+				usleep(warmup);
+				for (int i = 0; i < num_threads; i++) {
+					timeCmps[i].startMeasurement();
+				}
+				usleep(duration);
+				// stop runs
+				int total_operations = 0;
+				for (int i = 0; i < num_threads; i++) {
+					timeCmps[i].stop();
+					int thread_operations = timeCmps[i].getOperations();
+					printf("[T%d] %d operations\n", i, thread_operations);
+					total_operations += thread_operations;
+				}
 				for (int i = 0; i < num_threads; i++) {
 					threads[i].join();
 				}
 
 				// measure time
-				gettimeofday(&end, NULL);
-				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
-						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_total = ((float) num_threads * repeats)
-						/ elapsed_millis;
+				float throughput_total = ((float) total_operations) / duration;
 				stats.addValue(throughput_total);
 
 				delete list;

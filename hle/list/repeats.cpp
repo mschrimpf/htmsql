@@ -32,12 +32,12 @@ int main(int argc, char *argv[]) {
 	int align = 1;
 	int repeats_min = 1000, repeats_step = 1000, repeats_max = 10000, loops =
 			100, probability_insert = 25, probability_remove = 25,
-			probability_contains = 50, base_inserts = 1000, lockType = -1;
+			probability_contains = 50, base_inserts = 100, lockType = -1,
+			unsynchronized = 0;
 	int wait = 0;
-	int *arg_values[] =
-			{ &num_threads, &loops, &probability_insert, &probability_remove,
-					&probability_contains, &base_inserts, &lockType,
-					&repeats_min, &repeats_max, &repeats_step, &wait, &align };
+	int *arg_values[] = { &num_threads, &loops, &probability_insert,
+			&probability_remove, &probability_contains, &base_inserts,
+			&lockType, &repeats_min, &repeats_max, &repeats_step, &wait, &align };
 	const char *identifier[] = { "-n", "-l", "-pi", "-pr", "-pc", "-bi", "-t",
 			"-rmin", "-rmax", "-rstep", "-w", "-a" };
 	handle_args(argc, argv, 12, arg_values, identifier);
@@ -67,8 +67,9 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::HLE_EXCH_SPEC,
 			//
-			LockType::RTM
+			LockType::RTM,
 	//
+			LockType::NONE
 			};
 	int lockTypesCount, lockTypesMin, lockTypesMax;
 	lockTypesCount = sizeof(lockTypesEnum) / sizeof(lockTypesEnum[0]);
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]) {
 		lockTypesMax = lockType + 1;
 	} else {
 		lockTypesMin = 0;
-		lockTypesMax = lockTypesCount;
+		lockTypesMax = lockTypesCount - 1; // ignore nosync (has to be selected explicitly)
 	}
 	LockType lockTypes[lockTypesCount];
 	for (int t = lockTypesMin; t < lockTypesMax; t++) {

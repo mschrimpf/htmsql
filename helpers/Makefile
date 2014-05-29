@@ -48,7 +48,7 @@ util.o: ../util.cpp
 pthread_lock_glibc: $(SOURCES_PTHREAD_LOCK_GLIBC)
 	$(CC) \
 			-Wl,--rpath=$(GLIBC)/build/lib:/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu -Wl,--dynamic-linker=$(GLIBC)/build/lib/ld-linux-x86-64.so.2 \
-			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS) --enable-lock-elision=yes
+			-o $@ $(SOURCES_PTHREAD_LOCK_GLIBC) $(LDLAGS)
 			
 			
 clean:

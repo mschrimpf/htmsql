@@ -843,10 +843,9 @@ os_fast_mutex_init_func(
 
 	InitializeCriticalSection((LPCRITICAL_SECTION) fast_mutex);
 #else
-	// this branch is called
-	ut_a(0 == pthread_mutex_init(fast_mutex, MY_MUTEX_INIT_FAST));
-//	ut_a(0 == pthread_mutex_init(fast_mutex, NULL)); // was not the cause of no cycles-t
-
+//	ut_a(0 == pthread_mutex_init(fast_mutex, MY_MUTEX_INIT_FAST));
+	ut_a(0 == pthread_mutex_init(fast_mutex, MY_MUTEX_INIT_HTM));
+//	ut_a(0 == pthread_mutex_init(fast_mutex, NULL));
 #endif
 	if (UNIV_LIKELY(os_sync_mutex_inited)) {
 		/* When creating os_sync_mutex itself (in Unix) we cannot

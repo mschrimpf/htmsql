@@ -17,11 +17,24 @@ protected:
 	const int OPERATION_CONTAINS = 0;
 	const int OPERATION_REMOVE = -1;
 
+	int stop_flag = 0;
+	int operations = 0;
+
 public:
 	/**
 	 * Performs random operations, based on the defined probabilities.
 	 */
 	void run(int tid, List * list, int repeats, int probability_insert,
 			int probability_remove, int probability_contains, std::queue<int> queue);
+	/**
+	 * Performs random operations, based on the defined probabilities.
+	 * Infinite run.
+	 */
+	void run_infinite(int tid, List * list, int probability_insert,
+			int probability_remove, int probability_contains, std::queue<int> queue);
+
+	void startMeasurement();
+	void stop();
+	int getOperations();
 };
 #endif // TIME_CMP_H

@@ -30,8 +30,6 @@ Mutex, the basic synchronization primitive
 Created 9/5/1995 Heikki Tuuri
 *******************************************************/
 
-#include <stdio.h>
-
 /******************************************************************//**
 Sets the waiters field in a mutex. */
 UNIV_INTERN
@@ -82,12 +80,10 @@ ib_mutex_test_and_set(
 	ib_mutex_t*	mutex)	/*!< in: mutex */
 {
 #if defined(HAVE_ATOMIC_BUILTINS)
-	printf("ib_mutex_test_and_set::os_atomic_test_and_set_byte\n");
 	return(os_atomic_test_and_set_byte(&mutex->lock_word, 1));
 #else
 	ibool	ret;
 
-//	printf("ib_mutex_test_and_set::os_fast_mutex_trylock (pthread)\n");
 	ret = os_fast_mutex_trylock(&(mutex->os_fast_mutex));
 
 	if (ret == 0) {
@@ -119,7 +115,8 @@ mutex_reset_lock_word(
 #else
 	mutex->lock_word = 0;
 
-	os_fast_mutex_unlock(&(mutex->os_fast_mutex));
+//	os_fast_mutex_unlock(&(mutex->os_fast_mutex));
+	pthread_mutex_unlock(&(mutex->os_fast_mutex.mutex));
 #endif
 }
 
@@ -171,9 +168,7 @@ mutex_exit_func(
 #ifdef UNIV_SYNC_DEBUG
 	sync_thread_reset_level(mutex);
 #endif
-//	mutex_reset_lock_word(mutex);
-
-	pthread_mutex_unlock(&(mutex->os_fast_mutex.mutex));
+	mutex_reset_lock_word(mutex);
 
 	/* A problem: we assume that mutex_reset_lock word
 	is a memory barrier, that is when we read the waiters

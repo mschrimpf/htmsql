@@ -61,7 +61,7 @@ int run(int size, void (*access_func)(unsigned char*, int), int abort_trx) {
 	retry: if (_xbegin() == _XBEGIN_STARTED) {
 		execute_array_access(a, size, access_func, access_array);
 		if (abort_trx)
-			_mm_pause();
+			_xabort(0);
 		_xend();
 	} else {
 		abort_trx = 0;

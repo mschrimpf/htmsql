@@ -26,7 +26,6 @@ Created 9/6/1995 Heikki Tuuri
 #ifdef __WIN__
 #include <winbase.h>
 #endif
-#include <stdio.h>
 
 /**********************************************************//**
 Acquires ownership of a fast mutex.
@@ -40,7 +39,6 @@ os_fast_mutex_trylock(
 	fast_mutex_t*	mutex = &fast_mutex->mutex;
 
 #ifdef __WIN__
-	printf("ERR >> os_fast_mutex_trylock with WIN\n");
 	return(!TryEnterCriticalSection(mutex));
 #else
 	/* NOTE that the MySQL my_pthread.h redefines pthread_mutex_trylock
@@ -48,7 +46,6 @@ os_fast_mutex_trylock(
 	libraries, HP-UX-10.20 follows the old Posix 1003.4a Draft 4 and
 	returns 1 on success (but MySQL remaps that to 0), while Linux,
 	FreeBSD, Solaris, AIX, Tru64 Unix, HP-UX-11.0 return 0 on success. */
-//	printf("os_fast_mutex_trylock with pthread\n");
 
 	return((ulint) pthread_mutex_trylock(mutex));
 #endif

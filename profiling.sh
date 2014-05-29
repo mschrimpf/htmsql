@@ -127,18 +127,7 @@ function profile_perf_stat_rtm_events {
 # $3: (optional) silent
 function profile_perf_record_aborts {
 	_OUTPUT_FOLDER="$2"
-	_EXEC_CMD="perf record \
-				-e cpu/el-abort/pp \
-				-g \
-				--transaction \
-				--weight \
-				-p $1 \
-				-o $2/$_FILENAME_PERF_RECORD_ABORTS"
-	if [ "$3" == true ]; then
-		execute_cmd "$_EXEC_CMD"
-	else
-		execute_cmd "$_EXEC_CMD" "PROFILING PERF RECORD ABORTS"
-	fi
+	profile_perf_record_event "$1" "$2" "cpu/el-abort/pp" "$3"
 }
 # Profile for RTM abort causes
 # $1: pid
@@ -146,17 +135,27 @@ function profile_perf_record_aborts {
 # $3: (optional) silent
 function profile_perf_record_rtm_aborts {
 	_OUTPUT_FOLDER="$2"
+	profile_perf_record_event "$1" "$2" "cpu/tx-abort/pp" "$3"
+}
+# Profile a specific event
+# $1: pid
+# $2: output-dir
+# $3: event descriptor
+# $4: (optional) silent
+function profile_perf_record_event {
+	record_filename=$(echo $3 | sed 's,/,_,g')
+	record_filename="perf-$record_filename.data"
 	_EXEC_CMD="perf record \
-				-e cpu/tx-abort/pp \
+				-e $3 \
 				-g \
 				--transaction \
 				--weight \
 				-p $1 \
-				-o $2/$_FILENAME_PERF_RECORD_RTM_ABORTS"
-	if [ "$3" == true ]; then
+				-o $2/$record_filename"
+	if [ "$4" == true ]; then
 		execute_cmd "$_EXEC_CMD"
 	else
-		execute_cmd "$_EXEC_CMD" "PROFILING PERF RECORD RTM ABORTS"
+		execute_cmd "$_EXEC_CMD" "PROFILING PERF RECORD $3"
 	fi
 }
 # Profile everything
@@ -238,22 +237,33 @@ function process_perf_stat {
 		cycles_t=$(sed -ne "s/\([0-9\.]*\) *cpu\/cycles-t.*/\1/p" $1/$_FILENAME_PERF_STAT)
 		cycles_ct=$(sed -ne "s/\([0-9\.]*\) *cpu\/cycles-ct.*/\1/p" $1/$_FILENAME_PERF_STAT)
 		# remove the dots
-		cycles=$(echo $cycles | sed 's/[\.]*//g')
+		cycles=$(echo $cycles | sed 's/[\. ]*//g') # and spaces
 		cycles=$(echo $cycles | sed 's/\(\[[0-9]*,[0-9]*%\]\)*//g') # I know this is ugly but I couldn't get the first mutex right in a reasonable amount of time
 		cycles_t=$(echo $cycles_t | sed 's/[\.]*//g')
 		cycles_ct=$(echo $cycles_ct | sed 's/[\.]*//g')
 		# calculate vals
-		share_cycles_transactional=$(bc -l <<< "$cycles_t / $cycles")
-		share_cycles_abort=$(bc -l <<< "1 - $cycles_ct / $cycles_t")
+		share_cycles_transactional=$(bc -l <<< "($cycles_t / $cycles) * 100") # percentage
+		share_cycles_abort=$(bc -l <<< "(1 - $cycles_ct / $cycles_t) * 100") # percentage
 		cycles_aborted=$(bc -l <<< "$cycles_t - $cycles_ct")
 		# output
 		out_filename="$1/$_FILENAME_MY_PERF_STAT"
-		echo "Total cycles:         $cycles" 											> "$out_filename"
-		echo "Transactional cycles: $cycles_t" 											>> "$out_filename"
-		echo "Committed cycles:     $cycles_ct" 										>> "$out_filename"
-		echo "Aborted cycles:       $cycles_aborted" 									>> "$out_filename"
-		echo "Transactional cycles relative to total:   $share_cycles_transactional" 	>> "$out_filename"
-		echo "Aborted cycles relative to transactional: $share_cycles_abort" 			>> "$out_filename"
+		
+		export LC_NUMERIC="en_US.UTF-8" # use dots to separate floats
+		
+		printf -- 'Total cycles:         %15d\n' "$cycles"         > "$out_filename"
+		printf -- 'Transactional cycles: %15d\n' "$cycles_t"       >> "$out_filename"
+		printf -- 'Committed cycles:     %15d\n' "$cycles_ct"      >> "$out_filename"
+		printf -- 'Aborted cycles:       %15d\n' "$cycles_aborted" >> "$out_filename"
+		
+		printf -- 'Transactional cycles relative to total:   %f%%\n' "$share_cycles_transactional"      >> "$out_filename"
+		printf -- 'Aborted cycles relative to transactional: %f%%\n' "$share_cycles_abort"      >> "$out_filename"
+		
+		# echo "total cycles:         $cycles" 											> "$out_filename"
+		# echo "transactional cycles: $cycles_t" 											>> "$out_filename"
+		# echo "committed cycles:     $cycles_ct" 										>> "$out_filename"
+		# echo "aborted cycles:       $cycles_aborted" 									>> "$out_filename"
+		# echo "transactional cycles relative to total:   $share_cycles_transactional%" 	>> "$out_filename"
+		# echo "aborted cycles relative to transactional: $share_cycles_abort%" 			>> "$out_filename"
 	else
 		echo "File $1/$_FILENAME_PERF_STAT does not exist"
 	fi

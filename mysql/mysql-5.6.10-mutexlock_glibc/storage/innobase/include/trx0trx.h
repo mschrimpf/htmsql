@@ -1069,13 +1069,13 @@ struct commit_node_t{
 /** Acquire the trx->mutex. */
 #define trx_mutex_enter(t) do {			\
 	/*mutex_enter(&t->mutex);*/			\
-	os_fast_mutex_lock(&t->mutex.os_fast_mutex.mutex); \
+	os_fast_mutex_lock(&t->mutex.os_fast_mutex); \
 } while (0)
 
 /** Release the trx->mutex. */
 #define trx_mutex_exit(t) do {			\
 	/*mutex_exit(&t->mutex);*/			\
-	os_fast_mutex_unlock(&t->mutex.os_fast_mutex.mutex); \
+	os_fast_mutex_unlock(&t->mutex.os_fast_mutex); \
 } while (0)
 
 /** @brief The latch protecting the adaptive search system

@@ -30,6 +30,8 @@ Mutex, the basic synchronization primitive
 Created 9/5/1995 Heikki Tuuri
 *******************************************************/
 
+#include "myhle.h"
+
 /******************************************************************//**
 Sets the waiters field in a mutex. */
 UNIV_INTERN
@@ -150,6 +152,58 @@ mutex_get_waiters(
 	return(*ptr);		/* Here we assume that the read of a single
 				word from memory is atomic */
 }
+
+
+
+UNIV_INLINE
+void
+hle_mutex_exit_func(
+/*============*/
+        ib_mutex_t*     mutex)  /*!< in: pointer to mutex */
+{
+        ut_ad(mutex_own(mutex));
+
+        ut_d(mutex->thread_id = (os_thread_id_t) ULINT_UNDEFINED);
+
+#ifdef UNIV_SYNC_DEBUG
+        sync_thread_reset_level(mutex);
+#endif
+        hle_unlock(&mutex->hle_mutex);
+
+        if (mutex_get_waiters(mutex) != 0) {
+
+                mutex_signal_object(mutex);
+        }
+
+#ifdef UNIV_SYNC_PERF_STAT
+        mutex_exit_count++;
+#endif
+}
+
+/******************************************************************//**
+Locks a mutex for the current thread. If the mutex is reserved, the function
+spins a preset time (controlled by SYNC_SPIN_ROUNDS), waiting for the mutex
+before suspending the thread. */
+UNIV_INLINE
+void
+hle_mutex_enter_func(
+/*=============*/
+        ib_mutex_t*     mutex,          /*!< in: pointer to mutex */
+        const char*     file_name,      /*!< in: file name where locked */
+        ulint           line)           /*!< in: line where locked */
+{
+        ut_ad(mutex_validate(mutex));
+        ut_ad(!mutex_own(mutex));
+
+        hle_lock(&mutex->hle_mutex);
+}
+
+
+
+
+
+
+
 
 /******************************************************************//**
 NOTE! Use the corresponding macro mutex_exit(), not directly this function!

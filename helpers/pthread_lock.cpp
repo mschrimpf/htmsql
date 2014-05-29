@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <immintrin.h>
+#include <xmmintrin.h>
 //#include <vector>
 #include <unistd.h> // usleep
 #include "../hle/lib/hle-emulation.h"
@@ -15,6 +16,7 @@
  *   >> does _NOT_ work with uninitialized attr
  *   >> does _NOT_ work with attr PTHREAD_MUTEX_ADAPTIVE_NP
  *   works uninitialized but lots of aborts (1 - (330.893.836 / 1.406.282.450) = 76.47%)
+ *   symbols PTHREAD_TIMED_NONHLE_MUTEX_INITIALIZER_NP and PTHREAD_MUTEX_HLE_ADAPTIVE_NP from the linux talk are not found
  *
  * _LOCK_
  *   works with pthread_mutex_lock: ~zero aborts
@@ -31,7 +33,7 @@ int main(int argc, char *argv[]) {
 
 	pthread_mutex_t mutex;
 	// works
-//	mutex = PTHREAD_MUTEX_INITIALIZER; // default
+	mutex = PTHREAD_MUTEX_INITIALIZER; // default
 	// works
 //	pthread_mutex_init(&mutex, NULL); // default
 	// works
@@ -66,6 +68,11 @@ int main(int argc, char *argv[]) {
 //	pthread_mutexattr_init(&my_mutexattr);
 //	pthread_mutexattr_settype(&my_mutexattr, PTHREAD_MUTEX_ADAPTIVE_NP);
 //	pthread_mutex_init(&mutex, &my_mutexattr);
+	// symbol not found
+//	pthread_mutexattr_t my_mutexattr;
+//	pthread_mutexattr_init(&my_mutexattr);
+//	pthread_mutexattr_settype(&my_mutexattr, PTHREAD_TIMED_NONHLE_MUTEX_INITIALIZER_NP); //PTHREAD_MUTEX_HLE_ADAPTIVE_NP);
+//	pthread_mutex_init(&mutex, &my_mutexattr);
 
 	int n = 0;
 	for (int i = 0; i < loops; i++) {
@@ -83,7 +90,9 @@ int main(int argc, char *argv[]) {
 		pthread_mutex_unlock(&mutex);
 	}
 
-	pthread_mutex_destroy(&mutex);
+	int ret = pthread_mutex_destroy(&mutex);
+	if(ret != 0)
+		printf("Could not destroy mutex (error %d)\n", ret);
 
 	printf("n: %d (%s)\n", n, n == loops * add ? "correct" : "incorrect");
 

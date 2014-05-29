@@ -844,8 +844,8 @@ os_fast_mutex_init_func(
 	InitializeCriticalSection((LPCRITICAL_SECTION) fast_mutex);
 #else
 //	ut_a(0 == pthread_mutex_init(fast_mutex, MY_MUTEX_INIT_FAST));
-	ut_a(0 == pthread_mutex_init(fast_mutex, MY_MUTEX_INIT_HTM));
-//	ut_a(0 == pthread_mutex_init(fast_mutex, NULL));
+//	ut_a(0 == pthread_mutex_init(fast_mutex, MY_MUTEX_INIT_HTM));
+	ut_a(0 == pthread_mutex_init(fast_mutex, NULL));
 #endif
 	if (UNIV_LIKELY(os_sync_mutex_inited)) {
 		/* When creating os_sync_mutex itself (in Unix) we cannot
@@ -906,7 +906,8 @@ os_fast_mutex_free_func(
 #else
 	int	ret;
 
-	ret = pthread_mutex_destroy(fast_mutex);
+	ret = 0; // FIXME
+	pthread_mutex_destroy(fast_mutex);
 
 	if (UNIV_UNLIKELY(ret != 0)) {
 		ut_print_timestamp(stderr);

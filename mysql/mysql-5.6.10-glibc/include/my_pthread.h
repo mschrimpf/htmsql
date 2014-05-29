@@ -768,8 +768,6 @@ extern int my_rw_trywrlock(my_rw_lock_t *);
 #endif
 
 /* Define mutex types, see my_thr_init.c */
-extern pthread_mutexattr_t my_mutexattr_htm;
-#define MY_MUTEX_INIT_HTM &my_mutexattr_htm
 #define MY_MUTEX_INIT_SLOW   NULL
 #ifdef PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP
 extern pthread_mutexattr_t my_fast_mutexattr;

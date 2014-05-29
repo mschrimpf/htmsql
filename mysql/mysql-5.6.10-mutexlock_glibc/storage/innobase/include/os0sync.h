@@ -355,10 +355,10 @@ Atomic compare-and-swap and increment for InnoDB. */
 
 #if defined(HAVE_IB_GCC_ATOMIC_BUILTINS)
 
-//# define HAVE_ATOMIC_BUILTINS
+# define HAVE_ATOMIC_BUILTINS
 
 # ifdef HAVE_IB_GCC_ATOMIC_BUILTINS_64
-//#  define HAVE_ATOMIC_BUILTINS_64
+#  define HAVE_ATOMIC_BUILTINS_64
 # endif
 
 /**********************************************************//**
@@ -427,8 +427,8 @@ Returns the old value of *ptr, atomically sets *ptr to new_val */
 
 #elif defined(HAVE_IB_SOLARIS_ATOMICS)
 
-//# define HAVE_ATOMIC_BUILTINS
-//# define HAVE_ATOMIC_BUILTINS_64
+# define HAVE_ATOMIC_BUILTINS
+# define HAVE_ATOMIC_BUILTINS_64
 
 /* If not compiling with GCC or GCC doesn't support the atomic
 intrinsics and running on Solaris >= 10 use Solaris atomics */
@@ -499,10 +499,10 @@ Returns the old value of *ptr, atomically sets *ptr to new_val */
 
 #elif defined(HAVE_WINDOWS_ATOMICS)
 
-//# define HAVE_ATOMIC_BUILTINS
+# define HAVE_ATOMIC_BUILTINS
 
 # ifndef _WIN32
-//#  define HAVE_ATOMIC_BUILTINS_64
+#  define HAVE_ATOMIC_BUILTINS_64
 # endif
 
 /**********************************************************//**

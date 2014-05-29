@@ -140,8 +140,6 @@ my_bool my_thread_global_init(void)
   my_thread_global_init_done= 1;
 
   pthread_mutexattr_init(&my_mutexattr_htm);
-  pthread_mutexattr_settype(&my_mutexattr_htm,
-		  PTHREAD_MUTEX_DEFAULT);
 
 #ifdef PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP
   /*
@@ -154,6 +152,8 @@ my_bool my_thread_global_init(void)
     short).
   */
   pthread_mutexattr_init(&my_fast_mutexattr);
+  pthread_mutexattr_settype(&my_fast_mutexattr,
+                              PTHREAD_MUTEX_ADAPTIVE_NP);
 
 #endif
 
@@ -259,6 +259,7 @@ void my_thread_global_end(void)
   mysql_mutex_unlock(&THR_LOCK_threads);
 
   pthread_key_delete(THR_KEY_mysys);
+  pthread_mutexattr_destroy(&my_mutexattr_htm);
 #ifdef PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP
   pthread_mutexattr_destroy(&my_fast_mutexattr);
 #endif
@@ -477,7 +478,7 @@ static uint get_thread_lib(void)
 {
 #ifdef _CS_GNU_LIBPTHREAD_VERSION
   char buff[64];
-    
+
   confstr(_CS_GNU_LIBPTHREAD_VERSION, buff, sizeof(buff));
 
   if (!strncasecmp(buff, "NPTL", 4))
@@ -493,7 +494,7 @@ static uint get_thread_lib(void)
   In Visual Studio 2005 and later, default SIGABRT handler will overwrite
   any unhandled exception filter set by the application  and will try to
   call JIT debugger. This is not what we want, this we calling __debugbreak
-  to stop in debugger, if process is being debugged or to generate 
+  to stop in debugger, if process is being debugged or to generate
   EXCEPTION_BREAKPOINT and then handle_segfault will do its magic.
 */
 

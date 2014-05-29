@@ -229,18 +229,18 @@ function stop_profiling {
 }
 
 # Outputs the perf stat results with more accurate cycles-t and cycles-abort relative to cycles-t
+# $1: directory containing the perf file
 function process_perf_stat {
 	if [ -f "$1/$_FILENAME_PERF_STAT" ]; then
 		# sed without -E flag does not support the quantifiers + and ?
 		# extract variables
-		cycles=$(sed -ne "s/\([0-9\.]*\) cycles.*GHz/\1/p" $1/$_FILENAME_PERF_STAT)
-		cycles_t=$(sed -ne "s/\([0-9\.]*\) *cpu\/cycles-t.*/\1/p" $1/$_FILENAME_PERF_STAT)
-		cycles_ct=$(sed -ne "s/\([0-9\.]*\) *cpu\/cycles-ct.*/\1/p" $1/$_FILENAME_PERF_STAT)
-		# remove the dots
-		cycles=$(echo $cycles | sed 's/[\. ]*//g') # and spaces
-		cycles=$(echo $cycles | sed 's/\(\[[0-9]*,[0-9]*%\]\)*//g') # I know this is ugly but I couldn't get the first mutex right in a reasonable amount of time
-		cycles_t=$(echo $cycles_t | sed 's/[\.]*//g')
-		cycles_ct=$(echo $cycles_ct | sed 's/[\.]*//g')
+		cycles=$(sed -ne "s/\([0-9\.,]*\) cycles.*GHz.*/\1/p" $1/$_FILENAME_PERF_STAT)
+		cycles_t=$(sed -ne "s/\([0-9\.,]*\) *cpu\/cycles-t.*/\1/p" $1/$_FILENAME_PERF_STAT)
+		cycles_ct=$(sed -ne "s/\([0-9\.,]*\) *cpu\/cycles-ct.*/\1/p" $1/$_FILENAME_PERF_STAT)
+		# remove the dots/commas (commas occur with a different exported LC_NUMERIC)
+		cycles=$(echo $cycles | sed 's/[\.,]*//g')
+		cycles_t=$(echo $cycles_t | sed 's/[\.,]*//g')
+		cycles_ct=$(echo $cycles_ct | sed 's/[\.,]*//g')
 		# calculate vals
 		share_cycles_transactional=$(bc -l <<< "($cycles_t / $cycles) * 100") # percentage
 		share_cycles_abort=$(bc -l <<< "(1 - $cycles_ct / $cycles_t) * 100") # percentage

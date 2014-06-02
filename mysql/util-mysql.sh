@@ -17,7 +17,9 @@
 source ~/develop/util.sh
 
 
-_TYPE_ALL=(unmodified all glibc mutexlock_glibc global_lock global_lock_hle lock_word syslock trx_all trx_lock_func trx_lock_func-rtm)
+# make sure the values in this array are ordered from shortest to longest, 
+# otherwise e.g. "abc" would be matched even though one wanted "ab"
+_TYPE_ALL=(unmodified all glibc mutexlock_glibc global_lock global_lock_hle lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
 
 
 

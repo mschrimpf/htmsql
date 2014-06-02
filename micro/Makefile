@@ -53,3 +53,8 @@ SOURCES_DATA_CONFLICT=data-conflict.cpp \
 ../util.cpp ../Stats.cpp
 data-conflict: $(SOURCES_DATA_CONFLICT)
 	$(CC) $(CCFLAGS) -O2 -o $@ $(SOURCES_DATA_CONFLICT) $(LDLAGS)
+
+SOURCES_RTM_ABORT_FLAGS=rtm-abort_flags.cpp \
+../util.cpp ../Stats.cpp
+rtm-abort_flags: $(SOURCES_RTM_ABORT_FLAGS)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_RTM_ABORT_FLAGS) $(LDLAGS)

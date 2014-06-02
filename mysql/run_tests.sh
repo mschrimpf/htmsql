@@ -15,11 +15,12 @@ source ~/develop/mysql/util-mysql.sh
 # vars
 read_probabilities=(100 75)
 
-threads=(1 2 4)
+threads=(1 2 4 8 16 32 64)
 
+# warmup=10
 duration=150
 
-types=(unmodified syslock glibc) #_TYPE_ALL #
+types=${_TYPE_ALL[*]} #(unmodified syslock syslock-rtm glibc) #
 
 benchmarks=(txbench) #dbt2 sysbench)
 declare -A benchmark_paths
@@ -46,7 +47,7 @@ function print_header {
 	printf -- 'Threads' > "$1"
 	
 	for type in ${types[@]}; do
-		header_labels=("tx/ms" "transactional cycles" "aborted cycles")
+		header_labels=("tx/ms" "Standard deviation" "transactional cycles [%]" "aborted cycles [%]")
 		for header_label in "${header_labels[@]}"; do
 			printf -- ';%s' "$type $header_label" >> "$1"
 		done
@@ -81,6 +82,7 @@ printf -- ' * %3d%%\n' "${read_probabilities[@]}" # print as list
 
 echo ""
 
+# echo "Warmup of each run:   $warmup"
 echo "Duration of each run: $duration"
 
 echo ""
@@ -120,6 +122,7 @@ for benchmark in ${benchmarks[@]}; do
 				result_file="$report_dir/result.txt"
 				
 				extract_and_write "$result_file" "Total transactions:[^0-9\.]*\([0-9\.]*\).*" "$file_out"
+				extract_and_write "$result_file" "Standard deviation:[^0-9\.]*\([0-9\.]*\).*" "$file_out"
 				extract_and_write "$result_file" "Transactional cycles relative to total:[^0-9\.]*\([0-9\.]*\).*" "$file_out"
 				extract_and_write "$result_file" "Aborted cycles relative to transactional:[^0-9\.]*\([0-9\.]*\).*" "$file_out"
 				

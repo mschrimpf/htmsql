@@ -136,80 +136,6 @@ void run_global_partitioned(int tid, int repeats, Account account_pool[],
 }
 
 ///
-/// RTM
-///
-void xrun(int tid, int repeats, Account account_pool[], int account_pool_size,
-		int (*random_generator)(int limit), int probability_transfer,
-		int probability_read) {
-	for (int r = 0; r < repeats; r++) {
-		int rnd_op = random_generator(probability_transfer + probability_read);
-		// update
-		if (rnd_op < probability_transfer) {
-			// select two random accounts
-			int a1 = random_generator(account_pool_size);
-			int a2 = random_generator(account_pool_size);
-			// withdraw money from a1 and deposit it into a2
-			int money = random_generator(MAXIMUM_MONEY);
-
-			int failures = 0;
-			retry_transfer:
-			// withdraw money from a1 and deposit it into a2
-			if (_xbegin() == _XBEGIN_STARTED) {
-				account_pool[a1].withdraw(money); // remove from a1
-				account_pool[a2].deposit(money); // store in a2
-				_xend();
-			} else {
-				if (failures++ < RTM_MAX_RETRIES)
-					goto retry_transfer;
-				else
-					fprintf(stderr, "Max retry count reached\n");
-			}
-		}
-		// read
-		else {
-			int a = random_generator(account_pool_size);
-
-			int failures = 0;
-			retry_read: if (_xbegin() == _XBEGIN_STARTED) {
-				double balance = account_pool[a].getBalance();
-				_xend();
-			} else {
-				if (failures++ < RTM_MAX_RETRIES)
-					goto retry_read;
-				else
-					fprintf(stderr, "Max retry count reached\n");
-			}
-		}
-	}
-}
-
-void xrun_partitioned(int tid, int repeats, Account account_pool[],
-		int account_pool_size) {
-// partition the array and build an assumed best-case for HLE: no conflicts at all
-	int partition_size = account_pool_size / CORES;
-	int partition_left = tid * partition_size;
-	for (int r = 0; r < repeats; r++) {
-		int a1 = partition_left + (r % partition_size);
-		int a2 = partition_left + ((r + 1) % partition_size);
-		int money = MAXIMUM_MONEY;
-
-		int failures = 0;
-		retry:
-		// withdraw money from a1 and deposit it into a2
-		if (_xbegin() == _XBEGIN_STARTED) {
-			account_pool[a1].withdraw(money); // remove from a1
-			account_pool[a2].deposit(money); // store in a2
-			_xend();
-		} else {
-			if (failures++ < RTM_MAX_RETRIES)
-				goto retry;
-			else
-				fprintf(stderr, "Max retry count reached\n");
-		}
-	}
-}
-
-///
 /// value check
 ///
 void checkResult(int account_pool_size, long actual_sum,
@@ -341,20 +267,11 @@ int main(int argc, char *argv[]) {
 				gettimeofday(&start, NULL);
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					switch (lockTypes[t].enum_type) {
-					case LockType::EnumType::RTM:
-						threads[i] = std::thread(xrun, i, repeats, account_pool,
-								ACCOUNT_COUNT, random_generator,
-								probability_transfer, probability_read);
-						break;
-					default:
-						threads[i] = std::thread(run_object, i, repeats,
-								ts_account_pool, ACCOUNT_COUNT,
-//								account_pool, ACCOUNT_COUNT, &lockTypes[t],
-								random_generator, probability_transfer,
-								probability_read);
-						break;
-					}
+					threads[i] = std::thread(run_object, i, repeats,
+							ts_account_pool, ACCOUNT_COUNT, // object lock
+//							account_pool, ACCOUNT_COUNT, &lockTypes[t], // global lock
+							random_generator, probability_transfer,
+							probability_read);
 				}
 				// wait for threads
 				for (int i = 0; i < num_threads; i++) {
@@ -370,14 +287,7 @@ int main(int argc, char *argv[]) {
 				stats.addValue(throughput_total);
 
 				// check result
-				switch (lockTypes[t].enum_type) {
-				case LockType::EnumType::RTM:
-					checkResult(ACCOUNT_COUNT, account_pool);
-					break;
-				default:
-					checkResult(ACCOUNT_COUNT, ts_account_pool);
-					break;
-				}
+				checkResult(ACCOUNT_COUNT, ts_account_pool);
 			} // end of loops loop
 
 			printf(";%.2f;%.2f", stats.getExpectedValue(),

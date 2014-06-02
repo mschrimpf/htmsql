@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 //	FILE * out = fopen(filename.c_str(), "w");
 
 	//	printf("Clocks;Attempts;Failures;Failure rate [%%]\n");
-	fprintf(out, "Clocks;ExpectedValue;Variance;Stddev;Stderror\n");
+	fprintf(out, "Clocks;ExpectedValue;Stddev\n");
 
 	for (int clocks = rmin; clocks <= rmax; clocks *= rstep) {
 		fprintf(out, "%d", clocks);
@@ -37,12 +37,14 @@ int main(int argc, char *argv[]) {
 		for (int l = 0; l < loops; l++) {
 			int failures = 0;
 			for (int p = 0; p < inner_loops; p++) {
-				if (_xbegin() == _XBEGIN_STARTED) {
+				int code = _xbegin();
+				if (code == _XBEGIN_STARTED) {
 					for (int i = 0; i < clocks; i++) {
 						asm volatile("nop");
 					}
 					_xend();
 				} else {
+//					printf("Code: %d\n", code); // 0 for interrupts
 					failures++;
 				}
 			}
@@ -58,7 +60,7 @@ int main(int argc, char *argv[]) {
 //		int successful = loops - failures;
 //		float variance = (float) (successful * failures) / (loops * loops);
 
-		printf(";%.2f;%.2f", stats.getExpectedValue(), stats.getVariance(), stats.getStandardDeviation(), stats.getStandardError());
+		printf(";%.2f;%.2f", stats.getExpectedValue(), stats.getStandardDeviation());
 		fprintf(out, "\n");
 	}
 

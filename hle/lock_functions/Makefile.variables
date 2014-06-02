@@ -11,4 +11,5 @@ $(current_dir)/hle_tas_lock-busy.cpp $(current_dir)/hle_tas_lock-spec.cpp \
 $(current_dir)/hle_exch_lock-busy.cpp $(current_dir)/hle_exch_lock-spec.cpp \
 $(current_dir)/hle_exch_lock-spec-checked.cpp \
 $(current_dir)/hle_asm_exch_lock-busy.cpp $(current_dir)/hle_asm_exch_lock-spec.cpp \
-$(current_dir)/hle_asm_exch_lock-asm_spec.cpp
+$(current_dir)/hle_asm_exch_lock-asm_spec.cpp \
+$(current_dir)/rtm_lock.cpp

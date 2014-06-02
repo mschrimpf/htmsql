@@ -20,6 +20,7 @@
 #include "hle_asm_exch_lock-busy.h"
 #include "hle_asm_exch_lock-spec.h"
 #include "hle_asm_exch_lock-asm_spec.h"
+#include "rtm_lock.h"
 
 LockType::LockType() {
 	this->lock = this->unlock = NULL;
@@ -41,13 +42,9 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->lock = &LockType::pthread_lock;
 		this->unlock = &LockType::pthread_unlock;
 		break;
-//	case PTHREAD_HLE:
-//		this->lock = &LockType::pthread_hle_lock;
-//		this->unlock = &LockType::pthread_hle_unlock;
-//		break;
 	case RTM:
-		this->lock = this->unlock = NULL;
-		this->type_lock_function = this->type_unlock_function = NULL;
+		this->lock = &LockType::rtm_call_lock;
+		this->unlock = &LockType::rtm_call_unlock;
 		break;
 	case ATOMIC_EXCH_BUSY:
 	case ATOMIC_EXCH_SPEC:
@@ -152,13 +149,6 @@ void LockType::pthread_lock() {
 void LockType::pthread_unlock() {
 	pthread_mutex_unlock(&this->p_mutex);
 }
-// pthread hle
-//void LockType::pthread_hle_lock() {
-//	pthread_mutex_lock(&this->p_mutex_hle);
-//}
-//void LockType::pthread_hle_unlock() {
-//	pthread_mutex_unlock(&this->p_mutex_hle);
-//}
 // type
 void LockType::type_lock() {
 //	printf("Attempting to lock %p (%d)\n", &this->type_mutex, this->type_mutex);
@@ -166,6 +156,13 @@ void LockType::type_lock() {
 }
 void LockType::type_unlock() {
 	(*this->type_unlock_function)(&this->type_mutex);
+}
+// rtm
+void LockType::rtm_call_lock() {
+	rtm_lock();
+}
+void LockType::rtm_call_unlock() {
+	rtm_unlock();
 }
 
 void LockType::printHeader(LockType *lockTypes[], int size, FILE *out) {
@@ -207,8 +204,6 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "No synchronization";
 	case PTHREAD:
 		return "POSIX Thread";
-//	case PTHREAD_HLE:
-//		return "POSIX Thread HLE";
 	case ATOMIC_EXCH_BUSY:
 		return "atomic_EXCH_BUSY";
 	case ATOMIC_EXCH_SPEC:

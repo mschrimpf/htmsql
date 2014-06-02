@@ -91,6 +91,8 @@ private:
 //	void pthread_hle_unlock();
 	void type_lock();
 	void type_unlock();
+	void rtm_call_lock();
+	void rtm_call_unlock();
 };
 
 #endif // LOCKTYPE_H_

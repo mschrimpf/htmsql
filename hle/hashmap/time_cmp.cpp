@@ -26,13 +26,16 @@
 #define RAND(limit) rand_gerhard(limit)
 //#define RAND(limit) rand() % (limit)
 
+volatile int stop_run;
+int * operations_count;
+
 /**
  * Performs random operations, based on the defined probabilities.
  */
-void run(int tid, HashMap *map, int repeats, int probability_insert,
-		int probability_remove, int probability_contains,
-		std::queue<int> queue) {
-	for (int r = 0; r < repeats; r++) {
+void run(int tid, HashMap *map, int probability_insert, int probability_remove,
+		int probability_contains, std::queue<int> queue) {
+	int ops = 0; // use local variable, otherwise we're potentially in the same cache line as other threads
+	while (!stop_run) {
 		int rnd_op = RAND(
 				probability_insert + probability_remove + probability_contains);
 		int rnd_val = RAND(VALUE_RANGE);
@@ -47,7 +50,9 @@ void run(int tid, HashMap *map, int repeats, int probability_insert,
 		} else { // contains
 			map->contains(rnd_val);
 		}
+		ops++;
 	}
+	operations_count[tid] = ops;
 }
 
 ///
@@ -56,20 +61,19 @@ void run(int tid, HashMap *map, int repeats, int probability_insert,
 int main(int argc, char *argv[]) {
 	// arguments
 	int num_threads = CORES;
-	int repeats = 100000, loops = 100, probability_insert = 25,
-			probability_remove = 25, probability_contains = 50, base_inserts =
-					1000, lockType = -1, size = -1;
-	int *arg_values[] =
-			{ &repeats, &num_threads, &loops, &probability_insert,
-					&probability_remove, &probability_contains, &base_inserts,
-					&lockType, &size };
-	const char *identifier[] = { "-r", "-n", "-l", "-pi", "-pr", "-pc", "-bi",
-			"-t", "-s" };
-	handle_args(argc, argv, 9, arg_values, identifier);
+	int loops = 10, probability_insert = 25, probability_remove = 25,
+			probability_contains = 50, base_inserts = 1000, lockType = -1,
+			size = -1, duration = 100000, warmup = duration / 10;
+	int *arg_values[] = { &num_threads, &loops, &probability_insert,
+			&probability_remove, &probability_contains, &base_inserts,
+			&lockType, &size, &warmup, &duration };
+	const char *identifier[] = { "-n", "-l", "-pi", "-pr", "-pc", "-bi", "-t",
+			"-s", "-w", "-d" };
+	handle_args(argc, argv, 10, arg_values, identifier);
 
 	int * sizes = NULL;
 	int sizes_len;
-	if(size > 0) {
+	if (size > 0) {
 		sizes_len = 1;
 		sizes = new int[sizes_len];
 		sizes[0] = size;
@@ -86,7 +90,7 @@ int main(int argc, char *argv[]) {
 	printf("Total Throughput per millis\n");
 	printf("Threads:      %d\n", num_threads);
 	printf("Loops:        %d\n", loops);
-	printf("Repeats:      %d\n", repeats);
+	printf("Duration:     %d microseconds (%d microseconds warmup)\n", duration, warmup);
 	printf("(base_inserts=%d, prob_ins=%d, prob_rem=%d, prob_con=%d)\n",
 			base_inserts, probability_insert, probability_remove,
 			probability_contains);
@@ -128,9 +132,6 @@ int main(int argc, char *argv[]) {
 		printf("%d", sizes[s]);
 		std::cout.flush();
 
-		if (sizes[s] < 100)
-			repeats = 1000;
-
 		// run all lock-types
 		for (int t = lockTypesMin; t < lockTypesMax; t++) {
 			// use a loop to check the time more than once --> normalize
@@ -156,27 +157,35 @@ int main(int argc, char *argv[]) {
 				rotation = 0;
 
 				// measure
-				struct timeval start, end;
-				gettimeofday(&start, NULL);
+				operations_count = new int[num_threads];
+				stop_run = 0;
 
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(run, i, map, repeats,
-							probability_insert, probability_remove,
-							probability_contains,
+					threads[i] = std::thread(run, i, map, probability_insert,
+							probability_remove, probability_contains,
 							queues[rotation++ % num_threads]);
 				}
-				// wait for threads
+				// warmup
+				usleep(warmup);
 				for (int i = 0; i < num_threads; i++) {
-					threads[i].join();
+					operations_count[i] = 0; // reset
+				}
+				usleep(duration);
+				stop_run = 1; // stop runs
+				for (int i = 0; i < num_threads; i++) {
+					threads[i].join(); // make sure result has been written
 				}
 
+				int total_operations = 0;
+				for (int i = 0; i < num_threads; i++) {
+					total_operations += operations_count[i];
+				}
+				delete[] operations_count;
+
 				// measure time
-				gettimeofday(&end, NULL);
-				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
-						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_total = ((float) num_threads * repeats)
-						/ elapsed_millis;
+				int time_in_millis = duration / 1000;
+				float throughput_total = ((float) total_operations) / time_in_millis;
 				stats.addValue(throughput_total);
 
 				// check result

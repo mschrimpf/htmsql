@@ -152,7 +152,8 @@ int main(int argc, char *argv[]) {
 				}
 
 				// measure time
-				float throughput_total = ((float) total_operations) / duration;
+				int time_in_millis = duration / 1000;
+				float throughput_total = ((float) total_operations) / time_in_millis;
 				stats.addValue(throughput_total);
 
 				delete list;

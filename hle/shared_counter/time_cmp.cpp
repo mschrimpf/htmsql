@@ -7,7 +7,6 @@
 #include <vector>
 
 #include <immintrin.h> // rtm
-
 #include "PaddedCounter.h"
 #include "ThreadsafeCounter.h"
 #include "RtmCounter.h"
@@ -49,71 +48,63 @@ PaddedCounter * createCounter(LockType& lockType, int align, int global) {
 	return counter;
 }
 
-void run(int tid, int repeats, PaddedCounter * counter, int pin) {
+volatile int stop_run;
+int * operations_count;
+
+void run(int tid, PaddedCounter * counter, int pin) {
 	if (pin && stick_this_thread_to_core(tid % CORES) != 0)
 		printf("Could not pin thread\n");
 
-	for (int r = 0; r < repeats; r++) {
+	int ops = 0; // use local variable, otherwise we're potentially in the same cache line as other threads
+
+	while (!stop_run) {
 		counter->increment();
+		ops++;
 	}
+	operations_count[tid] = ops;
 }
 
-void run_unaligned(int tid, int repeats, int * counter, LockType * locker,
+void run_unaligned(int tid, int * counter, LockType * locker,
 		int pin) {
 	if (pin && stick_this_thread_to_core(tid % CORES) != 0)
 		printf("Could not pin thread\n");
 
-	for (int r = 0; r < repeats; r++) {
+	int ops = 0; // use local variable, otherwise we're potentially in the same cache line as other threads
+
+	while (!stop_run) {
 		(locker->*(locker->lock))();
 		(*counter)++;
 		(locker->*(locker->unlock))();
+		ops++;
 	}
-}
-
-void run_unaligned_rtm(int tid, int repeats, int * counter, int pin) {
-	if (pin && stick_this_thread_to_core(tid % CORES) != 0)
-		printf("Could not pin thread\n");
-
-	for (int r = 0; r < repeats; r++) {
-		int failures = 0, max_failures = 1000000;
-		retry: if (_xbegin() == _XBEGIN_STARTED) {
-			(*counter)++;
-			_xend();
-		} else {
-			failures++;
-			if (failures < max_failures)
-				goto retry;
-			else {
-				printf("Max failures %d reached\n", failures);
-				exit(1);
-			}
-		}
-	}
+	operations_count[tid] = ops;
 }
 
 int main(int argc, char *argv[]) {
 	// arguments
-	int loops = 100, repeats = 1000000, threads_min = 1, threads_max = 8,
-			threads_mult = 2, lockType = -1, mode = 1, pin = 1, align = 1,
-			wait = 0, global = 0;
-	int *values[] = { &loops, &repeats, &threads_min, &threads_max,
-			&threads_mult, &lockType, &mode, &pin, &wait, &align, &global };
-	const char *identifier[] = { "-l", "-r", "-tmin", "-tmax", "-tmult", "-t",
-			"-m", "-p", "-w", "-a", "-g" };
+	int loops = 100, threads_min = 1, threads_max = 8, threads_mult = 2,
+			lockType = -1, mode = 1, pin = 1, align = 1, wait = 0, global = 0,
+			duration = 100000, warmup = duration / 10;
+	int *values[] = { &loops, &threads_min, &threads_max, &threads_mult,
+			&lockType, &mode, &pin, &wait, &align, &global, &warmup, &duration };
+	const char *identifier[] = { "-l", "-tmin", "-tmax", "-tmult", "-t", "-m",
+			"-p", "-w", "-a", "-g", "-w", "-d" };
 	handle_args(argc, argv, 11, values, identifier);
 
 	if (wait)
 		usleep(1000000);
 
 	printf("Total Throughput per millisecond\n");
-	printf("Loops:   %d\n", loops);
+	printf("Loops:    %d\n", loops);
+	printf("Duration: %d microseconds (%d microseconds warmup)\n", duration,
+			warmup);
 	printf("%d - %d threads in multiples of %d\n", threads_min, threads_max,
 			threads_mult);
-	printf("Mode:    %s\n",
+	printf("Mode:     %s\n",
 			mode == COUNTER_PER_CORE ? "counter per core" : "single counter");
-	printf("Pinned:  %s\n", pin ? "yes" : "no");
-	printf("Aligned: %s\n", align ? "yes" : "no");
-	printf("Global:  %s\n", global ? "yes" : "no");
+	printf("Pinned:   %s\n", pin ? "yes" : "no");
+	printf("Aligned:  %s\n", align ? "yes" : "no");
+	printf("Global:   %s\n", global ? "yes" : "no");
 	printf("\n");
 
 	// locking
@@ -169,7 +160,7 @@ int main(int argc, char *argv[]) {
 					perCoreLocks[c] = lockTypes[t];
 				}
 
-				//
+				// create counters
 				PaddedCounter *singleCounter = createCounter(lockTypes[t],
 						align, global);
 				PaddedCounter * perCoreCounters[CORES];
@@ -178,8 +169,9 @@ int main(int argc, char *argv[]) {
 							global);
 				}
 				// run
-				struct timeval start, end;
-				gettimeofday(&start, NULL);
+				operations_count = new int[num_threads];
+				stop_run = 0;
+
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
 					if (align) {
@@ -192,7 +184,7 @@ int main(int argc, char *argv[]) {
 							counter = perCoreCounters[i % CORES];
 							break;
 						}
-						threads[i] = std::thread(run, i, repeats, counter, pin);
+						threads[i] = std::thread(run, i, counter, pin);
 					}
 					// unaligned
 					else {
@@ -208,29 +200,34 @@ int main(int argc, char *argv[]) {
 							locker = &perCoreLocks[i % CORES];
 							break;
 						}
-						if (lockTypes[t].enum_type != LockType::EnumType::RTM)
-							threads[i] = std::thread(run_unaligned, i, repeats,
-									counter, locker, pin);
-						else
-							threads[i] = std::thread(run_unaligned_rtm, i,
-									repeats, counter, pin);
+						threads[i] = std::thread(run_unaligned, i, counter,
+								locker, pin);
 					}
 				}
-				// wait for threads
+				// warmup
+				usleep(warmup);
 				for (int i = 0; i < num_threads; i++) {
-					threads[i].join();
+					operations_count[i] = 0; // reset
+				}
+				usleep(duration);
+				stop_run = 1; // stop runs
+				for (int i = 0; i < num_threads; i++) {
+					threads[i].join(); // make sure result has been written
 				}
 
-				gettimeofday(&end, NULL);
-				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
-						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_total = ((float) num_threads * repeats)
-						/ elapsed_millis;
+				int total_operations = 0;
+				for (int i = 0; i < num_threads; i++) {
+					total_operations += operations_count[i];
+				}
+				delete[] operations_count;
+
+				// measure time
+				int time_in_millis = duration / 1000;
+				float throughput_total = ((float) total_operations) / time_in_millis;
 				stats.addValue(throughput_total);
-				// end run
 
 				// check result
-				int expected = num_threads * repeats;
+				int expected = total_operations;
 				int actual = 0;
 				switch (mode) {
 				case SINGLE_COUNTER:

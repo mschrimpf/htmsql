@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
 	if (wait)
 		usleep(500000);
 
+	printf("-- THIS BENCHMARK IS DEPRECATED AND MIGHT USE IMPROPER INDICATORS --\n");
 	printf("Total Throughput per millisecond\n");
 	printf("Sizeof ListItem: %lu\n", sizeof(ListItem));
 	printf("Aligned:      %d\n", align);

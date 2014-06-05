@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '7887':
+
+       813.827.228 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,36%]
+     1.557.911.799 r01C8 (HLE_RETIRED.START)                                                        [33,36%]
+       744.084.600 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,36%]
+            81.800 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,36%]
+                36 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,36%]
+       659.175.218 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,36%]
+       195.833.985 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,36%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,36%]
+
+     109,997619364 seconds time elapsed
+

@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '8340':
+
+     1.127.280.956 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,40%]
+     1.799.634.191 r01C8 (HLE_RETIRED.START)                                                        [33,40%]
+       672.352.890 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,40%]
+            95.935 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,40%]
+                18 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,40%]
+       756.932.052 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,40%]
+       458.722.855 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,40%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,40%]
+
+     110,023857342 seconds time elapsed
+

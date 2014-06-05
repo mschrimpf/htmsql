@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 	int num_threads = CORES;
 	int loops = 10, probability_insert = 25, probability_remove = 25,
 			probability_contains = 50, base_inserts = 1000, lockType = -1,
-			size = -1, duration = 100000, warmup = duration / 10;
+			size = -1, duration = 1000000, warmup = duration / 10;
 	int *arg_values[] = { &num_threads, &loops, &probability_insert,
 			&probability_remove, &probability_contains, &base_inserts,
 			&lockType, &size, &warmup, &duration };

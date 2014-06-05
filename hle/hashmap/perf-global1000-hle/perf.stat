@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '8340':
+
+     435774,332109 task-clock                #    3,960 CPUs utilized          
+   240.357.386.236 instructions              #    0,19  insns per cycle         [33,35%]
+ 1.258.879.252.829 cycles                    #    2,889 GHz                     [33,35%]
+   326.092.374.461 cpu/cycles-t/             #   25,90% transactional cycles    [33,35%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,35%]
+     1.799.198.389 cpu/el-start/             #      181 cycles / elision        [33,35%]
+   151.644.533.756 cpu/cycles-ct/            #   13,86% aborted cycles          [33,35%]
+
+     110,039234849 seconds time elapsed
+

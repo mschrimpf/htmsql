@@ -1,14 +1,14 @@
 
- Performance counter stats for process id '6199':
+ Performance counter stats for process id '31587':
 
-        10.574.829 r04C8 (HLE_RETIRED.ABORTED)                                                        [35,27%]
-        40.563.768 r01C8 (HLE_RETIRED.START)                                                        [35,27%]
-        29.988.800 r02C8 (HLE_RETIRED.COMMIT)                                                        [35,27%]
-             2.206 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [35,27%]
-                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [35,27%]
-        10.198.837 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [35,27%]
-           482.209 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [35,27%]
-                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [35,27%]
+       579.012.354 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,34%]
+     1.940.761.249 r01C8 (HLE_RETIRED.START)                                                        [33,34%]
+     1.361.748.777 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,34%]
+            52.305 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,34%]
+                36 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,34%]
+       549.843.780 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,34%]
+        37.456.303 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,34%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,34%]
 
-       2,529450930 seconds time elapsed
+     101,027675558 seconds time elapsed
 

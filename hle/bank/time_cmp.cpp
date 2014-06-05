@@ -5,8 +5,6 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <cmath> // sqrt
-#define PADDING 1
-
 #include <immintrin.h> // RTM: _x
 #include "entities/Account.h"
 #include "entities/ThreadsafeAccount.h"
@@ -14,6 +12,7 @@
 #include "../../util.h"
 #include "../../Stats.h"
 
+#define PADDING 1
 #define CORES 4
 #define RTM_MAX_RETRIES 1000000
 
@@ -29,6 +28,9 @@ int rands_size = 0;
 int rands_counter = 0;
 
 int num_threads = CORES;
+
+volatile int stop_run;
+int * operations_count;
 
 ///
 /// Random generators
@@ -46,10 +48,12 @@ int savedrand(int limit) {
 ///
 /// Object-related locks run functions
 ///
-void run_object(int tid, int repeats, ThreadsafeAccount account_pool[],
+void run_object(int tid, ThreadsafeAccount account_pool[],
 		int account_pool_size, int (*random_generator)(int limit),
 		int probability_transfer, int probability_read) {
-	for (int r = 0; r < repeats; r++) {
+	int ops = 0; // use local variable, otherwise we're potentially in the same cache line as other threads
+
+	while (!stop_run) {
 		int rnd_op = random_generator(probability_transfer + probability_read);
 		// update
 		if (rnd_op < probability_transfer) {
@@ -68,71 +72,9 @@ void run_object(int tid, int repeats, ThreadsafeAccount account_pool[],
 
 			double balance = account_pool[a].getBalance();
 		}
+		ops++;
 	}
-}
-void run_object_partitioned(int tid, int repeats,
-		ThreadsafeAccount account_pool[], int account_pool_size) {
-// partition the array and build an assumed best-case for HLE: no conflicts at all
-	int partition_size = account_pool_size / num_threads;
-	int partition_left = tid * partition_size;
-	for (int r = 0; r < repeats; r++) {
-		int a1 = partition_left + (r % partition_size);
-		int a2 = partition_left + ((r + 1) % partition_size);
-		int money = MAXIMUM_MONEY;
-
-		account_pool[a1].withdraw(money); // remove from a1
-		account_pool[a2].deposit(money); // store in a2
-	}
-}
-///
-/// Global lock run functions
-///
-void run_global(int tid, int repeats, Account account_pool[],
-		int account_pool_size, LockType *locker,
-		int (*random_generator)(int limit), int probability_transfer,
-		int probability_read) {
-	LockType _locker = *locker;
-	for (int r = 0; r < repeats; r++) {
-		int rnd_op = random_generator(probability_transfer + probability_read);
-		// update
-		if (rnd_op < probability_transfer) {
-			// select two random accounts
-			int a1 = random_generator(account_pool_size);
-			int a2 = random_generator(account_pool_size);
-			// withdraw money from a1 and deposit it into a2
-			int money = random_generator(MAXIMUM_MONEY);
-
-			(_locker.*(_locker.lock))();
-			account_pool[a1].withdraw(money); // remove from a1
-			account_pool[a2].deposit(money); // store in a2
-			(_locker.*(_locker.unlock))();
-		}
-		// read
-		else {
-			int a = random_generator(account_pool_size);
-
-			(_locker.*(_locker.lock))();
-			double balance = account_pool[a].getBalance();
-			(_locker.*(_locker.unlock))();
-		}
-	}
-}
-// partition the array and build an assumed best-case for HLE: no conflicts at all
-void run_global_partitioned(int tid, int repeats, Account account_pool[],
-		int account_pool_size, LockType *locker) {
-	int partition_size = account_pool_size / num_threads;
-	int partition_left = tid * partition_size;
-	for (int r = 0; r < repeats; r++) {
-		int a1 = partition_left + (r % partition_size);
-		int a2 = partition_left + ((r + 1) % partition_size);
-		// withdraw money from a1 and deposit it into a2
-		int money = MAXIMUM_MONEY;
-
-		(locker->*(locker->lock))();
-		account_pool[a1].withdraw(money); // remove from a1
-		account_pool[a2].deposit(money); // store in a2
-		(locker->*(locker->unlock))();
-	}
+	operations_count[tid] = ops;
 }
 
 ///
@@ -172,10 +114,11 @@ void checkResult(int account_pool_size, ThreadsafeAccount ts_account_pool[]) {
 int main(int argc, char *argv[]) {
 // arguments
 	num_threads = CORES;
-	int loops = 100, repeats = 100000, /* 0: sysrand, 1: customrand, 2: savedrand */
-	rgen = 2;
-	int *values[] = { &num_threads, &loops, &repeats, &rgen };
-	const char *identifier[] = { "-n", "-l", "-r", "-rgen" };
+	int loops = 100, duration = 1000000, warmup = duration / 10,
+			rgen = 2 /* 0: sysrand, 1: customrand, 2: savedrand */;
+	int *values[] =
+			{ &num_threads, &loops, &rgen, &warmup, &duration };
+	const char *identifier[] = { "-n", "-l", "-r", "-rgen", "-w", "-d" };
 	handle_args(argc, argv, 4, values, identifier);
 
 	int probabilities_read[] = { 0, 50, 100 };
@@ -202,7 +145,8 @@ int main(int argc, char *argv[]) {
 	printf("Threads:   %d\n", num_threads);
 	printf("Accounts:  %d\n", ACCOUNT_COUNT);
 	printf("Loops:     %d\n", loops);
-	printf("Repeats:   %d\n", repeats);
+	printf("Duration:  %d microseconds (%d microseconds warmup)\n", duration,
+			warmup);
 	printf("function:  %s\n", "run_object");
 	printf("\n");
 
@@ -262,28 +206,39 @@ int main(int argc, char *argv[]) {
 					account_pool[a].init(ACCOUNT_INITIAL);
 				}
 
-				// measure
-				struct timeval start, end;
-				gettimeofday(&start, NULL);
+				// run
+				operations_count = new int[num_threads];
+				stop_run = 0;
+
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(run_object, i, repeats,
-							ts_account_pool, ACCOUNT_COUNT, // object lock
+					threads[i] = std::thread(run_object, i, ts_account_pool,
+							ACCOUNT_COUNT, // object lock
 //							account_pool, ACCOUNT_COUNT, &lockTypes[t], // global lock
 							random_generator, probability_transfer,
 							probability_read);
 				}
-				// wait for threads
+				// warmup
+				usleep(warmup);
 				for (int i = 0; i < num_threads; i++) {
-					threads[i].join();
+					operations_count[i] = 0; // reset
+				}
+				usleep(duration);
+				stop_run = 1; // stop runs
+				for (int i = 0; i < num_threads; i++) {
+					threads[i].join(); // make sure result has been written
 				}
 
+				int total_operations = 0;
+				for (int i = 0; i < num_threads; i++) {
+					total_operations += operations_count[i];
+				}
+				delete[] operations_count;
+
 				// measure time
-				gettimeofday(&end, NULL);
-				float elapsed_millis = (end.tv_sec - start.tv_sec) * 1000
-						+ (end.tv_usec - start.tv_usec) / 1000;
-				float throughput_total = ((float) num_threads * repeats)
-						/ elapsed_millis;
+				int time_in_millis = duration / 1000;
+				float throughput_total = ((float) total_operations)
+						/ time_in_millis;
 				stats.addValue(throughput_total);
 
 				// check result

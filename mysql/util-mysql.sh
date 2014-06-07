@@ -15,6 +15,7 @@
 #
 
 source ~/develop/util.sh
+source ~/develop/profiling.sh
 
 
 # make sure the values in this array are ordered from shortest to longest, 
@@ -137,15 +138,12 @@ function get_mysql_folder_from_type {
 # $1 type (ignored if $MYSQLBINDIR are already set)
 function set_mysql_type_if_not_set {
 	if [[ -z "$MYSQLBINDIR" ]]; then # type not yet set globally
-		echo "mysqlbindir not set yet"
 		if [[ -z "$1" ]]; then # no type argument provided
 			echo "Error: neither MYSQLBINDIR set nor type argument provided"
 			return 1
 		else
 			get_mysql_folder_from_type "$1"
 		fi
-	else
-		echo "mysqlbindir already set to $MYSQLBINDIR"
 	fi
 }
 

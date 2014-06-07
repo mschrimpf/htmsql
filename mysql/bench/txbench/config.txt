@@ -1,6 +1,6 @@
 DB.User=root
 DB.Pass=
-DB.Url=jdbc:mysql://127.0.0.1:3306
+DB.Url=jdbc:mysql://deskkemper05.informatik.tu-muenchen.de:3306
 DB.Database=txbench
 DB.JdbcDriver=com.mysql.jdbc.Driver
 DB.TableSize=100000

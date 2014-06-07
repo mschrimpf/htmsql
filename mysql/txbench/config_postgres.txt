@@ -1,9 +1,0 @@
-DB.User=postgres
-DB.Pass=
-DB.Url=jdbc:postgresql://129.78.97.46:5432/sibench
-DB.JdbcDriver=org.postgresql.Driver
-DB.TableSize=100000
-EXP.NumOfRowRead=100
-EXP.NumOfRowUpdate=20
-EXP.Duration=60
-EXP.WarmUp=10

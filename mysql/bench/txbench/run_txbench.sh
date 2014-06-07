@@ -158,25 +158,6 @@ function check_status() {
 
 
 
-# Profiles perf stat and perf record.
-# Saves the corresponding pids in $PROFILE_PERF_STAT_PID and $_PROFILE_PERF_RECORD_PID
-function profile {
-	_MYSQL_PID=$(pidof mysqld)
-	
-	profile_perf_stat "$_MYSQL_PID" "$_OUTPUT_DIR" &
-	# if [ "$_TYPE" != "unmodified" ]; then # don't profile non-htm
-	# fi
-	if [ "$_TYPE" == "glibc" ] || [ "$_TYPE" == "mutexlock_glibc" ] || [ "$_TYPE" == "trx_lock_func-rtm" ]; then # rtm events
-		profile_perf_stat_rtm_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
-		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "tx-start" true &
-		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/tx-abort/pp" &
-	else # hle events
-		profile_perf_stat_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
-		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "el-start" true &
-		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/el-abort/pp" &
-	fi
-}
-
 # Compile
 
 _EXEC_CMD="javac *.java"
@@ -186,7 +167,10 @@ execute_cmd "$_EXEC_CMD"  "COMPILING"
 # Suite run
 #####
 
-start_mysql
+echo "Type is: $_TYPE"
+
+#start_mysql
+execute_on_haswell "source ~/develop/mysql/util-mysql.sh ; start_mysql $_TYPE ;"
 
 # init
 _EXEC_CMD="java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar DBGen"
@@ -201,13 +185,20 @@ _EXEC_CMD="java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin
 execute_cmd "$_EXEC_CMD" "RUNNING TXBENCH" &
 
 _RUN_PID=$!
-profile &
+#profile_mysql "$_TYPE" "$_OUTPUT_DIR" &
+execute_on_haswell "source ~/develop/mysql/util-mysql.sh ; profile_mysql $_TYPE $_OUTPUT_DIR & ;"
 
 echo "waiting for run_pid $_RUN_PID"
 wait "$_RUN_PID"
-stop_profiling "$_OUTPUT_DIR"
-# copy profiling contents to result (blankline as separator)
-echo "" >> "$_OUTPUT_DIR/result.txt"
+#stop_profiling "$_OUTPUT_DIR"
+execute_on_haswell "source ~/develop/profiling.sh ; stop_profiling $_OUTPUT_DIR ;"
+
+# download profiling results
+_EXEC_CMD="scp -r ${HASWELL_SERVER_USER}@${HASWELL_SERVER_ADDRESS}:$_OUTPUT_DIR $_OUTPUT_DIR"
+execute_cmd "$_EXEC_CMD Downloading profiling results"
+
+# copy profiling contents to result
+echo "" >> "$_OUTPUT_DIR/result.txt" # blankline as separator
 cat "$_OUTPUT_DIR/$_FILENAME_MY_PERF_STAT" >> "$_OUTPUT_DIR/result.txt"
 
 check_status
@@ -215,7 +206,8 @@ check_status
 _EXEC_CMD="java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar Cleanup"
 execute_cmd "$_EXEC_CMD" "CLEANING DATABASE"
 
-stop_mysql
+#stop_mysql
+execute_on_haswell "source ~/develop/mysql/util-mysql.sh ; stop_mysql $_TYPE ;"
 
 # stdout_log has not yet been moved (on error)
 if [ "$_STATUS" == 0 ]; then

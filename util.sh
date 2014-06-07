@@ -6,6 +6,10 @@
 # 	at the beginning of 2014.
 #
 
+HASWELL_SERVER_USER="htmsql"
+HASWELL_SERVER_ADDRESS="deskkemper05.informatik.tu-muenchen.de"
+HASWELL_SERVER_PRIVATE_KEY="~/develop/private-key-protected.openssh"
+
 
 # Logs both stdout and stderr to the file given as first argument. They 
 # will still be displayed on the console.
@@ -82,4 +86,19 @@ function replace_string_recursive {
 		return
 	fi
 	grep -rl "$oldstring" "$path" | xargs sed -i s/"$oldstring"/"$newstring"/g
+}
+
+function setup_ssh_agent {
+	ssh-agent bash
+	ssh-add ~/develop/private-key-protected.openssh
+}
+
+# $1: command
+function execute_on_haswell {
+	if [[ -z "$1" ]]; then
+		echo "Error: No remote command provided"
+		return 1
+	fi
+	CMD="ssh ${HASWELL_SERVER_USER}@${HASWELL_SERVER_ADDRESS} -i $HASWELL_SERVER_PRIVATE_KEY $1"
+	execute_cmd "$CMD" "Executing on Haswell"
 }

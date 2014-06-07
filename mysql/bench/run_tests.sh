@@ -86,6 +86,11 @@ echo ""
 echo "Duration of each run: $duration"
 
 echo ""
+
+echo "Setting up SSH Agent"
+setup_ssh_agent
+
+echo ""
 echo ""
 
 

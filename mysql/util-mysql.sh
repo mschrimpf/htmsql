@@ -87,7 +87,6 @@ function get_report_folder_from_type {
 		return 1
 	fi
 	
-	#export DBT2_REPORTDIR="${_TYPES_REPORTDIRS[${_TYPE}]}"
 	export DBT2_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}${_TYPE}-dbt2"
 	export SYSBENCH_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}${_TYPE}-sysbench"
 	export TXBENCH_REPORTDIR="$_MYSQLDIRS_ROOTPATH/${_REPORTDIR_PREFIX}${_TYPE}-txbench"
@@ -125,28 +124,49 @@ _MYSQL_CMD_SHUTDOWN="mysqladmin --no-defaults -u root shutdown"
 
 
 # Retrieves the folder for the given type.
-# The mysql-root-folder will be stored in $DBT2_MYSQLPATH.
-# The install/bin folder will be stored in $DBT2_MYSQLBINDIR.
+# The mysql-root-folder will be stored in $MYSQLPATH.
+# The install/bin folder will be stored in $MYSQLBINDIR.
 function get_mysql_folder_from_type {
 	get_full_type "$1"
 	exit_if_status_error
-	export DBT2_MYSQLPATH="${_MYSQLDIRS_ROOTPATH}/$_MYSQLDIR_PREFIX$_TYPE"
-	#export DBT2_MYSQLBINDIR="${_TYPES_MYSQLBINDIRS[${_TYPE}]}"
-	export DBT2_MYSQLBINDIR="$DBT2_MYSQLPATH/$_MYSQL_PATH_INSTALL/$_MYSQL_PATH_BIN"
+	export MYSQLPATH="${_MYSQLDIRS_ROOTPATH}/$_MYSQLDIR_PREFIX$_TYPE"
+	#export MYSQLBINDIR="${_TYPES_MYSQLBINDIRS[${_TYPE}]}"
+	export MYSQLBINDIR="$MYSQLPATH/$_MYSQL_PATH_INSTALL/$_MYSQL_PATH_BIN"
 }
 
-# Asynchronous start of MySQL located in $DBT2_MYSQLBINDIR.
+# $1 type (ignored if $MYSQLBINDIR are already set)
+function set_mysql_type_if_not_set {
+	if [[ -z "$MYSQLBINDIR" ]]; then # type not yet set globally
+		echo "mysqlbindir not set yet"
+		if [[ -z "$1" ]]; then # no type argument provided
+			echo "Error: neither MYSQLBINDIR set nor type argument provided"
+			return 1
+		else
+			get_mysql_folder_from_type "$1"
+		fi
+	else
+		echo "mysqlbindir already set to $MYSQLBINDIR"
+	fi
+}
+
+# Asynchronous start of MySQL located in $MYSQLBINDIR.
+# $1 type (ignored if $MYSQLBINDIR is set)
 function start_mysql {
+	set_mysql_type_if_not_set "$1"
+	exit_if_status_error
 	ulimit -Sn 4096
 	#read -p "Start MySQL, then press enter"
-	_EXEC_CMD="$DBT2_MYSQLBINDIR/$_MYSQL_CMD_START"
+	_EXEC_CMD="$MYSQLBINDIR/$_MYSQL_CMD_START"
 	execute_cmd "$_EXEC_CMD" "STARTING DATABASE" &
 	sleep 5
 }
 # Synchronous stop of running MySQL instance.
+# $1 type (ignored if $MYSQLBINDIR is set)
 function stop_mysql {
+	set_mysql_type_if_not_set "$1"
+	exit_if_status_error
 	#read -p "Stop MySQL, then press enter"
-	_EXEC_CMD="$DBT2_MYSQLBINDIR/$_MYSQL_CMD_SHUTDOWN"
+	_EXEC_CMD="$MYSQLBINDIR/$_MYSQL_CMD_SHUTDOWN"
 	execute_cmd "$_EXEC_CMD" "STOPPING DATABASE" false
 }
 
@@ -157,5 +177,44 @@ function delete_mysql_data {
 	fi
 	if [ -f "$DBT2_MYSQLPATH/$_MYSQL_PATH_INSTALL/$_MYSQL_CNF" ]; then
 		rm "$DBT2_MYSQLPATH/$_MYSQL_PATH_INSTALL/$_MYSQL_CNF"
+	fi
+}
+
+
+
+# Profiles MySQL
+# $1: type
+# $2: output dir
+function profile_mysql {
+	if [[ -z "$1" ]]; then
+		echo "Error: Type argument (1) not provided"
+		return 1
+	else
+		export _TYPE="$1"
+	fi
+	if [[ -z "$2" ]]; then
+		echo "Error: OutputDir argument (2) not provided"
+		return 1
+	else
+		export _OUTPUT_DIR="$2"
+		if [ ! -d "$_OUTPUT_DIR" ]; then
+			echo "Creating output dir: $_OUTPUT_DIR"
+			mkdir -p "$_OUTPUT_DIR"
+		fi
+	fi
+	
+	_MYSQL_PID=$(pidof mysqld)
+	
+	profile_perf_stat "$_MYSQL_PID" "$_OUTPUT_DIR" &
+	# if [ "$_TYPE" != "unmodified" ]; then # don't profile non-htm
+	# fi
+	if [ "$_TYPE" == "glibc" ] || [ "$_TYPE" == "mutexlock_glibc" ] || [ "$_TYPE" == "trx_lock_func-rtm" ]; then # rtm events
+		profile_perf_stat_rtm_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
+		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "tx-start" true &
+		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/tx-abort/pp" &
+	else # hle events
+		profile_perf_stat_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
+		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "el-start" true &
+		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/el-abort/pp" &
 	fi
 }

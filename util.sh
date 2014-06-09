@@ -92,13 +92,31 @@ function setup_ssh_agent {
 	ssh-agent bash
 	ssh-add ~/develop/private-key-protected.openssh
 }
+function assure_ssh_agent {
+	# assure ssh-agent running
+	SSH_AGENT_PID=$(pidof ssh-agent)
+	if [[ -z "$SSH_AGENT_PID" ]]; then
+		echo "Error: ssh-agent is not running - start with 'exec ssh-agent bash'"
+		exit 1
+	fi
 
+	SSH_IDENTITIES=$(ssh-add -l)
+	HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE=$(readlink $HASWELL_SERVER_PRIVATE_KEY)
+	if [[ $SSH_IDENTITIES != *$HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE* ]]; then # ppk not set up
+		echo "Set up SSH Agent with key $HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE first"
+		exit 1
+	fi
+}
+	
 # $1: command
 function execute_on_haswell {
 	if [[ -z "$1" ]]; then
 		echo "Error: No remote command provided"
 		return 1
 	fi
-	CMD="ssh ${HASWELL_SERVER_USER}@${HASWELL_SERVER_ADDRESS} -i $HASWELL_SERVER_PRIVATE_KEY $1"
+	# EOF: here document, see http://stackoverflow.com/a/4412338/2225200
+	CMD="ssh ${HASWELL_SERVER_USER}@${HASWELL_SERVER_ADDRESS} -i $HASWELL_SERVER_PRIVATE_KEY << EOF
+		$1
+EOF"
 	execute_cmd "$CMD" "Executing on Haswell"
 }

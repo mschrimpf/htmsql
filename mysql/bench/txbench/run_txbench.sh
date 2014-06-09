@@ -115,6 +115,8 @@ while [ "$1" != "" ]; do
 	shift
 done
 
+# assure ssh agent is setup
+assure_ssh_agent
 
 # handle args and build output_dir
 get_full_type "$_OUTPUT_TYPE"
@@ -173,7 +175,7 @@ echo "Type is: $_TYPE"
 execute_on_haswell "source ~/develop/mysql/util-mysql.sh; 
 	start_mysql $_TYPE ;" &
 sleep 10 # wait until MySQL started
-execute_on_haswell "./$MYSQLBINDIR/mysql --no-defaults -u root -e 'USE mysql; INSERT IGNORE INTO user (Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Reload_priv, Shutdown_priv, Process_priv, File_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Show_db_priv, Super_priv, Create_tmp_table_priv, Lock_tables_priv, Execute_priv, Repl_slave_priv, Repl_client_priv, Create_view_priv, Show_view_priv, Create_routine_priv, Alter_routine_priv, Create_user_priv, Event_priv, Trigger_priv) VALUES (\"dbkemper4.informatik.tu-muenchen.de\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\");'"
+execute_on_haswell "$MYSQLBINDIR/mysql --no-defaults -u root -e 'USE mysql; INSERT IGNORE INTO user (Host, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Reload_priv, Shutdown_priv, Process_priv, File_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Show_db_priv, Super_priv, Create_tmp_table_priv, Lock_tables_priv, Execute_priv, Repl_slave_priv, Repl_client_priv, Create_view_priv, Show_view_priv, Create_routine_priv, Alter_routine_priv, Create_user_priv, Event_priv, Trigger_priv, Create_tablespace_priv) VALUES (\"dbkemper4.informatik.tu-muenchen.de\", \"root\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\", \"Y\");'" # make sure our IP has the necessary rights
 
 # init
 _EXEC_CMD="java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar DBGen"
@@ -189,21 +191,25 @@ execute_cmd "$_EXEC_CMD" "RUNNING TXBENCH" &
 
 _RUN_PID=$!
 
-# wait until almost finished
-sleep $(($_DURATION - 10))
 #profile_mysql "$_TYPE" "$_OUTPUT_DIR" &
 execute_on_haswell "source ~/develop/mysql/util-mysql.sh;
 	profile_mysql $_TYPE $_OUTPUT_DIR;" &
 
-echo "waiting for run_pid $_RUN_PID"
-wait "$_RUN_PID"
+# wait until almost finished
+sleep $(($_DURATION - 10))
 #stop_profiling "$_OUTPUT_DIR"
 execute_on_haswell "source ~/develop/profiling.sh;
 	stop_profiling $_OUTPUT_DIR;"
 
+echo "waiting for run_pid $_RUN_PID"
+wait "$_RUN_PID"
+
 # download profiling results
-_EXEC_CMD="scp -r ${HASWELL_SERVER_USER}@${HASWELL_SERVER_ADDRESS}:$_OUTPUT_DIR $_OUTPUT_DIR"
-execute_cmd "$_EXEC_CMD Downloading profiling results"
+_EXEC_CMD="scp -r ${HASWELL_SERVER_USER}@${HASWELL_SERVER_ADDRESS}:$_OUTPUT_DIR/* $_OUTPUT_DIR"
+execute_cmd "$_EXEC_CMD" "Downloading profiling results"
+# and delete remote output folder
+_EXEC_CMD="rm -rf $_OUTPUT_DIR"
+# execute_on_haswell "$_EXEC_CMD" "Deleting remote output folder"
 
 # copy profiling contents to result
 echo "" >> "$_OUTPUT_DIR/result.txt" # blankline as separator
@@ -211,6 +217,7 @@ cat "$_OUTPUT_DIR/$_FILENAME_MY_PERF_STAT" >> "$_OUTPUT_DIR/result.txt"
 
 check_status
 
+# clean DB
 _EXEC_CMD="java -Dconfigure=./config.txt -cp .:./mysql-connector-java-5.1.11-bin.jar Cleanup"
 execute_cmd "$_EXEC_CMD" "CLEANING DATABASE"
 

@@ -64,6 +64,8 @@ function extract_and_write {
 	printf -- ';%f' "$val" >> "$3"
 }
 
+assure_ssh_agent
+
 #
 # info
 #
@@ -84,11 +86,6 @@ echo ""
 
 # echo "Warmup of each run:   $warmup"
 echo "Duration of each run: $duration"
-
-echo ""
-
-echo "Setting up SSH Agent"
-setup_ssh_agent
 
 echo ""
 echo ""
@@ -121,7 +118,7 @@ for benchmark in ${benchmarks[@]}; do
 				"./${benchmark_exes[$benchmark]}" "$type" -c "$num_threads" -pr_r "$read_probability" -pr_u "$readupdate_probability" -d "$duration" >> "$log_file"
 
 				# save result
-				report_root_dir="$DIR/report-$type-$benchmark"
+				report_root_dir="$DIR/../report-$type-$benchmark"
 				report_dir=$(ls -tr "$report_root_dir" | tail -1)
 				report_dir="$report_root_dir/$report_dir"
 				result_file="$report_dir/result.txt"

@@ -101,7 +101,7 @@ function assure_ssh_agent {
 	fi
 
 	SSH_IDENTITIES=$(ssh-add -l)
-	HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE=$(readlink $HASWELL_SERVER_PRIVATE_KEY)
+	HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE=$(echo ${HASWELL_SERVER_PRIVATE_KEY:1}) # cut off the ~
 	if [[ $SSH_IDENTITIES != *$HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE* ]]; then # ppk not set up
 		echo "Set up SSH Agent with key $HASWELL_SERVER_PRIVATE_KEY_ABSOLUTE first"
 		exit 1

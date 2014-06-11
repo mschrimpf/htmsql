@@ -81,6 +81,7 @@ public class SibenchClient extends Common implements Runnable
 		// if ( MI_SSI ) stmt.executeUpdate( "SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE SNAPSHOT" );
 		// else if ( MI_SI ) stmt.executeUpdate( "SET SESSION TRANSACTION ISOLATION LEVEL SNAPSHOT" );
 		// else if ( MI_S2PL ) stmt.executeUpdate( "SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE" );
+		stmt.executeUpdate( "SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE" );
 		stmt.executeUpdate( "SET AUTOCOMMIT = 0" );
 		conn.setAutoCommit( false );
 	}

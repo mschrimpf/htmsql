@@ -114,7 +114,7 @@ for benchmark in ${benchmarks[@]}; do
 			printf -- '%d' "${num_threads}" >> "$file_out"
 		
 			for type in ${types[@]}; do
-				echo "    Benchmarking $type"
+				echo "    Benchmarking $type (t=$num_threads, pr_r=$read_probability, bench=$benchmark)"
 				"./${benchmark_exes[$benchmark]}" "$type" -c "$num_threads" -pr_r "$read_probability" -pr_u "$readupdate_probability" -d "$duration" >> "$log_file"
 
 				# save result

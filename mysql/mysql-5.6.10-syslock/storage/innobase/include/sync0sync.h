@@ -223,6 +223,9 @@ original non-instrumented functions */
 
 # define hle_mutex_enter(M)     hle_mutex_enter_func((M), __FILE__, __LINE__)
 
+# define hle_mutex_enter_nowait(M)	\
+	hle_mutex_enter_nowait_func((M), __FILE__, __LINE__)
+
 # define hle_mutex_exit(M)      hle_mutex_exit_func(M)
 
 
@@ -233,6 +236,19 @@ hle_mutex_enter_func(
         ib_mutex_t*     mutex,          /*!< in: pointer to mutex */
         const char*     file_name,      /*!< in: file name where locked */
         ulint           line);          /*!< in: line where locked */
+/********************************************************************//**
+NOTE! Use the corresponding macro in the header file, not this function
+directly. Tries to lock the mutex for the current thread. If the lock is not
+acquired immediately, returns with return value 1.
+@return	0 if succeed, 1 if not */
+UNIV_INTERN
+ulint
+hle_mutex_enter_nowait_func(
+/*====================*/
+	ib_mutex_t*	mutex,		/*!< in: pointer to mutex */
+	const char*	file_name,	/*!< in: file name where mutex
+					requested */
+	ulint		line);		/*!< in: line where requested */
 
 UNIV_INLINE
 void

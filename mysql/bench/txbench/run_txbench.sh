@@ -149,7 +149,6 @@ function check_status() {
 	export _STATUS="${?}"
 	if [ "$_STATUS" != 0 ]; then
 		echo "Error executing script"
-		stop_profiling
 		
 		mv_stdout_log
 		exit
@@ -212,8 +211,12 @@ _EXEC_CMD="rm -rf $_OUTPUT_DIR"
 # execute_on_haswell "$_EXEC_CMD" "Deleting remote output folder"
 
 # copy profiling contents to result
-echo "" >> "$_OUTPUT_DIR/result.txt" # blankline as separator
-cat "$_OUTPUT_DIR/$_FILENAME_MY_PERF_STAT" >> "$_OUTPUT_DIR/result.txt"
+if [ -f "$my_perf_stat_file" ]; then
+	echo "" >> "$_OUTPUT_DIR/result.txt" # blankline as separator
+	cat "$_OUTPUT_DIR/$_FILENAME_MY_PERF_STAT" >> "$_OUTPUT_DIR/result.txt"
+else
+	echo "My perf stat file does not exist: $my_perf_stat_file"
+fi
 
 check_status
 

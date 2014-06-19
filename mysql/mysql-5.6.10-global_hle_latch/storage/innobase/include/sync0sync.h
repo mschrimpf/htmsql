@@ -53,7 +53,7 @@ typedef LONG lock_word_t;	/*!< On Windows, InterlockedExchange operates
 typedef byte lock_word_t;
 #endif
 
-extern lock_word_t global_mutex;
+extern ib_mutex_t global_mutex;
 
 #if defined UNIV_PFS_MUTEX || defined UNIV_PFS_RWLOCK
 
@@ -222,6 +222,11 @@ original non-instrumented functions */
 
 #endif	/* UNIV_PFS_MUTEX */
 
+
+
+# define hle_mutex_enter(M)     hle_mutex_enter_func((M), __FILE__, __LINE__)
+
+# define hle_mutex_exit(M)      hle_mutex_exit_func(M)
 
 
 
@@ -763,6 +768,7 @@ struct ib_mutex_t {
 	volatile lock_word_t	lock_word;	/*!< lock_word is the target
 				of the atomic test-and-set instruction when
 				atomic operations are enabled. */
+	volatile unsigned hle_mutex;
 
 #if !defined(HAVE_ATOMIC_BUILTINS)
 	os_fast_mutex_t

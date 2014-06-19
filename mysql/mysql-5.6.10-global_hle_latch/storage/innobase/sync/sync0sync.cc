@@ -49,7 +49,7 @@ Created 9/5/1995 Heikki Tuuri
 
 
 
-lock_word_t global_mutex;
+ib_mutex_t global_mutex;
 
 
 /*
@@ -448,18 +448,6 @@ mutex_own(
 #endif /* UNIV_DEBUG */
 
 /******************************************************************//**
-Checks that the global mutex is owned.
-@return	TRUE if owns */
-UNIV_INTERN
-ibool
-mutex_own_global(
-/*======*/
-)
-{
-	return(mutex_get_lock_word_global() == 1);
-}
-
-/******************************************************************//**
 Sets the waiters field in a mutex. */
 UNIV_INTERN
 void
@@ -599,64 +587,6 @@ spin_loop:
 	sync_array_wait_event(sync_arr, index);
 
 	goto mutex_loop;
-}
-
-/******************************************************************//**
-Reserves a mutex for the current thread. If the mutex is reserved, the
-function spins a preset time (controlled by SYNC_SPIN_ROUNDS), waiting
-for the mutex before suspending the thread. */
-UNIV_INTERN
-void
-mutex_spin_wait_global(
-/*============*/
-)
-{
-	ulint		i;		/* spin round count */
-
-mutex_loop:
-
-	i = 0;
-
-	/* Spin waiting for the lock word to become zero. Note that we do
-	not have to assume that the read access to the lock word is atomic,
-	as the actual locking is always committed with atomic test-and-set.
-	In reality, however, all processors probably have an atomic read of
-	a memory word. */
-
-spin_loop:
-
-	while (mutex_get_lock_word_global() != 0 && i < SYNC_SPIN_ROUNDS) {
-		if (srv_spin_wait_delay) {
-			ut_delay(ut_rnd_interval(0, srv_spin_wait_delay));
-		}
-
-		i++;
-	}
-
-	if (i == SYNC_SPIN_ROUNDS) {
-		os_thread_yield();
-	}
-
-	if (ib_mutex_test_and_set_global() == 0) {
-		/* Succeeded! */
-		return;
-	}
-
-	/* We may end up with a situation where lock_word is 0 but the OS
-	fast mutex is still reserved. On FreeBSD the OS does not seem to
-	schedule a thread which is constantly calling pthread_mutex_trylock
-	(in ib_mutex_test_and_set implementation). Then we could end up
-	spinning here indefinitely. The following 'i++' stops this infinite
-	spin. */
-
-	i++;
-
-	if (i < SYNC_SPIN_ROUNDS) {
-		goto spin_loop;
-	}
-
-	printf("Maximum spins reached: %ul\n", i);
-	exit(1);
 }
 
 /******************************************************************//**

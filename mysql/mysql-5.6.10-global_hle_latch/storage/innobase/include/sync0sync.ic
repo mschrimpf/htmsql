@@ -32,97 +32,54 @@
 
 #include <stdio.h>
 
-
+#include "myhle.h"
 
 
 
 /******************************************************************//***/
 
-
-
-/******************************************************************//**
- Gets the value of the lock word. */
-UNIV_INLINE lock_word_t
-mutex_get_lock_word_global(
-		/*================*/
-) /*!< in: mutex */
-{
-	return global_mutex;
-}
-
-/******************************************************************//**
- Reserves a mutex for the current thread. If the mutex is reserved, the
- function spins a preset time (controlled by SYNC_SPIN_ROUNDS) waiting
- for the mutex before suspending the thread. */
-UNIV_INTERN
+UNIV_INLINE
 void
-mutex_spin_wait_global(
+hle_mutex_exit_func(
 /*============*/
-);
-
-/******************************************************************//**
- Performs an atomic test-and-set instruction to the lock_word field of a
- mutex.
- @return	the previous value of lock_word: 0 or 1 */
-UNIV_INLINE byte
-ib_mutex_test_and_set_global(
-		/*===============*/
-)
+        ib_mutex_t*     mutex)  /*!< in: pointer to mutex */
 {
-#if defined(HAVE_ATOMIC_BUILTINS)
-	return(os_atomic_test_and_set_byte(&global_mutex, 1));
-#else
-	printf("Unsupported environment\n");
-	exit(1);
+        ut_ad(mutex_own(mutex));
+
+        ut_d(mutex->thread_id = (os_thread_id_t) ULINT_UNDEFINED);
+
+#ifdef UNIV_SYNC_DEBUG
+        sync_thread_reset_level(mutex);
+#endif
+        hle_unlock(&mutex->hle_mutex);
+
+        if (mutex_get_waiters(mutex) != 0) {
+
+                mutex_signal_object(mutex);
+        }
+
+#ifdef UNIV_SYNC_PERF_STAT
+        mutex_exit_count++;
 #endif
 }
 
 /******************************************************************//**
- Performs a reset instruction to the lock_word field of a mutex. This
- instruction also serializes memory operations to the program order. */
+Locks a mutex for the current thread. If the mutex is reserved, the function
+spins a preset time (controlled by SYNC_SPIN_ROUNDS), waiting for the mutex
+before suspending the thread. */
 UNIV_INLINE
-void mutex_reset_lock_word_global(
-/*==================*/
-)
+void
+hle_mutex_enter_func(
+/*=============*/
+        ib_mutex_t*     mutex,          /*!< in: pointer to mutex */
+        const char*     file_name,      /*!< in: file name where locked */
+        ulint           line)           /*!< in: line where locked */
 {
-#if defined(HAVE_ATOMIC_BUILTINS)
-	/* In theory __sync_lock_release should be used to release the lock.
-	 Unfortunately, it does not work properly alone. The workaround is
-	 that more conservative __sync_lock_test_and_set is used instead. */
-	os_atomic_test_and_set_byte(&global_mutex, 0);
-#else
-	printf("Unsupported environment\n");
-	exit(1);
-#endif
+        ut_ad(mutex_validate(mutex));
+        ut_ad(!mutex_own(mutex));
+
+        hle_lock(&mutex->hle_mutex);
 }
-
-
-UNIV_INLINE
-void mutex_exit_func_global(
-/*============*/
-) /*!< in: pointer to mutex */
-{
-	mutex_reset_lock_word_global();
-}
-
-/******************************************************************//**
- Locks a mutex for the current thread. If the mutex is reserved, the function
- spins a preset time (controlled by SYNC_SPIN_ROUNDS), waiting for the mutex
- before suspending the thread. */
-UNIV_INLINE
-void mutex_enter_func_global() /*!< in: line where locked */
-{
-	/* Note that we do not peek at the value of lock_word before trying
-	 the atomic test_and_set; we could peek, and possibly save time. */
-
-	if (!ib_mutex_test_and_set_global()) {
-		return; /* Succeeded! */
-	}
-
-	mutex_spin_wait_global();
-}
-
-
 
 
 

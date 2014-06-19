@@ -20,7 +20,7 @@ source ~/develop/profiling.sh
 
 # make sure the values in this array are ordered from shortest to longest, 
 # otherwise e.g. "abc" would be matched even though one wanted "ab"
-_TYPE_ALL=(unmodified all glibc mutexlock_glibc global_lock global_lock_hle lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
+_TYPE_ALL=(unmodified all glibc mutexlock_glibc global_latch global_hle_latch lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
 
 
 
@@ -207,7 +207,7 @@ function profile_mysql {
 	profile_perf_stat "$_MYSQL_PID" "$_OUTPUT_DIR" &
 	# if [ "$_TYPE" != "unmodified" ]; then # don't profile non-htm
 	# fi
-	if [ "$_TYPE" == "glibc" ] || [ "$_TYPE" == "mutexlock_glibc" ] || [ "$_TYPE" == "trx_lock_func-rtm" ]; then # rtm events
+	if [ "$_TYPE" == "glibc" ] || [ "$_TYPE" == "mutexlock_glibc" ] || [ "$_TYPE" == "trx_lock_func-rtm" ] || [ "$_TYPE" == "syslock-rtm" ]; then # rtm events
 		profile_perf_stat_rtm_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
 		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "tx-start" true &
 		profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/tx-abort/pp" &

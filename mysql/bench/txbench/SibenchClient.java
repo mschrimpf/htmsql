@@ -83,7 +83,7 @@ public class SibenchClient extends Common implements Runnable
 		// else if ( MI_S2PL ) stmt.executeUpdate( "SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE" );
 		stmt.executeUpdate( "SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE" );
 		stmt.executeUpdate( "SET AUTOCOMMIT = 0" );
-		conn.setAutoCommit( false );
+		conn.setAutoCommit( true );
 	}
 
 	public int getTxType( int we )
@@ -151,7 +151,7 @@ public class SibenchClient extends Common implements Runnable
 				}
 
 				t_b =  System.currentTimeMillis();
-				conn.commit();
+				// conn.commit();
 				t_c =  System.currentTimeMillis();
 
 				total_time = t_c - t_a;
@@ -281,7 +281,7 @@ public class SibenchClient extends Common implements Runnable
 		long ru_t_ea = 0;
 
 		//make summary stats
-		Stats totalStats = new Stats();
+		Stats threadStats = new Stats();
 		for( int i = 0 ; i < worker.length ; i++ )
 		{
 			r_t_succ = r_t_succ + gen[i].r_succ;
@@ -295,8 +295,11 @@ public class SibenchClient extends Common implements Runnable
 			r_t_com_time  += r_c_times[i];
 			ru_t_com_time += u_c_times[i];
 
-			totalStats.addValue(getOpsPerTime(gen[i].r_succ + gen[i].ru_succ, r_times[i] + u_times[i]));
+			threadStats.addValue(getOpsPerTime(gen[i].r_succ + gen[i].ru_succ, r_times[i] + u_times[i]));
 		}
+		
+		int total_transactions_succ = r_t_succ + ru_t_succ;
+		long total_time = 1000 * duration;
 		
 		System.out.println();
 		
@@ -306,11 +309,13 @@ public class SibenchClient extends Common implements Runnable
 		System.out.printf( "RU_total_time          %d\n", ru_t_tot_time );
 		System.out.printf( "TOTAL_Trx (succ/fail)  %d/%d\n", r_t_succ + ru_t_succ , r_t_fail + ru_t_fail);
 		System.out.println();
-		System.out.printf( "Total transactions:    %.4f tx/ms\n", totalStats.getExpectedValue() );
-		System.out.printf( "Standard deviation:    %.4f\n", totalStats.getStandardDeviation() );
+		System.out.printf( "Total transactions:    %.4f tx/ms\n", getOpsPerTime( total_transactions_succ, total_time ) );
+		System.out.printf( "Transactions per thread:    		%.4f tx/ms\n", threadStats.getExpectedValue() );
+		System.out.printf( "Standard deviation tx per thread:   %.4f\n", threadStats.getStandardDeviation() );
 		
 		System.out.println();
 		
+		// Transaction latency
 		System.out.printf( "AVG_READ_TX_TIME       %.2f ms/read tx\n", getAvgTime( r_t_tot_time , r_t_succ ) );
 		System.out.printf( "AVG_READ_COMMIT_TIME   %.2f ms/read commit\n", getAvgTime( r_t_com_time , r_t_succ ) );
 		System.out.printf( "AVG_READ_TX_PER_MS     %.2f read tx/ms\n", getOpsPerTime( r_t_succ, r_t_tot_time ) );

@@ -42,6 +42,7 @@ _OUTPUT_FOLDER=
 
 _FILENAME_PERF_STAT="perf.stat"
 _FILENAME_MY_PERF_STAT="my-perf.stat"
+_FILENAME_MY_PERF_STAT_EVENTS="my-perf.stat.events"
 _FILENAME_PERF_STAT_EVENTS="perf.stat.events"
 _FILENAME_PERF_STAT_EVENTS_RTM="perf.stat.rtm-events"
 _FILENAME_PERF_STAT_MISSINGLOCKS_EVENTS="perf-missinglocks.stat.events"
@@ -214,18 +215,18 @@ function stop_profiling {
 		# kill -INT "$_PROFILE_PERF_RECORD_PID"
 		# rm "$_PID_FILE"
 	# fi
-	
+
 	# _PERF_PROCESSES=$(pidof -x perf | wc -w)
 	# # no profile processes have been killed and they were active
 	# if [ "$_PERF_PROCESSES_BEFORE" == "$_PERF_PROCESSES" ] && [ "$_PERF_PROCESSES_BEFORE" != "0" ]; then
 		# echo ">> Perf processes could not be stopped - using pkill (FIXME)"
 		pkill -INT -u $(id -u) perf # only kill processes of own user
 	# fi
-	
+
 	echo "Profiling stopped"
-	
-	process_perf_stat "$_OUTPUT_FOLDER"
+
 	process_perf_events "$_OUTPUT_FOLDER"
+	process_perf_stat "$_OUTPUT_FOLDER"
 }
 
 # Outputs the perf stat results with more accurate cycles-t and cycles-abort relative to cycles-t
@@ -237,27 +238,30 @@ function process_perf_stat {
 		cycles=$(sed -ne "s/\([0-9\.,]*\) cycles.*GHz.*/\1/p" $1/$_FILENAME_PERF_STAT)
 		cycles_t=$(sed -ne "s/\([0-9\.,]*\) *cpu\/cycles-t.*/\1/p" $1/$_FILENAME_PERF_STAT)
 		cycles_ct=$(sed -ne "s/\([0-9\.,]*\) *cpu\/cycles-ct.*/\1/p" $1/$_FILENAME_PERF_STAT)
+			
 		# remove the dots/commas (commas occur with a different exported LC_NUMERIC)
 		cycles=$(echo $cycles | sed 's/[\.,]*//g')
 		cycles_t=$(echo $cycles_t | sed 's/[\.,]*//g')
 		cycles_ct=$(echo $cycles_ct | sed 's/[\.,]*//g')
 		# calculate vals
 		share_cycles_transactional=$(bc -l <<< "($cycles_t / $cycles) * 100") # percentage
+		share_cycles_abort_rel_total=$(bc -l <<< "(1 - ($cycles_t - $cycles_ct) / $cycles) * 100") # percentage
 		share_cycles_abort=$(bc -l <<< "(1 - $cycles_ct / $cycles_t) * 100") # percentage
 		cycles_aborted=$(bc -l <<< "$cycles_t - $cycles_ct")
 		# output
 		out_filename="$1/$_FILENAME_MY_PERF_STAT"
-		
+
 		export LC_NUMERIC="en_US.UTF-8" # use dots to separate floats
-		
+
 		printf -- 'Total cycles:         %15d\n' "$cycles"         > "$out_filename"
 		printf -- 'Transactional cycles: %15d\n' "$cycles_t"       >> "$out_filename"
 		printf -- 'Committed cycles:     %15d\n' "$cycles_ct"      >> "$out_filename"
 		printf -- 'Aborted cycles:       %15d\n' "$cycles_aborted" >> "$out_filename"
-		
+
 		printf -- 'Transactional cycles relative to total:   %f%%\n' "$share_cycles_transactional"      >> "$out_filename"
+		printf -- 'Aborted cycles relative to total:   %f%%\n' "$share_cycles_abort_rel_total"      >> "$out_filename"
 		printf -- 'Aborted cycles relative to transactional: %f%%\n' "$share_cycles_abort"      >> "$out_filename"
-		
+
 		# echo "total cycles:         $cycles" 											> "$out_filename"
 		# echo "transactional cycles: $cycles_t" 											>> "$out_filename"
 		# echo "committed cycles:     $cycles_ct" 										>> "$out_filename"
@@ -266,6 +270,24 @@ function process_perf_stat {
 		# echo "aborted cycles relative to transactional: $share_cycles_abort%" 			>> "$out_filename"
 	else
 		echo "File $1/$_FILENAME_PERF_STAT does not exist"
+	fi
+	
+	transactions_file="$1/$_FILENAME_PERF_STAT_EVENTS"
+	if [ ! -f "$transactions_file" ]; then
+		transactions_file="$1/$_FILENAME_PERF_STAT_EVENTS_RTM"
+	fi
+	if [ -f "$transactions_file" ]; then
+		transctions_out="$1/$_FILENAME_MY_PERF_STAT_EVENTS"
+		transactions_abort=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.ABORTED).*/\1/p" $transactions_file) # " npp display bug
+		transactions_abort=$(echo $transactions_abort | sed 's/[\.,]*//g')
+		for i in `seq 1 5`; do
+			transactions_abort_cause=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.ABORTED_MISC$i.*/\1/p" $transactions_file)
+			transactions_abort_cause=$(echo $transactions_abort_cause | sed 's/[\.,]*//g')
+			abort_cause_relative=$(bc -l <<< "($transactions_abort_cause / $transactions_abort) * 100") # percentage
+			printf -- 'MISC%d relative: %.4f\n' "$i" "$abort_cause_relative" >> "$transctions_out"
+        done
+	else
+		echo "File $transactions_file does not exist"
 	fi
 }
 

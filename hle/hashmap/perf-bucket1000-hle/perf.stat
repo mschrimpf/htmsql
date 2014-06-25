@@ -1,13 +1,13 @@
 
- Performance counter stats for process id '9022':
+ Performance counter stats for process id '19665':
 
-     401425,682966 task-clock                #    3,973 CPUs utilized          
-   311.276.895.615 instructions              #    0,27  insns per cycle         [33,38%]
- 1.159.968.734.999 cycles                    #    2,890 GHz                     [33,38%]
-   307.302.354.401 cpu/cycles-t/             #   26,49% transactional cycles    [33,38%]
-                 0 cpu/tx-start/             #    0,000 K/sec                   [33,38%]
-     2.069.680.722 cpu/el-start/             #      148 cycles / elision        [33,38%]
-   238.006.183.366 cpu/cycles-ct/            #    5,97% aborted cycles          [33,38%]
+      43675,904942 task-clock                #    3,985 CPUs utilized          
+    38.992.437.983 instructions              #    0,31  insns per cycle         [33,27%]
+   126.242.560.928 cycles                    #    2,890 GHz                     [33,27%]
+    28.009.564.448 cpu/cycles-t/             #   22,19% transactional cycles    [33,27%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,27%]
+       224.699.690 cpu/el-start/             #      125 cycles / elision        [33,27%]
+    26.383.476.675 cpu/cycles-ct/            #    1,29% aborted cycles          [33,27%]
 
-     101,046251434 seconds time elapsed
+      10,959254157 seconds time elapsed
 

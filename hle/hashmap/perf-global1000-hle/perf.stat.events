@@ -1,14 +1,14 @@
 
- Performance counter stats for process id '8340':
+ Performance counter stats for process id '6249':
 
-     1.127.280.956 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,40%]
-     1.799.634.191 r01C8 (HLE_RETIRED.START)                                                        [33,40%]
-       672.352.890 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,40%]
-            95.935 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,40%]
-                18 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,40%]
-       756.932.052 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,40%]
-       458.722.855 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,40%]
-                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,40%]
+        10.991.845 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,51%]
+        17.261.182 r01C8 (HLE_RETIRED.START)                                                        [33,51%]
+         6.269.141 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,51%]
+               833 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,51%]
+                 3 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,50%]
+         7.160.496 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,50%]
+         4.714.492 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,50%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,50%]
 
-     110,023857342 seconds time elapsed
+       1,075130150 seconds time elapsed
 

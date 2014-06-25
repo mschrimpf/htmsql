@@ -41,19 +41,26 @@ Created 9/5/1995 Heikki Tuuri
 #include "os0thread.h"
 #include "os0sync.h"
 #include "sync0arr.h"
+/* BEGIN: HTMSQL */
+#if defined(HAVE_HLE)
+# include "hle.h"
+#endif
+/* END: HTMSQL */
 
 #if  defined(UNIV_DEBUG) && !defined(UNIV_HOTBACKUP)
 extern "C" my_bool	timed_mutexes;
 #endif /* UNIV_DEBUG && !UNIV_HOTBACKUP */
 
-#ifdef HAVE_WINDOWS_ATOMICS
+/* BEGIN: HTMSQL */
+#if defined(HAVE_HLE)
+typedef unsigned lock_word_t; /*< Use unsigned (size 4) for HTM-SQL */
+/* END: HTMSQL */
+#elif defined(HAVE_WINDOWS_ATOMICS)
 typedef LONG lock_word_t;	/*!< On Windows, InterlockedExchange operates
 				on LONG variable */
 #else
 typedef byte lock_word_t;
 #endif
-
-extern ib_mutex_t global_mutex;
 
 #if defined UNIV_PFS_MUTEX || defined UNIV_PFS_RWLOCK
 
@@ -221,12 +228,6 @@ original non-instrumented functions */
 # define mutex_free(M)	mutex_free_func(M)
 
 #endif	/* UNIV_PFS_MUTEX */
-
-
-
-
-
-
 
 /******************************************************************//**
 Creates, or rather, initializes a mutex object in a specified memory
@@ -416,14 +417,6 @@ mutex_own(
 	const ib_mutex_t*	mutex)	/*!< in: mutex */
 	__attribute__((warn_unused_result));
 #endif /* UNIV_DEBUG */
-/******************************************************************//**
-Checks that the current thread owns the global mutex.
-@return	TRUE if owns */
-UNIV_INTERN
-ibool
-mutex_own_global(
-/*======*/
-);
 #ifdef UNIV_SYNC_DEBUG
 /******************************************************************//**
 Adds a latch and its level in the thread level array. Allocates the memory

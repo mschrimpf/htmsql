@@ -224,9 +224,13 @@ original non-instrumented functions */
 
 
 
-# define hle_mutex_enter(M)     hle_mutex_enter_func((M), __FILE__, __LINE__)
+//# define hle_mutex_enter(M)     hle_mutex_enter_func((M), __FILE__, __LINE__)
+//
+//# define hle_mutex_exit(M)      hle_mutex_exit_func(M)
 
-# define hle_mutex_exit(M)      hle_mutex_exit_func(M)
+# define hle_mutex_enter(M)     mutex_enter_func((M), __FILE__, __LINE__)
+
+# define hle_mutex_exit(M)      mutex_exit_func(M)
 
 
 

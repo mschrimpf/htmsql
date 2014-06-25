@@ -1,14 +1,14 @@
 
- Performance counter stats for process id '31134':
+ Performance counter stats for process id '19397':
 
-       197.179.470 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,36%]
-       479.817.583 r01C8 (HLE_RETIRED.START)                                                        [33,36%]
-       282.638.105 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,36%]
-           118.480 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,36%]
+        21.843.739 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,36%]
+        48.416.684 r01C8 (HLE_RETIRED.START)                                                        [33,36%]
+        26.573.003 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,36%]
+            11.552 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,36%]
                  0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,36%]
-       174.415.636 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,36%]
-        23.196.211 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,36%]
+        18.968.014 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,36%]
+         2.915.378 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,36%]
                  0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,36%]
 
-     101,035117453 seconds time elapsed
+      10,968549821 seconds time elapsed
 

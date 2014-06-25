@@ -592,6 +592,9 @@ trx_sys_create(void)
 	trx_sys = static_cast<trx_sys_t*>(mem_zalloc(sizeof(*trx_sys)));
 
 	mutex_create(trx_sys_mutex_key, &trx_sys->mutex, SYNC_TRX_SYS);
+
+
+	mutex_create(trx_sys_mutex_key, &global_mutex, SYNC_TRX_SYS);
 }
 
 /*****************************************************************//**

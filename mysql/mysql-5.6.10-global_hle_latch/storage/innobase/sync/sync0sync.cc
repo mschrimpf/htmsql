@@ -285,6 +285,7 @@ mutex_create_func(
 	os_fast_mutex_init(PFS_NOT_INSTRUMENTED, &mutex->os_fast_mutex);
 	mutex->lock_word = 0;
 #endif
+	mutex->hle_mutex = 0;
 	mutex->event = os_event_create();
 	mutex_set_waiters(mutex, 0);
 #ifdef UNIV_DEBUG

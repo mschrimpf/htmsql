@@ -31,12 +31,12 @@ int main(int argc, char *argv[]) {
 	int num_threads = CORES;
 	int align = 1;
 	int repeats = 5000, loops = 100, base_inserts = 100, lockType = -1,
-			duration = 5000, warmup = 1000;
+			duration = 1000000, warmup = duration / 10;
 	int wait = 0;
 	int *arg_values[] = { &num_threads, &loops, &base_inserts, &lockType,
 			&repeats, &wait, &align, &duration, &warmup };
-	const char *identifier[] =
-			{ "-n", "-l", "-bi", "-t", "-r", "-w", "-a", "-d", "-wu" };
+	const char *identifier[] = { "-n", "-l", "-bi", "-t", "-r", "-w", "-a",
+			"-d", "-wu" };
 	handle_args(argc, argv, 9, arg_values, identifier);
 
 	usleep(wait);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::ATOMIC_EXCH_SPEC,
 			//
-			LockType::HLE_EXCH_SPIN,
+			LockType::HLE_EXCH_BUSY,
 			//
 			LockType::RTM,
 			//
@@ -78,7 +78,8 @@ int main(int argc, char *argv[]) {
 	}
 
 //	int probabilities_contains[] = { 0, 25, 50, 75, 100 };
-	int probabilities_contains[] = { 100 };
+	int probabilities_contains[] = { 0, 50, 100 };
+//	int probabilities_contains[] = { 100 };
 
 	printf("p_ins;p_rem;p_con;");
 	const char *appendings[3];
@@ -128,7 +129,8 @@ int main(int argc, char *argv[]) {
 				TimeCmp timeCmps[num_threads];
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
-					threads[i] = std::thread(&TimeCmp::run_infinite, &timeCmps[i], i,
+					threads[i] = std::thread(&TimeCmp::run_infinite,
+							&timeCmps[i], i,
 							list, //repeats,
 							probability_insert, probability_remove,
 							probability_contains,
@@ -144,7 +146,7 @@ int main(int argc, char *argv[]) {
 				for (int i = 0; i < num_threads; i++) {
 					timeCmps[i].stop();
 					int thread_operations = timeCmps[i].getOperations();
-					printf("[T%d] %d operations\n", i, thread_operations);
+//					printf("[T%d] %d operations\n", i, thread_operations);
 					total_operations += thread_operations;
 				}
 				for (int i = 0; i < num_threads; i++) {
@@ -153,7 +155,8 @@ int main(int argc, char *argv[]) {
 
 				// measure time
 				int time_in_millis = duration / 1000;
-				float throughput_total = ((float) total_operations) / time_in_millis;
+				float throughput_total = ((float) total_operations)
+						/ time_in_millis;
 				stats.addValue(throughput_total);
 
 				delete list;

@@ -105,7 +105,9 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::HLE_EXCH_SPEC,
 			//
-			LockType::RTM
+			LockType::RTM,
+			//
+			LockType::RTM_SMART
 	//
 			};
 	int lockTypesCount, lockTypesMin, lockTypesMax;

@@ -245,7 +245,7 @@ function process_perf_stat {
 		cycles_ct=$(echo $cycles_ct | sed 's/[\.,]*//g')
 		# calculate vals
 		share_cycles_transactional=$(bc -l <<< "($cycles_t / $cycles) * 100") # percentage
-		share_cycles_abort_rel_total=$(bc -l <<< "(1 - ($cycles_t - $cycles_ct) / $cycles) * 100") # percentage
+		share_cycles_abort_rel_total=$(bc -l <<< "(($cycles_t - $cycles_ct) / $cycles) * 100") # percentage
 		share_cycles_abort=$(bc -l <<< "(1 - $cycles_ct / $cycles_t) * 100") # percentage
 		cycles_aborted=$(bc -l <<< "$cycles_t - $cycles_ct")
 		# output
@@ -278,8 +278,12 @@ function process_perf_stat {
 	fi
 	if [ -f "$transactions_file" ]; then
 		transctions_out="$1/$_FILENAME_MY_PERF_STAT_EVENTS"
+		transactions_start=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.STARTED).*/\1/p" $transactions_file) # " npp display bug
+		transactions_start=$(echo $transactions_abort | sed 's/[\.,]*//g')
 		transactions_abort=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.ABORTED).*/\1/p" $transactions_file) # " npp display bug
 		transactions_abort=$(echo $transactions_abort | sed 's/[\.,]*//g')
+		printf -- 'Started: %15d\n' "$transactions_start" >> "$transctions_out"
+		printf -- 'Aborted: %15d\n' "$transactions_abort" >> "$transctions_out"
 		for i in `seq 1 5`; do
 			transactions_abort_cause=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.ABORTED_MISC$i.*/\1/p" $transactions_file)
 			transactions_abort_cause=$(echo $transactions_abort_cause | sed 's/[\.,]*//g')

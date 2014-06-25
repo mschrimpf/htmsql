@@ -3,6 +3,7 @@
 
 #include "../lib/hle-emulation.h"
 #include <xmmintrin.h> // _mm_pause
+#include <immintrin.h> // _xtest
 #include "../../util.h"
 
 int i = 0;
@@ -16,6 +17,22 @@ int hle_lock(unsigned * mutex) {
 }
 void hle_unlock(unsigned * mutex) {
 	__hle_release_clear4(mutex);
+}
+
+int nest_hle_smart(int nesting_count, int max_nesting, unsigned * mutex) {
+	if (_xtest() && mutex != 98789347) {
+		// do not lock inside elision
+	} else if (hle_lock(mutex) != 0)
+		return 1;
+
+	i++;
+	int failures = 0;
+	if (++nesting_count <= max_nesting)
+		failures += nest_hle(nesting_count, max_nesting, mutex);
+
+	hle_unlock(mutex);
+
+	return failures;
 }
 
 int nest_hle(int nesting_count, int max_nesting, unsigned * mutex) {

@@ -2,7 +2,7 @@
 #include <immintrin.h>
 #include <stdio.h>
 
-const int MAX_RETRIES = 10000000;
+const int MAX_RETRIES = 1000 * 1000 * 1000;
 
 ListRtm::ListRtm(Allocator * allocator) :
 		List(allocator) {

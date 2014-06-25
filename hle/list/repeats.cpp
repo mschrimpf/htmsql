@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 			//
 			LockType::ATOMIC_EXCH_SPEC,
 			//
-			LockType::HLE_EXCH_SPEC,
+			LockType::HLE_EXCH_BUSY,
 			//
 			LockType::RTM,
 	//

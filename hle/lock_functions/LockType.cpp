@@ -1,5 +1,6 @@
-#include <stdio.h>
 #include "LockType.h"
+
+#include <stdio.h>
 
 //#include "pthread_lock.h"
 #include "thread_lock.h"
@@ -42,10 +43,6 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->lock = &LockType::pthread_lock;
 		this->unlock = &LockType::pthread_unlock;
 		break;
-	case RTM:
-		this->lock = &LockType::rtm_call_lock;
-		this->unlock = &LockType::rtm_call_unlock;
-		break;
 	case ATOMIC_EXCH_BUSY:
 	case ATOMIC_EXCH_SPEC:
 	case ATOMIC_EXCH_HLE_BUSY:
@@ -62,6 +59,8 @@ void LockType::init(LockType::EnumType enum_type) {
 	case HLE_ASM_EXCH_BUSY:
 	case HLE_ASM_EXCH_SPEC:
 	case HLE_ASM_EXCH_ASM_SPEC:
+	case RTM:
+	case RTM_SMART:
 		this->lock = &LockType::type_lock;
 		this->unlock = &LockType::type_unlock;
 		break;
@@ -133,6 +132,14 @@ void LockType::init(LockType::EnumType enum_type) {
 		this->type_lock_function = hle_asm_exch_lock_asm_spec;
 		this->type_unlock_function = hle_asm_exch_unlock_asm_spec;
 		break;
+	case RTM:
+		this->type_lock_function = rtm_lock;
+		this->type_unlock_function = rtm_unlock;
+		break;
+	case RTM_SMART:
+		this->type_lock_function = rtm_lock_smart;
+		this->type_unlock_function =rtm_unlock_smart ;
+		break;
 	}
 }
 
@@ -151,18 +158,10 @@ void LockType::pthread_unlock() {
 }
 // type
 void LockType::type_lock() {
-//	printf("Attempting to lock %p (%d)\n", &this->type_mutex, this->type_mutex);
 	(*this->type_lock_function)(&this->type_mutex);
 }
 void LockType::type_unlock() {
 	(*this->type_unlock_function)(&this->type_mutex);
-}
-// rtm
-void LockType::rtm_call_lock() {
-	rtm_lock();
-}
-void LockType::rtm_call_unlock() {
-	rtm_unlock();
 }
 
 void LockType::printHeader(LockType *lockTypes[], int size, FILE *out) {
@@ -220,8 +219,6 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "atomic_TAS_HLE_BUSY";
 	case ATOMIC_TAS_HLE_SPEC:
 		return "atomic_TAS_HLE_SPEC";
-	case RTM:
-		return "RTM";
 	case HLE_TAS_BUSY:
 		return "HLE_TAS_BUSY";
 	case HLE_TAS_SPEC:
@@ -238,5 +235,9 @@ const char* LockType::getEnumText(LockType::EnumType e) {
 		return "HLE_ASM_EXCH-spec";
 	case HLE_ASM_EXCH_ASM_SPEC:
 		return "HLE_ASM_EXCH-asm_spec";
+	case RTM:
+		return "RTM";
+	case RTM_SMART:
+		return "RTM_SMART";
 	}
 }

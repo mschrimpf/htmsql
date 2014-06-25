@@ -75,6 +75,7 @@ HashMap::~HashMap() {
  */
 LinkedListItem* HashMap::insert(int value) {
 	int h = hash(value);
+	LinkedListItem* insert_item = new LinkedListItem(value);
 
 	((map[h]->locker).*((map[h]->locker).lock))();
 
@@ -83,12 +84,13 @@ LinkedListItem* HashMap::insert(int value) {
 	while (item_ptr) { // move to last list item
 		if (item_ptr->data == value) { // value already exists
 			((map[h]->locker).*((map[h]->locker).unlock))();
+			delete insert_item;
 			return item_ptr;
 		}
 		prev_item = item_ptr; // next
 		item_ptr = item_ptr->successor;
 	}
-	LinkedListItem* insert_item = new LinkedListItem(value);
+	// prev_item now points to the last item in the list (possibly null)
 	if (prev_item) { // item(s) in list
 		// -> link to new item from list
 		prev_item->successor = insert_item;
@@ -120,11 +122,10 @@ int HashMap::remove(int value) {
 		if (prev_item) { // prev_item exists -> map[h] is set
 			prev_item->successor = item->successor;
 		} else { // value we search for is at first list-position
-			LinkedListItem* successor = item->successor;
-			map[h]->item = successor;
+			map[h]->item = item->successor;
 		}
-		delete item;
 		((map[h]->locker).*((map[h]->locker).unlock))();
+		delete item;
 		return 1;
 	} else { // value does not exist in map
 		((map[h]->locker).*((map[h]->locker).unlock))();

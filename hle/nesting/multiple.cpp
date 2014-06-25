@@ -3,6 +3,7 @@
 
 #include "../lib/hle-emulation.h"
 #include <xmmintrin.h> // _mm_pause
+#include <immintrin.h> // _xtest
 #include "../../util.h"
 
 class PaddedMutex {
@@ -23,10 +24,26 @@ void hle_unlock(unsigned * mutex) {
 	__hle_release_clear4(mutex);
 }
 
-int nest_multiple(int mutex_count) {
-//	PaddedMutex * mutexes = (PaddedMutex *) malloc(sizeof(PaddedMutex) * mutex_count);
-	PaddedMutex * mutexes = (PaddedMutex *) aligned_alloc(cache_line_size,
-			sizeof(PaddedMutex*) * mutex_count);
+void smart_hle_lock(unsigned * mutex) {
+	if (_xtest() && *mutex != 98789347) { // read the lock_word to store it in the read-set (compare with value that will normally not be held)
+		return; // avoid nesting errors - lock only once and ignore consecutive ones
+	}
+	while (__hle_acquire_test_and_set4(mutex)) {
+		_mm_pause();
+	}
+}
+void smart_hle_unlock(unsigned * mutex) {
+	if(*mutex == 0) // not set
+		return;
+	__hle_release_clear4(mutex);
+}
+
+int nest_multiple(int mutex_count, void (*lock)(unsigned*),
+		void (*unlock)(unsigned*)) {
+	PaddedMutex * mutexes = (PaddedMutex *) malloc(
+			sizeof(PaddedMutex) * mutex_count);
+//	PaddedMutex * mutexes = (PaddedMutex *) aligned_alloc(cache_line_size,
+//			sizeof(PaddedMutex*) * mutex_count); // leads to nonsense segfaults in iteration
 	if (!mutexes) {
 		printf("Could not allocate memory for %d mutexes\n", mutex_count);
 		exit(1);
@@ -37,19 +54,18 @@ int nest_multiple(int mutex_count) {
 	}
 
 	for (int m = 0; m < mutex_count; m++) {
-		hle_lock(&mutexes[m].mutex);
+		lock(&mutexes[m].mutex);
 	}
 
 	i++;
 
 	for (int m = 0; m < mutex_count; m++) {
-		hle_unlock(&mutexes[m].mutex);
+		unlock(&mutexes[m].mutex);
 	}
 	free(mutexes);
 	return 0;
 }
 
-// Leads to zero failures
 int main(int argc, char *argv[]) {
 	int loops = 10, wait = 0;
 	int min_mutexes = 0, max_mutexes = 10;
@@ -68,6 +84,8 @@ int main(int argc, char *argv[]) {
 
 	printf("sizeof(PaddexMutex): %lu\n", sizeof(PaddedMutex));
 
+	printf("\n>> MEASURE WITH PERF <<\n\n");
+
 	printf(
 			"Mutexes;Attempts;Failures;Amount of times the mutex was occupied\n");
 	for (int mutex_count = min_mutexes; mutex_count <= max_mutexes;
@@ -76,7 +94,9 @@ int main(int argc, char *argv[]) {
 		int failures = 0;
 
 		for (int l = 0; l < loops; l++) {
-			failures += nest_multiple(mutex_count);
+			failures += nest_multiple(mutex_count, hle_lock, hle_unlock);
+			failures += nest_multiple(mutex_count, smart_hle_lock,
+					smart_hle_unlock);
 		}
 
 		float failure_rate = (float) failures / loops * 100;

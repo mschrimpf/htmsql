@@ -5,15 +5,13 @@
 #include <xmmintrin.h> // _mm_pause
 
 #define __HLE_EXCH_LOCK_SPIN(size, type)\
-	static void hle_exch_lock_spin##size(void *mutex) {\
-		type* lock = (type*) mutex;\
+	static void hle_exch_lock_spin##size(type *lock) {\
 		while(__hle_acquire_exchange_n##size(lock, 1)) {\
 			_mm_pause();\
 		}\
 	}
 #define __HLE_EXCH_LOCK_SPEC(size, type)\
-	static void hle_exch_lock_spec##size(void *mutex) {\
-		type* lock = (type*) mutex;\
+	static void hle_exch_lock_spec##size(type *lock) {\
 		while (__hle_acquire_exchange_n##size(lock, 1)) {\
 			type val;\
 			do {\
@@ -23,8 +21,7 @@
 		}\
 	}
 #define __HLE_EXCH_LOCK_SPEC_NOLOAD(size, type)\
-	static void hle_exch_lock_spec_noload##size(void *mutex) {\
-		type* lock = (type*) mutex;\
+	static void hle_exch_lock_spec_noload##size(type *lock) {\
 		while (__hle_acquire_exchange_n##size(lock, 1)) {\
 			type val;\
 			do {\
@@ -35,15 +32,13 @@
 	}
 
 #define __HLE_TAS_LOCK_SPIN(size, type)\
-	static void hle_tas_lock_spin##size(void *mutex) {\
-		type* lock = (type*) mutex;\
+	static void hle_tas_lock_spin##size(type *lock) {\
 		while(__hle_acquire_test_and_set##size(lock)) {\
 			_mm_pause();\
 		}\
 	}
 #define __HLE_TAS_LOCK_SPEC(size, type)\
-	static void hle_tas_lock_spec##size(void *mutex) {\
-		type* lock = (type*) mutex;\
+	static void hle_tas_lock_spec##size(type *lock) {\
 		while (__hle_acquire_test_and_set##size(lock)) {\
 			type val;\
 			do {\
@@ -54,8 +49,7 @@
 	}
 
 #define __HLE_EXCH_UNLOCK(size, type)\
-	static void hle_unlock##size(void *mutex) {\
-		type* lock = (type*) mutex;\
+	static void hle_unlock##size(type *lock) {\
 		__hle_release_clear##size(lock);\
 	}
 

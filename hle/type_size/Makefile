@@ -6,7 +6,7 @@ SFLAGS=-S -masm=intel
 SOURCES=type_size.cpp \
 hle-lock_functions.cpp \
 atomic-lock_functions.cpp \
-../../util.cpp
+../../util.cpp ../../Stats.cpp
 EXECUTABLE=type_size
 
 # time_cmp

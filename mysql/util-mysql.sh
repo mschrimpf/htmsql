@@ -20,7 +20,7 @@ source ~/develop/profiling.sh
 
 # make sure the values in this array are ordered from shortest to longest, 
 # otherwise e.g. "abc" would be matched even though one wanted "ab"
-_TYPE_ALL=(unmodified all smartall glibc mutexlock_glibc global_latch global_hle_latch lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
+_TYPE_ALL=(unmodified all beta smartall glibc mutexlock_glibc global_latch global_hle_latch lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
 
 
 
@@ -213,18 +213,18 @@ function profile_mysql {
 	
 	if [ "$3" == 1 ] || [ "$3" == true ]; then # record
 		if [ "$type_is_hle" == true ]; then
-			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "tx-start" &
-			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/tx-abort/pp" &
-		else # hle events
 			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "el-start" &
 			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/el-abort/pp" &
+		else # hle events
+			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "tx-start" &
+			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/tx-abort/pp" &
 		fi
 	else # stat
 		profile_perf_stat "$_MYSQL_PID" "$_OUTPUT_DIR" &
 		if [ "$type_is_hle" == true ]; then
-			profile_perf_stat_rtm_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
-		else # hle events
 			profile_perf_stat_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
+		else # hle events
+			profile_perf_stat_rtm_events "$_MYSQL_PID" "$_OUTPUT_DIR" &
 		fi
 	fi
 }

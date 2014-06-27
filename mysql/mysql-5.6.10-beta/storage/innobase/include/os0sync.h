@@ -356,7 +356,7 @@ Atomic compare-and-swap and increment for InnoDB. */
 /* BEGIN: HTMSQL */
 //#if cpu_has_rtm()
 // TODO: might have to rewrite functions to macros or ignore them completely
-# define HAVE_HLE
+# define HAVE_HLE 1
 //#endif
 /* END: HTMSQL */
 

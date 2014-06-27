@@ -1,13 +1,13 @@
 
- Performance counter stats for process id '15974':
+ Performance counter stats for process id '32280':
 
-       5431,559568 task-clock                #    0,998 CPUs utilized          
-     7.961.278.012 instructions              #    0,49  insns per cycle         [33,34%]
-    16.194.585.910 cycles                    #    2,982 GHz                     [33,34%]
-     3.096.991.210 cpu/cycles-t/             #   19,12% transactional cycles    [33,34%]
-                 0 cpu/tx-start/             #    0,000 K/sec                   [33,34%]
-        59.850.222 cpu/el-start/             #       52 cycles / elision        [33,34%]
-       939.532.377 cpu/cycles-ct/            #   13,32% aborted cycles          [33,34%]
+         50,725746 task-clock                #    0,947 CPUs utilized          
+        90.283.888 instructions              #    0,63  insns per cycle         [37,31%]
+       142.374.123 cycles                    #    2,807 GHz                     [37,31%]
+        25.703.876 cpu/cycles-t/             #   18,05% transactional cycles    [37,30%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [37,30%]
+           512.019 cpu/el-start/             #       50 cycles / elision        [37,29%]
+         7.857.942 cpu/cycles-ct/            #   12,53% aborted cycles          [37,29%]
 
-       5,440878105 seconds time elapsed
+       0,053541883 seconds time elapsed
 

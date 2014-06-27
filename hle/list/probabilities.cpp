@@ -49,6 +49,8 @@ int main(int argc, char *argv[]) {
 	printf("Duration:     %d microseconds\n", duration);
 	printf("Warmup:       %d microseconds\n", warmup);
 	printf("(base_inserts=%d, value_range=%d)\n", base_inserts, VALUE_RANGE);
+	printf("TimeCmp size: %lu\n", sizeof(TimeCmp));
+	printf("ListItem size:%lu\n", sizeof(ListItem));
 	printf("\n");
 
 	// define locktypes
@@ -81,16 +83,17 @@ int main(int argc, char *argv[]) {
 	int probabilities_contains[] = { 0, 50, 100 };
 //	int probabilities_contains[] = { 100 };
 
+	Allocator * allocator =
+			align ? (Allocator *) new AlignedAllocator() : (Allocator *) new DefaultAllocator();
 	printf("p_ins;p_rem;p_con;");
 	const char *appendings[3];
 	appendings[0] = "ExpectedValue";
 	appendings[1] = "Stddev";
 	LockType::printHeaderRange(lockTypes, lockTypesMin, lockTypesMax,
 			appendings, 2);
-	for (int p = 0;
-			p
-					< sizeof(probabilities_contains)
-							/ sizeof(probabilities_contains[0]); p++) {
+	int probabilities_length = sizeof(probabilities_contains)
+			/ sizeof(probabilities_contains[0]);
+	for (int p = 0; p < probabilities_length; p++) {
 		int probability_contains = probabilities_contains[p];
 		int probability_update = 100 - probability_contains;
 		int probability_insert = probability_update / 2;
@@ -105,8 +108,6 @@ int main(int argc, char *argv[]) {
 			Stats stats;
 			for (int l = 0; l < loops; l++) {
 				// init
-				Allocator * allocator =
-						align ? (Allocator *) new AlignedAllocator() : (Allocator *) new DefaultAllocator();
 				List * list =
 						lockTypes[t].enum_type == LockType::EnumType::RTM ?
 								(List *) new ListRtm(allocator) :
@@ -130,10 +131,8 @@ int main(int argc, char *argv[]) {
 				std::thread threads[num_threads];
 				for (int i = 0; i < num_threads; i++) {
 					threads[i] = std::thread(&TimeCmp::run_infinite,
-							&timeCmps[i], i,
-							list, //repeats,
-							probability_insert, probability_remove,
-							probability_contains,
+							&timeCmps[i], i, list, probability_insert,
+							probability_remove, probability_contains,
 							queues[rotation++ % num_threads]);
 				}
 				usleep(warmup);
@@ -168,4 +167,5 @@ int main(int argc, char *argv[]) {
 		} // end of locktype-loop
 		printf("\n");
 	} // end of repeats loop
+	delete allocator;
 }

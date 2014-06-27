@@ -19,22 +19,6 @@ void hle_unlock(unsigned * mutex) {
 	__hle_release_clear4(mutex);
 }
 
-int nest_hle_smart(int nesting_count, int max_nesting, unsigned * mutex) {
-	if (_xtest() && mutex != 98789347) {
-		// do not lock inside elision
-	} else if (hle_lock(mutex) != 0)
-		return 1;
-
-	i++;
-	int failures = 0;
-	if (++nesting_count <= max_nesting)
-		failures += nest_hle(nesting_count, max_nesting, mutex);
-
-	hle_unlock(mutex);
-
-	return failures;
-}
-
 int nest_hle(int nesting_count, int max_nesting, unsigned * mutex) {
 	if (hle_lock(mutex) != 0)
 		return 1;
@@ -115,9 +99,9 @@ int main(int argc, char *argv[]) {
 
 		for (int l = 0; l < loops; l++) {
 			unsigned mutex1 = 0, mutex2 = 0, mutex3 = 0;
-			failures += nest_hle(0, max_nesting, &mutex1);
+//			failures += nest_hle(0, max_nesting, &mutex1);
 //			failures += nest_double(0, max_nesting, &mutex1, &mutex2);
-//			failures += nest_triple(0, max_nesting, &mutex1, &mutex2, &mutex3);
+			failures += nest_triple(0, max_nesting, &mutex1, &mutex2, &mutex3);
 //			failures += nest_iterative(0, max_nesting, &mutex1);
 		}
 

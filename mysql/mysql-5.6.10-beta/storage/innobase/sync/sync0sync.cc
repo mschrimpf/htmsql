@@ -485,7 +485,7 @@ mutex_spin_wait(
 	isn't exact. Moved out of ifdef that follows because we are willing
 	to sacrifice the cost of counting this as the data is valuable.
 	Count the number of calls to mutex_spin_wait. */
-	mutex_spin_wait_count.add(counter_index, 1);
+//	mutex_spin_wait_count.add(counter_index, 1);
 
 mutex_loop:
 

@@ -1,5 +1,5 @@
 
- Performance counter stats for process id '16934':
+ Performance counter stats for process id '30514':
 
      <not counted> r01C9 (RTM_RETIRED.START)                   
      <not counted> r04C9 (RTM_RETIRED.ABORTED)                   
@@ -10,5 +10,5 @@
      <not counted> r08C9 (RTM_RETIRED.ABORTED_MISC1)                   
      <not counted> r02C9 (RTM_RETIRED.COMMIT)                   
 
-       0,082983632 seconds time elapsed
+       0,489383134 seconds time elapsed
 

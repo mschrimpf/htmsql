@@ -14,6 +14,7 @@ public:
 };
 
 int i = 0;
+//int smart = 0;
 
 void hle_lock(unsigned * mutex) {
 	while (__hle_acquire_test_and_set4(mutex)) {
@@ -25,7 +26,8 @@ void hle_unlock(unsigned * mutex) {
 }
 
 void smart_hle_lock(unsigned * mutex) {
-	if (_xtest() && *mutex != 98789347) { // read the lock_word to store it in the read-set (compare with value that will normally not be held)
+	if (_xtest() && *mutex != 65535) { // read the lock_word to store it in the read-set (compare with value that will normally not be held)
+//		smart++;
 		return; // avoid nesting errors - lock only once and ignore consecutive ones
 	}
 	while (__hle_acquire_test_and_set4(mutex)) {
@@ -33,7 +35,7 @@ void smart_hle_lock(unsigned * mutex) {
 	}
 }
 void smart_hle_unlock(unsigned * mutex) {
-	if(*mutex == 0) // not set
+	if (*mutex == 0) // not set
 		return;
 	__hle_release_clear4(mutex);
 }
@@ -50,7 +52,7 @@ int nest_multiple(int mutex_count, void (*lock)(unsigned*),
 	}
 	for (int m = 0; m < mutex_count; m++) {
 		mutexes[m].mutex = 0; // make sure the mutex is not set
-//			printf("&mutexes[%d]: %p\n", m, &mutexes[m]); // they are actually aligned on multiples of 64
+//		printf("&mutexes[%d]: %p\n", m, &mutexes[m]); // check alignment
 	}
 
 	for (int m = 0; m < mutex_count; m++) {
@@ -94,14 +96,14 @@ int main(int argc, char *argv[]) {
 		int failures = 0;
 
 		for (int l = 0; l < loops; l++) {
-			failures += nest_multiple(mutex_count, hle_lock, hle_unlock);
-			failures += nest_multiple(mutex_count, smart_hle_lock,
-					smart_hle_unlock);
+//			failures += nest_multiple(mutex_count, hle_lock, hle_unlock); // many nesting aborts for mutex_count > 1
+			failures += nest_multiple(mutex_count, smart_hle_lock, smart_hle_unlock); // 0 nesting aborts
 		}
 
 		float failure_rate = (float) failures / loops * 100;
 		printf(";%d;%d;%.2f\n", loops, failures, failure_rate);
 	}
 
-	printf("i: %d\n", i);
+	printf("i:     %d\n", i);
+//	printf("smart: %d\n"), smart);
 }

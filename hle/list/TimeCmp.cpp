@@ -11,6 +11,11 @@
 void TimeCmp::run(int tid, List * list, int repeats, int probability_insert,
 		int probability_remove, int probability_contains,
 		std::queue<int> queue) {
+	if(stick_this_thread_to_core(tid % 4) != 0) {
+		printf("Could not stick thread\n");
+		exit(1);
+	}
+
 	for (int r = 0; r < repeats; r++) {
 //		printf("[T%d] %d/%d\n", tid, r, repeats);
 		int rnd_op =

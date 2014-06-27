@@ -13,12 +13,27 @@
 #include <xmmintrin.h> // _mm_pause
 #define DEBUG 0
 
+struct uchar_mutex {
+	unsigned char value;
+	unsigned char padding[64 - 1];
+};
+struct ushort_mutex {
+	unsigned short value;
+	unsigned char padding[64 - 2];
+};
+struct unsigned_mutex {
+	unsigned value;
+	unsigned char padding[64 - 4];
+};
+struct ull_mutex {
+	unsigned long long value;
+	unsigned char padding[64 - 8];
+};
+
 #define type_uchar unsigned char // 1
 #define type_ushort unsigned short // 2
 #define type_u unsigned // 4
 #define type_ull unsigned long long // 8
-#define type type_uchar
-
 #define LOCK_FUNCTIONS_LENGTH 2
 #define __FUNCTION_DEFINITION(type, size)\
 	void (*lock_functions[])(type *lock) = {hle_exch_lock_spin##size, hle_exch_lock_spec##size};\
@@ -27,7 +42,14 @@
 			hle_tas_lock_spec##size, hle_exch_lock_spec##size};*/\
 	void (*unlock_function)(type *lock) = hle_unlock##size;
 
-type *mutexes = NULL; // TODO: padding
+// define lock_functions to test
+#define type type_ushort
+//#define mutex_type uchar_mutex
+#define mutex_type ushort_mutex
+//#define mutex_type unsigned_mutex
+//#define mutex_type ull_mutex
+__FUNCTION_DEFINITION(type, 2)
+mutex_type *mutexes = NULL;
 int **lock_accesses = NULL;
 int partitioned = 0;
 int pin = 1;
@@ -46,7 +68,7 @@ void *run(int tid, void (*lock_function)(type *),
 	int i = 0;
 	while (!stop_run) {
 		int access = lock_accesses[i];
-		type* mutex_ptr = &mutexes[access];
+		type* mutex_ptr = &mutexes[access].value;
 #if DEBUG == 1
 		printf("[T#%d] Locking %d (%p)\n", tid, access, mutex_ptr);
 #endif
@@ -67,7 +89,7 @@ void *run(int tid, void (*lock_function)(type *),
 void printHeader(int functionType = -1, FILE * out = stdout) {
 	switch (functionType) {
 	case 0:
-		fprintf(out, "Sizes;hle_exch-spin\n");
+		fprintf(out, "Sizes;hle_exch-spin;stddev\n");
 		break;
 	case 1:
 		fprintf(out, "Sizes;hle_exch-spec\n");
@@ -80,7 +102,8 @@ void printHeader(int functionType = -1, FILE * out = stdout) {
 		fprintf(out, "Sizes;hle_exch-spec;hle_exch-spec-noload\n");
 		break;
 	default:
-		fprintf(out, "Sizes;hle_exch-spin;hle_exch-spec\n");
+		fprintf(out,
+				"Sizes;hle_exch-spin;hle_exch-spin stddev;hle_exch-spec;hle_exch-spec stddev\n");
 		break;
 	}
 }
@@ -88,7 +111,7 @@ void printHeader(int functionType = -1, FILE * out = stdout) {
 int main(int argc, char *argv[]) {
 	int num_threads = 4;
 	int loops = 10;
-	int lockFunction = -1;
+	int lockFunction = 0;
 	int partitioned = 0, duration = 10000, warmup = duration / 10;
 	int *values[] = { &num_threads, &loops, &partitioned, &lockFunction,
 			&sleep_time, &pin, &duration, &warmup };
@@ -97,17 +120,15 @@ int main(int argc, char *argv[]) {
 	handle_args(argc, argv, 9, values, identifier);
 
 	printf("Threads:         %d\n", num_threads);
+	printf("sizeof(type):    %lu | padded: %lu\n",
+			sizeof(((mutex_type *) 0)->value), sizeof(mutex_type));
 	printf("Loops:           %d\n", loops);
 	printf("Partitioned:     %s\n", partitioned ? "yes" : "no");
 	printf("Pinned:          %s\n", pin ? "yes" : "no");
 	printf("sleep:           %d\n", sleep_time);
 	printf("Duration:        %d microseconds (%d microseconds warmup)\n",
 			duration, warmup);
-	printf("Type size:       %d\n", 1);
-	int sizes[] = { 1, 10, 100 }; //{ 1000, 5500, 10000 }; // {10, 55, 100}; //
-
-	// define lock_functions to test
-	__FUNCTION_DEFINITION(type, 1)
+	int sizes[] = { 10 }; //{ 1, 10, 100 }; //{ 1000, 5500, 10000 }; // {10, 55, 100}; //
 
 	int lockFunctionsMin, lockFunctionsMax;
 	switch (lockFunction) {
@@ -133,7 +154,9 @@ int main(int argc, char *argv[]) {
 		int mutexes_array_size = sizes[s];
 		printf("%d", mutexes_array_size);
 		std::cout.flush();
-		mutexes = (type *) calloc(mutexes_array_size, sizeof(type));
+		mutexes = (mutex_type *) calloc(
+				sizes[sizeof(sizes) / sizeof(sizes[0]) - 1], // always allocate maximum amount
+				sizeof(mutex_type));
 
 		// loop over functions, loops, threads
 		for (int f = lockFunctionsMin; f < lockFunctionsMax; f++) {
@@ -198,7 +221,8 @@ int main(int argc, char *argv[]) {
 				}
 				// TODO corruption error (double free) for uchar size 1000 and ushort size 100
 			}
-			printf(";%.2f", stats.getExpectedValue());
+			printf(";%.2f;%.2f", stats.getExpectedValue(),
+					stats.getStandardDeviation());
 			std::cout.flush();
 		} // end lock functions loop
 		printf("\n");

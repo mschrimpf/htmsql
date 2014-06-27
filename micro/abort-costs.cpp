@@ -41,8 +41,8 @@ int regular_aborts = 0;
 
 int run_prefilled(unsigned char * a, int size, int * array_accesses,
 		void (*access_func)(unsigned char*, int), int abort_trx) {
-//	for (int i = 0; i < size; i++)
-//		a[i] = 0;
+	for (int i = 0; i < size; i++)
+		a[i] = 0;
 	/* a is in cache */
 
 // benchmark
@@ -121,10 +121,10 @@ int main(int argc, char *argv[]) {
 
 	// init
 	int access_array[size];
-//	for(int i=0; i<size; i++) {
-//		access_array[i] = rand() % size;
-//	}
-	fill_prefetching_unfriendly(access_array, size);
+	for(int i=0; i<size; i++) {
+		access_array[i] = rand() % size;
+	}
+//	fill_prefetching_unfriendly(access_array, size);
 
 	// init array
 	unsigned char a[size];

@@ -1,5 +1,5 @@
 
- Performance counter stats for process id '16934':
+ Performance counter stats for process id '30514':
 
      <not counted> r04C8 (HLE_RETIRED.ABORTED)                   
      <not counted> r01C8 (HLE_RETIRED.START)                   
@@ -10,5 +10,5 @@
      <not counted> r20C8 (HLE_RETIRED.ABORTED_MISC3)                   
      <not counted> r10C8 (HLE_RETIRED.ABORTED_MISC2)                   
 
-       0,082893455 seconds time elapsed
+       0,489966695 seconds time elapsed
 

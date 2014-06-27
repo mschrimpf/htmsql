@@ -212,6 +212,7 @@ function profile_mysql {
 	fi
 	
 	if [ "$3" == 1 ] || [ "$3" == true ]; then # record
+		echo "Recording events"
 		if [ "$type_is_hle" == true ]; then
 			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "el-start" &
 			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/el-abort/pp" &

@@ -152,7 +152,8 @@ function profile_perf_record_event {
 				--transaction \
 				--weight \
 				-p $1 \
-				-o $2/$record_filename"
+				-o $2/$record_filename \
+				&>$2/$record_filename" # use this trick to initially create the file and thus be able to call this method from remote as well (would not work otherwise). This will create the file and rename it on demand to filename.old when the profiling actually happens
 	if [ "$4" == true ]; then
 		execute_cmd "$_EXEC_CMD"
 	else
@@ -278,7 +279,7 @@ function process_perf_stat {
 	fi
 	if [ -f "$transactions_file" ]; then
 		transctions_out="$1/$_FILENAME_MY_PERF_STAT_EVENTS"
-		transactions_start=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.STARTED).*/\1/p" $transactions_file) # " npp display bug
+		transactions_start=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.START).*/\1/p" $transactions_file) # " npp display bug
 		transactions_start=$(echo $transactions_abort | sed 's/[\.,]*//g')
 		transactions_abort=$(sed -ne "s/\([0-9\.,]*\) r.*_RETIRED.ABORTED).*/\1/p" $transactions_file) # " npp display bug
 		transactions_abort=$(echo $transactions_abort | sed 's/[\.,]*//g')

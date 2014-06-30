@@ -20,7 +20,7 @@ source ~/develop/profiling.sh
 
 # make sure the values in this array are ordered from shortest to longest, 
 # otherwise e.g. "abc" would be matched even though one wanted "ab"
-_TYPE_ALL=(unmodified all beta smartall glibc mutexlock_glibc global_latch global_hle_latch lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
+_TYPE_ALL=(unmodified all rtm_all rtm_all10 rtm_all100 rtm_all100000 beta smartall glibc mutexlock_glibc global_latch global_hle_latch lock_word syslock syslock-rtm trx_all trx_lock_func trx_lock_func-rtm)
 
 
 
@@ -212,7 +212,6 @@ function profile_mysql {
 	fi
 	
 	if [ "$3" == 1 ] || [ "$3" == true ]; then # record
-		echo "Recording events"
 		if [ "$type_is_hle" == true ]; then
 			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "el-start" &
 			profile_perf_record_event "$_MYSQL_PID" "$_OUTPUT_DIR" "cpu/el-abort/pp" &

@@ -45,3 +45,9 @@ SOURCES_DATA_CONFLICT=data_conflict.cpp \
 ../../util.cpp ../../Stats.cpp
 data_conflict: $(SOURCES_DATA_CONFLICT)
 	$(CC) $(CCFLAGS) -o $@ $(SOURCES_DATA_CONFLICT) $(LDLAGS)
+
+# 
+SOURCES_XABORT=xabort.cpp \
+../../util.cpp ../../Stats.cpp
+xabort: $(SOURCES_XABORT)
+	$(CC) $(CCFLAGS) -o $@ $(SOURCES_XABORT) $(LDLAGS)

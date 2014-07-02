@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1872':
+
+       6383,235862 task-clock                #    3,206 CPUs utilized          
+     8.049.292.230 instructions              #    0,46  insns per cycle         [33,77%]
+    17.457.186.747 cycles                    #    2,735 GHz                     [33,77%]
+     2.036.508.694 cpu/cycles-t/             #   11,67% transactional cycles    [33,77%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,77%]
+         8.055.388 cpu/el-start/             #      253 cycles / elision        [33,77%]
+     1.529.542.343 cpu/cycles-ct/            #    2,90% aborted cycles          [33,77%]
+
+       1,990876578 seconds time elapsed
+

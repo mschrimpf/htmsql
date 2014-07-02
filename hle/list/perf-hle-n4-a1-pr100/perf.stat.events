@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '1872':
+
+         5.009.461 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,91%]
+         7.813.805 r01C8 (HLE_RETIRED.START)                                                        [33,91%]
+         2.804.635 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,91%]
+               304 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,91%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,91%]
+           460.038 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,91%]
+         4.633.115 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,91%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,91%]
+
+       1,989468657 seconds time elapsed
+

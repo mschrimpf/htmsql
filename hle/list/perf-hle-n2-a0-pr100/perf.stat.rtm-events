@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '1622':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [34,02%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [34,02%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [34,01%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [34,01%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [34,01%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [34,01%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [34,02%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [34,02%]
+
+       1,991324424 seconds time elapsed
+

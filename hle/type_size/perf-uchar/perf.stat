@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '19888':
+
+       4778,494625 task-clock                #    2,751 CPUs utilized          
+     4.327.644.642 instructions              #    0,31  insns per cycle         [33,26%]
+    14.011.540.998 cycles                    #    2,932 GHz                     [33,26%]
+     3.295.348.269 cpu/cycles-t/             #   23,52% transactional cycles    [33,26%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,26%]
+        34.256.595 cpu/el-start/             #       96 cycles / elision        [33,26%]
+     2.889.716.465 cpu/cycles-ct/            #    2,89% aborted cycles          [33,26%]
+
+       1,736904239 seconds time elapsed
+

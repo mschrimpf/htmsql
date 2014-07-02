@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1622':
+
+       3963,275600 task-clock                #    1,989 CPUs utilized          
+     8.377.849.537 instructions              #    0,68  insns per cycle         [33,87%]
+    12.401.982.624 cycles                    #    3,129 GHz                     [33,87%]
+     4.463.077.227 cpu/cycles-t/             #   35,99% transactional cycles    [33,87%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,87%]
+        14.519.298 cpu/el-start/             #      307 cycles / elision        [33,87%]
+     4.121.355.145 cpu/cycles-ct/            #    2,76% aborted cycles          [33,87%]
+
+       1,993001188 seconds time elapsed
+

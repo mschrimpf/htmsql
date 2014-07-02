@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '19441':
+
+       4061,169751 task-clock                #    2,227 CPUs utilized          
+     5.845.492.534 instructions              #    0,50  insns per cycle         [33,41%]
+    11.662.155.170 cycles                    #    2,872 GHz                     [33,41%]
+     6.271.154.870 cpu/cycles-t/             #   53,77% transactional cycles    [33,41%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,41%]
+       103.202.572 cpu/el-start/             #       61 cycles / elision        [33,41%]
+     5.890.344.028 cpu/cycles-ct/            #    3,27% aborted cycles          [33,41%]
+
+       1,823470358 seconds time elapsed
+

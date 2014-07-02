@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1506':
+
+       3959,385182 task-clock                #    1,986 CPUs utilized          
+     9.704.873.032 instructions              #    0,77  insns per cycle         [33,64%]
+    12.540.253.570 cycles                    #    3,167 GHz                     [33,64%]
+     5.314.722.248 cpu/cycles-t/             #   42,38% transactional cycles    [33,64%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,64%]
+        11.982.831 cpu/el-start/             #      444 cycles / elision        [33,64%]
+     5.311.051.247 cpu/cycles-ct/            #    0,03% aborted cycles          [33,63%]
+
+       1,993438006 seconds time elapsed
+

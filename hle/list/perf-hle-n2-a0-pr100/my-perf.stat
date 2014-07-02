@@ -1,0 +1,7 @@
+Total cycles:             12401982624
+Transactional cycles:      4463077227
+Committed cycles:          4121355145
+Aborted cycles:             341722082
+Transactional cycles relative to total:   35.986804%
+Aborted cycles relative to total:   2.755383%
+Aborted cycles relative to transactional: 7.656647%

@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '20708':
+
+       4245,916663 task-clock                #    2,295 CPUs utilized          
+     3.560.005.338 instructions              #    0,29  insns per cycle         [33,62%]
+    12.102.707.629 cycles                    #    2,850 GHz                     [33,62%]
+     2.494.041.012 cpu/cycles-t/             #   20,61% transactional cycles    [33,62%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,62%]
+        28.366.901 cpu/el-start/             #       88 cycles / elision        [33,62%]
+     1.380.765.695 cpu/cycles-ct/            #    9,20% aborted cycles          [33,62%]
+
+       1,850125774 seconds time elapsed
+

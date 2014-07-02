@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '19441':
+
+         6.078.273 r04C8 (HLE_RETIRED.ABORTED)                                                        [33,66%]
+       101.078.964 r01C8 (HLE_RETIRED.START)                                                        [33,66%]
+        95.000.965 r02C8 (HLE_RETIRED.COMMIT)                                                        [33,66%]
+             1.640 r80C8 (HLE_RETIRED.ABORTED_MISC5)                                                        [33,66%]
+                 0 r40C8 (HLE_RETIRED.ABORTED_MISC4)                                                        [33,66%]
+            18.033 r08C8 (HLE_RETIRED.ABORTED_MISC1)                                                        [33,66%]
+         6.066.883 r20C8 (HLE_RETIRED.ABORTED_MISC3)                                                        [33,66%]
+                 0 r10C8 (HLE_RETIRED.ABORTED_MISC2)                                                        [33,66%]
+
+       1,828969742 seconds time elapsed
+

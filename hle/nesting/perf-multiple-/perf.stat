@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '30107':
+
+          0,729389 task-clock                #    0,001 CPUs utilized          
+           357.319 instructions              #    0,68  insns per cycle        
+           527.579 cycles                    #    0,723 GHz                    
+                 0 cpu/cycles-t/             #    0,00% transactional cycles   
+                 0 cpu/tx-start/             #    0,000 K/sec                  
+                 0 cpu/el-start/             #    0,000 K/sec                  
+                 0 cpu/cycles-ct/            #    0,00% aborted cycles         
+
+       0,493086989 seconds time elapsed
+

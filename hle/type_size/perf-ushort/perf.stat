@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '21067':
+
+       4585,177559 task-clock                #    2,551 CPUs utilized          
+     4.096.573.789 instructions              #    0,31  insns per cycle         [33,83%]
+    13.289.634.156 cycles                    #    2,898 GHz                     [33,83%]
+     2.897.118.072 cpu/cycles-t/             #   21,80% transactional cycles    [33,83%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [33,83%]
+        31.408.331 cpu/el-start/             #       92 cycles / elision        [33,83%]
+     2.214.682.392 cpu/cycles-ct/            #    5,14% aborted cycles          [33,83%]
+
+       1,797375512 seconds time elapsed
+

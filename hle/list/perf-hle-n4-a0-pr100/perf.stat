@@ -1,0 +1,13 @@
+
+ Performance counter stats for process id '1738':
+
+       6365,050308 task-clock                #    3,193 CPUs utilized          
+     7.779.283.676 instructions              #    0,45  insns per cycle         [34,37%]
+    17.431.383.256 cycles                    #    2,739 GHz                     [34,37%]
+     1.884.322.642 cpu/cycles-t/             #   10,81% transactional cycles    [34,37%]
+                 0 cpu/tx-start/             #    0,000 K/sec                   [34,37%]
+         9.579.527 cpu/el-start/             #      197 cycles / elision        [34,37%]
+     1.240.137.129 cpu/cycles-ct/            #    3,70% aborted cycles          [34,37%]
+
+       1,993572504 seconds time elapsed
+

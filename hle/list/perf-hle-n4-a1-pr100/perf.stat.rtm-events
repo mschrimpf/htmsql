@@ -1,0 +1,14 @@
+
+ Performance counter stats for process id '1872':
+
+                 0 r01C9 (RTM_RETIRED.START)                                                        [32,81%]
+                 0 r04C9 (RTM_RETIRED.ABORTED)                                                        [32,81%]
+                 0 r80C9 (RTM_RETIRED.ABORTED_MISC5)                                                        [32,81%]
+                 0 r40C9 (RTM_RETIRED.ABORTED_MISC4)                                                        [32,81%]
+                 0 r20C9 (RTM_RETIRED.ABORTED_MISC3)                                                        [32,81%]
+                 0 r10C9 (RTM_RETIRED.ABORTED_MISC2)                                                        [32,81%]
+                 0 r08C9 (RTM_RETIRED.ABORTED_MISC1)                                                        [32,81%]
+                 0 r02C9 (RTM_RETIRED.COMMIT)                                                        [32,81%]
+
+       1,989439744 seconds time elapsed
+

@@ -79,8 +79,8 @@ int main(int argc, char *argv[]) {
 		lockTypes[t].init(lockTypesEnum[t]);
 	}
 
-//	int probabilities_contains[] = { 0, 25, 50, 75, 100 };
-	int probabilities_contains[] = { 0, 50, 100 };
+	int probabilities_contains[] = { 0, 25, 50, 75, 100 };
+//	int probabilities_contains[] = { 0, 50, 100 };
 //	int probabilities_contains[] = { 100 };
 
 	Allocator * allocator =

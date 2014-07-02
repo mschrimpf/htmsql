@@ -17,7 +17,7 @@ void rtm_unlock(type* mutex) {
 
 /* smart */
 void rtm_lock_smart(type* mutex) {
-	int failures = 0, max_retries = 0;
+	int failures = 0, max_retries = 10000000;
 
 	int code;
 	while ((code = _xbegin()) != _XBEGIN_STARTED) {

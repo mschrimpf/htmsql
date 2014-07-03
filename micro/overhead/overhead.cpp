@@ -25,23 +25,11 @@ __inline__ uint64_t rdtsc() {
 }
 #endif
 
-int dummy;
-
-void access_array(unsigned char * a, int size) {
-	for (int i = 0; i < size; i++)
-//		a[i]++;
-		dummy += a[i];
-}
-
 /**
  * @param mode 0 for no synchronization, 1 for pthread mutex, 2 for atomic lock, 3 for hle, 4 for rtm
  */
-uint64_t run(int size, int mode) {
+uint64_t run(int mode) {
 	stick_this_thread_to_core(0);
-	// init and write array
-	unsigned char * a = new unsigned char[size];
-	for (int i = 0; i < size; i++)
-		a[i] = 0;
 	// mutexes
 	unsigned lock = 0;
 	pthread_mutex_t p_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -52,26 +40,21 @@ uint64_t run(int size, int mode) {
 	gettimeofday(&start, NULL);
 	switch (mode) {
 	case 0:
-//		access_array(a, size);
 		break;
 	case 1:
 		pthread_mutex_lock(&p_mutex);
-//		access_array(a, size);
 		pthread_mutex_unlock(&p_mutex);
 		break;
 	case 2:
 		atomic_exch_lock_spec(&lock);
-//		access_array(a, size);
 		atomic_exch_unlock_spec(&lock);
 		break;
 	case 3:
 		hle_exch_lock_spec(&lock);
-//		access_array(a, size);
 		hle_exch_unlock_spec(&lock);
 		break;
 	case 4:
 		retry: if (_xbegin() == _XBEGIN_STARTED) {
-//			access_array(a, size);
 			_xend();
 		} else {
 			goto retry;
@@ -88,13 +71,12 @@ uint64_t run(int size, int mode) {
 
 int main(int argc, char *argv[]) {
 	// arguments
-	int loops = 1000, size = 100, lockType = -1, wait = 0;
-	int *values[] = { &loops, &size, &lockType, &wait };
-	const char *identifier[] = { "-l", "-s", "-t", "-w" };
-	handle_args(argc, argv, 4, values, identifier);
+	int loops = 1000, lockType = -1, wait = 0;
+	int *values[] = { &loops, &lockType, &wait };
+	const char *identifier[] = { "-l", "-t", "-w" };
+	handle_args(argc, argv, 3, values, identifier);
 
 	printf("Loops: %d\n", loops);
-	printf("Size:  %d\n", size);
 	printf("\n");
 
 	int tmin = 0;
@@ -113,7 +95,7 @@ int main(int argc, char *argv[]) {
 			&statsRtm };
 	for (int l = 0; l < loops; l++) {
 		for (int i = tmin; i < tmax; i++)
-			stats[i]->addValue(run(size, i));
+			stats[i]->addValue(run(i));
 	}
 
 	float baselineEP = statsBaseline.getExpectedValue(), baselineSD =
@@ -137,6 +119,4 @@ int main(int argc, char *argv[]) {
 				subtractStddev(stddev, baselineSD));
 		printf(";%.2f;%.2f\n", ep - atomicEP, subtractStddev(stddev, atomicSD));
 	}
-
-	printf("Dummy: %d\n", dummy);
 }
